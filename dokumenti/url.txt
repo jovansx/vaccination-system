@@ -1,0 +1,6 @@
+digitalni zeleni sertifikat-jmbg
+interesovanje-jmbg
+izvestaj o imunizaciji-period od-do
+potvrda od izvresnoj vakcinaciji-jmbg i redni broj doze
+saglasnost za imunizaciju-indeks dokumenta
+zahtev za sertifikat-jmbg i redni broj zahteva

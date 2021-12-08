@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<izvestaj_o_imunizaciji  
+    xmlns="http://www.akatsuki.org/izvestaj_o_imunizaciji"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:t="http://www.akatsuki.org/tipovi"
+    xsi:schemaLocation="http://www.akatsuki.org izvestaj_o_imunizaciji.xsd
+    http://www.akatsuki.org/tipovi tipovi.xsd" datum_izdavanja="2021-09-11">
+    <period>
+        <od>2021-08-01</od>
+        <do>2021-09-01</do>
+    </period>
+    <dokumenti>
+        <interesovanje_za_imunizaciju>2758</interesovanje_za_imunizaciju>
+        <zeleni_sertifikat>
+            <primljeno>453</primljeno>
+            <izdato>428</izdato>
+        </zeleni_sertifikat>
+    </dokumenti>
+    <doze_vakcina izdato="3225">
+        <raspodela_po_dozama>
+            <doza broj="1" kolicina="1789"/>
+            <doza broj="2" kolicina="1276"/>
+            <doza broj="3" kolicina="160"/>
+        </raspodela_po_dozama>
+        <raspodela_po_proizvodjacima>
+            <proizvodjac naziv="Pfizer-BioNTech" kolicina="1625"/>
+            <proizvodjac naziv="Sinopharm" kolicina="1100"/>
+            <proizvodjac naziv="Sputnik V (Gamaleya istrazivacki centar)" kolicina="356"/>
+            <proizvodjac naziv="AstraZeneca" kolicina="144"/> 
+            <proizvodjac naziv="Moderna" kolicina="5"/>   
+        </raspodela_po_proizvodjacima>
+    </doze_vakcina>
+</izvestaj_o_imunizaciji>

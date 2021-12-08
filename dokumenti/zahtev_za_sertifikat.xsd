@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified"
+    targetNamespace="http://www.akatsuki.org/zahtev_za_sertifikat"
+    xmlns="http://www.akatsuki.org/zahtev_za_sertifikat" xmlns:t="http://www.akatsuki.org/tipovi">
+
+    <xs:import namespace="http://www.akatsuki.org/tipovi" schemaLocation="tipovi.xsd"/>
+    <xs:element name="zahtev_za_sertifikat">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="podnosilac" type="t:TPodnosilacZahteva"/>
+                <xs:element name="razlog_podnosenja_zahteva" type="xs:string"/>
+            </xs:sequence>
+            <xs:attribute name="datum" type="xs:date" use="required"/>
+            <xs:attribute name="mesto" type="xs:string" use="required"/>
+        </xs:complexType>
+    </xs:element>
+</xs:schema>

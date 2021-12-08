@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<zahtev_za_sertifikat xmlns="http://www.akatsuki.org/zahtev_za_sertifikat"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:t="http://www.akatsuki.org/tipovi"
+    xsi:schemaLocation="http://www.akatsuki.org zahtev_za_sertifikat.xsd
+    http://www.akatsuki.org/tipovi tipovi.xsd"
+    datum="2021-10-03" mesto="Novi Sad">
+    <podnosilac>
+        <t:ime>Aleksandar</t:ime>
+        <t:prezime>Buljevic</t:prezime>
+        <t:jmbg>1510999800012</t:jmbg>
+        <t:pol>Muski</t:pol>
+        <t:broj_pasosa>098765439</t:broj_pasosa>
+        <t:datum_rodjenja>2021-10-15</t:datum_rodjenja>
+    </podnosilac>
+    <razlog_podnosenja_zahteva>Ovde ide neki moj zahtev.</razlog_podnosenja_zahteva>
+</zahtev_za_sertifikat>

@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<interesovanje 
+    xmlns="http://www.akatsuki.org/interesovanje"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:t="http://www.akatsuki.org/tipovi"
+    xsi:schemaLocation="http://www.akatsuki.org interesovanje.xsd
+    http://www.akatsuki.org/tipovi tipovi.xsd">
+    <drzavljanstvo>srpsko</drzavljanstvo>
+    <podnosilac>
+        <t:ime>Aleksandar</t:ime>
+        <t:prezime>Buljevic</t:prezime>
+        <t:jmbg>1510999800012</t:jmbg>
+        <t:email>abuljevic8@gmail.com</t:email>
+        <t:fiksni_telefon>0216423876</t:fiksni_telefon>
+        <t:mobilni_telefon>0691782912</t:mobilni_telefon>
+        <t:lokacija>Novi Sad</t:lokacija>
+    </podnosilac>
+    <vakcine>
+        <vakcina nazivVakcine="Pfizer-BioNTech" />
+        <vakcina nazivVakcine="Sputnik V (Gamaleya istrazivacki centar)" />
+        <vakcina nazivVakcine="Sinopharm" />
+        <vakcina nazivVakcine="AstraZeneca" />
+        <vakcina nazivVakcine="Moderna"/>
+        <vakcina nazivVakcine="Bilo koja" />
+    </vakcine>
+    <dobrovoljni_davalac_krvi>true</dobrovoljni_davalac_krvi>
+</interesovanje>

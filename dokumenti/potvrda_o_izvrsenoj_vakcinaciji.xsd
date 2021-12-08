@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified"
+    targetNamespace="http://www.akatsuki.org/potvrda_o_izvrsenoj_vakcinaciji"
+    xmlns="http://www.akatsuki.org/potvrda_o_izvrsenoj_vakcinaciji"
+    xmlns:o="http://www.akatsuki.org/potvrda_o_izvrsenoj_vakcinaciji"
+    xmlns:t="http://www.akatsuki.org/tipovi">
+    <xs:import namespace="http://www.akatsuki.org/tipovi" schemaLocation="tipovi.xsd"/>
+
+    <xs:element name="potvrda_o_vakcinaciji">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="primalac" type="t:TPrimalac"/>
+                <xs:element name="primljene_vakcine">
+                    <xs:complexType>
+                        <xs:sequence>
+                            <xs:element maxOccurs="unbounded" name="doza">
+                                <xs:complexType>
+                                    <xs:sequence>
+                                        <xs:element name="datum_davanja" type="xs:date"/>
+                                        <xs:element name="serija" type="xs:string"/>
+                                    </xs:sequence>
+                                    <xs:attribute default="1" name="broj" type="xs:positiveInteger"
+                                        use="optional"/>
+                                </xs:complexType>
+                            </xs:element>
+                        </xs:sequence>
+                    </xs:complexType>
+                    <xs:unique name="BrojDoze">
+                        <xs:selector xpath="o:doza"/>
+                        <xs:field xpath="@broj"/>
+                    </xs:unique>
+                </xs:element>
+                <xs:element name="zdravstvena_ustanova" type="xs:string"/>
+                <xs:element name="naziv_vakcine" type="TNazivVakcine"/>
+                <xs:element name="qr_code" type="xs:string"/>
+            </xs:sequence>
+            <xs:attribute name="datum_izdavanja" type="xs:date"/>
+        </xs:complexType>
+    </xs:element>
+    <xs:simpleType name="TNazivVakcine">
+        <xs:restriction base="xs:string">
+            <xs:enumeration value="Pfizer-BioNTech"/>
+            <xs:enumeration value="Sputnik V"/>
+            <xs:enumeration value="Sinopharm"/>
+            <xs:enumeration value="AstraZeneca"/>
+            <xs:enumeration value="Moderna"/>
+        </xs:restriction>
+    </xs:simpleType>
+</xs:schema>
