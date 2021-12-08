@@ -1,6 +1,19 @@
-digitalni zeleni sertifikat-jmbg
-interesovanje-jmbg
-izvestaj o imunizaciji-period od-do
-potvrda od izvresnoj vakcinaciji-jmbg i redni broj doze
-saglasnost za imunizaciju-indeks dokumenta
-zahtev za sertifikat-jmbg i redni broj zahteva
+
+Digitalni zeleni sertifikat
+ - http://www.akatsuki.org/digitalni_sertifikat/{{jmbg}}
+
+Interesovanje za vakcinaciju
+ - http://www.akatsuki.org/interesovanje/{{jmbg}}
+
+Izvestaj o imunizaciji
+ - http://www.akatsuki.org/izvestaj_o_imunizaciji/{{period od}}_{{period do}}
+ 
+Potvrda o vakcinaciji
+ - http://www.akatsuki.org/potvrda_o_izvrsenoj_vakcinaciji/{{jmbg}}_{{redni broj doze}}
+
+Saglasnost za imunizaciju
+ - http://www.akatsuki.org/saglasnost_za_imunizaciju/{{indeks}}
+
+Zahtev za izdavanje digitalnog zelenog sertifikata
+ - http://www.akatsuki.org/zahtev_za_sertifikat/{{jmbg}}_{{indeks}}
+
