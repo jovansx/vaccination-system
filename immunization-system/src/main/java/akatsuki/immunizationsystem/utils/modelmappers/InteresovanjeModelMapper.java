@@ -1,4 +1,4 @@
-package akatsuki.immunizationsystem.utils;
+package akatsuki.immunizationsystem.utils.modelmappers;
 
 import akatsuki.immunizationsystem.model.documents.Interesovanje;
 import org.springframework.stereotype.Component;

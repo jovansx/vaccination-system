@@ -1,4 +1,4 @@
-package akatsuki.immunizationsystem.utils;
+package akatsuki.immunizationsystem.utils.modelmappers;
 
 public interface IModelMapper<T> {
 

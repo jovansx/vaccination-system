@@ -1,7 +1,7 @@
 package akatsuki.immunizationsystem.dao;
 
 import akatsuki.immunizationsystem.model.documents.Interesovanje;
-import akatsuki.immunizationsystem.utils.IModelMapper;
+import akatsuki.immunizationsystem.utils.modelmappers.IModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.xmldb.api.modules.XMLResource;

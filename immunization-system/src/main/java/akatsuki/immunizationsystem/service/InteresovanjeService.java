@@ -5,21 +5,17 @@ import akatsuki.immunizationsystem.exceptions.BadRequestRuntimeException;
 import akatsuki.immunizationsystem.exceptions.ConflictRuntimeException;
 import akatsuki.immunizationsystem.exceptions.NotFoundRuntimeException;
 import akatsuki.immunizationsystem.model.documents.Interesovanje;
-import akatsuki.immunizationsystem.utils.IModelMapper;
+import akatsuki.immunizationsystem.utils.modelmappers.IModelMapper;
 import akatsuki.immunizationsystem.utils.Validator;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 @Service
+@RequiredArgsConstructor
 public class InteresovanjeService {
     private final IDao<Interesovanje> interesovanjeDAO;
     private final Validator validator;
     private final IModelMapper<Interesovanje> mapper;
-
-    public InteresovanjeService(IDao<Interesovanje> interesovanjeDAO, Validator validator, IModelMapper<Interesovanje> modelMapper) {
-        this.interesovanjeDAO = interesovanjeDAO;
-        this.validator = validator;
-        this.mapper = modelMapper;
-    }
 
     public String getInteresovanje(String jmbg) throws RuntimeException {
         if (!validator.isJmbgValid(jmbg))
@@ -32,7 +28,7 @@ public class InteresovanjeService {
     public String createInteresovanje(String interesovanjeXml) throws RuntimeException {
         Interesovanje interesovanje = mapper.convertToObject(interesovanjeXml);
         if (interesovanje == null)
-            throw new BadRequestRuntimeException("Xml koji ste poslali nije validan.");
+            throw new BadRequestRuntimeException("Dokument koji ste poslali nije validan.");
 
         if (interesovanjeDAO.get(interesovanje.getPodnosilac().getJmbg()).isPresent())
             throw new ConflictRuntimeException("Osoba s jmbg-om " + interesovanje.getPodnosilac().getJmbg() + " je vec podnela interesovanje za vakcinacijom.");

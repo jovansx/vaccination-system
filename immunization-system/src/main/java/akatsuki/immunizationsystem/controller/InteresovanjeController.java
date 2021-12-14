@@ -1,15 +1,15 @@
 package akatsuki.immunizationsystem.controller;
 
 import akatsuki.immunizationsystem.service.InteresovanjeService;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/api/interesovanja")
+@RequiredArgsConstructor
 public class InteresovanjeController {
 
-    @Autowired
-    private InteresovanjeService interesovanjeService;
+    private final InteresovanjeService interesovanjeService;
 
     @GetMapping("/{jmbg}")
     public String getInteresovanje(@PathVariable String jmbg) {

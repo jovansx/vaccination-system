@@ -1,7 +1,6 @@
 package akatsuki.immunizationsystem.dao;
 
 import akatsuki.immunizationsystem.config.DbConnection;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.xmldb.api.DatabaseManager;
 import org.xmldb.api.base.Collection;
@@ -43,7 +42,7 @@ public class DaoUtils {
 
     public void createResource(String collectionId, Object object, Class<?> classOfObject) {
         try {
-            Collection col = DatabaseManager.getCollection(dbConnection.getUrl() + collectionId, dbConnection.getUsername(), dbConnection.getPassword());
+            Collection col = DatabaseManager.getCollection(dbConnection.getDbUrl() + collectionId, dbConnection.getUsername(), dbConnection.getPassword());
             col.setProperty(OutputKeys.INDENT, "yes");
             XMLResource res = null;
             OutputStream os = new ByteArrayOutputStream();
