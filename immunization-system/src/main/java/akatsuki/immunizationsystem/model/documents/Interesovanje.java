@@ -19,9 +19,9 @@ import java.util.List;
 
 /**
  * <p>Java class for anonymous complex type.
- * 
+ *
  * <p>The following schema fragment specifies the expected content contained within this class.
- * 
+ *
  * <pre>
  * &lt;complexType&gt;
  *   &lt;complexContent&gt;
@@ -46,15 +46,13 @@ import java.util.List;
  *   &lt;/complexContent&gt;
  * &lt;/complexType&gt;
  * </pre>
- * 
- * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "", propOrder = {
-    "drzavljanstvo",
-    "podnosilac",
-    "vakcine",
-    "dobrovoljniDavalacKrvi"
+        "drzavljanstvo",
+        "podnosilac",
+        "vakcine",
+        "dobrovoljniDavalacKrvi"
 })
 @XmlRootElement(name = "interesovanje", namespace = "http://www.akatsuki.org/interesovanje")
 public class Interesovanje {
@@ -71,11 +69,9 @@ public class Interesovanje {
 
     /**
      * Gets the value of the drzavljanstvo property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link TDrzavljanstvo }
-     *     
+     *
+     * @return possible object is
+     * {@link TDrzavljanstvo }
      */
     public TDrzavljanstvo getDrzavljanstvo() {
         return drzavljanstvo;
@@ -83,11 +79,9 @@ public class Interesovanje {
 
     /**
      * Sets the value of the drzavljanstvo property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link TDrzavljanstvo }
-     *     
+     *
+     * @param value allowed object is
+     *              {@link TDrzavljanstvo }
      */
     public void setDrzavljanstvo(TDrzavljanstvo value) {
         this.drzavljanstvo = value;
@@ -95,11 +89,9 @@ public class Interesovanje {
 
     /**
      * Gets the value of the podnosilac property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link TPodnosilacInteresovanja }
-     *     
+     *
+     * @return possible object is
+     * {@link TPodnosilacInteresovanja }
      */
     public TPodnosilacInteresovanja getPodnosilac() {
         return podnosilac;
@@ -107,11 +99,9 @@ public class Interesovanje {
 
     /**
      * Sets the value of the podnosilac property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link TPodnosilacInteresovanja }
-     *     
+     *
+     * @param value allowed object is
+     *              {@link TPodnosilacInteresovanja }
      */
     public void setPodnosilac(TPodnosilacInteresovanja value) {
         this.podnosilac = value;
@@ -119,11 +109,9 @@ public class Interesovanje {
 
     /**
      * Gets the value of the vakcine property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link Vakcine }
-     *     
+     *
+     * @return possible object is
+     * {@link Vakcine }
      */
     public Vakcine getVakcine() {
         return vakcine;
@@ -131,11 +119,9 @@ public class Interesovanje {
 
     /**
      * Sets the value of the vakcine property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link Vakcine }
-     *     
+     *
+     * @param value allowed object is
+     *              {@link Vakcine }
      */
     public void setVakcine(Vakcine value) {
         this.vakcine = value;
@@ -143,7 +129,6 @@ public class Interesovanje {
 
     /**
      * Gets the value of the dobrovoljniDavalacKrvi property.
-     * 
      */
     public boolean isDobrovoljniDavalacKrvi() {
         return dobrovoljniDavalacKrvi;
@@ -151,7 +136,6 @@ public class Interesovanje {
 
     /**
      * Sets the value of the dobrovoljniDavalacKrvi property.
-     * 
      */
     public void setDobrovoljniDavalacKrvi(boolean value) {
         this.dobrovoljniDavalacKrvi = value;
@@ -160,9 +144,9 @@ public class Interesovanje {
 
     /**
      * <p>Java class for anonymous complex type.
-     * 
+     *
      * <p>The following schema fragment specifies the expected content contained within this class.
-     * 
+     *
      * <pre>
      * &lt;complexType&gt;
      *   &lt;complexContent&gt;
@@ -174,12 +158,10 @@ public class Interesovanje {
      *   &lt;/complexContent&gt;
      * &lt;/complexType&gt;
      * </pre>
-     * 
-     * 
      */
     @XmlAccessorType(XmlAccessType.FIELD)
     @XmlType(name = "", propOrder = {
-        "vakcina"
+            "vakcina"
     })
     public static class Vakcine {
 
@@ -188,25 +170,23 @@ public class Interesovanje {
 
         /**
          * Gets the value of the vakcina property.
-         * 
+         *
          * <p>
          * This accessor method returns a reference to the live list,
          * not a snapshot. Therefore any modification you make to the
          * returned list will be present inside the JAXB object.
          * This is why there is not a <CODE>set</CODE> method for the vakcina property.
-         * 
+         *
          * <p>
          * For example, to add a new item, do as follows:
          * <pre>
          *    getVakcina().add(newItem);
          * </pre>
-         * 
-         * 
+         *
+         *
          * <p>
          * Objects of the following type(s) are allowed in the list
          * {@link TTipVakcine }
-         * 
-         * 
          */
         public List<TTipVakcine> getVakcina() {
             if (vakcina == null) {

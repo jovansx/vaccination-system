@@ -19,9 +19,9 @@ import java.util.List;
 
 /**
  * <p>Java class for anonymous complex type.
- * 
+ *
  * <p>The following schema fragment specifies the expected content contained within this class.
- * 
+ *
  * <pre>
  * &lt;complexType&gt;
  *   &lt;complexContent&gt;
@@ -86,14 +86,12 @@ import java.util.List;
  *   &lt;/complexContent&gt;
  * &lt;/complexType&gt;
  * </pre>
- * 
- * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "", propOrder = {
-    "primalac",
-    "vakcinacija",
-    "testovi"
+        "primalac",
+        "vakcinacija",
+        "testovi"
 })
 @XmlRootElement(name = "digitalni_sertifikat", namespace = "http://www.akatsuki.org/digitalni_sertifikat")
 public class DigitalniSertifikat {
@@ -112,11 +110,9 @@ public class DigitalniSertifikat {
 
     /**
      * Gets the value of the primalac property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link TPodnosilacZahteva }
-     *     
+     *
+     * @return possible object is
+     * {@link TPodnosilacZahteva }
      */
     public TPodnosilacZahteva getPrimalac() {
         return primalac;
@@ -124,11 +120,9 @@ public class DigitalniSertifikat {
 
     /**
      * Sets the value of the primalac property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link TPodnosilacZahteva }
-     *     
+     *
+     * @param value allowed object is
+     *              {@link TPodnosilacZahteva }
      */
     public void setPrimalac(TPodnosilacZahteva value) {
         this.primalac = value;
@@ -136,11 +130,9 @@ public class DigitalniSertifikat {
 
     /**
      * Gets the value of the vakcinacija property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link Vakcinacija }
-     *     
+     *
+     * @return possible object is
+     * {@link Vakcinacija }
      */
     public Vakcinacija getVakcinacija() {
         return vakcinacija;
@@ -148,11 +140,9 @@ public class DigitalniSertifikat {
 
     /**
      * Sets the value of the vakcinacija property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link Vakcinacija }
-     *     
+     *
+     * @param value allowed object is
+     *              {@link Vakcinacija }
      */
     public void setVakcinacija(Vakcinacija value) {
         this.vakcinacija = value;
@@ -160,11 +150,9 @@ public class DigitalniSertifikat {
 
     /**
      * Gets the value of the testovi property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link Testovi }
-     *     
+     *
+     * @return possible object is
+     * {@link Testovi }
      */
     public Testovi getTestovi() {
         return testovi;
@@ -172,11 +160,9 @@ public class DigitalniSertifikat {
 
     /**
      * Sets the value of the testovi property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link Testovi }
-     *     
+     *
+     * @param value allowed object is
+     *              {@link Testovi }
      */
     public void setTestovi(Testovi value) {
         this.testovi = value;
@@ -184,11 +170,9 @@ public class DigitalniSertifikat {
 
     /**
      * Gets the value of the datumIVremeIzdavanja property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link XMLGregorianCalendar }
-     *     
+     *
+     * @return possible object is
+     * {@link XMLGregorianCalendar }
      */
     public XMLGregorianCalendar getDatumIVremeIzdavanja() {
         return datumIVremeIzdavanja;
@@ -196,11 +180,9 @@ public class DigitalniSertifikat {
 
     /**
      * Sets the value of the datumIVremeIzdavanja property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link XMLGregorianCalendar }
-     *     
+     *
+     * @param value allowed object is
+     *              {@link XMLGregorianCalendar }
      */
     public void setDatumIVremeIzdavanja(XMLGregorianCalendar value) {
         this.datumIVremeIzdavanja = value;
@@ -208,11 +190,9 @@ public class DigitalniSertifikat {
 
     /**
      * Gets the value of the brojSertifikata property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
+     *
+     * @return possible object is
+     * {@link String }
      */
     public String getBrojSertifikata() {
         return brojSertifikata;
@@ -220,11 +200,9 @@ public class DigitalniSertifikat {
 
     /**
      * Sets the value of the brojSertifikata property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
+     *
+     * @param value allowed object is
+     *              {@link String }
      */
     public void setBrojSertifikata(String value) {
         this.brojSertifikata = value;
@@ -233,9 +211,9 @@ public class DigitalniSertifikat {
 
     /**
      * <p>Java class for anonymous complex type.
-     * 
+     *
      * <p>The following schema fragment specifies the expected content contained within this class.
-     * 
+     *
      * <pre>
      * &lt;complexType&gt;
      *   &lt;complexContent&gt;
@@ -262,12 +240,10 @@ public class DigitalniSertifikat {
      *   &lt;/complexContent&gt;
      * &lt;/complexType&gt;
      * </pre>
-     * 
-     * 
      */
     @XmlAccessorType(XmlAccessType.FIELD)
     @XmlType(name = "", propOrder = {
-        "test"
+            "test"
     })
     public static class Testovi {
 
@@ -276,25 +252,23 @@ public class DigitalniSertifikat {
 
         /**
          * Gets the value of the test property.
-         * 
+         *
          * <p>
          * This accessor method returns a reference to the live list,
          * not a snapshot. Therefore any modification you make to the
          * returned list will be present inside the JAXB object.
          * This is why there is not a <CODE>set</CODE> method for the test property.
-         * 
+         *
          * <p>
          * For example, to add a new item, do as follows:
          * <pre>
          *    getTest().add(newItem);
          * </pre>
-         * 
-         * 
+         *
+         *
          * <p>
          * Objects of the following type(s) are allowed in the list
          * {@link Test }
-         * 
-         * 
          */
         public List<Test> getTest() {
             if (test == null) {
@@ -306,9 +280,9 @@ public class DigitalniSertifikat {
 
         /**
          * <p>Java class for anonymous complex type.
-         * 
+         *
          * <p>The following schema fragment specifies the expected content contained within this class.
-         * 
+         *
          * <pre>
          * &lt;complexType&gt;
          *   &lt;complexContent&gt;
@@ -325,17 +299,15 @@ public class DigitalniSertifikat {
          *   &lt;/complexContent&gt;
          * &lt;/complexType&gt;
          * </pre>
-         * 
-         * 
          */
         @XmlAccessorType(XmlAccessType.FIELD)
         @XmlType(name = "", propOrder = {
-            "vrstaUzorka",
-            "proizvodjac",
-            "datumUzorkovanja",
-            "datumIzdavanjaRezultata",
-            "rezultat",
-            "laboratorija"
+                "vrstaUzorka",
+                "proizvodjac",
+                "datumUzorkovanja",
+                "datumIzdavanjaRezultata",
+                "rezultat",
+                "laboratorija"
         })
         public static class Test {
 
@@ -356,11 +328,9 @@ public class DigitalniSertifikat {
 
             /**
              * Gets the value of the vrstaUzorka property.
-             * 
-             * @return
-             *     possible object is
-             *     {@link String }
-             *     
+             *
+             * @return possible object is
+             * {@link String }
              */
             public String getVrstaUzorka() {
                 return vrstaUzorka;
@@ -368,11 +338,9 @@ public class DigitalniSertifikat {
 
             /**
              * Sets the value of the vrstaUzorka property.
-             * 
-             * @param value
-             *     allowed object is
-             *     {@link String }
-             *     
+             *
+             * @param value allowed object is
+             *              {@link String }
              */
             public void setVrstaUzorka(String value) {
                 this.vrstaUzorka = value;
@@ -380,11 +348,9 @@ public class DigitalniSertifikat {
 
             /**
              * Gets the value of the proizvodjac property.
-             * 
-             * @return
-             *     possible object is
-             *     {@link String }
-             *     
+             *
+             * @return possible object is
+             * {@link String }
              */
             public String getProizvodjac() {
                 return proizvodjac;
@@ -392,11 +358,9 @@ public class DigitalniSertifikat {
 
             /**
              * Sets the value of the proizvodjac property.
-             * 
-             * @param value
-             *     allowed object is
-             *     {@link String }
-             *     
+             *
+             * @param value allowed object is
+             *              {@link String }
              */
             public void setProizvodjac(String value) {
                 this.proizvodjac = value;
@@ -404,11 +368,9 @@ public class DigitalniSertifikat {
 
             /**
              * Gets the value of the datumUzorkovanja property.
-             * 
-             * @return
-             *     possible object is
-             *     {@link XMLGregorianCalendar }
-             *     
+             *
+             * @return possible object is
+             * {@link XMLGregorianCalendar }
              */
             public XMLGregorianCalendar getDatumUzorkovanja() {
                 return datumUzorkovanja;
@@ -416,11 +378,9 @@ public class DigitalniSertifikat {
 
             /**
              * Sets the value of the datumUzorkovanja property.
-             * 
-             * @param value
-             *     allowed object is
-             *     {@link XMLGregorianCalendar }
-             *     
+             *
+             * @param value allowed object is
+             *              {@link XMLGregorianCalendar }
              */
             public void setDatumUzorkovanja(XMLGregorianCalendar value) {
                 this.datumUzorkovanja = value;
@@ -428,11 +388,9 @@ public class DigitalniSertifikat {
 
             /**
              * Gets the value of the datumIzdavanjaRezultata property.
-             * 
-             * @return
-             *     possible object is
-             *     {@link XMLGregorianCalendar }
-             *     
+             *
+             * @return possible object is
+             * {@link XMLGregorianCalendar }
              */
             public XMLGregorianCalendar getDatumIzdavanjaRezultata() {
                 return datumIzdavanjaRezultata;
@@ -440,11 +398,9 @@ public class DigitalniSertifikat {
 
             /**
              * Sets the value of the datumIzdavanjaRezultata property.
-             * 
-             * @param value
-             *     allowed object is
-             *     {@link XMLGregorianCalendar }
-             *     
+             *
+             * @param value allowed object is
+             *              {@link XMLGregorianCalendar }
              */
             public void setDatumIzdavanjaRezultata(XMLGregorianCalendar value) {
                 this.datumIzdavanjaRezultata = value;
@@ -452,11 +408,9 @@ public class DigitalniSertifikat {
 
             /**
              * Gets the value of the rezultat property.
-             * 
-             * @return
-             *     possible object is
-             *     {@link String }
-             *     
+             *
+             * @return possible object is
+             * {@link String }
              */
             public String getRezultat() {
                 return rezultat;
@@ -464,11 +418,9 @@ public class DigitalniSertifikat {
 
             /**
              * Sets the value of the rezultat property.
-             * 
-             * @param value
-             *     allowed object is
-             *     {@link String }
-             *     
+             *
+             * @param value allowed object is
+             *              {@link String }
              */
             public void setRezultat(String value) {
                 this.rezultat = value;
@@ -476,11 +428,9 @@ public class DigitalniSertifikat {
 
             /**
              * Gets the value of the laboratorija property.
-             * 
-             * @return
-             *     possible object is
-             *     {@link String }
-             *     
+             *
+             * @return possible object is
+             * {@link String }
              */
             public String getLaboratorija() {
                 return laboratorija;
@@ -488,11 +438,9 @@ public class DigitalniSertifikat {
 
             /**
              * Sets the value of the laboratorija property.
-             * 
-             * @param value
-             *     allowed object is
-             *     {@link String }
-             *     
+             *
+             * @param value allowed object is
+             *              {@link String }
              */
             public void setLaboratorija(String value) {
                 this.laboratorija = value;
@@ -505,9 +453,9 @@ public class DigitalniSertifikat {
 
     /**
      * <p>Java class for anonymous complex type.
-     * 
+     *
      * <p>The following schema fragment specifies the expected content contained within this class.
-     * 
+     *
      * <pre>
      * &lt;complexType&gt;
      *   &lt;complexContent&gt;
@@ -533,12 +481,10 @@ public class DigitalniSertifikat {
      *   &lt;/complexContent&gt;
      * &lt;/complexType&gt;
      * </pre>
-     * 
-     * 
      */
     @XmlAccessorType(XmlAccessType.FIELD)
     @XmlType(name = "", propOrder = {
-        "doza"
+            "doza"
     })
     public static class Vakcinacija {
 
@@ -547,25 +493,23 @@ public class DigitalniSertifikat {
 
         /**
          * Gets the value of the doza property.
-         * 
+         *
          * <p>
          * This accessor method returns a reference to the live list,
          * not a snapshot. Therefore any modification you make to the
          * returned list will be present inside the JAXB object.
          * This is why there is not a <CODE>set</CODE> method for the doza property.
-         * 
+         *
          * <p>
          * For example, to add a new item, do as follows:
          * <pre>
          *    getDoza().add(newItem);
          * </pre>
-         * 
-         * 
+         *
+         *
          * <p>
          * Objects of the following type(s) are allowed in the list
          * {@link Doza }
-         * 
-         * 
          */
         public List<Doza> getDoza() {
             if (doza == null) {
@@ -577,9 +521,9 @@ public class DigitalniSertifikat {
 
         /**
          * <p>Java class for anonymous complex type.
-         * 
+         *
          * <p>The following schema fragment specifies the expected content contained within this class.
-         * 
+         *
          * <pre>
          * &lt;complexType&gt;
          *   &lt;complexContent&gt;
@@ -595,15 +539,13 @@ public class DigitalniSertifikat {
          *   &lt;/complexContent&gt;
          * &lt;/complexType&gt;
          * </pre>
-         * 
-         * 
          */
         @XmlAccessorType(XmlAccessType.FIELD)
         @XmlType(name = "", propOrder = {
-            "tip",
-            "proizvodjacISerija",
-            "datum",
-            "zdravstvenaUstanova"
+                "tip",
+                "proizvodjacISerija",
+                "datum",
+                "zdravstvenaUstanova"
         })
         public static class Doza {
 
@@ -621,11 +563,9 @@ public class DigitalniSertifikat {
 
             /**
              * Gets the value of the tip property.
-             * 
-             * @return
-             *     possible object is
-             *     {@link TTipVakcine }
-             *     
+             *
+             * @return possible object is
+             * {@link TTipVakcine }
              */
             public TTipVakcine getTip() {
                 return tip;
@@ -633,11 +573,9 @@ public class DigitalniSertifikat {
 
             /**
              * Sets the value of the tip property.
-             * 
-             * @param value
-             *     allowed object is
-             *     {@link TTipVakcine }
-             *     
+             *
+             * @param value allowed object is
+             *              {@link TTipVakcine }
              */
             public void setTip(TTipVakcine value) {
                 this.tip = value;
@@ -645,11 +583,9 @@ public class DigitalniSertifikat {
 
             /**
              * Gets the value of the proizvodjacISerija property.
-             * 
-             * @return
-             *     possible object is
-             *     {@link String }
-             *     
+             *
+             * @return possible object is
+             * {@link String }
              */
             public String getProizvodjacISerija() {
                 return proizvodjacISerija;
@@ -657,11 +593,9 @@ public class DigitalniSertifikat {
 
             /**
              * Sets the value of the proizvodjacISerija property.
-             * 
-             * @param value
-             *     allowed object is
-             *     {@link String }
-             *     
+             *
+             * @param value allowed object is
+             *              {@link String }
              */
             public void setProizvodjacISerija(String value) {
                 this.proizvodjacISerija = value;
@@ -669,11 +603,9 @@ public class DigitalniSertifikat {
 
             /**
              * Gets the value of the datum property.
-             * 
-             * @return
-             *     possible object is
-             *     {@link XMLGregorianCalendar }
-             *     
+             *
+             * @return possible object is
+             * {@link XMLGregorianCalendar }
              */
             public XMLGregorianCalendar getDatum() {
                 return datum;
@@ -681,11 +613,9 @@ public class DigitalniSertifikat {
 
             /**
              * Sets the value of the datum property.
-             * 
-             * @param value
-             *     allowed object is
-             *     {@link XMLGregorianCalendar }
-             *     
+             *
+             * @param value allowed object is
+             *              {@link XMLGregorianCalendar }
              */
             public void setDatum(XMLGregorianCalendar value) {
                 this.datum = value;
@@ -693,11 +623,9 @@ public class DigitalniSertifikat {
 
             /**
              * Gets the value of the zdravstvenaUstanova property.
-             * 
-             * @return
-             *     possible object is
-             *     {@link String }
-             *     
+             *
+             * @return possible object is
+             * {@link String }
              */
             public String getZdravstvenaUstanova() {
                 return zdravstvenaUstanova;
@@ -705,11 +633,9 @@ public class DigitalniSertifikat {
 
             /**
              * Sets the value of the zdravstvenaUstanova property.
-             * 
-             * @param value
-             *     allowed object is
-             *     {@link String }
-             *     
+             *
+             * @param value allowed object is
+             *              {@link String }
              */
             public void setZdravstvenaUstanova(String value) {
                 this.zdravstvenaUstanova = value;
@@ -717,11 +643,9 @@ public class DigitalniSertifikat {
 
             /**
              * Gets the value of the broj property.
-             * 
-             * @return
-             *     possible object is
-             *     {@link Integer }
-             *     
+             *
+             * @return possible object is
+             * {@link Integer }
              */
             public Integer getBroj() {
                 return broj;
@@ -729,11 +653,9 @@ public class DigitalniSertifikat {
 
             /**
              * Sets the value of the broj property.
-             * 
-             * @param value
-             *     allowed object is
-             *     {@link Integer }
-             *     
+             *
+             * @param value allowed object is
+             *              {@link Integer }
              */
             public void setBroj(Integer value) {
                 this.broj = value;

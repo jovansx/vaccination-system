@@ -16,9 +16,9 @@ import javax.xml.bind.annotation.XmlType;
 
 /**
  * <p>Java class for TTipVakcine complex type.
- * 
+ *
  * <p>The following schema fragment specifies the expected content contained within this class.
- * 
+ *
  * <pre>
  * &lt;complexType name="TTipVakcine"&gt;
  *   &lt;complexContent&gt;
@@ -28,8 +28,6 @@ import javax.xml.bind.annotation.XmlType;
  *   &lt;/complexContent&gt;
  * &lt;/complexType&gt;
  * </pre>
- * 
- * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "TTipVakcine")
@@ -40,11 +38,9 @@ public class TTipVakcine {
 
     /**
      * Gets the value of the nazivVakcine property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link TNazivVakcine }
-     *     
+     *
+     * @return possible object is
+     * {@link TNazivVakcine }
      */
     public TNazivVakcine getNazivVakcine() {
         return nazivVakcine;
@@ -52,11 +48,9 @@ public class TTipVakcine {
 
     /**
      * Sets the value of the nazivVakcine property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link TNazivVakcine }
-     *     
+     *
+     * @param value allowed object is
+     *              {@link TNazivVakcine }
      */
     public void setNazivVakcine(TNazivVakcine value) {
         this.nazivVakcine = value;

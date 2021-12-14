@@ -14,9 +14,9 @@ import javax.xml.datatype.XMLGregorianCalendar;
 
 /**
  * <p>Java class for TPodnosilacZahteva complex type.
- * 
+ *
  * <p>The following schema fragment specifies the expected content contained within this class.
- * 
+ *
  * <pre>
  * &lt;complexType name="TPodnosilacZahteva"&gt;
  *   &lt;complexContent&gt;
@@ -30,18 +30,15 @@ import javax.xml.datatype.XMLGregorianCalendar;
  *   &lt;/complexContent&gt;
  * &lt;/complexType&gt;
  * </pre>
- * 
- * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "TPodnosilacZahteva", propOrder = {
-    "pol",
-    "brojPasosa",
-    "datumRodjenja"
+        "pol",
+        "brojPasosa",
+        "datumRodjenja"
 })
 public class TPodnosilacZahteva
-    extends TKorisnik
-{
+        extends TKorisnik {
 
     @XmlElement(required = true)
     @XmlSchemaType(name = "string")
@@ -54,11 +51,9 @@ public class TPodnosilacZahteva
 
     /**
      * Gets the value of the pol property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link TPol }
-     *     
+     *
+     * @return possible object is
+     * {@link TPol }
      */
     public TPol getPol() {
         return pol;
@@ -66,11 +61,9 @@ public class TPodnosilacZahteva
 
     /**
      * Sets the value of the pol property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link TPol }
-     *     
+     *
+     * @param value allowed object is
+     *              {@link TPol }
      */
     public void setPol(TPol value) {
         this.pol = value;
@@ -78,11 +71,9 @@ public class TPodnosilacZahteva
 
     /**
      * Gets the value of the brojPasosa property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
+     *
+     * @return possible object is
+     * {@link String }
      */
     public String getBrojPasosa() {
         return brojPasosa;
@@ -90,11 +81,9 @@ public class TPodnosilacZahteva
 
     /**
      * Sets the value of the brojPasosa property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
+     *
+     * @param value allowed object is
+     *              {@link String }
      */
     public void setBrojPasosa(String value) {
         this.brojPasosa = value;
@@ -102,11 +91,9 @@ public class TPodnosilacZahteva
 
     /**
      * Gets the value of the datumRodjenja property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link XMLGregorianCalendar }
-     *     
+     *
+     * @return possible object is
+     * {@link XMLGregorianCalendar }
      */
     public XMLGregorianCalendar getDatumRodjenja() {
         return datumRodjenja;
@@ -114,11 +101,9 @@ public class TPodnosilacZahteva
 
     /**
      * Sets the value of the datumRodjenja property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link XMLGregorianCalendar }
-     *     
+     *
+     * @param value allowed object is
+     *              {@link XMLGregorianCalendar }
      */
     public void setDatumRodjenja(XMLGregorianCalendar value) {
         this.datumRodjenja = value;

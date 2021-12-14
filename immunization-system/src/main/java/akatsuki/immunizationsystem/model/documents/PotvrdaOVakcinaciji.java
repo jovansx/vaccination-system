@@ -20,9 +20,9 @@ import java.util.List;
 
 /**
  * <p>Java class for anonymous complex type.
- * 
+ *
  * <p>The following schema fragment specifies the expected content contained within this class.
- * 
+ *
  * <pre>
  * &lt;complexType&gt;
  *   &lt;complexContent&gt;
@@ -61,16 +61,14 @@ import java.util.List;
  *   &lt;/complexContent&gt;
  * &lt;/complexType&gt;
  * </pre>
- * 
- * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "", propOrder = {
-    "primalac",
-    "primljeneVakcine",
-    "zdravstvenaUstanova",
-    "nazivVakcine",
-    "qrCode"
+        "primalac",
+        "primljeneVakcine",
+        "zdravstvenaUstanova",
+        "nazivVakcine",
+        "qrCode"
 })
 @XmlRootElement(name = "potvrda_o_vakcinaciji", namespace = "http://www.akatsuki.org/potvrda_o_izvrsenoj_vakcinaciji")
 public class PotvrdaOVakcinaciji {
@@ -92,11 +90,9 @@ public class PotvrdaOVakcinaciji {
 
     /**
      * Gets the value of the primalac property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link TPrimalac }
-     *     
+     *
+     * @return possible object is
+     * {@link TPrimalac }
      */
     public TPrimalac getPrimalac() {
         return primalac;
@@ -104,11 +100,9 @@ public class PotvrdaOVakcinaciji {
 
     /**
      * Sets the value of the primalac property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link TPrimalac }
-     *     
+     *
+     * @param value allowed object is
+     *              {@link TPrimalac }
      */
     public void setPrimalac(TPrimalac value) {
         this.primalac = value;
@@ -116,11 +110,9 @@ public class PotvrdaOVakcinaciji {
 
     /**
      * Gets the value of the primljeneVakcine property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link PrimljeneVakcine }
-     *     
+     *
+     * @return possible object is
+     * {@link PrimljeneVakcine }
      */
     public PrimljeneVakcine getPrimljeneVakcine() {
         return primljeneVakcine;
@@ -128,11 +120,9 @@ public class PotvrdaOVakcinaciji {
 
     /**
      * Sets the value of the primljeneVakcine property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link PrimljeneVakcine }
-     *     
+     *
+     * @param value allowed object is
+     *              {@link PrimljeneVakcine }
      */
     public void setPrimljeneVakcine(PrimljeneVakcine value) {
         this.primljeneVakcine = value;
@@ -140,11 +130,9 @@ public class PotvrdaOVakcinaciji {
 
     /**
      * Gets the value of the zdravstvenaUstanova property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
+     *
+     * @return possible object is
+     * {@link String }
      */
     public String getZdravstvenaUstanova() {
         return zdravstvenaUstanova;
@@ -152,11 +140,9 @@ public class PotvrdaOVakcinaciji {
 
     /**
      * Sets the value of the zdravstvenaUstanova property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
+     *
+     * @param value allowed object is
+     *              {@link String }
      */
     public void setZdravstvenaUstanova(String value) {
         this.zdravstvenaUstanova = value;
@@ -164,11 +150,9 @@ public class PotvrdaOVakcinaciji {
 
     /**
      * Gets the value of the nazivVakcine property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link TNazivVakcineIzvrseneVakcinacije }
-     *     
+     *
+     * @return possible object is
+     * {@link TNazivVakcineIzvrseneVakcinacije }
      */
     public TNazivVakcineIzvrseneVakcinacije getNazivVakcine() {
         return nazivVakcine;
@@ -176,11 +160,9 @@ public class PotvrdaOVakcinaciji {
 
     /**
      * Sets the value of the nazivVakcine property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link TNazivVakcineIzvrseneVakcinacije }
-     *     
+     *
+     * @param value allowed object is
+     *              {@link TNazivVakcineIzvrseneVakcinacije }
      */
     public void setNazivVakcine(TNazivVakcineIzvrseneVakcinacije value) {
         this.nazivVakcine = value;
@@ -188,11 +170,9 @@ public class PotvrdaOVakcinaciji {
 
     /**
      * Gets the value of the qrCode property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
+     *
+     * @return possible object is
+     * {@link String }
      */
     public String getQrCode() {
         return qrCode;
@@ -200,11 +180,9 @@ public class PotvrdaOVakcinaciji {
 
     /**
      * Sets the value of the qrCode property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
+     *
+     * @param value allowed object is
+     *              {@link String }
      */
     public void setQrCode(String value) {
         this.qrCode = value;
@@ -212,11 +190,9 @@ public class PotvrdaOVakcinaciji {
 
     /**
      * Gets the value of the datumIzdavanja property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link XMLGregorianCalendar }
-     *     
+     *
+     * @return possible object is
+     * {@link XMLGregorianCalendar }
      */
     public XMLGregorianCalendar getDatumIzdavanja() {
         return datumIzdavanja;
@@ -224,11 +200,9 @@ public class PotvrdaOVakcinaciji {
 
     /**
      * Sets the value of the datumIzdavanja property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link XMLGregorianCalendar }
-     *     
+     *
+     * @param value allowed object is
+     *              {@link XMLGregorianCalendar }
      */
     public void setDatumIzdavanja(XMLGregorianCalendar value) {
         this.datumIzdavanja = value;
@@ -237,9 +211,9 @@ public class PotvrdaOVakcinaciji {
 
     /**
      * <p>Java class for anonymous complex type.
-     * 
+     *
      * <p>The following schema fragment specifies the expected content contained within this class.
-     * 
+     *
      * <pre>
      * &lt;complexType&gt;
      *   &lt;complexContent&gt;
@@ -263,12 +237,10 @@ public class PotvrdaOVakcinaciji {
      *   &lt;/complexContent&gt;
      * &lt;/complexType&gt;
      * </pre>
-     * 
-     * 
      */
     @XmlAccessorType(XmlAccessType.FIELD)
     @XmlType(name = "", propOrder = {
-        "doza"
+            "doza"
     })
     public static class PrimljeneVakcine {
 
@@ -277,25 +249,23 @@ public class PotvrdaOVakcinaciji {
 
         /**
          * Gets the value of the doza property.
-         * 
+         *
          * <p>
          * This accessor method returns a reference to the live list,
          * not a snapshot. Therefore any modification you make to the
          * returned list will be present inside the JAXB object.
          * This is why there is not a <CODE>set</CODE> method for the doza property.
-         * 
+         *
          * <p>
          * For example, to add a new item, do as follows:
          * <pre>
          *    getDoza().add(newItem);
          * </pre>
-         * 
-         * 
+         *
+         *
          * <p>
          * Objects of the following type(s) are allowed in the list
          * {@link Doza }
-         * 
-         * 
          */
         public List<Doza> getDoza() {
             if (doza == null) {
@@ -307,9 +277,9 @@ public class PotvrdaOVakcinaciji {
 
         /**
          * <p>Java class for anonymous complex type.
-         * 
+         *
          * <p>The following schema fragment specifies the expected content contained within this class.
-         * 
+         *
          * <pre>
          * &lt;complexType&gt;
          *   &lt;complexContent&gt;
@@ -323,13 +293,11 @@ public class PotvrdaOVakcinaciji {
          *   &lt;/complexContent&gt;
          * &lt;/complexType&gt;
          * </pre>
-         * 
-         * 
          */
         @XmlAccessorType(XmlAccessType.FIELD)
         @XmlType(name = "", propOrder = {
-            "datumDavanja",
-            "serija"
+                "datumDavanja",
+                "serija"
         })
         public static class Doza {
 
@@ -344,11 +312,9 @@ public class PotvrdaOVakcinaciji {
 
             /**
              * Gets the value of the datumDavanja property.
-             * 
-             * @return
-             *     possible object is
-             *     {@link XMLGregorianCalendar }
-             *     
+             *
+             * @return possible object is
+             * {@link XMLGregorianCalendar }
              */
             public XMLGregorianCalendar getDatumDavanja() {
                 return datumDavanja;
@@ -356,11 +322,9 @@ public class PotvrdaOVakcinaciji {
 
             /**
              * Sets the value of the datumDavanja property.
-             * 
-             * @param value
-             *     allowed object is
-             *     {@link XMLGregorianCalendar }
-             *     
+             *
+             * @param value allowed object is
+             *              {@link XMLGregorianCalendar }
              */
             public void setDatumDavanja(XMLGregorianCalendar value) {
                 this.datumDavanja = value;
@@ -368,11 +332,9 @@ public class PotvrdaOVakcinaciji {
 
             /**
              * Gets the value of the serija property.
-             * 
-             * @return
-             *     possible object is
-             *     {@link String }
-             *     
+             *
+             * @return possible object is
+             * {@link String }
              */
             public String getSerija() {
                 return serija;
@@ -380,11 +342,9 @@ public class PotvrdaOVakcinaciji {
 
             /**
              * Sets the value of the serija property.
-             * 
-             * @param value
-             *     allowed object is
-             *     {@link String }
-             *     
+             *
+             * @param value allowed object is
+             *              {@link String }
              */
             public void setSerija(String value) {
                 this.serija = value;
@@ -392,11 +352,9 @@ public class PotvrdaOVakcinaciji {
 
             /**
              * Gets the value of the broj property.
-             * 
-             * @return
-             *     possible object is
-             *     {@link BigInteger }
-             *     
+             *
+             * @return possible object is
+             * {@link BigInteger }
              */
             public BigInteger getBroj() {
                 if (broj == null) {
@@ -408,11 +366,9 @@ public class PotvrdaOVakcinaciji {
 
             /**
              * Sets the value of the broj property.
-             * 
-             * @param value
-             *     allowed object is
-             *     {@link BigInteger }
-             *     
+             *
+             * @param value allowed object is
+             *              {@link BigInteger }
              */
             public void setBroj(BigInteger value) {
                 this.broj = value;

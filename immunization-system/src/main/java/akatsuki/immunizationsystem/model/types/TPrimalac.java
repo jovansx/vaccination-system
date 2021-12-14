@@ -14,9 +14,9 @@ import javax.xml.datatype.XMLGregorianCalendar;
 
 /**
  * <p>Java class for TPrimalac complex type.
- * 
+ *
  * <p>The following schema fragment specifies the expected content contained within this class.
- * 
+ *
  * <pre>
  * &lt;complexType name="TPrimalac"&gt;
  *   &lt;complexContent&gt;
@@ -29,17 +29,14 @@ import javax.xml.datatype.XMLGregorianCalendar;
  *   &lt;/complexContent&gt;
  * &lt;/complexType&gt;
  * </pre>
- * 
- * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "TPrimalac", propOrder = {
-    "pol",
-    "datumRodjenja"
+        "pol",
+        "datumRodjenja"
 })
 public class TPrimalac
-    extends TKorisnik
-{
+        extends TKorisnik {
 
     @XmlElement(required = true)
     @XmlSchemaType(name = "string")
@@ -50,11 +47,9 @@ public class TPrimalac
 
     /**
      * Gets the value of the pol property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link TPol }
-     *     
+     *
+     * @return possible object is
+     * {@link TPol }
      */
     public TPol getPol() {
         return pol;
@@ -62,11 +57,9 @@ public class TPrimalac
 
     /**
      * Sets the value of the pol property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link TPol }
-     *     
+     *
+     * @param value allowed object is
+     *              {@link TPol }
      */
     public void setPol(TPol value) {
         this.pol = value;
@@ -74,11 +67,9 @@ public class TPrimalac
 
     /**
      * Gets the value of the datumRodjenja property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link XMLGregorianCalendar }
-     *     
+     *
+     * @return possible object is
+     * {@link XMLGregorianCalendar }
      */
     public XMLGregorianCalendar getDatumRodjenja() {
         return datumRodjenja;
@@ -86,11 +77,9 @@ public class TPrimalac
 
     /**
      * Sets the value of the datumRodjenja property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link XMLGregorianCalendar }
-     *     
+     *
+     * @param value allowed object is
+     *              {@link XMLGregorianCalendar }
      */
     public void setDatumRodjenja(XMLGregorianCalendar value) {
         this.datumRodjenja = value;

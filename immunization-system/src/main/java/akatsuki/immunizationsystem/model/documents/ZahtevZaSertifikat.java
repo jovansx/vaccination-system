@@ -16,9 +16,9 @@ import javax.xml.datatype.XMLGregorianCalendar;
 
 /**
  * <p>Java class for anonymous complex type.
- * 
+ *
  * <p>The following schema fragment specifies the expected content contained within this class.
- * 
+ *
  * <pre>
  * &lt;complexType&gt;
  *   &lt;complexContent&gt;
@@ -33,13 +33,11 @@ import javax.xml.datatype.XMLGregorianCalendar;
  *   &lt;/complexContent&gt;
  * &lt;/complexType&gt;
  * </pre>
- * 
- * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "", propOrder = {
-    "podnosilac",
-    "razlogPodnosenjaZahteva"
+        "podnosilac",
+        "razlogPodnosenjaZahteva"
 })
 @XmlRootElement(name = "zahtev_za_sertifikat", namespace = "http://www.akatsuki.org/zahtev_za_sertifikat")
 public class ZahtevZaSertifikat {
@@ -56,11 +54,9 @@ public class ZahtevZaSertifikat {
 
     /**
      * Gets the value of the podnosilac property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link TPodnosilacZahteva }
-     *     
+     *
+     * @return possible object is
+     * {@link TPodnosilacZahteva }
      */
     public TPodnosilacZahteva getPodnosilac() {
         return podnosilac;
@@ -68,11 +64,9 @@ public class ZahtevZaSertifikat {
 
     /**
      * Sets the value of the podnosilac property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link TPodnosilacZahteva }
-     *     
+     *
+     * @param value allowed object is
+     *              {@link TPodnosilacZahteva }
      */
     public void setPodnosilac(TPodnosilacZahteva value) {
         this.podnosilac = value;
@@ -80,11 +74,9 @@ public class ZahtevZaSertifikat {
 
     /**
      * Gets the value of the razlogPodnosenjaZahteva property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
+     *
+     * @return possible object is
+     * {@link String }
      */
     public String getRazlogPodnosenjaZahteva() {
         return razlogPodnosenjaZahteva;
@@ -92,11 +84,9 @@ public class ZahtevZaSertifikat {
 
     /**
      * Sets the value of the razlogPodnosenjaZahteva property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
+     *
+     * @param value allowed object is
+     *              {@link String }
      */
     public void setRazlogPodnosenjaZahteva(String value) {
         this.razlogPodnosenjaZahteva = value;
@@ -104,11 +94,9 @@ public class ZahtevZaSertifikat {
 
     /**
      * Gets the value of the datum property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link XMLGregorianCalendar }
-     *     
+     *
+     * @return possible object is
+     * {@link XMLGregorianCalendar }
      */
     public XMLGregorianCalendar getDatum() {
         return datum;
@@ -116,11 +104,9 @@ public class ZahtevZaSertifikat {
 
     /**
      * Sets the value of the datum property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link XMLGregorianCalendar }
-     *     
+     *
+     * @param value allowed object is
+     *              {@link XMLGregorianCalendar }
      */
     public void setDatum(XMLGregorianCalendar value) {
         this.datum = value;
@@ -128,11 +114,9 @@ public class ZahtevZaSertifikat {
 
     /**
      * Gets the value of the mesto property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
+     *
+     * @return possible object is
+     * {@link String }
      */
     public String getMesto() {
         return mesto;
@@ -140,11 +124,9 @@ public class ZahtevZaSertifikat {
 
     /**
      * Sets the value of the mesto property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
+     *
+     * @param value allowed object is
+     *              {@link String }
      */
     public void setMesto(String value) {
         this.mesto = value;

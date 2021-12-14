@@ -15,7 +15,7 @@ import javax.xml.bind.annotation.XmlType;
 
 /**
  * <p>Java class for TPol.
- * 
+ *
  * <p>The following schema fragment specifies the expected content contained within this class.
  * <p>
  * <pre>
@@ -26,7 +26,6 @@ import javax.xml.bind.annotation.XmlType;
  *   &lt;/restriction&gt;
  * &lt;/simpleType&gt;
  * </pre>
- * 
  */
 @XmlType(name = "TPol")
 @XmlEnum
@@ -42,17 +41,17 @@ public enum TPol {
         value = v;
     }
 
-    public String value() {
-        return value;
-    }
-
     public static TPol fromValue(String v) {
-        for (TPol c: TPol.values()) {
+        for (TPol c : TPol.values()) {
             if (c.value.equals(v)) {
                 return c;
             }
         }
         throw new IllegalArgumentException(v);
+    }
+
+    public String value() {
+        return value;
     }
 
 }

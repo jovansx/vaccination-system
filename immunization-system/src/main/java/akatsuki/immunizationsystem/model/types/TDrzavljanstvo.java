@@ -15,7 +15,7 @@ import javax.xml.bind.annotation.XmlType;
 
 /**
  * <p>Java class for TDrzavljanstvo.
- * 
+ *
  * <p>The following schema fragment specifies the expected content contained within this class.
  * <p>
  * <pre>
@@ -27,7 +27,6 @@ import javax.xml.bind.annotation.XmlType;
  *   &lt;/restriction&gt;
  * &lt;/simpleType&gt;
  * </pre>
- * 
  */
 @XmlType(name = "TDrzavljanstvo", namespace = "http://www.akatsuki.org/interesovanje")
 @XmlEnum
@@ -45,17 +44,17 @@ public enum TDrzavljanstvo {
         value = v;
     }
 
-    public String value() {
-        return value;
-    }
-
     public static TDrzavljanstvo fromValue(String v) {
-        for (TDrzavljanstvo c: TDrzavljanstvo.values()) {
+        for (TDrzavljanstvo c : TDrzavljanstvo.values()) {
             if (c.value.equals(v)) {
                 return c;
             }
         }
         throw new IllegalArgumentException(v);
+    }
+
+    public String value() {
+        return value;
     }
 
 }

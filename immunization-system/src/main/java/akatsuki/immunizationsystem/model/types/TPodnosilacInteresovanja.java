@@ -16,9 +16,9 @@ import javax.xml.bind.annotation.XmlType;
 
 /**
  * <p>Java class for TPodnosilacInteresovanja complex type.
- * 
+ *
  * <p>The following schema fragment specifies the expected content contained within this class.
- * 
+ *
  * <pre>
  * &lt;complexType name="TPodnosilacInteresovanja"&gt;
  *   &lt;complexContent&gt;
@@ -33,19 +33,16 @@ import javax.xml.bind.annotation.XmlType;
  *   &lt;/complexContent&gt;
  * &lt;/complexType&gt;
  * </pre>
- * 
- * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "TPodnosilacInteresovanja", propOrder = {
-    "email",
-    "fiksniTelefon",
-    "mobilniTelefon",
-    "lokacija"
+        "email",
+        "fiksniTelefon",
+        "mobilniTelefon",
+        "lokacija"
 })
 public class TPodnosilacInteresovanja
-    extends TKorisnik
-{
+        extends TKorisnik {
 
     @XmlElement(required = true)
     protected String email;
@@ -58,11 +55,9 @@ public class TPodnosilacInteresovanja
 
     /**
      * Gets the value of the email property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
+     *
+     * @return possible object is
+     * {@link String }
      */
     public String getEmail() {
         return email;
@@ -70,11 +65,9 @@ public class TPodnosilacInteresovanja
 
     /**
      * Sets the value of the email property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
+     *
+     * @param value allowed object is
+     *              {@link String }
      */
     public void setEmail(String value) {
         this.email = value;
@@ -82,11 +75,9 @@ public class TPodnosilacInteresovanja
 
     /**
      * Gets the value of the fiksniTelefon property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
+     *
+     * @return possible object is
+     * {@link String }
      */
     public String getFiksniTelefon() {
         return fiksniTelefon;
@@ -94,11 +85,9 @@ public class TPodnosilacInteresovanja
 
     /**
      * Sets the value of the fiksniTelefon property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
+     *
+     * @param value allowed object is
+     *              {@link String }
      */
     public void setFiksniTelefon(String value) {
         this.fiksniTelefon = value;
@@ -106,11 +95,9 @@ public class TPodnosilacInteresovanja
 
     /**
      * Gets the value of the mobilniTelefon property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
+     *
+     * @return possible object is
+     * {@link String }
      */
     public String getMobilniTelefon() {
         return mobilniTelefon;
@@ -118,11 +105,9 @@ public class TPodnosilacInteresovanja
 
     /**
      * Sets the value of the mobilniTelefon property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
+     *
+     * @param value allowed object is
+     *              {@link String }
      */
     public void setMobilniTelefon(String value) {
         this.mobilniTelefon = value;
@@ -130,11 +115,9 @@ public class TPodnosilacInteresovanja
 
     /**
      * Gets the value of the lokacija property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
+     *
+     * @return possible object is
+     * {@link String }
      */
     public String getLokacija() {
         return lokacija;
@@ -142,11 +125,9 @@ public class TPodnosilacInteresovanja
 
     /**
      * Sets the value of the lokacija property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
+     *
+     * @param value allowed object is
+     *              {@link String }
      */
     public void setLokacija(String value) {
         this.lokacija = value;
