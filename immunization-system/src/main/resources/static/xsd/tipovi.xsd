@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified"
+    targetNamespace="http://www.akatsuki.org/tipovi" xmlns="http://www.akatsuki.org/tipovi">
+
+    <xs:complexType name="TKorisnik" abstract="true">
+        <xs:sequence>
+            <xs:element name="ime" type="xs:string"/>
+            <xs:element name="prezime" type="xs:string"/>
+            <xs:element name="jmbg" type="TJmbg"/>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:complexType name="TPodnosilacZahteva">
+        <xs:complexContent>
+            <xs:extension base="TKorisnik">
+                <xs:sequence>
+                    <xs:element name="pol" type="TPol"/>
+                    <xs:element name="broj_pasosa" type="TBrojPasosa"/>
+                    <xs:element name="datum_rodjenja" type="xs:date"/>
+                </xs:sequence>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+    <xs:complexType name="TPodnosilacInteresovanja">
+        <xs:complexContent>
+            <xs:extension base="TKorisnik">
+                <xs:sequence>
+                    <xs:element name="email" type="TEmail"/>
+                    <xs:element name="fiksni_telefon" type="TTelefon"/>
+                    <xs:element name="mobilni_telefon" type="TTelefon"/>
+                    <xs:element name="lokacija" type="xs:string"/>
+                </xs:sequence>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+    <xs:complexType name="TPrimalac">
+        <xs:complexContent>
+            <xs:extension base="TKorisnik">
+                <xs:sequence>
+                    <xs:element name="pol" type="TPol"/>
+                    <xs:element name="datum_rodjenja" type="xs:date"/>
+                </xs:sequence>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+    <xs:simpleType name="TPol">
+        <xs:restriction base="xs:string">
+            <xs:enumeration value="Muski"/>
+            <xs:enumeration value="Zenski"/>
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:simpleType name="TJmbg">
+        <xs:restriction base="xs:string">
+            <xs:pattern
+                value="(0[1-9]|[12]\d|3[01])(0[1-9]|1[012])(9[0-9]{2}|0[01][0-9]|02[01])([0-8][0-9]|9[0-6])([0-9][0-9][0-9])([0-9])"
+            />
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:simpleType name="TBrojPasosa">
+        <xs:restriction base="xs:string">
+            <xs:pattern value="[0-9]{9}|[0-9]{8}"/>
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:simpleType name="TTelefon">
+        <xs:restriction base="xs:string">
+            <xs:pattern value="[0-9]{10}"/>
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:simpleType name="TFiksniTelefon">
+        <xs:restriction base="xs:string">
+            <xs:pattern value="\([0-9]{3}\) [0-9]{3}-[0-9]{4}"/>
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:simpleType name="TEmail">
+        <xs:restriction base="xs:string">
+            <xs:pattern value="[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}"/>
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:complexType name="TTipVakcine">
+        <xs:attribute name="nazivVakcine" type="TNazivVakcine" use="required"></xs:attribute>
+    </xs:complexType>
+    <xs:simpleType name="TNazivVakcine">
+        <xs:restriction base="xs:string">
+            <xs:enumeration value="Pfizer-BioNTech"/>
+            <xs:enumeration value="Sputnik V (Gamaleya istrazivacki centar)"/>
+            <xs:enumeration value="Sinopharm"/>
+            <xs:enumeration value="AstraZeneca"/>
+            <xs:enumeration value="Moderna"/>
+            <xs:enumeration value="Bilo koja"/>
+        </xs:restriction>
+    </xs:simpleType>
+</xs:schema>

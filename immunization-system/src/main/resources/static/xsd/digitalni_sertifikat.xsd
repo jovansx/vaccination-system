@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified"
+    targetNamespace="http://www.akatsuki.org/digitalni_sertifikat"
+    xmlns="http://www.akatsuki.org/digitalni_sertifikat" xmlns:t="http://www.akatsuki.org/tipovi"
+    xmlns:o="http://www.akatsuki.org/digitalni_sertifikat">
+    <xs:import namespace="http://www.akatsuki.org/tipovi" schemaLocation="tipovi.xsd"/>
+    <xs:element name="digitalni_sertifikat">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="primalac" type="t:TPodnosilacZahteva"/>
+
+                <xs:element name="vakcinacija">
+                    <xs:complexType>
+                        <xs:sequence minOccurs="2" maxOccurs="unbounded">
+                            <xs:element name="doza">
+                                <xs:complexType>
+                                    <xs:sequence>
+                                        <xs:element name="tip" type="t:TTipVakcine"/>
+                                        <xs:element name="proizvodjac_i_serija" type="xs:string"/>
+                                        <xs:element name="datum" type="xs:date"/>
+                                        <xs:element name="zdravstvena_ustanova" type="xs:string"/>
+                                    </xs:sequence>
+                                    <xs:attribute name="broj" type="xs:int"/>
+                                </xs:complexType>
+                            </xs:element>
+                        </xs:sequence>
+                    </xs:complexType>
+                    <xs:unique name="BrojDoze">
+                        <xs:selector xpath="o:doza"/>
+                        <xs:field xpath="@broj"/>
+                    </xs:unique>
+                </xs:element>
+
+                <xs:element name="testovi">
+                    <xs:complexType>
+                        <xs:sequence minOccurs="3" maxOccurs="3">
+                            <xs:element name="test">
+                                <xs:complexType>
+                                    <xs:sequence>
+                                        <xs:element name="vrsta_uzorka" type="xs:string"/>
+                                        <xs:element name="proizvodjac" type="xs:string"/>
+                                        <xs:element name="datum_uzorkovanja" type="xs:dateTime"/>
+                                        <xs:element name="datum_izdavanja_rezultata"
+                                            type="xs:dateTime"/>
+                                        <xs:element name="rezultat" type="xs:string"/>
+                                        <xs:element name="laboratorija" type="xs:string"/>
+                                    </xs:sequence>
+                                </xs:complexType>
+                            </xs:element>
+                        </xs:sequence>
+                    </xs:complexType>
+                </xs:element>
+            </xs:sequence>
+            <xs:attribute name="datum_i_vreme_izdavanja" use="required" type="xs:dateTime"/>
+            <xs:attribute name="broj_sertifikata" use="required" type="xs:string"/>
+        </xs:complexType>
+    </xs:element>
+</xs:schema>
