@@ -1,12 +1,16 @@
 package akatsuki.immunizationsystem.config;
 
-import akatsuki.immunizationsystem.utils.DbConnection;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 @Configuration
-public class DbConfig {
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
+public class DbConnection {
 
     @Value("${db.username}")
     private String username;
@@ -19,9 +23,4 @@ public class DbConfig {
 
     @Value("${db.driver}")
     private String dbDriver;
-
-    @Bean
-    DbConnection dbConnection() {
-        return new DbConnection(username, password, dbUrl, dbDriver);
-    }
 }
