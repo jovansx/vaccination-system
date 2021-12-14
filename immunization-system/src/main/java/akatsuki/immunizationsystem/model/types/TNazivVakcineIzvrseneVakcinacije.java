@@ -24,10 +24,6 @@ public enum TNazivVakcineIzvrseneVakcinacije {
         value = v;
     }
 
-    public String value() {
-        return value;
-    }
-
     public static TNazivVakcineIzvrseneVakcinacije fromValue(String v) {
         for (TNazivVakcineIzvrseneVakcinacije c : TNazivVakcineIzvrseneVakcinacije.values()) {
             if (c.value.equals(v)) {

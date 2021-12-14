@@ -26,10 +26,6 @@ public enum TNazivVakcine {
         value = v;
     }
 
-    public String value() {
-        return value;
-    }
-
     public static TNazivVakcine fromValue(String v) {
         for (TNazivVakcine c : TNazivVakcine.values()) {
             if (c.value.equals(v)) {

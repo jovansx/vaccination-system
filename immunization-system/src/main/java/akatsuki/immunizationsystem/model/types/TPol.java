@@ -18,10 +18,6 @@ public enum TPol {
         value = v;
     }
 
-    public String value() {
-        return value;
-    }
-
     public static TPol fromValue(String v) {
         for (TPol c : TPol.values()) {
             if (c.value.equals(v)) {

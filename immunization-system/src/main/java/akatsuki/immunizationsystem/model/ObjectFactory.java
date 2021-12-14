@@ -19,18 +19,17 @@ import javax.xml.bind.annotation.XmlRegistry;
 
 
 /**
- * This object contains factory methods for each 
- * Java content interface and Java element interface 
- * generated in the io.codejournal.maven.xsd2java package. 
- * <p>An ObjectFactory allows you to programatically 
- * construct new instances of the Java representation 
- * for XML content. The Java representation of XML 
- * content can consist of schema derived interfaces 
- * and classes representing the binding of schema 
- * type definitions, element declarations and model 
- * groups.  Factory methods for each of these are 
+ * This object contains factory methods for each
+ * Java content interface and Java element interface
+ * generated in the io.codejournal.maven.xsd2java package.
+ * <p>An ObjectFactory allows you to programatically
+ * construct new instances of the Java representation
+ * for XML content. The Java representation of XML
+ * content can consist of schema derived interfaces
+ * and classes representing the binding of schema
+ * type definitions, element declarations and model
+ * groups.  Factory methods for each of these are
  * provided in this class.
- * 
  */
 @XmlRegistry
 public class ObjectFactory {
@@ -38,14 +37,12 @@ public class ObjectFactory {
 
     /**
      * Create a new ObjectFactory that can be used to create new instances of schema derived classes for package: io.codejournal.maven.xsd2java
-     * 
      */
     public ObjectFactory() {
     }
 
     /**
      * Create an instance of {@link DigitalniSertifikat }
-     * 
      */
     public DigitalniSertifikat createDigitalniSertifikat() {
         return new DigitalniSertifikat();
@@ -53,7 +50,6 @@ public class ObjectFactory {
 
     /**
      * Create an instance of {@link Interesovanje }
-     * 
      */
     public Interesovanje createInteresovanje() {
         return new Interesovanje();
@@ -61,7 +57,6 @@ public class ObjectFactory {
 
     /**
      * Create an instance of {@link IzvestajOImunizaciji }
-     * 
      */
     public IzvestajOImunizaciji createIzvestajOImunizaciji() {
         return new IzvestajOImunizaciji();
@@ -69,7 +64,6 @@ public class ObjectFactory {
 
     /**
      * Create an instance of {@link PotvrdaOVakcinaciji }
-     * 
      */
     public PotvrdaOVakcinaciji createPotvrdaOVakcinaciji() {
         return new PotvrdaOVakcinaciji();
@@ -77,7 +71,6 @@ public class ObjectFactory {
 
     /**
      * Create an instance of {@link SaglasnostZaImunizaciju }
-     * 
      */
     public SaglasnostZaImunizaciju createSaglasnostZaImunizaciju() {
         return new SaglasnostZaImunizaciju();
@@ -85,7 +78,6 @@ public class ObjectFactory {
 
     /**
      * Create an instance of {@link SaglasnostZaImunizaciju.EvidencijaOVakcinaciji }
-     * 
      */
     public SaglasnostZaImunizaciju.EvidencijaOVakcinaciji createSaglasnostZaImunizacijuEvidencijaOVakcinaciji() {
         return new SaglasnostZaImunizaciju.EvidencijaOVakcinaciji();
@@ -93,7 +85,6 @@ public class ObjectFactory {
 
     /**
      * Create an instance of {@link SaglasnostZaImunizaciju.EvidencijaOVakcinaciji.Vakcine }
-     * 
      */
     public SaglasnostZaImunizaciju.EvidencijaOVakcinaciji.Vakcine createSaglasnostZaImunizacijuEvidencijaOVakcinacijiVakcine() {
         return new SaglasnostZaImunizaciju.EvidencijaOVakcinaciji.Vakcine();
@@ -101,7 +92,6 @@ public class ObjectFactory {
 
     /**
      * Create an instance of {@link SaglasnostZaImunizaciju.Pacijent }
-     * 
      */
     public SaglasnostZaImunizaciju.Pacijent createSaglasnostZaImunizacijuPacijent() {
         return new SaglasnostZaImunizaciju.Pacijent();
@@ -109,7 +99,6 @@ public class ObjectFactory {
 
     /**
      * Create an instance of {@link SaglasnostZaImunizaciju.Pacijent.SocijalnaZastita }
-     * 
      */
     public SaglasnostZaImunizaciju.Pacijent.SocijalnaZastita createSaglasnostZaImunizacijuPacijentSocijalnaZastita() {
         return new SaglasnostZaImunizaciju.Pacijent.SocijalnaZastita();
@@ -117,7 +106,6 @@ public class ObjectFactory {
 
     /**
      * Create an instance of {@link SaglasnostZaImunizaciju.Pacijent.Prebivaliste }
-     * 
      */
     public SaglasnostZaImunizaciju.Pacijent.Prebivaliste createSaglasnostZaImunizacijuPacijentPrebivaliste() {
         return new SaglasnostZaImunizaciju.Pacijent.Prebivaliste();
@@ -125,7 +113,6 @@ public class ObjectFactory {
 
     /**
      * Create an instance of {@link SaglasnostZaImunizaciju.Pacijent.Drzavljanstvo }
-     * 
      */
     public SaglasnostZaImunizaciju.Pacijent.Drzavljanstvo createSaglasnostZaImunizacijuPacijentDrzavljanstvo() {
         return new SaglasnostZaImunizaciju.Pacijent.Drzavljanstvo();
@@ -133,7 +120,6 @@ public class ObjectFactory {
 
     /**
      * Create an instance of {@link PotvrdaOVakcinaciji.PrimljeneVakcine }
-     * 
      */
     public PotvrdaOVakcinaciji.PrimljeneVakcine createPotvrdaOVakcinacijiPrimljeneVakcine() {
         return new PotvrdaOVakcinaciji.PrimljeneVakcine();
@@ -141,7 +127,6 @@ public class ObjectFactory {
 
     /**
      * Create an instance of {@link IzvestajOImunizaciji.DozeVakcina }
-     * 
      */
     public IzvestajOImunizaciji.DozeVakcina createIzvestajOImunizacijiDozeVakcina() {
         return new IzvestajOImunizaciji.DozeVakcina();
@@ -149,7 +134,6 @@ public class ObjectFactory {
 
     /**
      * Create an instance of {@link IzvestajOImunizaciji.DozeVakcina.RaspodelaPoProizvodjacima }
-     * 
      */
     public IzvestajOImunizaciji.DozeVakcina.RaspodelaPoProizvodjacima createIzvestajOImunizacijiDozeVakcinaRaspodelaPoProizvodjacima() {
         return new IzvestajOImunizaciji.DozeVakcina.RaspodelaPoProizvodjacima();
@@ -157,7 +141,6 @@ public class ObjectFactory {
 
     /**
      * Create an instance of {@link IzvestajOImunizaciji.DozeVakcina.RaspodelaPoDozama }
-     * 
      */
     public IzvestajOImunizaciji.DozeVakcina.RaspodelaPoDozama createIzvestajOImunizacijiDozeVakcinaRaspodelaPoDozama() {
         return new IzvestajOImunizaciji.DozeVakcina.RaspodelaPoDozama();
@@ -165,7 +148,6 @@ public class ObjectFactory {
 
     /**
      * Create an instance of {@link IzvestajOImunizaciji.Dokumenti }
-     * 
      */
     public IzvestajOImunizaciji.Dokumenti createIzvestajOImunizacijiDokumenti() {
         return new IzvestajOImunizaciji.Dokumenti();
@@ -173,7 +155,6 @@ public class ObjectFactory {
 
     /**
      * Create an instance of {@link DigitalniSertifikat.Testovi }
-     * 
      */
     public DigitalniSertifikat.Testovi createDigitalniSertifikatTestovi() {
         return new DigitalniSertifikat.Testovi();
@@ -181,7 +162,6 @@ public class ObjectFactory {
 
     /**
      * Create an instance of {@link DigitalniSertifikat.Vakcinacija }
-     * 
      */
     public DigitalniSertifikat.Vakcinacija createDigitalniSertifikatVakcinacija() {
         return new DigitalniSertifikat.Vakcinacija();
@@ -189,7 +169,6 @@ public class ObjectFactory {
 
     /**
      * Create an instance of {@link TPodnosilacZahteva }
-     * 
      */
     public TPodnosilacZahteva createTPodnosilacZahteva() {
         return new TPodnosilacZahteva();
@@ -197,7 +176,6 @@ public class ObjectFactory {
 
     /**
      * Create an instance of {@link TPodnosilacInteresovanja }
-     * 
      */
     public TPodnosilacInteresovanja createTPodnosilacInteresovanja() {
         return new TPodnosilacInteresovanja();
@@ -205,7 +183,6 @@ public class ObjectFactory {
 
     /**
      * Create an instance of {@link TPrimalac }
-     * 
      */
     public TPrimalac createTPrimalac() {
         return new TPrimalac();
@@ -213,7 +190,6 @@ public class ObjectFactory {
 
     /**
      * Create an instance of {@link TTipVakcine }
-     * 
      */
     public TTipVakcine createTTipVakcine() {
         return new TTipVakcine();
@@ -221,7 +197,6 @@ public class ObjectFactory {
 
     /**
      * Create an instance of {@link Interesovanje.Vakcine }
-     * 
      */
     public Interesovanje.Vakcine createInteresovanjeVakcine() {
         return new Interesovanje.Vakcine();
@@ -229,7 +204,6 @@ public class ObjectFactory {
 
     /**
      * Create an instance of {@link IzvestajOImunizaciji.Period }
-     * 
      */
     public IzvestajOImunizaciji.Period createIzvestajOImunizacijiPeriod() {
         return new IzvestajOImunizaciji.Period();
@@ -237,7 +211,6 @@ public class ObjectFactory {
 
     /**
      * Create an instance of {@link ZahtevZaSertifikat }
-     * 
      */
     public ZahtevZaSertifikat createZahtevZaSertifikat() {
         return new ZahtevZaSertifikat();
@@ -245,7 +218,6 @@ public class ObjectFactory {
 
     /**
      * Create an instance of {@link SaglasnostZaImunizaciju.EvidencijaOVakcinaciji.Lekar }
-     * 
      */
     public SaglasnostZaImunizaciju.EvidencijaOVakcinaciji.Lekar createSaglasnostZaImunizacijuEvidencijaOVakcinacijiLekar() {
         return new SaglasnostZaImunizaciju.EvidencijaOVakcinaciji.Lekar();
@@ -253,7 +225,6 @@ public class ObjectFactory {
 
     /**
      * Create an instance of {@link SaglasnostZaImunizaciju.EvidencijaOVakcinaciji.Vakcine.Vakcina }
-     * 
      */
     public SaglasnostZaImunizaciju.EvidencijaOVakcinaciji.Vakcine.Vakcina createSaglasnostZaImunizacijuEvidencijaOVakcinacijiVakcineVakcina() {
         return new SaglasnostZaImunizaciju.EvidencijaOVakcinaciji.Vakcine.Vakcina();
@@ -261,7 +232,6 @@ public class ObjectFactory {
 
     /**
      * Create an instance of {@link SaglasnostZaImunizaciju.EvidencijaOVakcinaciji.Vakcine.Kontraindikacije }
-     * 
      */
     public SaglasnostZaImunizaciju.EvidencijaOVakcinaciji.Vakcine.Kontraindikacije createSaglasnostZaImunizacijuEvidencijaOVakcinacijiVakcineKontraindikacije() {
         return new SaglasnostZaImunizaciju.EvidencijaOVakcinaciji.Vakcine.Kontraindikacije();
@@ -269,7 +239,6 @@ public class ObjectFactory {
 
     /**
      * Create an instance of {@link SaglasnostZaImunizaciju.Pacijent.PunoIme }
-     * 
      */
     public SaglasnostZaImunizaciju.Pacijent.PunoIme createSaglasnostZaImunizacijuPacijentPunoIme() {
         return new SaglasnostZaImunizaciju.Pacijent.PunoIme();
@@ -277,7 +246,6 @@ public class ObjectFactory {
 
     /**
      * Create an instance of {@link SaglasnostZaImunizaciju.Pacijent.Rodjenje }
-     * 
      */
     public SaglasnostZaImunizaciju.Pacijent.Rodjenje createSaglasnostZaImunizacijuPacijentRodjenje() {
         return new SaglasnostZaImunizaciju.Pacijent.Rodjenje();
@@ -285,7 +253,6 @@ public class ObjectFactory {
 
     /**
      * Create an instance of {@link SaglasnostZaImunizaciju.Pacijent.IzjavaSaglasnosti }
-     * 
      */
     public SaglasnostZaImunizaciju.Pacijent.IzjavaSaglasnosti createSaglasnostZaImunizacijuPacijentIzjavaSaglasnosti() {
         return new SaglasnostZaImunizaciju.Pacijent.IzjavaSaglasnosti();
@@ -293,7 +260,6 @@ public class ObjectFactory {
 
     /**
      * Create an instance of {@link SaglasnostZaImunizaciju.Pacijent.SocijalnaZastita.Sediste }
-     * 
      */
     public SaglasnostZaImunizaciju.Pacijent.SocijalnaZastita.Sediste createSaglasnostZaImunizacijuPacijentSocijalnaZastitaSediste() {
         return new SaglasnostZaImunizaciju.Pacijent.SocijalnaZastita.Sediste();
@@ -301,7 +267,6 @@ public class ObjectFactory {
 
     /**
      * Create an instance of {@link SaglasnostZaImunizaciju.Pacijent.Prebivaliste.Adresa }
-     * 
      */
     public SaglasnostZaImunizaciju.Pacijent.Prebivaliste.Adresa createSaglasnostZaImunizacijuPacijentPrebivalisteAdresa() {
         return new SaglasnostZaImunizaciju.Pacijent.Prebivaliste.Adresa();
@@ -309,7 +274,6 @@ public class ObjectFactory {
 
     /**
      * Create an instance of {@link SaglasnostZaImunizaciju.Pacijent.Drzavljanstvo.Srpsko }
-     * 
      */
     public SaglasnostZaImunizaciju.Pacijent.Drzavljanstvo.Srpsko createSaglasnostZaImunizacijuPacijentDrzavljanstvoSrpsko() {
         return new SaglasnostZaImunizaciju.Pacijent.Drzavljanstvo.Srpsko();
@@ -317,7 +281,6 @@ public class ObjectFactory {
 
     /**
      * Create an instance of {@link SaglasnostZaImunizaciju.Pacijent.Drzavljanstvo.Strano }
-     * 
      */
     public SaglasnostZaImunizaciju.Pacijent.Drzavljanstvo.Strano createSaglasnostZaImunizacijuPacijentDrzavljanstvoStrano() {
         return new SaglasnostZaImunizaciju.Pacijent.Drzavljanstvo.Strano();
@@ -325,7 +288,6 @@ public class ObjectFactory {
 
     /**
      * Create an instance of {@link PotvrdaOVakcinaciji.PrimljeneVakcine.Doza }
-     * 
      */
     public PotvrdaOVakcinaciji.PrimljeneVakcine.Doza createPotvrdaOVakcinacijiPrimljeneVakcineDoza() {
         return new PotvrdaOVakcinaciji.PrimljeneVakcine.Doza();
@@ -333,7 +295,6 @@ public class ObjectFactory {
 
     /**
      * Create an instance of {@link IzvestajOImunizaciji.DozeVakcina.RaspodelaPoProizvodjacima.Proizvodjac }
-     * 
      */
     public IzvestajOImunizaciji.DozeVakcina.RaspodelaPoProizvodjacima.Proizvodjac createIzvestajOImunizacijiDozeVakcinaRaspodelaPoProizvodjacimaProizvodjac() {
         return new IzvestajOImunizaciji.DozeVakcina.RaspodelaPoProizvodjacima.Proizvodjac();
@@ -341,7 +302,6 @@ public class ObjectFactory {
 
     /**
      * Create an instance of {@link IzvestajOImunizaciji.DozeVakcina.RaspodelaPoDozama.Doza }
-     * 
      */
     public IzvestajOImunizaciji.DozeVakcina.RaspodelaPoDozama.Doza createIzvestajOImunizacijiDozeVakcinaRaspodelaPoDozamaDoza() {
         return new IzvestajOImunizaciji.DozeVakcina.RaspodelaPoDozama.Doza();
@@ -349,7 +309,6 @@ public class ObjectFactory {
 
     /**
      * Create an instance of {@link IzvestajOImunizaciji.Dokumenti.ZeleniSertifikat }
-     * 
      */
     public IzvestajOImunizaciji.Dokumenti.ZeleniSertifikat createIzvestajOImunizacijiDokumentiZeleniSertifikat() {
         return new IzvestajOImunizaciji.Dokumenti.ZeleniSertifikat();
@@ -357,7 +316,6 @@ public class ObjectFactory {
 
     /**
      * Create an instance of {@link DigitalniSertifikat.Testovi.Test }
-     * 
      */
     public DigitalniSertifikat.Testovi.Test createDigitalniSertifikatTestoviTest() {
         return new DigitalniSertifikat.Testovi.Test();
@@ -365,7 +323,6 @@ public class ObjectFactory {
 
     /**
      * Create an instance of {@link DigitalniSertifikat.Vakcinacija.Doza }
-     * 
      */
     public DigitalniSertifikat.Vakcinacija.Doza createDigitalniSertifikatVakcinacijaDoza() {
         return new DigitalniSertifikat.Vakcinacija.Doza();

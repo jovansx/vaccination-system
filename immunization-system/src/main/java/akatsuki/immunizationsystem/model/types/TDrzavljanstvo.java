@@ -20,12 +20,8 @@ public enum TDrzavljanstvo {
         value = v;
     }
 
-    public String value() {
-        return value;
-    }
-
     public static TDrzavljanstvo fromValue(String v) {
-        for (TDrzavljanstvo c: TDrzavljanstvo.values()) {
+        for (TDrzavljanstvo c : TDrzavljanstvo.values()) {
             if (c.value.equals(v)) {
                 return c;
             }

@@ -102,7 +102,7 @@ public class DigitalniSertifikat {
             @XmlElement(name = "zdravstvena_ustanova", namespace = "http://www.akatsuki.org/digitalni_sertifikat", required = true)
             protected String zdravstvenaUstanova;
             @XmlAttribute(name = "broj")
-            protected Integer broj; //TODO: vidi dal je trebao iznad da bude definisan u redosledu
+            protected Integer broj;
         }
     }
 }
