@@ -18,6 +18,8 @@ public class InteresovanjeDao implements IDao<Interesovanje> {
     @Autowired
     private IModelMapper<Interesovanje> mapper;
 
+//    TODO Da li vracati ovaj optional ili string pa ga
+//     konvertovati u servisu da ne bi 2 puta konvertovali bezveze
     @Override
     public Optional<Interesovanje> get(String id) {
         XMLResource resource = daoUtils.getResource(collectionId, id);
