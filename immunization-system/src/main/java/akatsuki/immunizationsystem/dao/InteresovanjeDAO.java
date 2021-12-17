@@ -2,24 +2,20 @@ package akatsuki.immunizationsystem.dao;
 
 import akatsuki.immunizationsystem.model.documents.Interesovanje;
 import akatsuki.immunizationsystem.utils.modelmappers.IModelMapper;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
-import org.xmldb.api.modules.XMLResource;
 
 import java.util.Collection;
 import java.util.Optional;
 
 @Component
+@RequiredArgsConstructor
 public class InteresovanjeDAO implements IDao<Interesovanje> {
 
     private final String collectionId = "/db/vaccination-system/interesovanja";
-    @Autowired
-    private DaoUtils daoUtils;
-    @Autowired
-    private IModelMapper<Interesovanje> mapper;
+    private final DaoUtils daoUtils;
+    private final IModelMapper<Interesovanje> mapper;
 
-//    TODO Da li vracati ovaj optional ili string pa ga
-//     konvertovati u servisu da ne bi 2 puta konvertovali bezveze
     @Override
     public Optional<Interesovanje> get(String id) {
         String resourceContent = daoUtils.getResource(collectionId, id);

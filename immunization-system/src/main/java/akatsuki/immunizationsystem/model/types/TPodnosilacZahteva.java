@@ -21,13 +21,12 @@ import javax.xml.datatype.XMLGregorianCalendar;
 public class TPodnosilacZahteva
         extends TKorisnik {
 
-    //TODO: podesi onaj tipovi nameposace
-    @XmlElement(required = true)
+    @XmlElement(namespace = "http://www.akatsuki.org/tipovi", required = true)
     @XmlSchemaType(name = "string")
     protected TPol pol;
-    @XmlElement(name = "broj_pasosa", required = true)
+    @XmlElement(namespace = "http://www.akatsuki.org/tipovi", name = "broj_pasosa", required = true)
     protected String brojPasosa;
-    @XmlElement(name = "datum_rodjenja", required = true)
+    @XmlElement(namespace = "http://www.akatsuki.org/tipovi",name = "datum_rodjenja", required = true)
     @XmlSchemaType(name = "date")
     protected XMLGregorianCalendar datumRodjenja;
 }
