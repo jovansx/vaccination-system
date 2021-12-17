@@ -21,6 +21,7 @@ import javax.xml.datatype.XMLGregorianCalendar;
 public class TPodnosilacZahteva
         extends TKorisnik {
 
+    //TODO: podesi onaj tipovi nameposace
     @XmlElement(required = true)
     @XmlSchemaType(name = "string")
     protected TPol pol;

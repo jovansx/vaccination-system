@@ -22,10 +22,10 @@ import javax.xml.bind.annotation.*;
 @AllArgsConstructor
 public abstract class TKorisnik {
 
-    @XmlElement(required = true)
+    @XmlElement(namespace = "http://www.akatsuki.org/tipovi", required = true)
     protected String ime;
-    @XmlElement(required = true)
+    @XmlElement(namespace = "http://www.akatsuki.org/tipovi", required = true)
     protected String prezime;
-    @XmlElement(required = true)
+    @XmlElement(namespace = "http://www.akatsuki.org/tipovi", required = true)
     protected String jmbg;
 }

@@ -24,12 +24,12 @@ import javax.xml.bind.annotation.XmlType;
 public class TPodnosilacInteresovanja
         extends TKorisnik {
 
-    @XmlElement(required = true)
+    @XmlElement(namespace = "http://www.akatsuki.org/tipovi", required = true)
     protected String email;
-    @XmlElement(name = "fiksni_telefon", required = true)
+    @XmlElement(namespace = "http://www.akatsuki.org/tipovi", name = "fiksni_telefon", required = true)
     protected String fiksniTelefon;
-    @XmlElement(name = "mobilni_telefon", required = true)
+    @XmlElement(namespace = "http://www.akatsuki.org/tipovi", name = "mobilni_telefon", required = true)
     protected String mobilniTelefon;
-    @XmlElement(required = true)
+    @XmlElement(namespace = "http://www.akatsuki.org/tipovi", required = true)
     protected String lokacija;
 }

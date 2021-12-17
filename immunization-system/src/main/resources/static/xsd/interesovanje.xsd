@@ -1,42 +1,37 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<xsd:schema 
-    xmlns:xsd="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified"
+<xs:schema 
+    xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified"
     targetNamespace="http://www.akatsuki.org/interesovanje"
     xmlns="http://www.akatsuki.org/interesovanje"
     xmlns:o="http://www.akatsuki.org/interesovanje"
     xmlns:t="http://www.akatsuki.org/tipovi">
-    <xsd:import namespace="http://www.akatsuki.org/tipovi" schemaLocation="tipovi.xsd"/>
-    <xsd:element name="interesovanje">
-        <xsd:complexType>
-            <xsd:sequence>
-                <xsd:element name="drzavljanstvo" type="TDrzavljanstvo"/>
-                <xsd:element name="podnosilac" type="t:TPodnosilacInteresovanja"/>
-                <xsd:element name="vakcine"> 
-                    <xsd:complexType>
-                        <xsd:sequence>
-                            <xsd:element name="vakcina" type="t:TTipVakcine" minOccurs="1" maxOccurs="6">
-                            </xsd:element>
-                        </xsd:sequence>
-                    </xsd:complexType>
-                    <xsd:unique  name="vakcinaNazivUnique">
-                        <xsd:selector xpath="o:vakcina"></xsd:selector>
-                        <xsd:field xpath="@nazivVakcine"></xsd:field>
-                    </xsd:unique >
-                </xsd:element>
-                <xsd:element name="dobrovoljni_davalac_krvi" type="xsd:boolean"/>
-            </xsd:sequence>
-        </xsd:complexType>
-    </xsd:element>
-    
-    
-    
-    
-    
-    <xsd:simpleType name="TDrzavljanstvo">
-        <xsd:restriction base="xsd:string">
-            <xsd:enumeration value="srpsko"/>
-            <xsd:enumeration value="strano sa boravkom"/>
-            <xsd:enumeration value="strano bez boravka"/>
-        </xsd:restriction>
-    </xsd:simpleType>
-</xsd:schema>
+    <xs:import namespace="http://www.akatsuki.org/tipovi" schemaLocation="tipovi.xsd"/>
+    <xs:element name="interesovanje">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="drzavljanstvo" type="TDrzavljanstvo"/>
+                <xs:element name="podnosilac" type="t:TPodnosilacInteresovanja"/>
+                <xs:element name="vakcine"> 
+                    <xs:complexType>
+                        <xs:sequence>
+                            <xs:element name="vakcina" type="t:TTipVakcine" minOccurs="1" maxOccurs="6">
+                            </xs:element>
+                        </xs:sequence>
+                    </xs:complexType>
+                    <xs:unique  name="vakcinaNazivUnique">
+                        <xs:selector xpath="o:vakcina"></xs:selector>
+                        <xs:field xpath="@nazivVakcine"></xs:field>
+                    </xs:unique >
+                </xs:element>
+                <xs:element name="dobrovoljni_davalac_krvi" type="xs:boolean"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+    <xs:simpleType name="TDrzavljanstvo">
+        <xs:restriction base="xs:string">
+            <xs:enumeration value="srpsko"/>
+            <xs:enumeration value="strano sa boravkom"/>
+            <xs:enumeration value="strano bez boravka"/>
+        </xs:restriction>
+    </xs:simpleType>
+</xs:schema>
