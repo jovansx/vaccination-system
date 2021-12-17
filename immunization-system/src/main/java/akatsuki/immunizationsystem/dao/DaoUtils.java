@@ -33,7 +33,7 @@ public class DaoUtils {
     }
 
     public String getResource(String collectionId, String documentId) {
-        XMLResource res = null;
+        XMLResource res;
         Collection col = null;
         String responseContent = "";
         try {
