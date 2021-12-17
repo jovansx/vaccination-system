@@ -46,7 +46,7 @@ public class DaoUtils {
         } catch (Exception ex) {
             ex.printStackTrace();
         } finally {
-            if(col != null) {
+            if (col != null) {
                 try {
                     col.close();
                 } catch (XMLDBException ex) {

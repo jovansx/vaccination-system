@@ -1,7 +1,6 @@
 package akatsuki.immunizationsystem.dao;
 
 import akatsuki.immunizationsystem.model.documents.DigitalniSertifikat;
-import akatsuki.immunizationsystem.model.documents.Interesovanje;
 import akatsuki.immunizationsystem.utils.modelmappers.IModelMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
