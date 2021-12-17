@@ -2,6 +2,7 @@ package akatsuki.immunizationsystem.utils.modelmappers;
 
 import akatsuki.immunizationsystem.model.documents.Interesovanje;
 import org.springframework.stereotype.Component;
+import org.springframework.util.ResourceUtils;
 
 import javax.xml.XMLConstants;
 import javax.xml.bind.JAXBContext;
@@ -22,10 +23,12 @@ public class InteresovanjeModelMapper implements IModelMapper<Interesovanje> {
             Unmarshaller unmarshaller = jaxbContext.createUnmarshaller();
 
             SchemaFactory schemaFactory = SchemaFactory.newInstance(XMLConstants.W3C_XML_SCHEMA_NS_URI);
-            Schema schema = schemaFactory.newSchema(new File("static/xsd/interesovanje.xsd"));
+            File file = ResourceUtils.getFile("classpath:static/xsd/interesovanje.xsd");
+            Schema schema = schemaFactory.newSchema(file);
             unmarshaller.setSchema(schema);
             return (Interesovanje) unmarshaller.unmarshal(new StringReader(xmlString));
-        } catch (Exception ignored) {
+        } catch (Exception e) {
+            e.printStackTrace();
         }
         return null;
     }
