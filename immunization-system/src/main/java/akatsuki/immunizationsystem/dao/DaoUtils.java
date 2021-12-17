@@ -46,15 +46,6 @@ public class DaoUtils {
         } catch (Exception ex) {
             ex.printStackTrace();
         } finally {
-            if(res != null) {
-                try {
-//                    TODO: popraviti
-//                    ((EXistResource)res).freeResources();
-                    System.out.println("bla");
-                } catch (Exception ex) { // TODO: vidi ovde je bio drugi ex
-                    ex.printStackTrace();
-                }
-            }
             if(col != null) {
                 try {
                     col.close();
