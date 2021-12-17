@@ -2,30 +2,26 @@ package akatsuki.immunizationsystem.dao;
 
 import akatsuki.immunizationsystem.model.documents.Interesovanje;
 import akatsuki.immunizationsystem.utils.modelmappers.IModelMapper;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
-import org.xmldb.api.modules.XMLResource;
 
 import java.util.Collection;
 import java.util.Optional;
 
 @Component
-public class InteresovanjeDao implements IDao<Interesovanje> {
+@RequiredArgsConstructor
+public class InteresovanjeDAO implements IDao<Interesovanje> {
 
-    private final String collectionId = "interesovanja";
-    @Autowired
-    private DaoUtils daoUtils;
-    @Autowired
-    private IModelMapper<Interesovanje> mapper;
+    private final String collectionId = "/db/vaccination-system/interesovanja";
+    private final DaoUtils daoUtils;
+    private final IModelMapper<Interesovanje> mapper;
 
-//    TODO Da li vracati ovaj optional ili string pa ga
-//     konvertovati u servisu da ne bi 2 puta konvertovali bezveze
     @Override
     public Optional<Interesovanje> get(String id) {
-        XMLResource resource = daoUtils.getResource(collectionId, id);
-        if (resource == null)
+        String resourceContent = daoUtils.getResource(collectionId, id);
+        if (resourceContent.equals(""))
             return Optional.empty();
-        Interesovanje interesovanje = mapper.convertToObject(resource.toString());
+        Interesovanje interesovanje = mapper.convertToObject(resourceContent);
         if (interesovanje == null)
             return Optional.empty();
         return Optional.of(interesovanje);
@@ -38,7 +34,8 @@ public class InteresovanjeDao implements IDao<Interesovanje> {
 
     @Override
     public String save(Interesovanje interesovanje) {
-        daoUtils.createResource(collectionId, interesovanje, Interesovanje.class);
+        String documentId = interesovanje.getPodnosilac().getJmbg() + ".xml";
+        daoUtils.createResource(collectionId, interesovanje, documentId, Interesovanje.class);
         return interesovanje.getPodnosilac().getJmbg();
     }
 

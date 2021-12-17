@@ -5,6 +5,8 @@ import org.springframework.stereotype.Component;
 import org.xmldb.api.DatabaseManager;
 import org.xmldb.api.base.Collection;
 import org.xmldb.api.base.Database;
+import org.xmldb.api.base.XMLDBException;
+import org.xmldb.api.modules.CollectionManagementService;
 import org.xmldb.api.modules.XMLResource;
 
 import javax.xml.bind.JAXBContext;
@@ -25,26 +27,41 @@ public class DaoUtils {
             Database database = (Database) cl.newInstance();
             database.setProperty("create-database", "true");
             DatabaseManager.registerDatabase(database);
-        } catch (Exception ignored) {
+        } catch (Exception ex) {
+            ex.printStackTrace();
         }
     }
 
-    public XMLResource getResource(String collectionId, String documentId) {
-        XMLResource res = null;
+    public String getResource(String collectionId, String documentId) {
+        XMLResource res;
+        Collection col = null;
+        String responseContent = "";
         try {
-            Collection col = DatabaseManager.getCollection(dbConnection.getDbUrl() + collectionId, dbConnection.getUsername(), dbConnection.getPassword());
+            col = DatabaseManager.getCollection(dbConnection.getDbUrl() + collectionId, dbConnection.getUsername(), dbConnection.getPassword());
             col.setProperty(OutputKeys.INDENT, "yes");
-            res = (XMLResource) col.getResource(documentId);
-        } catch (Exception ignored) {
+            res = (XMLResource) col.getResource(documentId + ".xml");
+            Object objectContent = res.getContent();
+            if (objectContent != null)
+                responseContent = (String) objectContent;
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        } finally {
+            if(col != null) {
+                try {
+                    col.close();
+                } catch (XMLDBException ex) {
+                    ex.printStackTrace();
+                }
+            }
         }
-        return res;
+        return responseContent;
     }
 
-    public void createResource(String collectionId, Object object, Class<?> classOfObject) {
+    public void createResource(String collectionId, Object object, String documentId, Class<?> classOfObject) {
         try {
-            Collection col = DatabaseManager.getCollection(dbConnection.getDbUrl() + collectionId, dbConnection.getUsername(), dbConnection.getPassword());
+            Collection col = getOrCreateCollection(collectionId, 0);
             col.setProperty(OutputKeys.INDENT, "yes");
-            XMLResource res = null;
+            XMLResource res = (XMLResource) col.createResource(documentId, XMLResource.RESOURCE_TYPE);
             OutputStream os = new ByteArrayOutputStream();
             JAXBContext context = JAXBContext.newInstance(classOfObject);
             Marshaller marshaller = context.createMarshaller();
@@ -52,7 +69,40 @@ public class DaoUtils {
             marshaller.marshal(object, os);
             res.setContent(os);
             col.storeResource(res);
-        } catch (Exception ignored) {
+        } catch (Exception e) {
+            e.printStackTrace();
         }
+    }
+
+    private Collection getOrCreateCollection(String collectionUri, int pathSegmentOffset) throws XMLDBException {
+        Collection col = DatabaseManager.getCollection(dbConnection.getDbUrl() + collectionUri, dbConnection.getUsername(), dbConnection.getPassword());
+
+        if (col == null) {
+
+            if (collectionUri.startsWith("/"))
+                collectionUri = collectionUri.substring(1);
+
+            String[] pathSegments = collectionUri.split("/");
+
+            if (pathSegments.length > 0) {
+                StringBuilder path = new StringBuilder();
+
+                for (int i = 0; i <= pathSegmentOffset; i++)
+                    path.append("/").append(pathSegments[i]);
+
+                Collection startCol = DatabaseManager.getCollection(dbConnection.getDbUrl() + path, dbConnection.getUsername(), dbConnection.getPassword());
+
+                if (startCol == null) {
+                    String parentPath = path.substring(0, path.lastIndexOf("/"));
+                    Collection parentCol = DatabaseManager.getCollection(dbConnection.getDbUrl() + parentPath, dbConnection.getUsername(), dbConnection.getPassword());
+                    CollectionManagementService mgt = (CollectionManagementService) parentCol.getService("CollectionManagementService", "1.0");
+                    col = mgt.createCollection(pathSegments[pathSegmentOffset]);
+                    col.close();
+                    parentCol.close();
+                } else startCol.close();
+            }
+            return getOrCreateCollection(collectionUri, ++pathSegmentOffset);
+        } else
+            return col;
     }
 }

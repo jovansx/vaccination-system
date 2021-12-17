@@ -27,11 +27,6 @@
             </xs:sequence>
         </xs:complexType>
     </xs:element>
-    
-    
-    
-    
-    
     <xs:simpleType name="TDrzavljanstvo">
         <xs:restriction base="xs:string">
             <xs:enumeration value="srpsko"/>

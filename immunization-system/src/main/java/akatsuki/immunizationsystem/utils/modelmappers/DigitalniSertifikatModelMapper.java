@@ -1,5 +1,6 @@
 package akatsuki.immunizationsystem.utils.modelmappers;
 
+import akatsuki.immunizationsystem.model.documents.DigitalniSertifikat;
 import akatsuki.immunizationsystem.model.documents.Interesovanje;
 import org.springframework.stereotype.Component;
 import org.springframework.util.ResourceUtils;
@@ -15,18 +16,18 @@ import java.io.StringReader;
 import java.io.StringWriter;
 
 @Component
-public class InteresovanjeModelMapper implements IModelMapper<Interesovanje> {
+public class DigitalniSertifikatModelMapper implements IModelMapper<DigitalniSertifikat> {
     @Override
-    public Interesovanje convertToObject(String xmlString) {
+    public DigitalniSertifikat convertToObject(String xmlString) {
         try {
-            JAXBContext jaxbContext = JAXBContext.newInstance(Interesovanje.class);
+            JAXBContext jaxbContext = JAXBContext.newInstance(DigitalniSertifikat.class);
             Unmarshaller unmarshaller = jaxbContext.createUnmarshaller();
 
             SchemaFactory schemaFactory = SchemaFactory.newInstance(XMLConstants.W3C_XML_SCHEMA_NS_URI);
-            File file = ResourceUtils.getFile("classpath:static/xsd/interesovanje.xsd");
+            File file = ResourceUtils.getFile("classpath:static/xsd/digitalni_sertifikat.xsd");
             Schema schema = schemaFactory.newSchema(file);
             unmarshaller.setSchema(schema);
-            return (Interesovanje) unmarshaller.unmarshal(new StringReader(xmlString));
+            return (DigitalniSertifikat) unmarshaller.unmarshal(new StringReader(xmlString));
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -34,10 +35,10 @@ public class InteresovanjeModelMapper implements IModelMapper<Interesovanje> {
     }
 
     @Override
-    public String convertToXml(Interesovanje object) {
+    public String convertToXml(DigitalniSertifikat object) {
         StringWriter sw = new StringWriter();
         try {
-            JAXBContext jaxbContext = JAXBContext.newInstance(Interesovanje.class);
+            JAXBContext jaxbContext = JAXBContext.newInstance(DigitalniSertifikat.class);
             Marshaller marshaller = jaxbContext.createMarshaller();
             marshaller.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, Boolean.TRUE);
             marshaller.marshal(object, sw);
