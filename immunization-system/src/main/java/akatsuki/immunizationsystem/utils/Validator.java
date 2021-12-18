@@ -20,6 +20,20 @@ public class Validator {
         return jmbg.matches(jmbgRegex);
     }
 
+    public boolean isJmbgDozaValid(String jmbgDoza) {
+        String[] parts = jmbgDoza.split("_");
+        if (parts.length != 2)
+            return false;
+        if (!isJmbgValid(parts[0]))
+            return false;
+        try {
+            int broj_doze = Integer.parseInt(parts[1]);
+            return broj_doze > 0;
+        } catch (NumberFormatException ex) {
+            return false;
+        }
+    }
+
     public boolean isDatePeriodOk(String periodOdDo) {
         String[] parts = periodOdDo.split("_");
         if (parts.length != 2)
