@@ -30,8 +30,8 @@ public class InteresovanjeService {
         if (interesovanje == null)
             throw new BadRequestRuntimeException("Dokument koji ste poslali nije validan.");
 
-        if (interesovanjeDAO.get(interesovanje.getPodnosilac().getJmbg()).isPresent())
-            throw new ConflictRuntimeException("Osoba s jmbg-om " + interesovanje.getPodnosilac().getJmbg() + " je vec podnela interesovanje za vakcinacijom.");
+        if (interesovanjeDAO.get(interesovanje.getPodnosilac().getJmbg().getValue()).isPresent())
+            throw new ConflictRuntimeException("Osoba s jmbg-om " + interesovanje.getPodnosilac().getJmbg().getValue() + " je vec podnela interesovanje za vakcinacijom.");
 
         return interesovanjeDAO.save(interesovanje);
     }
