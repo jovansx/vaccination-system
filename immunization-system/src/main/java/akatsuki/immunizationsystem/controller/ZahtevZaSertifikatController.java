@@ -20,4 +20,9 @@ public class ZahtevZaSertifikatController {
         return zahtevZaSertifikatService.getZahtevZaSertifikat(jmbg, id);
     }
 
+    @PostMapping
+    @ResponseStatus(HttpStatus.CREATED)
+    public String createZahtevZaSertifikat(@RequestBody String zahtevXml) {
+        return zahtevZaSertifikatService.createZahtevZaSertifikat(zahtevXml);
+    }
 }

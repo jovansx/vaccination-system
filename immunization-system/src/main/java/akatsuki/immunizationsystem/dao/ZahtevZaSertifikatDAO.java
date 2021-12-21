@@ -8,6 +8,7 @@ import org.springframework.stereotype.Component;
 
 import java.util.Collection;
 import java.util.Optional;
+import java.util.UUID;
 
 @Component
 @RequiredArgsConstructor
@@ -28,13 +29,20 @@ public class ZahtevZaSertifikatDAO implements IZahtevZaSertifikatDAO {
     }
 
     @Override
+    public Optional<ZahtevZaSertifikat> getByJmbg(String id) {
+        return Optional.empty();
+    }
+
+    @Override
     public Collection<ZahtevZaSertifikat> getAll() {
         return null;
     }
 
     @Override
     public String save(ZahtevZaSertifikat zahtevZaSertifikat) {
-        return null;
+        String documentId = zahtevZaSertifikat.getPodnosilac().getJmbg() + "_" + UUID.randomUUID() + ".xml";
+        daoUtils.createResource(collectionId, zahtevZaSertifikat, documentId, ZahtevZaSertifikat.class);
+        return documentId;
     }
 
     @Override
@@ -46,4 +54,5 @@ public class ZahtevZaSertifikatDAO implements IZahtevZaSertifikatDAO {
     public void delete(ZahtevZaSertifikat zahtevZaSertifikat) {
 
     }
+
 }
