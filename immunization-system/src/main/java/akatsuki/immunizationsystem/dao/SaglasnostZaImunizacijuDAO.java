@@ -8,10 +8,11 @@ import org.springframework.stereotype.Component;
 
 import java.util.Collection;
 import java.util.Optional;
+import java.util.UUID;
 
 @Component
 @RequiredArgsConstructor
-public class SaglasnostZaImunizacijuDAO implements IDao<SaglasnostZaImunizaciju> {
+public class SaglasnostZaImunizacijuDAO implements ISaglasnostZaImunizacijuDAO {
 
     private final String collectionId = "/db/vaccination-system/saglasnosti";
     private final DaoUtils daoUtils;
@@ -28,6 +29,14 @@ public class SaglasnostZaImunizacijuDAO implements IDao<SaglasnostZaImunizaciju>
         return Optional.of(saglasnostZaImunizaciju);
     }
 
+    public Optional<SaglasnostZaImunizaciju> getByJmbg(String jmbg) {
+        return Optional.empty();
+    }
+
+    public Optional<SaglasnostZaImunizaciju> getByBrojPasosa(String brojPasosa) {
+        return Optional.empty();
+    }
+
     @Override
     public Collection<SaglasnostZaImunizaciju> getAll() {
         return null;
@@ -35,7 +44,9 @@ public class SaglasnostZaImunizacijuDAO implements IDao<SaglasnostZaImunizaciju>
 
     @Override
     public String save(SaglasnostZaImunizaciju saglasnostZaImunizaciju) {
-        return null;
+        String documentId = UUID.randomUUID() + ".xml";
+        daoUtils.createResource(collectionId, saglasnostZaImunizaciju, documentId, SaglasnostZaImunizaciju.class);
+        return documentId;
     }
 
     @Override
