@@ -15,7 +15,7 @@ public class SaglasnostZaImunizacijuController {
 
     @GetMapping("/{id}")
     public String getSaglasnostZaImunizaciju(@PathVariable UUID id) {
-        return saglasnostZaImunizacijuService.getInteresovanje(id);
+        return saglasnostZaImunizacijuService.getSaglasnostZaImunizaciju(id);
     }
 
     @PostMapping
