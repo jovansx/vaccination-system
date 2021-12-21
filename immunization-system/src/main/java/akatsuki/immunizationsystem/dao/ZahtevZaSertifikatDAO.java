@@ -6,9 +6,7 @@ import akatsuki.immunizationsystem.utils.modelmappers.IModelMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
-import java.util.Collection;
-import java.util.Optional;
-import java.util.UUID;
+import java.util.*;
 
 @Component
 @RequiredArgsConstructor
@@ -30,12 +28,25 @@ public class ZahtevZaSertifikatDAO implements IZahtevZaSertifikatDAO {
 
     @Override
     public Optional<ZahtevZaSertifikat> getByJmbg(String id) {
+        List<String> resourceContent = daoUtils.getResourcesByCollectionId(collectionId);
+        for(String resource: resourceContent) {
+            ZahtevZaSertifikat zahtevZaSertifikat = mapper.convertToObject(resource);
+            if(zahtevZaSertifikat.getPodnosilac().getJmbg().equals(id)) {
+                return Optional.of(zahtevZaSertifikat);
+            }
+        }
         return Optional.empty();
     }
 
     @Override
     public Collection<ZahtevZaSertifikat> getAll() {
-        return null;
+        List<String> resourceContent = daoUtils.getResourcesByCollectionId(collectionId);
+        List<ZahtevZaSertifikat> zahtevi = new ArrayList<>();
+        for(String resource: resourceContent) {
+            ZahtevZaSertifikat zahtevZaSertifikat = mapper.convertToObject(resource);
+            zahtevi.add(zahtevZaSertifikat);
+        }
+        return zahtevi;
     }
 
     @Override
