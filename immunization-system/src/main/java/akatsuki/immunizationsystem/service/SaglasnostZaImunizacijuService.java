@@ -31,15 +31,24 @@ public class SaglasnostZaImunizacijuService {
         if (saglasnostZaImunizaciju == null)
             throw new BadRequestRuntimeException("Dokument koji ste poslali nije validan.");
 
-        if(saglasnostZaImunizaciju.getPacijent().getDrzavljanstvo().getSrpsko() == null) {
-            if(saglasnostZaImunizacijuIDao.getByBrojPasosa(saglasnostZaImunizaciju.getPacijent().getDrzavljanstvo().getStrano().getBrojPasosa()).isPresent()) {
-                throw new ConflictRuntimeException("Osoba sa brojem pasosa " + saglasnostZaImunizaciju.getPacijent().getDrzavljanstvo().getStrano().getBrojPasosa() + " je vec podnela saglasnost za imunizaciju.");
-            }
-        } else {
-            if(saglasnostZaImunizacijuIDao.getByJmbg(saglasnostZaImunizaciju.getPacijent().getDrzavljanstvo().getSrpsko().getJmbg()).isPresent()) {
-                throw new ConflictRuntimeException("Osoba s jmbg-om " + saglasnostZaImunizaciju.getPacijent().getDrzavljanstvo().getSrpsko().getJmbg() + " je vec podnela saglasnost za imunizaciju.");
-            }
-        }
+        // kada dobije termin za vakcinu moze podneti saglasnost
+        // ne treba ova provera dole posto moze da podnosi vise saglasnosti
+        // moze podneti AKO ima termin za prijem vakcine
+        // moracemo nekako vezati dokument saglasnosti za terminom za vakcinu
+        // interesovanje za prijem - termin za prijem vakcine - dokument saglasnosti (object or null)
+        // ako postoji tvoj neki termin za prijem vakcine u buducnosti proveri da li je dokument u njemu null
+        // onda nije jos podneo i moze, ako nije null onda je podneo i ne moze
+        // ako ima dzs onda isto ne moze
+
+//        if(saglasnostZaImunizaciju.getPacijent().getDrzavljanstvo().getSrpsko() == null) {
+//            if(saglasnostZaImunizacijuIDao.getByBrojPasosa(saglasnostZaImunizaciju.getPacijent().getDrzavljanstvo().getStrano().getBrojPasosa()).isPresent()) {
+//                throw new ConflictRuntimeException("Osoba sa brojem pasosa " + saglasnostZaImunizaciju.getPacijent().getDrzavljanstvo().getStrano().getBrojPasosa() + " je vec podnela saglasnost za imunizaciju.");
+//            }
+//        } else {
+//            if(saglasnostZaImunizacijuIDao.getByJmbg(saglasnostZaImunizaciju.getPacijent().getDrzavljanstvo().getSrpsko().getJmbg()).isPresent()) {
+//                throw new ConflictRuntimeException("Osoba s jmbg-om " + saglasnostZaImunizaciju.getPacijent().getDrzavljanstvo().getSrpsko().getJmbg() + " je vec podnela saglasnost za imunizaciju.");
+//            }
+//        }
 
         return saglasnostZaImunizacijuIDao.save(saglasnostZaImunizaciju);
     }

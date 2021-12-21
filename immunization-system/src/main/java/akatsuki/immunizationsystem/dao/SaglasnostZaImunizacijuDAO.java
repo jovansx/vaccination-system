@@ -2,13 +2,12 @@ package akatsuki.immunizationsystem.dao;
 
 import akatsuki.immunizationsystem.model.documents.Interesovanje;
 import akatsuki.immunizationsystem.model.documents.SaglasnostZaImunizaciju;
+import akatsuki.immunizationsystem.model.documents.ZahtevZaSertifikat;
 import akatsuki.immunizationsystem.utils.modelmappers.IModelMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
-import java.util.Collection;
-import java.util.Optional;
-import java.util.UUID;
+import java.util.*;
 
 @Component
 @RequiredArgsConstructor
@@ -30,16 +29,36 @@ public class SaglasnostZaImunizacijuDAO implements ISaglasnostZaImunizacijuDAO {
     }
 
     public Optional<SaglasnostZaImunizaciju> getByJmbg(String jmbg) {
+        List<String> resourceContent = daoUtils.getResourcesByCollectionId(collectionId);
+        for(String resource: resourceContent) {
+            SaglasnostZaImunizaciju saglasnostZaImunizaciju = mapper.convertToObject(resource);
+            if(saglasnostZaImunizaciju.getPacijent().getDrzavljanstvo().getSrpsko().getJmbg().equals(jmbg)) {
+                return Optional.of(saglasnostZaImunizaciju);
+            }
+        }
         return Optional.empty();
     }
 
     public Optional<SaglasnostZaImunizaciju> getByBrojPasosa(String brojPasosa) {
+        List<String> resourceContent = daoUtils.getResourcesByCollectionId(collectionId);
+        for(String resource: resourceContent) {
+            SaglasnostZaImunizaciju saglasnostZaImunizaciju = mapper.convertToObject(resource);
+            if(saglasnostZaImunizaciju.getPacijent().getDrzavljanstvo().getStrano().getBrojPasosa().equals(brojPasosa)) {
+                return Optional.of(saglasnostZaImunizaciju);
+            }
+        }
         return Optional.empty();
     }
 
     @Override
     public Collection<SaglasnostZaImunizaciju> getAll() {
-        return null;
+        List<String> resourceContent = daoUtils.getResourcesByCollectionId(collectionId);
+        List<SaglasnostZaImunizaciju> saglasnosti = new ArrayList<>();
+        for(String resource: resourceContent) {
+            SaglasnostZaImunizaciju saglasnostZaImunizaciju = mapper.convertToObject(resource);
+            saglasnosti.add(saglasnostZaImunizaciju);
+        }
+        return saglasnosti;
     }
 
     @Override

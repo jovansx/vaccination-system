@@ -27,11 +27,11 @@ public class ZahtevZaSertifikatDAO implements IZahtevZaSertifikatDAO {
     }
 
     @Override
-    public Optional<ZahtevZaSertifikat> getByJmbg(String id) {
+    public Optional<ZahtevZaSertifikat> getByJmbg(String jmbg) {
         List<String> resourceContent = daoUtils.getResourcesByCollectionId(collectionId);
         for(String resource: resourceContent) {
             ZahtevZaSertifikat zahtevZaSertifikat = mapper.convertToObject(resource);
-            if(zahtevZaSertifikat.getPodnosilac().getJmbg().equals(id)) {
+            if(zahtevZaSertifikat.getPodnosilac().getJmbg().equals(jmbg)) {
                 return Optional.of(zahtevZaSertifikat);
             }
         }
