@@ -28,4 +28,6 @@ public class ZahtevZaSertifikat {
     protected XMLGregorianCalendar datum;
     @XmlAttribute(name = "mesto", required = true)
     protected String mesto;
+    @XmlAttribute(name="odobren", required = true)
+    protected boolean odobren;
 }

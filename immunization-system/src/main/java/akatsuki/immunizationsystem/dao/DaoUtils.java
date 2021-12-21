@@ -14,6 +14,8 @@ import javax.xml.bind.Marshaller;
 import javax.xml.transform.OutputKeys;
 import java.io.ByteArrayOutputStream;
 import java.io.OutputStream;
+import java.util.ArrayList;
+import java.util.List;
 
 @Component
 public class DaoUtils {
@@ -32,6 +34,34 @@ public class DaoUtils {
         }
     }
 
+    public List<String> getResourcesByCollectionId(String collectionId) {
+        Collection col = null;
+        String[] resources;
+        List<String> xmlResourceList = new ArrayList<>();
+        try {
+            col = DatabaseManager.getCollection(dbConnection.getDbUrl() + collectionId, dbConnection.getUsername(), dbConnection.getPassword());
+            col.setProperty(OutputKeys.INDENT, "yes");
+            resources = col.listResources();
+
+            for(String documentId: resources) {
+                XMLResource res = (XMLResource) col.getResource(documentId);
+                Object objectContent = res.getContent();
+                xmlResourceList.add((String) objectContent);
+            }
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        } finally {
+            if (col != null) {
+                try {
+                    col.close();
+                } catch (XMLDBException ex) {
+                    ex.printStackTrace();
+                }
+            }
+        }
+        return xmlResourceList;
+    }
+
     public String getResource(String collectionId, String documentId) {
         XMLResource res;
         Collection col = null;
@@ -39,6 +69,7 @@ public class DaoUtils {
         try {
             col = DatabaseManager.getCollection(dbConnection.getDbUrl() + collectionId, dbConnection.getUsername(), dbConnection.getPassword());
             col.setProperty(OutputKeys.INDENT, "yes");
+
             res = (XMLResource) col.getResource(documentId + ".xml");
             Object objectContent = res.getContent();
             if (objectContent != null)
