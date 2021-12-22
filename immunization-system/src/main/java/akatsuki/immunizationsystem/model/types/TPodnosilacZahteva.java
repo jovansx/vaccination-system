@@ -22,8 +22,7 @@ public class TPodnosilacZahteva
         extends TKorisnik {
 
     @XmlElement(namespace = "http://www.akatsuki.org/tipovi", required = true)
-    @XmlSchemaType(name = "string")
-    protected TPol pol;
+    protected TCPol pol;
     @XmlElement(namespace = "http://www.akatsuki.org/tipovi", name = "broj_pasosa", required = true)
     protected String brojPasosa;
     @XmlElement(namespace = "http://www.akatsuki.org/tipovi", name = "datum_rodjenja", required = true)

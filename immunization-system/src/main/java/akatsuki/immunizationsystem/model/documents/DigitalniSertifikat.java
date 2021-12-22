@@ -29,6 +29,8 @@ public class DigitalniSertifikat {
     protected XMLGregorianCalendar datumIVremeIzdavanja;
     @XmlAttribute(name = "broj_sertifikata", required = true)
     protected String brojSertifikata;
+    @XmlAttribute(name = "about", required = true)
+    protected String about;
 
     @XmlAccessorType(XmlAccessType.FIELD)
     @XmlType(name = "", propOrder = {"test"})

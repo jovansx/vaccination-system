@@ -37,7 +37,7 @@
         <xs:complexContent>
             <xs:extension base="TKorisnik">
                 <xs:sequence>
-                    <xs:element name="pol" type="TPol"/>
+                    <xs:element name="pol" type="TCPol"/>
                     <xs:element name="broj_pasosa" type="TBrojPasosa"/>
                     <xs:element name="datum_rodjenja" type="xs:date"/>
                 </xs:sequence>
@@ -65,6 +65,14 @@
                 </xs:sequence>
             </xs:extension>
         </xs:complexContent>
+    </xs:complexType>
+    <xs:complexType name="TCPol">
+        <xs:simpleContent>
+            <xs:extension base="TPol">
+                <xs:attribute fixed="pred:pol" name="property" use="required"/>
+                <xs:attribute fixed="xs:string" name="datatype" use="required"/>
+            </xs:extension>
+        </xs:simpleContent>
     </xs:complexType>
     <xs:simpleType name="TPol">
         <xs:restriction base="xs:string">
