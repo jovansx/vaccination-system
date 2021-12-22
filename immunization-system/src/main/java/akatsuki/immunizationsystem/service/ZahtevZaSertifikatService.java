@@ -32,7 +32,7 @@ public class ZahtevZaSertifikatService {
         if (zahtevZaSertifikat == null || zahtevZaSertifikat.isOdobren())
             throw new BadRequestRuntimeException("Dokument koji ste poslali nije validan.");
 
-        if(zahtevZaSertifikatDAO.getByJmbg(zahtevZaSertifikat.getPodnosilac().getJmbg()).isPresent()) {
+        if(zahtevZaSertifikatDAO.getByJmbg(zahtevZaSertifikat.getPodnosilac().getJmbg().getValue()).isPresent()) {
             throw new BadRequestRuntimeException("Osoba s jmbg-om " + zahtevZaSertifikat.getPodnosilac().getJmbg() + " je vec podnela zahtev za sertifikat.");
         }
 
