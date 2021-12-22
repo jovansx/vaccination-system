@@ -34,7 +34,7 @@ public class DigitalniSertifikatDAO implements IDao<DigitalniSertifikat> {
 
     @Override
     public String save(DigitalniSertifikat digitalniSertifikat) {
-        String documentId = digitalniSertifikat.getPrimalac().getJmbg() + ".xml";
+        String documentId = digitalniSertifikat.getPrimalac().getJmbg().getValue() + ".xml";
         daoUtils.createResource(collectionId, digitalniSertifikat, documentId, DigitalniSertifikat.class);
         return digitalniSertifikat.getPrimalac().getJmbg().getValue();
     }
