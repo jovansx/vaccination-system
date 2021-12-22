@@ -5,6 +5,7 @@ import akatsuki.immunizationsystem.exceptions.BadRequestRuntimeException;
 import akatsuki.immunizationsystem.exceptions.ConflictRuntimeException;
 import akatsuki.immunizationsystem.exceptions.NotFoundRuntimeException;
 import akatsuki.immunizationsystem.model.documents.PotvrdaOVakcinaciji;
+import akatsuki.immunizationsystem.utils.MetadataExtractor;
 import akatsuki.immunizationsystem.utils.Validator;
 import akatsuki.immunizationsystem.utils.modelmappers.IModelMapper;
 import lombok.RequiredArgsConstructor;
@@ -16,6 +17,7 @@ public class PotvrdaOIzvrsenojVakcinacijiService {
     private final IDao<PotvrdaOVakcinaciji> potvrdaOVakcinacijiIDao;
     private final Validator validator;
     private final IModelMapper<PotvrdaOVakcinaciji> mapper;
+    private final MetadataExtractor extractor;
 
     public String getPotvrdaOIzvrsenojVakcinaciji(String jmbgDoza) throws RuntimeException {
         if (!validator.isJmbgDozaValid(jmbgDoza))
@@ -32,10 +34,13 @@ public class PotvrdaOIzvrsenojVakcinacijiService {
             throw new BadRequestRuntimeException("Dokument koji ste poslali nije validan.");
 
         int broj_doze = potvrdaOVakcinaciji.getPrimljeneVakcine().getDoza().size();
-        String documentId = potvrdaOVakcinaciji.getPrimalac().getJmbg() + "_" + broj_doze;
+        String documentId = potvrdaOVakcinaciji.getPrimalac().getJmbg().getValue() + "_" + broj_doze;
         if (potvrdaOVakcinacijiIDao.get(documentId).isPresent())
-            throw new ConflictRuntimeException("Osoba s jmbg-om " + potvrdaOVakcinaciji.getPrimalac().getJmbg()
+            throw new ConflictRuntimeException("Osoba s jmbg-om " + potvrdaOVakcinaciji.getPrimalac().getJmbg().getValue()
                     + " i dozom broj " + broj_doze + " ima vec kreiranu potvrdu.");
+
+        if (!extractor.extractAndSaveToRdf(potvrdaOIzvrsenojVakcinacijiXml, "/potvrde"))
+            throw new BadRequestRuntimeException("Ekstrakcija metapodataka nije uspela.");
 
         return potvrdaOVakcinacijiIDao.save(potvrdaOVakcinaciji);
     }

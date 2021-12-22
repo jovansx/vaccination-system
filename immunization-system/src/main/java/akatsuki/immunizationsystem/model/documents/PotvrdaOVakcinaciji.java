@@ -1,5 +1,7 @@
 package akatsuki.immunizationsystem.model.documents;
 
+import akatsuki.immunizationsystem.model.types.TCNazivVakcineIzvrseneVakcinacije;
+import akatsuki.immunizationsystem.model.types.TCZdravstvenaUstanova;
 import akatsuki.immunizationsystem.model.types.TNazivVakcineIzvrseneVakcinacije;
 import akatsuki.immunizationsystem.model.types.TPrimalac;
 import lombok.AllArgsConstructor;
@@ -30,15 +32,20 @@ public class PotvrdaOVakcinaciji {
     @XmlElement(name = "primljene_vakcine", namespace = "http://www.akatsuki.org/potvrda_o_izvrsenoj_vakcinaciji", required = true)
     protected PrimljeneVakcine primljeneVakcine;
     @XmlElement(name = "zdravstvena_ustanova", namespace = "http://www.akatsuki.org/potvrda_o_izvrsenoj_vakcinaciji", required = true)
-    protected String zdravstvenaUstanova;
+    protected TCZdravstvenaUstanova zdravstvenaUstanova;
     @XmlElement(name = "naziv_vakcine", namespace = "http://www.akatsuki.org/potvrda_o_izvrsenoj_vakcinaciji", required = true)
-    @XmlSchemaType(name = "string")
-    protected TNazivVakcineIzvrseneVakcinacije nazivVakcine;
+    protected TCNazivVakcineIzvrseneVakcinacije nazivVakcine;
     @XmlElement(name = "qr_code", namespace = "http://www.akatsuki.org/potvrda_o_izvrsenoj_vakcinaciji", required = true)
     protected String qrCode;
     @XmlAttribute(name = "datum_izdavanja")
     @XmlSchemaType(name = "date")
     protected XMLGregorianCalendar datumIzdavanja;
+    @XmlAttribute(name = "about", required = true)
+    protected String about;
+    @XmlAttribute(name = "rel")
+    protected String rel;
+    @XmlAttribute(name = "href")
+    protected String href;
 
     @XmlAccessorType(XmlAccessType.FIELD)
     @XmlType(name = "", propOrder = {
