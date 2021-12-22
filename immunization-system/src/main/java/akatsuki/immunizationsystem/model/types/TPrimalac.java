@@ -21,8 +21,7 @@ public class TPrimalac
         extends TKorisnik {
 
     @XmlElement(namespace = "http://www.akatsuki.org/tipovi", required = true)
-    @XmlSchemaType(name = "string")
-    protected TPol pol;
+    protected TCPol pol;
     @XmlElement(namespace = "http://www.akatsuki.org/tipovi", name = "datum_rodjenja", required = true)
     @XmlSchemaType(name = "date")
     protected XMLGregorianCalendar datumRodjenja;
