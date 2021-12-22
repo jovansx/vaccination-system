@@ -23,9 +23,9 @@ import javax.xml.bind.annotation.*;
 public abstract class TKorisnik {
 
     @XmlElement(namespace = "http://www.akatsuki.org/tipovi", required = true)
-    protected String ime;
+    protected TIme ime;
     @XmlElement(namespace = "http://www.akatsuki.org/tipovi", required = true)
-    protected String prezime;
+    protected TPrezime prezime;
     @XmlElement(namespace = "http://www.akatsuki.org/tipovi", required = true)
-    protected String jmbg;
+    protected TCJmbg jmbg;
 }

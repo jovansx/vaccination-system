@@ -4,10 +4,34 @@
 
     <xs:complexType name="TKorisnik" abstract="true">
         <xs:sequence>
-            <xs:element name="ime" type="xs:string"/>
-            <xs:element name="prezime" type="xs:string"/>
-            <xs:element name="jmbg" type="TJmbg"/>
+            <xs:element name="ime" type="TIme"/>
+            <xs:element name="prezime" type="TPrezime"/>
+            <xs:element name="jmbg" type="TCJmbg"/>
         </xs:sequence>
+    </xs:complexType>
+    <xs:complexType name="TIme">
+        <xs:simpleContent>
+            <xs:extension base="xs:string">
+                <xs:attribute name="property" use="required" fixed="pred:ime"/>
+                <xs:attribute name="datatype" use="required" fixed="xs:string"/>
+            </xs:extension>
+        </xs:simpleContent>
+    </xs:complexType>
+    <xs:complexType name="TPrezime">
+        <xs:simpleContent>
+            <xs:extension base="xs:string">
+                <xs:attribute name="property" use="required" fixed="pred:prezime"/>
+                <xs:attribute name="datatype" use="required" fixed="xs:string"/>
+            </xs:extension>
+        </xs:simpleContent>
+    </xs:complexType>
+    <xs:complexType name="TLokacija">
+        <xs:simpleContent>
+            <xs:extension base="xs:string">
+                <xs:attribute name="property" use="required" fixed="pred:lokacija"/>
+                <xs:attribute name="datatype" use="required" fixed="xs:string"/>
+            </xs:extension>
+        </xs:simpleContent>
     </xs:complexType>
     <xs:complexType name="TPodnosilacZahteva">
         <xs:complexContent>
@@ -27,7 +51,7 @@
                     <xs:element name="email" type="TEmail"/>
                     <xs:element name="fiksni_telefon" type="TTelefon"/>
                     <xs:element name="mobilni_telefon" type="TTelefon"/>
-                    <xs:element name="lokacija" type="xs:string"/>
+                    <xs:element name="lokacija" type="TLokacija"/>
                 </xs:sequence>
             </xs:extension>
         </xs:complexContent>
@@ -48,6 +72,14 @@
             <xs:enumeration value="Zenski"/>
         </xs:restriction>
     </xs:simpleType>
+    <xs:complexType name="TCJmbg">
+        <xs:simpleContent>
+            <xs:extension base="TJmbg">
+                <xs:attribute name="property" use="required" fixed="pred:jmbg"/>
+                <xs:attribute name="datatype" use="required" fixed="xs:string"/>
+            </xs:extension>
+        </xs:simpleContent>
+    </xs:complexType>
     <xs:simpleType name="TJmbg">
         <xs:restriction base="xs:string">
             <xs:pattern
@@ -76,7 +108,7 @@
         </xs:restriction>
     </xs:simpleType>
     <xs:complexType name="TTipVakcine">
-        <xs:attribute name="nazivVakcine" type="TNazivVakcine" use="required"></xs:attribute>
+        <xs:attribute name="nazivVakcine" type="TNazivVakcine" use="required"/>
     </xs:complexType>
     <xs:simpleType name="TNazivVakcine">
         <xs:restriction base="xs:string">

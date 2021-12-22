@@ -32,6 +32,12 @@ public class Interesovanje {
     protected Vakcine vakcine;
     @XmlElement(name = "dobrovoljni_davalac_krvi", namespace = "http://www.akatsuki.org/interesovanje")
     protected boolean dobrovoljniDavalacKrvi;
+    @XmlAttribute(name = "about", required = true)
+    protected String about;
+    @XmlAttribute(name = "rel")
+    protected String rel;
+    @XmlAttribute(name = "href")
+    protected String href;
 
     @XmlAccessorType(XmlAccessType.FIELD)
     @XmlType(name = "", propOrder = {"vakcina"})

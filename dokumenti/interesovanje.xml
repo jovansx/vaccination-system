@@ -4,16 +4,18 @@
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     xmlns:t="http://www.akatsuki.org/tipovi"
     xsi:schemaLocation="http://www.akatsuki.org interesovanje.xsd
-    http://www.akatsuki.org/tipovi tipovi.xsd">
+    http://www.akatsuki.org/tipovi tipovi.xsd"
+    xmlns:pred="http://www.akatsuki.org/rdf/examples/predicate/"
+    about="http://www.akatsuki.org/interesovanja/1510999800012">
     <drzavljanstvo>srpsko</drzavljanstvo>
     <podnosilac>
-        <t:ime>Aleksandar</t:ime>
-        <t:prezime>Buljevic</t:prezime>
-        <t:jmbg>1510999800012</t:jmbg>
+        <t:ime property="pred:ime" datatype="xs:string">Aleksandar</t:ime>
+        <t:prezime property="pred:prezime" datatype="xs:string">Buljevic</t:prezime>
+        <t:jmbg property="pred:jmbg" datatype="xs:string">1510999800012</t:jmbg>
         <t:email>abuljevic8@gmail.com</t:email>
         <t:fiksni_telefon>0216423876</t:fiksni_telefon>
         <t:mobilni_telefon>0691782912</t:mobilni_telefon>
-        <t:lokacija>Novi Sad</t:lokacija>
+        <t:lokacija property="pred:lokacija" datatype="xs:string">Novi Sad</t:lokacija>
     </podnosilac>
     <vakcine>
         <vakcina nazivVakcine="Pfizer-BioNTech" />

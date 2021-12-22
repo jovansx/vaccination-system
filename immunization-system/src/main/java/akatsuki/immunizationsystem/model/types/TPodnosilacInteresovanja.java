@@ -31,5 +31,5 @@ public class TPodnosilacInteresovanja
     @XmlElement(namespace = "http://www.akatsuki.org/tipovi", name = "mobilni_telefon", required = true)
     protected String mobilniTelefon;
     @XmlElement(namespace = "http://www.akatsuki.org/tipovi", required = true)
-    protected String lokacija;
+    protected TLokacija lokacija;
 }

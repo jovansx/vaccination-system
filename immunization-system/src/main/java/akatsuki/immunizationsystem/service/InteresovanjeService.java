@@ -5,6 +5,7 @@ import akatsuki.immunizationsystem.exceptions.BadRequestRuntimeException;
 import akatsuki.immunizationsystem.exceptions.ConflictRuntimeException;
 import akatsuki.immunizationsystem.exceptions.NotFoundRuntimeException;
 import akatsuki.immunizationsystem.model.documents.Interesovanje;
+import akatsuki.immunizationsystem.utils.MetadataExtractor;
 import akatsuki.immunizationsystem.utils.Validator;
 import akatsuki.immunizationsystem.utils.modelmappers.IModelMapper;
 import lombok.RequiredArgsConstructor;
@@ -16,6 +17,7 @@ public class InteresovanjeService {
     private final IDao<Interesovanje> interesovanjeDAO;
     private final Validator validator;
     private final IModelMapper<Interesovanje> mapper;
+    private final MetadataExtractor extractor;
 
     public String getInteresovanje(String jmbg) throws RuntimeException {
         if (!validator.isJmbgValid(jmbg))
@@ -30,10 +32,11 @@ public class InteresovanjeService {
         if (interesovanje == null)
             throw new BadRequestRuntimeException("Dokument koji ste poslali nije validan.");
 
-        if (interesovanjeDAO.get(interesovanje.getPodnosilac().getJmbg()).isPresent())
-            throw new ConflictRuntimeException("Osoba s jmbg-om " + interesovanje.getPodnosilac().getJmbg() + " je vec podnela interesovanje za vakcinacijom.");
+        if (interesovanjeDAO.get(interesovanje.getPodnosilac().getJmbg().getValue()).isPresent())
+            throw new ConflictRuntimeException("Osoba s jmbg-om " + interesovanje.getPodnosilac().getJmbg().getValue() + " je vec podnela interesovanje za vakcinacijom.");
 
+        if (!extractor.extractAndSaveToRdf(interesovanjeXml, "/interesovanja"))
+            throw new BadRequestRuntimeException("Ekstrakcija metapodataka nije uspela.");
         return interesovanjeDAO.save(interesovanje);
     }
-
 }

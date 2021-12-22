@@ -71,9 +71,8 @@ public class DaoUtils {
             col.setProperty(OutputKeys.INDENT, "yes");
 
             res = (XMLResource) col.getResource(documentId + ".xml");
-            Object objectContent = res.getContent();
-            if (objectContent != null)
-                responseContent = (String) objectContent;
+            if (res != null)
+                responseContent = (String) res.getContent();
         } catch (Exception ex) {
             ex.printStackTrace();
         } finally {

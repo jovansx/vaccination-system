@@ -30,7 +30,7 @@ public class DigitalniSertifikatService {
         if (digitalniSertifikat == null)
             throw new BadRequestRuntimeException("Dokument koji ste poslali nije validan.");
 
-        if (digitalniSertifikatDAO.get(digitalniSertifikat.getPrimalac().getJmbg()).isPresent())
+        if (digitalniSertifikatDAO.get(digitalniSertifikat.getPrimalac().getJmbg().getValue()).isPresent())
             throw new ConflictRuntimeException("Osoba s jmbg-om " + digitalniSertifikat.getPrimalac().getJmbg() + " vec ima digitalni zeleni sertifikat.");
 
         return digitalniSertifikatDAO.save(digitalniSertifikat);
