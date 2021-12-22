@@ -1,30 +1,31 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<xs:schema 
-    xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified"
-    targetNamespace="http://www.akatsuki.org/interesovanje"
-    xmlns="http://www.akatsuki.org/interesovanje"
-    xmlns:o="http://www.akatsuki.org/interesovanje"
-    xmlns:t="http://www.akatsuki.org/tipovi">
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified"
+           targetNamespace="http://www.akatsuki.org/interesovanje"
+           xmlns="http://www.akatsuki.org/interesovanje" xmlns:o="http://www.akatsuki.org/interesovanje"
+           xmlns:t="http://www.akatsuki.org/tipovi">
     <xs:import namespace="http://www.akatsuki.org/tipovi" schemaLocation="tipovi.xsd"/>
     <xs:element name="interesovanje">
         <xs:complexType>
             <xs:sequence>
                 <xs:element name="drzavljanstvo" type="TDrzavljanstvo"/>
                 <xs:element name="podnosilac" type="t:TPodnosilacInteresovanja"/>
-                <xs:element name="vakcine"> 
+                <xs:element name="vakcine">
                     <xs:complexType>
                         <xs:sequence>
-                            <xs:element name="vakcina" type="t:TTipVakcine" minOccurs="1" maxOccurs="6">
-                            </xs:element>
+                            <xs:element name="vakcina" type="t:TTipVakcine" minOccurs="1"
+                                        maxOccurs="6"></xs:element>
                         </xs:sequence>
                     </xs:complexType>
-                    <xs:unique  name="vakcinaNazivUnique">
-                        <xs:selector xpath="o:vakcina"></xs:selector>
-                        <xs:field xpath="@nazivVakcine"></xs:field>
-                    </xs:unique >
+                    <xs:unique name="vakcinaNazivUnique">
+                        <xs:selector xpath="o:vakcina"/>
+                        <xs:field xpath="@nazivVakcine"/>
+                    </xs:unique>
                 </xs:element>
                 <xs:element name="dobrovoljni_davalac_krvi" type="xs:boolean"/>
             </xs:sequence>
+            <xs:attribute name="about" type="xs:string" use="required"/>
+            <xs:attribute fixed="pred:parentTo" name="rel" type="xs:string"/>
+            <xs:attribute name="href" type="xs:string"/>
         </xs:complexType>
     </xs:element>
     <xs:simpleType name="TDrzavljanstvo">

@@ -1,7 +1,7 @@
 package akatsuki.immunizationsystem.utils;
 
 import akatsuki.immunizationsystem.config.RdfConnection;
-import com.sun.org.apache.xalan.internal.xsltc.trax.*;
+import com.sun.org.apache.xalan.internal.xsltc.trax.TransformerFactoryImpl;
 import lombok.RequiredArgsConstructor;
 import org.apache.jena.rdf.model.Model;
 import org.apache.jena.rdf.model.ModelFactory;
@@ -29,6 +29,7 @@ public class MetadataExtractor {
     public boolean extractAndSaveToRdf(String xml, String path) {
         try {
             String rdfFilePath = "generated_rdf.rdf";
+            xml = xml.replaceAll(" datatype=\"[a-zA-Z:]*\"", "");
 
             extractMetadata(new ByteArrayInputStream(xml.getBytes()), new FileOutputStream(rdfFilePath));
 
