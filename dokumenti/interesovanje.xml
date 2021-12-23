@@ -11,9 +11,9 @@
     <podnosilac>
         <t:ime property="pred:ime" datatype="xs:string">Aleksandar</t:ime>
         <t:prezime property="pred:prezime" datatype="xs:string">Buljevic</t:prezime>
-        <t:jmbg property="pred:jmbg" datatype="xs:string">1510999800012</t:jmbg>
+        <t:id_broj property="pred:id_broj" datatype="xs:string">1510999800012</t:id_broj>
         <t:email>abuljevic8@gmail.com</t:email>
-        <t:fiksni_telefon>0216423876</t:fiksni_telefon>
+        <t:fiksni_telefon>(021) 641-3876</t:fiksni_telefon>
         <t:mobilni_telefon>0691782912</t:mobilni_telefon>
         <t:lokacija property="pred:lokacija" datatype="xs:string">Novi Sad</t:lokacija>
     </podnosilac>

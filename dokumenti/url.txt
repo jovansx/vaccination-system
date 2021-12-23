@@ -1,19 +1,19 @@
 
 Digitalni zeleni sertifikat
- - http://www.akatsuki.org/digitalni_sertifikat/{{jmbg}}
+ - http://www.akatsuki.org/digitalni_sertifikat/{{id_broj}}
 
 Interesovanje za vakcinaciju
- - http://www.akatsuki.org/interesovanje/{{jmbg}}
+ - http://www.akatsuki.org/interesovanje/{{id_broj}}
 
 Izvestaj o imunizaciji
  - http://www.akatsuki.org/izvestaj_o_imunizaciji/{{period od}}_{{period do}}
  
 Potvrda o vakcinaciji
- - http://www.akatsuki.org/potvrda_o_izvrsenoj_vakcinaciji/{{jmbg}}_{{redni broj doze}}
+ - http://www.akatsuki.org/potvrda_o_izvrsenoj_vakcinaciji/{{id_broj}}_{{redni broj doze}}
 
 Saglasnost za imunizaciju
- - http://www.akatsuki.org/saglasnost_za_imunizaciju/{{indeks}}
+ - http://www.akatsuki.org/saglasnost_za_imunizaciju/{{id_broj}}_{{indeks}}  //Promenjeno sa index -> id_broj + index
 
 Zahtev za izdavanje digitalnog zelenog sertifikata
- - http://www.akatsuki.org/zahtev_za_sertifikat/{{jmbg}}_{{indeks}}
+ - http://www.akatsuki.org/zahtev_za_sertifikat/{{id_broj}}_{{indeks}}
 
