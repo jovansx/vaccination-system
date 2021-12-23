@@ -12,9 +12,8 @@
     <primalac>
         <t:ime property="pred:ime" datatype="xs:string">Aleksandar</t:ime>
         <t:prezime property="pred:prezime" datatype="xs:string">Buljevic</t:prezime>
-        <t:jmbg property="pred:jmbg" datatype="xs:string">1510999800078</t:jmbg>
+        <t:id_broj property="pred:id_broj" datatype="xs:string">1510999800078</t:id_broj>
         <t:pol property="pred:pol" datatype="xs:string">Muski</t:pol>
-        <t:broj_pasosa>792875436</t:broj_pasosa>
         <t:datum_rodjenja>1999-10-15</t:datum_rodjenja>
     </primalac>
     <vakcinacija>
