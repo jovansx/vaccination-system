@@ -1,0 +1,50 @@
+<div class="registration-container">
+    <form class="form-container" [formGroup]="registrationForm" (ngSubmit)="registerUser()">
+      <h1>
+        Register to Vaccination system <mat-icon>account_circle</mat-icon>
+      </h1>
+      <mat-form-field appearance="fill">
+        <mat-label>Enter your first name</mat-label>
+        <input matInput formControlName="firstName" required />
+        <mat-error *ngIf="registrationForm.invalid">{{ validator.validateRequired('firstName') }}</mat-error>
+      </mat-form-field>
+      <mat-form-field appearance="fill">
+        <mat-label>Enter your last name</mat-label>
+        <input matInput formControlName="lastName" required />
+        <mat-error *ngIf="registrationForm.invalid">{{ validator.validateRequired('lastName') }}</mat-error>
+      </mat-form-field>
+      <mat-form-field appearance="fill">
+        <mat-label>Enter your mobile phone</mat-label>
+        <input matInput formControlName="mobilePhone" required />
+        <mat-error *ngIf="registrationForm.invalid">{{ validator.validateMobilePhone('mobilePhone') }}</mat-error>
+      </mat-form-field>
+      <mat-form-field appearance="fill">
+        <mat-label>Enter your email</mat-label>
+        <input matInput formControlName="email" required />
+        <mat-error *ngIf="registrationForm.invalid">{{ validator.validateEmail('email') }}</mat-error>
+      </mat-form-field>
+  
+      <mat-form-field appearance="fill">
+        <mat-label>Enter your password</mat-label>
+        <input
+          matInput
+          [type]="hide ? 'password' : 'text'"
+          formControlName="password"
+        />
+        <button
+          mat-icon-button
+          matSuffix
+          type="button"
+          (click)="hide = !hide"
+          [attr.aria-label]="'Hide password'"
+          [attr.aria-pressed]="hide"
+        >
+          <mat-icon>{{ hide ? "visibility_off" : "visibility" }}</mat-icon>
+        </button>
+        <mat-error *ngIf="registrationForm.invalid">{{ validator.validateRequired('password') }}</mat-error>
+      </mat-form-field>
+      <button id="registration" mat-flat-button color="primary" type="submit">Register</button>
+      <button id="back-to-login" mat-icon-button color="primary" routerLink="/login"><mat-icon>arrow_back_ios</mat-icon></button>
+    </form>
+  </div>
+  

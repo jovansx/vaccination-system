@@ -1,0 +1,49 @@
+.registration-container {
+    display: flex;
+    overflow-y: auto;
+    min-height: 100vh;
+    background-color: var(--light-grey);
+  }
+  
+  .form-container {
+    width: 30vw;
+    padding: 30px 0;
+    margin: auto;
+    background-color: white;
+    border-radius: 20px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    box-shadow: 0px 0px 5px grey;
+    position: relative;
+  }
+  
+  .form-container > mat-form-field {
+    width: 50%;
+    margin-bottom: 20px;
+    font-size: large;
+  }
+  
+  #registration {
+    width: 50%;
+  }
+  
+  #back-to-login {
+    position: absolute;
+    left: 20px;
+    top: 10px;
+  }
+  
+  h1 {
+    position: absolute;
+    top: -50px;
+  }
+  
+  h1 > mat-icon {
+    position: absolute;
+    font-size: 1.8em;
+    top: -65px;
+    left: 40%;
+  }
+  
