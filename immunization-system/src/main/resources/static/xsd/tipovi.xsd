@@ -59,7 +59,7 @@
         <xs:complexContent>
             <xs:extension base="TKorisnik">
                 <xs:sequence>
-                    <xs:element name="pol" type="TPol"/>
+                    <xs:element name="pol" type="TCPol"/>
                     <xs:element name="datum_rodjenja" type="xs:date"/>
                 </xs:sequence>
             </xs:extension>
