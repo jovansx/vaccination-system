@@ -30,17 +30,14 @@
                         <xs:field xpath="@broj"/>
                     </xs:unique>
                 </xs:element>
-                <xs:element name="zdravstvena_ustanova" type="TCZdravstvenaUstanova"/>
-                <xs:element name="naziv_vakcine" type="TCNazivVakcineIzvrseneVakcinacije"/>
+                <xs:element name="zdravstvena_ustanova" type="xs:string"/>
+                <xs:element name="naziv_vakcine" type="TNazivVakcine"/>
                 <xs:element name="qr_code" type="xs:string"/>
             </xs:sequence>
             <xs:attribute name="datum_izdavanja" type="xs:date"/>
-            <xs:attribute name="about" type="xs:string" use="required"/>
-            <xs:attribute fixed="pred:parentTo" name="rel" type="xs:string"/>
-            <xs:attribute name="href" type="xs:string"/>
         </xs:complexType>
     </xs:element>
-    <xs:simpleType name="TNazivVakcineIzvrseneVakcinacije">
+    <xs:simpleType name="TNazivVakcine">
         <xs:restriction base="xs:string">
             <xs:enumeration value="Pfizer-BioNTech"/>
             <xs:enumeration value="Sputnik V"/>
@@ -49,20 +46,4 @@
             <xs:enumeration value="Moderna"/>
         </xs:restriction>
     </xs:simpleType>
-    <xs:complexType name="TCNazivVakcineIzvrseneVakcinacije">
-        <xs:simpleContent>
-            <xs:extension base="TNazivVakcineIzvrseneVakcinacije">
-                <xs:attribute fixed="pred:vakcina" name="property" use="required"/>
-                <xs:attribute fixed="xs:string" name="datatype" use="required"/>
-            </xs:extension>
-        </xs:simpleContent>
-    </xs:complexType>
-    <xs:complexType name="TCZdravstvenaUstanova">
-        <xs:simpleContent>
-            <xs:extension base="xs:string">
-                <xs:attribute name="property" use="required" fixed="pred:zdravstvena_ustanova"/>
-                <xs:attribute name="datatype" use="required" fixed="xs:string"/>
-            </xs:extension>
-        </xs:simpleContent>
-    </xs:complexType>
 </xs:schema>

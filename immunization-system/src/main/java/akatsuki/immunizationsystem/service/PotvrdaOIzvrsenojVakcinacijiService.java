@@ -19,12 +19,12 @@ public class PotvrdaOIzvrsenojVakcinacijiService {
     private final IModelMapper<PotvrdaOVakcinaciji> mapper;
     private final MetadataExtractor extractor;
 
-    public String getPotvrdaOIzvrsenojVakcinaciji(String jmbgDoza) throws RuntimeException {
-        if (!validator.isJmbgDozaValid(jmbgDoza))
-            throw new BadRequestRuntimeException("Jmbg i doza " + jmbgDoza + " nije validan.");
+    public String getPotvrdaOIzvrsenojVakcinaciji(String idBrojDoza) throws RuntimeException {
+        if (!validator.isIdDozaValid(idBrojDoza))
+            throw new BadRequestRuntimeException("Id i doza " + idBrojDoza + " nije validan.");
 
-        PotvrdaOVakcinaciji potvrdaOVakcinaciji = potvrdaOVakcinacijiIDao.get(jmbgDoza).
-                orElseThrow(() -> new NotFoundRuntimeException("Nije pronadjena potvrda sa unetim " + jmbgDoza + "."));
+        PotvrdaOVakcinaciji potvrdaOVakcinaciji = potvrdaOVakcinacijiIDao.get(idBrojDoza).
+                orElseThrow(() -> new NotFoundRuntimeException("Nije pronadjena potvrda sa unetim " + idBrojDoza + "."));
         return mapper.convertToXml(potvrdaOVakcinaciji);
     }
 
@@ -34,9 +34,9 @@ public class PotvrdaOIzvrsenojVakcinacijiService {
             throw new BadRequestRuntimeException("Dokument koji ste poslali nije validan.");
 
         int broj_doze = potvrdaOVakcinaciji.getPrimljeneVakcine().getDoza().size();
-        String documentId = potvrdaOVakcinaciji.getPrimalac().getJmbg().getValue() + "_" + broj_doze;
+        String documentId = potvrdaOVakcinaciji.getPrimalac().getIdBroj().getValue() + "_" + broj_doze;
         if (potvrdaOVakcinacijiIDao.get(documentId).isPresent())
-            throw new ConflictRuntimeException("Osoba s jmbg-om " + potvrdaOVakcinaciji.getPrimalac().getJmbg().getValue()
+            throw new ConflictRuntimeException("Osoba s id-om " + potvrdaOVakcinaciji.getPrimalac().getIdBroj().getValue()
                     + " i dozom broj " + broj_doze + " ima vec kreiranu potvrdu.");
 
         if (!extractor.extractAndSaveToRdf(potvrdaOIzvrsenojVakcinacijiXml, "/potvrde"))

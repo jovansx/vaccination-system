@@ -34,9 +34,9 @@ public class InteresovanjeDAO implements IDao<Interesovanje> {
 
     @Override
     public String save(Interesovanje interesovanje) {
-        String documentId = interesovanje.getPodnosilac().getJmbg().getValue() + ".xml";
+        String documentId = interesovanje.getPodnosilac().getLokacija().getValue() + ".xml";
         daoUtils.createResource(collectionId, interesovanje, documentId, Interesovanje.class);
-        return interesovanje.getPodnosilac().getJmbg().getValue();
+        return interesovanje.getPodnosilac().getIdBroj().getValue();
     }
 
     @Override

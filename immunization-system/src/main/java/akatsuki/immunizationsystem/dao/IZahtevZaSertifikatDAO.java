@@ -6,5 +6,5 @@ import java.util.Optional;
 
 public interface IZahtevZaSertifikatDAO extends IDao<ZahtevZaSertifikat> {
 
-    Optional<ZahtevZaSertifikat> getByJmbg(String id);
+    Optional<ZahtevZaSertifikat> getByIdBroj(String id);
 }

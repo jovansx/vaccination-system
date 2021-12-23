@@ -10,7 +10,7 @@ import javax.xml.bind.annotation.*;
 @XmlType(name = "TKorisnik", propOrder = {
         "ime",
         "prezime",
-        "jmbg"
+        "idBroj"
 })
 @XmlSeeAlso({
         TPodnosilacZahteva.class,
@@ -26,6 +26,6 @@ public abstract class TKorisnik {
     protected TIme ime;
     @XmlElement(namespace = "http://www.akatsuki.org/tipovi", required = true)
     protected TPrezime prezime;
-    @XmlElement(namespace = "http://www.akatsuki.org/tipovi", required = true)
-    protected TCJmbg jmbg;
+    @XmlElement(namespace = "http://www.akatsuki.org/tipovi", required = true, name = "id_broj")
+    protected TCIdBroj idBroj;
 }

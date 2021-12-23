@@ -203,22 +203,22 @@ public class SaglasnostZaImunizaciju {
 
             @XmlAccessorType(XmlAccessType.FIELD)
             @XmlType(name = "", propOrder = {
-                    "jmbg"
+                    "idBroj"
             })
             @Data
             @NoArgsConstructor
             @AllArgsConstructor
             public static class Srpsko {
 
-                @XmlElement(namespace = "http://www.akatsuki.org/saglasnost_za_imunizaciju", required = true)
-                protected String jmbg;
+                @XmlElement(name = "id_broj",namespace = "http://www.akatsuki.org/saglasnost_za_imunizaciju", required = true)
+                protected String idBroj;
             }
 
 
             @XmlAccessorType(XmlAccessType.FIELD)
             @XmlType(name = "", propOrder = {
                     "naziv",
-                    "brojPasosa"
+                    "idBroj"
             })
             @Data
             @NoArgsConstructor
@@ -227,8 +227,8 @@ public class SaglasnostZaImunizaciju {
 
                 @XmlElement(namespace = "http://www.akatsuki.org/saglasnost_za_imunizaciju", required = true)
                 protected String naziv;
-                @XmlElement(name = "broj_pasosa", namespace = "http://www.akatsuki.org/saglasnost_za_imunizaciju", required = true)
-                protected String brojPasosa;
+                @XmlElement(name = "id_broj", namespace = "http://www.akatsuki.org/saglasnost_za_imunizaciju", required = true)
+                protected String idBroj;
             }
         }
 

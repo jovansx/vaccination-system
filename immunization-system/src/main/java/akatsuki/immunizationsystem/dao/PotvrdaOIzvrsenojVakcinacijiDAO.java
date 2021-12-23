@@ -35,7 +35,7 @@ public class PotvrdaOIzvrsenojVakcinacijiDAO implements IDao<PotvrdaOVakcinaciji
     @Override
     public String save(PotvrdaOVakcinaciji potvrdaOVakcinaciji) {
         int broj_doze = potvrdaOVakcinaciji.getPrimljeneVakcine().getDoza().size();
-        String documentId = potvrdaOVakcinaciji.getPrimalac().getJmbg().getValue() + "_" + broj_doze + ".xml";
+        String documentId = potvrdaOVakcinaciji.getPrimalac().getIdBroj().getValue() + "_" + broj_doze + ".xml";
         daoUtils.createResource(collectionId, potvrdaOVakcinaciji, documentId, PotvrdaOVakcinaciji.class);
         return documentId.substring(0, documentId.length() - 4);
     }

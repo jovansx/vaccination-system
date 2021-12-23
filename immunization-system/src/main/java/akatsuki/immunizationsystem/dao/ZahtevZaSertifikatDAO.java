@@ -27,11 +27,11 @@ public class ZahtevZaSertifikatDAO implements IZahtevZaSertifikatDAO {
     }
 
     @Override
-    public Optional<ZahtevZaSertifikat> getByJmbg(String jmbg) {
+    public Optional<ZahtevZaSertifikat> getByIdBroj(String idBroj) {
         List<String> resourceContent = daoUtils.getResourcesByCollectionId(collectionId);
         for(String resource: resourceContent) {
             ZahtevZaSertifikat zahtevZaSertifikat = mapper.convertToObject(resource);
-            if(zahtevZaSertifikat.getPodnosilac().getJmbg().equals(jmbg)) {
+            if(zahtevZaSertifikat.getPodnosilac().getIdBroj().getValue().equals(idBroj)) {
                 return Optional.of(zahtevZaSertifikat);
             }
         }
@@ -51,7 +51,8 @@ public class ZahtevZaSertifikatDAO implements IZahtevZaSertifikatDAO {
 
     @Override
     public String save(ZahtevZaSertifikat zahtevZaSertifikat) {
-        String documentId = zahtevZaSertifikat.getPodnosilac().getJmbg() + "_" + UUID.randomUUID() + ".xml";
+//        TODO videti da umesto uuid stavimo index
+        String documentId = zahtevZaSertifikat.getPodnosilac().getIdBroj().getValue() + "_" + UUID.randomUUID() + ".xml";
         daoUtils.createResource(collectionId, zahtevZaSertifikat, documentId, ZahtevZaSertifikat.class);
         return documentId;
     }

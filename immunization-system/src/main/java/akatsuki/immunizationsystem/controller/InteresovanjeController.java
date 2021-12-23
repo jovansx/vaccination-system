@@ -12,9 +12,9 @@ public class InteresovanjeController {
 
     private final InteresovanjeService interesovanjeService;
 
-    @GetMapping("/{jmbg}")
-    public String getInteresovanje(@PathVariable String jmbg) {
-        return interesovanjeService.getInteresovanje(jmbg);
+    @GetMapping("/{idBroj}")
+    public String getInteresovanje(@PathVariable String idBroj) {
+        return interesovanjeService.getInteresovanje(idBroj);
     }
 
     @PostMapping

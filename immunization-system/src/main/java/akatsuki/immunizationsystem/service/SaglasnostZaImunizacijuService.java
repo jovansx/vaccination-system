@@ -21,8 +21,9 @@ public class SaglasnostZaImunizacijuService {
     private final Validator validator;
     private final IModelMapper<SaglasnostZaImunizaciju> mapper;
 
-    public String getSaglasnostZaImunizaciju(UUID id) throws RuntimeException {
-        SaglasnostZaImunizaciju saglasnostZaImunizaciju = saglasnostZaImunizacijuIDao.get(id.toString()).orElseThrow(() -> new NotFoundRuntimeException("Saglasnost sa id-jem " + id + " nije pronadjena."));
+    public String getSaglasnostZaImunizaciju(String idBrojIndex) throws RuntimeException {
+//        TODO vidi da li treba da se validira s validatorom
+        SaglasnostZaImunizaciju saglasnostZaImunizaciju = saglasnostZaImunizacijuIDao.get(idBrojIndex).orElseThrow(() -> new NotFoundRuntimeException("Saglasnost sa id-jem " + idBrojIndex + " nije pronadjena."));
         return mapper.convertToXml(saglasnostZaImunizaciju);
     }
 

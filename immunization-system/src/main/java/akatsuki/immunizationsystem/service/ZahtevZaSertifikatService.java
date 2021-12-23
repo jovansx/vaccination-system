@@ -18,11 +18,10 @@ public class ZahtevZaSertifikatService {
     private final Validator validator;
     private final IModelMapper<ZahtevZaSertifikat> mapper;
 
-    public String getZahtevZaSertifikat(String jmbg, UUID id) throws RuntimeException {
-        if (!validator.isJmbgValid(jmbg))
-            throw new BadRequestRuntimeException("Jmbg koji ste uneli nije validan.");
-        String documentId = jmbg + "_" + id;
-        ZahtevZaSertifikat zahtevZaSertifikat = zahtevZaSertifikatDAO.get(documentId).orElseThrow(() -> new NotFoundRuntimeException("Saglasnost sa id-jem " + id + " nije pronadjena."));
+    public String getZahtevZaSertifikat(String idBrojIndex) throws RuntimeException {
+        if (!validator.isIdDozaValid(idBrojIndex))
+            throw new BadRequestRuntimeException("Id koji ste uneli nije validan.");
+        ZahtevZaSertifikat zahtevZaSertifikat = zahtevZaSertifikatDAO.get(idBrojIndex).orElseThrow(() -> new NotFoundRuntimeException("Saglasnost sa id-jem " + idBrojIndex + " nije pronadjena."));
         return mapper.convertToXml(zahtevZaSertifikat);
     }
 
@@ -32,9 +31,8 @@ public class ZahtevZaSertifikatService {
         if (zahtevZaSertifikat == null || zahtevZaSertifikat.isOdobren())
             throw new BadRequestRuntimeException("Dokument koji ste poslali nije validan.");
 
-        if(zahtevZaSertifikatDAO.getByJmbg(zahtevZaSertifikat.getPodnosilac().getJmbg().getValue()).isPresent()) {
-            throw new BadRequestRuntimeException("Osoba s jmbg-om " + zahtevZaSertifikat.getPodnosilac().getJmbg() + " je vec podnela zahtev za sertifikat.");
-        }
+        if(zahtevZaSertifikatDAO.getByIdBroj(zahtevZaSertifikat.getPodnosilac().getIdBroj().getValue()).isPresent())
+            throw new BadRequestRuntimeException("Osoba s id-om " + zahtevZaSertifikat.getPodnosilac().getIdBroj().getValue() + " je vec podnela zahtev za sertifikat.");
 
         return zahtevZaSertifikatDAO.save(zahtevZaSertifikat);
     }

@@ -12,13 +12,13 @@ import javax.xml.bind.annotation.XmlType;
 import javax.xml.bind.annotation.XmlValue;
 
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "TCJmbg", propOrder = {
+@XmlType(name = "TCIdBroj", propOrder = {
     "value"
 })
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class TCJmbg {
+public class TCIdBroj {
 
     @XmlValue
     protected String value;
