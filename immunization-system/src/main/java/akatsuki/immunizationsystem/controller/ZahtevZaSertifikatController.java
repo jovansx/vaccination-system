@@ -15,9 +15,9 @@ import java.util.UUID;
 public class ZahtevZaSertifikatController {
     private final ZahtevZaSertifikatService zahtevZaSertifikatService;
 
-    @GetMapping("/{jmbg}/{id}")
-    public String getZahtevZaSertifikat(@PathVariable String jmbg, @PathVariable UUID id) {
-        return zahtevZaSertifikatService.getZahtevZaSertifikat(jmbg, id);
+    @GetMapping("/{idBrojIndex}")
+    public String getZahtevZaSertifikat(@PathVariable String idBrojIndex) {
+        return zahtevZaSertifikatService.getZahtevZaSertifikat(idBrojIndex);
     }
 
     @PostMapping

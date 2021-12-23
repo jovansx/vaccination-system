@@ -12,9 +12,9 @@ public class PotvrdaOIzvrsenojVakcinacijiController {
 
     private final PotvrdaOIzvrsenojVakcinacijiService potvrdaOIzvrsenojVakcinacijiService;
 
-    @GetMapping("/{jmbgDoza}")
-    public String getPotvrdaOIzvrsenojVakcinaciji(@PathVariable String jmbgDoza) {
-        return potvrdaOIzvrsenojVakcinacijiService.getPotvrdaOIzvrsenojVakcinaciji(jmbgDoza);
+    @GetMapping("/{idBrojDoza}")
+    public String getPotvrdaOIzvrsenojVakcinaciji(@PathVariable String idBrojDoza) {
+        return potvrdaOIzvrsenojVakcinacijiService.getPotvrdaOIzvrsenojVakcinaciji(idBrojDoza);
     }
 
     @PostMapping

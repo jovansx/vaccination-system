@@ -12,9 +12,9 @@ public class DigitalniSertifikatController {
 
     private final DigitalniSertifikatService digitalniSertifikatService;
 
-    @GetMapping("/{jmbg}")
-    public String getDigitalniSertifikat(@PathVariable String jmbg) {
-        return digitalniSertifikatService.getDigitalniSertifikat(jmbg);
+    @GetMapping("/{idBroj}")
+    public String getDigitalniSertifikat(@PathVariable String idBroj) {
+        return digitalniSertifikatService.getDigitalniSertifikat(idBroj);
     }
 
     @PostMapping

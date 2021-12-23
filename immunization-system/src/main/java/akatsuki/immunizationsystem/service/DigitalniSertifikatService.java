@@ -19,11 +19,11 @@ public class DigitalniSertifikatService {
     private final IModelMapper<DigitalniSertifikat> mapper;
     private final MetadataExtractor extractor;
 
-    public String getDigitalniSertifikat(String jmbg) throws RuntimeException {
-        if (!validator.isJmbgValid(jmbg))
-            throw new BadRequestRuntimeException("Jmbg koji ste uneli nije validan.");
+    public String getDigitalniSertifikat(String idBroj) throws RuntimeException {
+        if (!validator.isIdValid(idBroj))
+            throw new BadRequestRuntimeException("Identifikacioni broj koji ste uneli nije validan.");
 
-        DigitalniSertifikat digitalniSertifikat = digitalniSertifikatDAO.get(jmbg).orElseThrow(() -> new NotFoundRuntimeException("Osoba s jmbg-om " + jmbg + " nema digitalni zeleni sertifikat."));
+        DigitalniSertifikat digitalniSertifikat = digitalniSertifikatDAO.get(idBroj).orElseThrow(() -> new NotFoundRuntimeException("Osoba s id-om " + idBroj + " nema digitalni zeleni sertifikat."));
         return mapper.convertToXml(digitalniSertifikat);
     }
 
@@ -32,8 +32,8 @@ public class DigitalniSertifikatService {
         if (digitalniSertifikat == null)
             throw new BadRequestRuntimeException("Dokument koji ste poslali nije validan.");
 
-        if (digitalniSertifikatDAO.get(digitalniSertifikat.getPrimalac().getJmbg().getValue()).isPresent())
-            throw new ConflictRuntimeException("Osoba s jmbg-om " + digitalniSertifikat.getPrimalac().getJmbg().getValue() + " vec ima digitalni zeleni sertifikat.");
+        if (digitalniSertifikatDAO.get(digitalniSertifikat.getPrimalac().getIdBroj().getValue()).isPresent())
+            throw new ConflictRuntimeException("Osoba s id-om " + digitalniSertifikat.getPrimalac().getIdBroj().getValue() + " vec ima digitalni zeleni sertifikat.");
 
         if (!extractor.extractAndSaveToRdf(digitalniSertifikatXml, "/digitalni-sertifikati"))
             throw new BadRequestRuntimeException("Ekstrakcija metapodataka nije uspela.");

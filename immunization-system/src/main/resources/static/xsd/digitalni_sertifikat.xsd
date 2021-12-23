@@ -8,7 +8,7 @@
         <xs:complexType>
             <xs:sequence>
                 <xs:element name="primalac" type="t:TPodnosilacZahteva"/>
-
+                
                 <xs:element name="vakcinacija">
                     <xs:complexType>
                         <xs:sequence minOccurs="2" maxOccurs="unbounded">
@@ -30,7 +30,7 @@
                         <xs:field xpath="@broj"/>
                     </xs:unique>
                 </xs:element>
-
+                
                 <xs:element name="testovi">
                     <xs:complexType>
                         <xs:sequence minOccurs="3" maxOccurs="3">

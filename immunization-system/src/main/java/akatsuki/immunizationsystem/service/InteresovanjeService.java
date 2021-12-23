@@ -19,11 +19,11 @@ public class InteresovanjeService {
     private final IModelMapper<Interesovanje> mapper;
     private final MetadataExtractor extractor;
 
-    public String getInteresovanje(String jmbg) throws RuntimeException {
-        if (!validator.isJmbgValid(jmbg))
+    public String getInteresovanje(String idBroj) throws RuntimeException {
+        if (!validator.isIdValid(idBroj))
             throw new BadRequestRuntimeException("Jmbg koji ste uneli nije validan.");
 
-        Interesovanje interesovanje = interesovanjeDAO.get(jmbg).orElseThrow(() -> new NotFoundRuntimeException("Osoba s jmbg-om " + jmbg + " nije podnela interesovanje za vakcinacijom."));
+        Interesovanje interesovanje = interesovanjeDAO.get(idBroj).orElseThrow(() -> new NotFoundRuntimeException("Osoba s id-om " + idBroj + " nije podnela interesovanje za vakcinacijom."));
         return mapper.convertToXml(interesovanje);
     }
 
@@ -32,8 +32,8 @@ public class InteresovanjeService {
         if (interesovanje == null)
             throw new BadRequestRuntimeException("Dokument koji ste poslali nije validan.");
 
-        if (interesovanjeDAO.get(interesovanje.getPodnosilac().getJmbg().getValue()).isPresent())
-            throw new ConflictRuntimeException("Osoba s jmbg-om " + interesovanje.getPodnosilac().getJmbg().getValue() + " je vec podnela interesovanje za vakcinacijom.");
+        if (interesovanjeDAO.get(interesovanje.getPodnosilac().getIdBroj().getValue()).isPresent())
+            throw new ConflictRuntimeException("Osoba s id-om " + interesovanje.getPodnosilac().getIdBroj().getValue() + " je vec podnela interesovanje za vakcinacijom.");
 
         if (!extractor.extractAndSaveToRdf(interesovanjeXml, "/interesovanja"))
             throw new BadRequestRuntimeException("Ekstrakcija metapodataka nije uspela.");

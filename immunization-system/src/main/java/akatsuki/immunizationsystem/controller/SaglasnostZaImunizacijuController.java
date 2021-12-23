@@ -13,9 +13,9 @@ import java.util.UUID;
 public class SaglasnostZaImunizacijuController {
     private final SaglasnostZaImunizacijuService saglasnostZaImunizacijuService;
 
-    @GetMapping("/{id}")
-    public String getSaglasnostZaImunizaciju(@PathVariable UUID id) {
-        return saglasnostZaImunizacijuService.getSaglasnostZaImunizaciju(id);
+    @GetMapping("/{idBrojIndex}")
+    public String getSaglasnostZaImunizaciju(@PathVariable String idBrojIndex) {
+        return saglasnostZaImunizacijuService.getSaglasnostZaImunizaciju(idBrojIndex);
     }
 
     @PostMapping

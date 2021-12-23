@@ -28,22 +28,12 @@ public class SaglasnostZaImunizacijuDAO implements ISaglasnostZaImunizacijuDAO {
         return Optional.of(saglasnostZaImunizaciju);
     }
 
-    public Optional<SaglasnostZaImunizaciju> getByJmbg(String jmbg) {
+    public Optional<SaglasnostZaImunizaciju> getByIdBroj(String jmbg) {
         List<String> resourceContent = daoUtils.getResourcesByCollectionId(collectionId);
         for(String resource: resourceContent) {
             SaglasnostZaImunizaciju saglasnostZaImunizaciju = mapper.convertToObject(resource);
-            if(saglasnostZaImunizaciju.getPacijent().getDrzavljanstvo().getSrpsko().getJmbg().equals(jmbg)) {
-                return Optional.of(saglasnostZaImunizaciju);
-            }
-        }
-        return Optional.empty();
-    }
-
-    public Optional<SaglasnostZaImunizaciju> getByBrojPasosa(String brojPasosa) {
-        List<String> resourceContent = daoUtils.getResourcesByCollectionId(collectionId);
-        for(String resource: resourceContent) {
-            SaglasnostZaImunizaciju saglasnostZaImunizaciju = mapper.convertToObject(resource);
-            if(saglasnostZaImunizaciju.getPacijent().getDrzavljanstvo().getStrano().getBrojPasosa().equals(brojPasosa)) {
+            if(saglasnostZaImunizaciju.getPacijent().getDrzavljanstvo().getSrpsko().getIdBroj().equals(jmbg)
+                    || saglasnostZaImunizaciju.getPacijent().getDrzavljanstvo().getStrano().getIdBroj().equals(jmbg) ) {
                 return Optional.of(saglasnostZaImunizaciju);
             }
         }
@@ -63,9 +53,15 @@ public class SaglasnostZaImunizacijuDAO implements ISaglasnostZaImunizacijuDAO {
 
     @Override
     public String save(SaglasnostZaImunizaciju saglasnostZaImunizaciju) {
-        String documentId = UUID.randomUUID() + ".xml";
-        daoUtils.createResource(collectionId, saglasnostZaImunizaciju, documentId, SaglasnostZaImunizaciju.class);
-        return documentId;
+        String id;
+        if(saglasnostZaImunizaciju.getPacijent().getDrzavljanstvo().getStrano().getIdBroj() != null)
+            id = saglasnostZaImunizaciju.getPacijent().getDrzavljanstvo().getStrano().getIdBroj();
+        else
+            id = saglasnostZaImunizaciju.getPacijent().getDrzavljanstvo().getSrpsko().getIdBroj();
+
+//        TODO treba index umesto onog sranja
+        daoUtils.createResource(collectionId, saglasnostZaImunizaciju, id + "_" + UUID.randomUUID() + ".xml", SaglasnostZaImunizaciju.class);
+        return id + ".xml";
     }
 
     @Override
