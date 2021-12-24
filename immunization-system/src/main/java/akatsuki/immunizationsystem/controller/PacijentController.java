@@ -14,8 +14,8 @@ public class PacijentController {
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public String createDigitalniSertifikat(@RequestBody String pacijentXml) {
-        return pacijentService.createPacijenta(pacijentXml);
+    public void createDigitalniSertifikat(@RequestBody String pacijentXml) {
+        pacijentService.createPacijenta(pacijentXml);
     }
 
 }

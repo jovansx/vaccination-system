@@ -37,7 +37,7 @@ export class LoginComponent implements OnInit {
         if (type === 'DOKTOR') {
           this._router.navigate(['/home/doctor']);
         } else if (type === 'PACIJENT') {
-          this._router.navigate(['/home/patient']);
+          this._router.navigate(['/home/patient/documents']);
         } else {
           this._router.navigate(['/login']);
         }

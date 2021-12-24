@@ -2,7 +2,7 @@
     <h1>
       Registracija na sistem vakcinacije<mat-icon>account_circle</mat-icon>
     </h1>
-    <form class="form-container" [formGroup]="registrationForm" (ngSubmit)="registerUser()">
+    <form class="form-container" [formGroup]="registrationForm" (ngSubmit)="registerUser()" fxFlex fxLayout="column" fxLayoutAlign="center center">
       <mat-form-field appearance="fill">
         <mat-label>Unesite ime</mat-label>
         <input matInput formControlName="ime" required />
@@ -38,7 +38,7 @@
       <mat-label>Unesite lozinku</mat-label>
       <input
         matInput
-        [type]="hide ? 'sifra' : 'text'"
+        [type]="hide ? 'password' : 'text'"
         formControlName="sifra"
       />
       <button

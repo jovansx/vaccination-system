@@ -27,7 +27,7 @@ export class AuthService {
     return this._http.post<string>('/authenticate', xmlRegistration, {headers});
   }
 
-  public registerUser(userDetails: RegistrationDetails): Observable<string> {
+  public registerUser(userDetails: RegistrationDetails): Observable<void> {
     let headers = new HttpHeaders({'Content-Type': 'application/xml'});
 
     const xmlRegistration: string = 
@@ -52,7 +52,7 @@ export class AuthService {
       <ulica>${userDetails.ulica}</ulica>
       <brojKuce>${userDetails.brojKuce}</brojKuce>
     </pacijent>`;
-    return this._http.post<string>('/register-user', xmlRegistration, {headers});
+    return this._http.post<void>('/pacijenti', xmlRegistration, {headers});
   }
 
   public logoutUser(): void {
