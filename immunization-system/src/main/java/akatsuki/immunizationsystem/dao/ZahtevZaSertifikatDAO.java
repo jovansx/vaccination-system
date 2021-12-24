@@ -1,6 +1,5 @@
 package akatsuki.immunizationsystem.dao;
 
-import akatsuki.immunizationsystem.model.documents.SaglasnostZaImunizaciju;
 import akatsuki.immunizationsystem.model.documents.ZahtevZaSertifikat;
 import akatsuki.immunizationsystem.utils.modelmappers.IModelMapper;
 import lombok.RequiredArgsConstructor;
@@ -29,9 +28,9 @@ public class ZahtevZaSertifikatDAO implements IZahtevZaSertifikatDAO {
     @Override
     public Optional<ZahtevZaSertifikat> getByIdBroj(String idBroj) {
         List<String> resourceContent = daoUtils.getResourcesByCollectionId(collectionId);
-        for(String resource: resourceContent) {
+        for (String resource : resourceContent) {
             ZahtevZaSertifikat zahtevZaSertifikat = mapper.convertToObject(resource);
-            if(zahtevZaSertifikat.getPodnosilac().getIdBroj().getValue().equals(idBroj)) {
+            if (zahtevZaSertifikat.getPodnosilac().getIdBroj().getValue().equals(idBroj)) {
                 return Optional.of(zahtevZaSertifikat);
             }
         }
@@ -42,7 +41,7 @@ public class ZahtevZaSertifikatDAO implements IZahtevZaSertifikatDAO {
     public Collection<ZahtevZaSertifikat> getAll() {
         List<String> resourceContent = daoUtils.getResourcesByCollectionId(collectionId);
         List<ZahtevZaSertifikat> zahtevi = new ArrayList<>();
-        for(String resource: resourceContent) {
+        for (String resource : resourceContent) {
             ZahtevZaSertifikat zahtevZaSertifikat = mapper.convertToObject(resource);
             zahtevi.add(zahtevZaSertifikat);
         }

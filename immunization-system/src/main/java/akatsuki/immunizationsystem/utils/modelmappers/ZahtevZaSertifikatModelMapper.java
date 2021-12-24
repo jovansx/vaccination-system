@@ -1,6 +1,5 @@
 package akatsuki.immunizationsystem.utils.modelmappers;
 
-import akatsuki.immunizationsystem.model.documents.SaglasnostZaImunizaciju;
 import akatsuki.immunizationsystem.model.documents.ZahtevZaSertifikat;
 import org.springframework.stereotype.Component;
 import org.springframework.util.ResourceUtils;

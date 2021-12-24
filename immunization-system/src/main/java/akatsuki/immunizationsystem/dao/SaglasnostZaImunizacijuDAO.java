@@ -1,8 +1,6 @@
 package akatsuki.immunizationsystem.dao;
 
-import akatsuki.immunizationsystem.model.documents.Interesovanje;
 import akatsuki.immunizationsystem.model.documents.SaglasnostZaImunizaciju;
-import akatsuki.immunizationsystem.model.documents.ZahtevZaSertifikat;
 import akatsuki.immunizationsystem.utils.modelmappers.IModelMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
@@ -30,10 +28,10 @@ public class SaglasnostZaImunizacijuDAO implements ISaglasnostZaImunizacijuDAO {
 
     public Optional<SaglasnostZaImunizaciju> getByIdBroj(String jmbg) {
         List<String> resourceContent = daoUtils.getResourcesByCollectionId(collectionId);
-        for(String resource: resourceContent) {
+        for (String resource : resourceContent) {
             SaglasnostZaImunizaciju saglasnostZaImunizaciju = mapper.convertToObject(resource);
-            if(saglasnostZaImunizaciju.getPacijent().getDrzavljanstvo().getSrpsko().getIdBroj().equals(jmbg)
-                    || saglasnostZaImunizaciju.getPacijent().getDrzavljanstvo().getStrano().getIdBroj().equals(jmbg) ) {
+            if (saglasnostZaImunizaciju.getPacijent().getDrzavljanstvo().getSrpsko().getIdBroj().equals(jmbg)
+                    || saglasnostZaImunizaciju.getPacijent().getDrzavljanstvo().getStrano().getIdBroj().equals(jmbg)) {
                 return Optional.of(saglasnostZaImunizaciju);
             }
         }
@@ -44,7 +42,7 @@ public class SaglasnostZaImunizacijuDAO implements ISaglasnostZaImunizacijuDAO {
     public Collection<SaglasnostZaImunizaciju> getAll() {
         List<String> resourceContent = daoUtils.getResourcesByCollectionId(collectionId);
         List<SaglasnostZaImunizaciju> saglasnosti = new ArrayList<>();
-        for(String resource: resourceContent) {
+        for (String resource : resourceContent) {
             SaglasnostZaImunizaciju saglasnostZaImunizaciju = mapper.convertToObject(resource);
             saglasnosti.add(saglasnostZaImunizaciju);
         }
@@ -54,7 +52,7 @@ public class SaglasnostZaImunizacijuDAO implements ISaglasnostZaImunizacijuDAO {
     @Override
     public String save(SaglasnostZaImunizaciju saglasnostZaImunizaciju) {
         String id;
-        if(saglasnostZaImunizaciju.getPacijent().getDrzavljanstvo().getStrano().getIdBroj() != null)
+        if (saglasnostZaImunizaciju.getPacijent().getDrzavljanstvo().getStrano().getIdBroj() != null)
             id = saglasnostZaImunizaciju.getPacijent().getDrzavljanstvo().getStrano().getIdBroj();
         else
             id = saglasnostZaImunizaciju.getPacijent().getDrzavljanstvo().getSrpsko().getIdBroj();
