@@ -1,12 +1,14 @@
 package akatsuki.immunizationsystem.dao;
 
 import akatsuki.immunizationsystem.model.documents.IzvestajOImunizaciji;
+import akatsuki.immunizationsystem.model.documents.SaglasnostZaImunizaciju;
 import akatsuki.immunizationsystem.model.users.Korisnik;
 import akatsuki.immunizationsystem.utils.modelmappers.IModelMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
 import java.util.Collection;
+import java.util.List;
 import java.util.Optional;
 
 @Component
@@ -28,10 +30,19 @@ public class KorisnikDAO implements IDao<Korisnik> {
         return Optional.of(korisnik);
     }
 
-    @Override
-    public Collection<Korisnik> getAll() {
-        return null;
+    public Optional<Korisnik> getByEmail(String email) {
+        List<String> resourceContent = daoUtils.getResourcesByCollectionId(collectionId);
+        for (String resource : resourceContent) {
+            Korisnik korisnik = mapper.convertToObject(resource);
+            if (korisnik.getEmail().equals(email)) {
+                return Optional.of(korisnik);
+            }
+        }
+        return Optional.empty();
     }
+
+    @Override
+    public Collection<Korisnik> getAll() { return null;}
 
     @Override
     public String save(Korisnik korisnik) {
