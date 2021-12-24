@@ -16,27 +16,27 @@ export class ValidatorService {
 
   validateRequired(control: string): string {
     if (this.form?.get(control)?.hasError('required')) {
-      return 'You must enter a value';
+      return 'Morate uneti vrednost!';
     }
     return '';
   }
 
   validateEmail(control: string): string {
     if (this.form?.get(control)?.hasError('required')) {
-      return 'You must enter a value';
+      return 'Morate uneti vrednost1';
     }
     if (this.form?.get(control)?.hasError('email')) {
-      return 'Entered email is not valid';
+      return 'Email nije validan!';
     }
     return '';
   }
 
-  validateMobilePhone(control: string): string {
+  validatePattern(control: string, phoneFormat: string): string {
     if (this.form?.get(control)?.hasError('required')) {
-      return 'You must enter a value!';
+      return 'Morate uneti vrednost!';
     }
     if (this.form?.get(control)?.hasError('pattern')) {
-      return 'Enter 10 digits!';
+      return `Zahtevani format ${phoneFormat}`;
     }
     return '';
   }

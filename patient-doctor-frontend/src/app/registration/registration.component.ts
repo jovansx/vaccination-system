@@ -13,11 +13,24 @@ import { ValidatorService } from '../services/validator.service';
 export class RegistrationComponent implements OnInit {
   hide: boolean = true;
   registrationForm: FormGroup = new FormGroup({
-    firstName: new FormControl('', [Validators.required]),
-    lastName: new FormControl('', [Validators.required]),
-    mobilePhone: new FormControl('', [Validators.required, Validators.pattern("[0-9]{10}")]),
+    ime: new FormControl('', [Validators.required]),
+    prezime: new FormControl('', [Validators.required]),
+    imeOca: new FormControl('', [Validators.required]),
+    mobilniTelefon: new FormControl('', [Validators.required, Validators.pattern("[0-9]{10}")]),
+    fiksniTelefon: new FormControl('', [Validators.required, Validators.pattern("\\([0-9]{3}\\) [0-9]{3}-[0-9]{4}")]),
     email: new FormControl('', [Validators.required, Validators.email]),
-    password: new FormControl('', [Validators.required]),
+    sifra: new FormControl('', [Validators.required]),
+    drzavljanstvo: new FormControl('SRPSKO', [Validators.required]),
+    idBroj: new FormControl('', [Validators.required]),
+    pol: new FormControl('MUSKI', [Validators.required]),
+    zanimanje: new FormControl('ZDRAVSTVENA_ZASTITA', [Validators.required]),
+    radniStatus: new FormControl('ZAPOSLEN', [Validators.required]),
+    datumRodjenja: new FormControl('', [Validators.required]),
+    mestoRodjenja: new FormControl('', [Validators.required]),
+    mestoStanovanja: new FormControl('', [Validators.required]),
+    opstina: new FormControl('', [Validators.required]),
+    ulica: new FormControl('', [Validators.required]),
+    brojKuce: new FormControl('', [Validators.required]),
   });
 
   constructor(private _auth: AuthService, private _router: Router,
