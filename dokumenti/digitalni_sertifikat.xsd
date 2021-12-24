@@ -8,7 +8,7 @@
         <xs:complexType>
             <xs:sequence>
                 <xs:element name="primalac" type="t:TPodnosilacZahteva"/>
-
+                
                 <xs:element name="vakcinacija">
                     <xs:complexType>
                         <xs:sequence minOccurs="2" maxOccurs="unbounded">
@@ -30,7 +30,7 @@
                         <xs:field xpath="@broj"/>
                     </xs:unique>
                 </xs:element>
-
+                
                 <xs:element name="testovi">
                     <xs:complexType>
                         <xs:sequence minOccurs="3" maxOccurs="3">
@@ -53,6 +53,9 @@
             </xs:sequence>
             <xs:attribute name="datum_i_vreme_izdavanja" use="required" type="xs:dateTime"/>
             <xs:attribute name="broj_sertifikata" use="required" type="xs:string"/>
+            <xs:attribute name="about" type="xs:string" use="required"/>
+            <xs:attribute fixed="pred:parentTo" name="rel" type="xs:string"/>
+            <xs:attribute name="href" type="xs:string"/>
         </xs:complexType>
     </xs:element>
 </xs:schema>

@@ -1,0 +1,47 @@
+.registration-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-around;
+    overflow-y: auto;
+    min-height: 100vh;
+    background-color: var(--light-grey);
+  }
+  
+  .form-container {
+    width: 80vw;
+    height: 80vh;
+    overflow: scroll;
+    margin: auto;
+    background-color: white;
+    border-radius: 20px;
+    box-shadow: 0px 0px 5px grey;
+    position: relative;
+  }
+  
+  .form-container > mat-form-field {
+    width: 40%;
+    margin: 0 20px;
+    font-size: large;
+  }
+
+  .form-container > mat-form-field:first-child {
+   margin-top: 20px;
+  }
+  
+  #registration {
+    width: 50%;
+  }
+  
+  #back-to-login {
+    position: absolute;
+    left: 20px;
+    top: 10px;
+  }
+  
+  h1 {
+    text-align: center;
+    width: 30vw;
+    margin-top: 50px;
+  }
+  

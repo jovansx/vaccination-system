@@ -7,7 +7,7 @@
     <pacijent datum_popunjavanja="1999-10-15">
         <drzavljanstvo>
             <srpsko>
-                <jmbg>1510999800078</jmbg>
+                <id_broj property="pred:id_broj" datatype="xs:string">1510999800078</id_broj>
             </srpsko>
         </drzavljanstvo>
         <puno_ime>

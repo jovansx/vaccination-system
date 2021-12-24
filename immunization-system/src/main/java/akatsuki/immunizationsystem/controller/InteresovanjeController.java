@@ -1,28 +1,25 @@
 package akatsuki.immunizationsystem.controller;
 
-import akatsuki.immunizationsystem.model.documents.Interesovanje;
-import akatsuki.immunizationsystem.service.DocumentService;
-import org.springframework.beans.factory.annotation.Autowired;
+import akatsuki.immunizationsystem.service.InteresovanjeService;
+import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
-import org.xml.sax.SAXException;
-
-import javax.websocket.server.PathParam;
-import javax.xml.bind.JAXBException;
 
 @RestController
-@RequestMapping("/api/documents")
+@RequestMapping("/api/interesovanja")
+@RequiredArgsConstructor
 public class InteresovanjeController {
 
-    @Autowired
-    private DocumentService documentService;
+    private final InteresovanjeService interesovanjeService;
 
-    @GetMapping("/{jmbg}")
-    public String getInteresovanje(@PathVariable String jmbg) {
-        return documentService.getInteresovanje(jmbg);
+    @GetMapping("/{idBroj}")
+    public String getInteresovanje(@PathVariable String idBroj) {
+        return interesovanjeService.getInteresovanje(idBroj);
     }
 
     @PostMapping
-    public String createInteresovanje(@RequestBody String interesovanjeXml) throws JAXBException, SAXException {
-        return documentService.createInteresovanje(interesovanjeXml);
+    @ResponseStatus(HttpStatus.CREATED)
+    public String createInteresovanje(@RequestBody String interesovanjeXml) {
+        return interesovanjeService.createInteresovanje(interesovanjeXml);
     }
 }

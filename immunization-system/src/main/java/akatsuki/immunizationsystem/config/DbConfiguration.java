@@ -1,0 +1,47 @@
+package akatsuki.immunizationsystem.config;
+
+import akatsuki.immunizationsystem.dao.IDao;
+import akatsuki.immunizationsystem.model.users.Doktor;
+import akatsuki.immunizationsystem.model.users.Korisnik;
+import akatsuki.immunizationsystem.model.users.Pacijent;
+import akatsuki.immunizationsystem.model.users.enums.*;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.boot.CommandLineRunner;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+
+import javax.xml.datatype.DatatypeFactory;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.GregorianCalendar;
+
+@Configuration
+@Slf4j
+public class DbConfiguration {
+
+    @Bean
+    public CommandLineRunner populateDatabase(IDao<Korisnik> korisnikIDao) {
+        return (args) -> {
+            Doktor doktor1 = new Doktor("Promenada u Novom Sadu", "1010998800071", "Nikola",
+                    "Nikolic", "(021) 823-1111", "nikola@gmail.com", "$2a$12$CLdgTeAs50lbVLOBELp7yele07svd3/1nNGefNJ6Lb5Qx/08eBMFa", TipKorisnika.DOKTOR);
+
+            DateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+
+            GregorianCalendar calendar = new GregorianCalendar();
+            Date date = format.parse("1999-09-09");
+            calendar.setTime(date);
+
+            Pacijent pacijent1 = new Pacijent("1010998800070", "Marko",
+                    "Markovic", "(021) 823-1112", "marko@gmail.com", "$2a$12$GfYvRDS42Ki3Dk3w39svpeKozJOFYPFYxwgP6l0eEyuadTf5gE5Ry",
+                    TipKorisnika.PACIJENT, Pol.MUSKI, DatatypeFactory.newInstance().newXMLGregorianCalendar(calendar), TipDrzavljanstva.SRPSKO,
+                    "Novi Sad", "Veternik", "Vladike Maksima", "12",
+                    "061 111 111", "Lazar", "Sombor", RadniStatus.STUDENT, Zanimanje.PROSVETA);
+
+            korisnikIDao.save(doktor1);
+            korisnikIDao.save(pacijent1);
+
+            log.info("Database is populated");
+        };
+    }
+}

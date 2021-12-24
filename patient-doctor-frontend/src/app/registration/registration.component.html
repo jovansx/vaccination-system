@@ -1,0 +1,132 @@
+<div class="registration-container">
+    <h1>
+      Registracija na sistem vakcinacije<mat-icon>account_circle</mat-icon>
+    </h1>
+    <form class="form-container" [formGroup]="registrationForm" (ngSubmit)="registerUser()">
+      <mat-form-field appearance="fill">
+        <mat-label>Unesite ime</mat-label>
+        <input matInput formControlName="ime" required />
+        <mat-error *ngIf="registrationForm.invalid">{{ validator.validateRequired('ime') }}</mat-error>
+      </mat-form-field>
+      <mat-form-field appearance="fill">
+        <mat-label>Unesite prezime</mat-label>
+        <input matInput formControlName="prezime" required />
+        <mat-error *ngIf="registrationForm.invalid">{{ validator.validateRequired('prezime') }}</mat-error>
+      </mat-form-field>
+      <mat-form-field appearance="fill">
+        <mat-label>Unesite ime oca</mat-label>
+        <input matInput formControlName="imeOca" required />
+        <mat-error *ngIf="registrationForm.invalid">{{ validator.validateRequired('imeOca') }}</mat-error>
+      </mat-form-field>
+      <mat-form-field appearance="fill">
+        <mat-label>Unesite fiksni telefon</mat-label>
+        <input matInput formControlName="fiksniTelefon" required />
+        <mat-error *ngIf="registrationForm.invalid">{{ validator.validatePattern('fiksniTelefon', '(ddd) ddd-dddd') }}</mat-error>
+      </mat-form-field>
+      <mat-form-field appearance="fill">
+        <mat-label>Unesite mobilni telefon</mat-label>
+        <input matInput formControlName="mobilniTelefon" required />
+        <mat-error *ngIf="registrationForm.invalid">{{ validator.validatePattern('mobilniTelefon', 'dddddddddd') }}</mat-error>
+      </mat-form-field>
+      <mat-form-field appearance="fill">
+        <mat-label>Unesite email</mat-label>
+        <input matInput formControlName="email" required />
+        <mat-error *ngIf="registrationForm.invalid">{{ validator.validateEmail('email') }}</mat-error>
+      </mat-form-field>
+  
+    <mat-form-field appearance="fill">
+      <mat-label>Unesite lozinku</mat-label>
+      <input
+        matInput
+        [type]="hide ? 'sifra' : 'text'"
+        formControlName="sifra"
+      />
+      <button
+        mat-icon-button
+        matSuffix
+        type="button"
+        (click)="hide = !hide"
+        [attr.aria-label]="'Hide password'"
+        [attr.aria-pressed]="hide"
+      >
+        <mat-icon>{{ hide ? "visibility_off" : "visibility" }}</mat-icon>
+      </button>
+      <mat-error *ngIf="registrationForm.invalid">{{ validator.validateRequired('sifra') }}</mat-error>
+    </mat-form-field>
+    <mat-form-field appearance="fill">
+      <mat-label>Drzavljanstvo</mat-label>
+      <mat-select formControlName="drzavljanstvo">
+        <mat-option value="SRPSKO">Srpsko</mat-option>
+        <mat-option value="STRANO_SA_BORAVKOM">Strano sa boravkom</mat-option>
+        <mat-option value="STRANO_BEZ_BORAVKA">Strano bez boravka</mat-option>
+      </mat-select>
+    </mat-form-field>
+    <mat-form-field appearance="fill">
+      <mat-label>{{registrationForm.controls['drzavljanstvo'].value === 'SRPSKO' ? "Unesite jmbg" : "Unesite broj pasosa"}}</mat-label>
+      <input matInput formControlName="idBroj" required />
+      <mat-error *ngIf="registrationForm.invalid">{{ validator.validateRequired('idBroj') }}</mat-error>
+    </mat-form-field>
+    <mat-form-field appearance="fill">
+        <mat-label>Pol</mat-label>
+        <mat-select formControlName="pol">
+          <mat-option value="MUSKI">Muski</mat-option>
+          <mat-option value="ZENSKI">Zenski</mat-option>
+        </mat-select>
+    </mat-form-field>
+    <mat-form-field appearance="fill">
+        <mat-label>Zanimanje</mat-label>
+        <mat-select formControlName="zanimanje">
+          <mat-option value="ZDRAVSTVENA_ZASTITA">Zdravstvena zastita</mat-option>
+          <mat-option value="SOCIJALNA_ZASTITA">Socijalna zastita</mat-option>
+          <mat-option value="PROSVETA">Prosveta</mat-option>
+          <mat-option value="MUP">Mup</mat-option>
+          <mat-option value="VOJSKA_RS">Vojska Republike Srbije</mat-option>
+          <mat-option value="DRUGO">Drugo</mat-option>
+        </mat-select>
+    </mat-form-field>
+    <mat-form-field appearance="fill">
+          <mat-label>Radni status</mat-label>
+          <mat-select formControlName="radniStatus">
+            <mat-option value="ZAPOSLEN">Zaposlen</mat-option>
+            <mat-option value="NEZAPOSLEN">Nezaposlen</mat-option>
+            <mat-option value="PENZIONER">Penzioner</mat-option>
+            <mat-option value="UCENIK">Ucenik</mat-option>
+            <mat-option value="STUDENT">Student</mat-option>
+            <mat-option value="DETE">Dete</mat-option>
+          </mat-select>
+      </mat-form-field>
+      <mat-form-field appearance="fill">
+        <mat-label>Unesite datum rodjenja</mat-label>
+        <input matInput formControlName="datumRodjenja" required />
+        <mat-error *ngIf="registrationForm.invalid">{{ validator.validateEmail('datumRodjenja') }}</mat-error>
+      </mat-form-field>
+      <mat-form-field appearance="fill">
+        <mat-label>Unesite mesto rodjenja</mat-label>
+        <input matInput formControlName="mestoRodjenja" required />
+        <mat-error *ngIf="registrationForm.invalid">{{ validator.validateEmail('mestoRodjenja') }}</mat-error>
+      </mat-form-field>
+      <mat-form-field appearance="fill">
+        <mat-label>Unesite mesto stanovanja</mat-label>
+        <input matInput formControlName="mestoStanovanja" required />
+        <mat-error *ngIf="registrationForm.invalid">{{ validator.validateEmail('mestoStanovanja') }}</mat-error>
+      </mat-form-field>
+      <mat-form-field appearance="fill">
+        <mat-label>Unesite opstinu</mat-label>
+        <input matInput formControlName="opstina" required />
+        <mat-error *ngIf="registrationForm.invalid">{{ validator.validateEmail('opstina') }}</mat-error>
+      </mat-form-field>
+      <mat-form-field appearance="fill">
+        <mat-label>Unesite ulicu</mat-label>
+        <input matInput formControlName="ulica" required />
+        <mat-error *ngIf="registrationForm.invalid">{{ validator.validateEmail('ulica') }}</mat-error>
+      </mat-form-field>
+      <mat-form-field appearance="fill">
+        <mat-label>Unesite kucni broj</mat-label>
+        <input matInput formControlName="brojKuce" required />
+        <mat-error *ngIf="registrationForm.invalid">{{ validator.validateEmail('brojKuce') }}</mat-error>
+      </mat-form-field>
+      <button id="registration" mat-flat-button color="primary" type="submit">Register</button>
+      <button id="back-to-login" mat-icon-button color="primary" routerLink="/login"><mat-icon>arrow_back_ios</mat-icon></button>
+    </form>
+  </div>
+  

@@ -1,38 +1,30 @@
 package akatsuki.immunizationsystem.dao;
 
 import akatsuki.immunizationsystem.model.documents.Interesovanje;
-import org.springframework.beans.factory.annotation.Autowired;
+import akatsuki.immunizationsystem.utils.modelmappers.IModelMapper;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
-import org.xmldb.api.modules.XMLResource;
 
-import javax.xml.bind.JAXBContext;
-import javax.xml.bind.Unmarshaller;
 import java.util.Collection;
 import java.util.Optional;
 
 @Component
-public class InteresovanjeDAO implements Dao<Interesovanje> {
+@RequiredArgsConstructor
+public class InteresovanjeDAO implements IDao<Interesovanje> {
 
-    @Autowired
-    private DaoUtils daoUtils;
-
-    private final String collectionId = "interesovanja";
+    private final String collectionId = "/db/vaccination-system/interesovanja";
+    private final DaoUtils daoUtils;
+    private final IModelMapper<Interesovanje> mapper;
 
     @Override
     public Optional<Interesovanje> get(String id) {
-        XMLResource resource = daoUtils.getResource(collectionId, id);
-        if (resource == null)
+        String resourceContent = daoUtils.getResource(collectionId, id);
+        if (resourceContent.equals(""))
             return Optional.empty();
-
-        try {
-            JAXBContext jaxbContext = JAXBContext.newInstance(Interesovanje.class);
-            Unmarshaller unmarshaller = jaxbContext.createUnmarshaller();
-            Interesovanje interesovanje = (Interesovanje) unmarshaller.unmarshal(resource.getContentAsDOM());
-            return Optional.of(interesovanje);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        return Optional.empty();
+        Interesovanje interesovanje = mapper.convertToObject(resourceContent);
+        if (interesovanje == null)
+            return Optional.empty();
+        return Optional.of(interesovanje);
     }
 
     @Override
@@ -42,7 +34,9 @@ public class InteresovanjeDAO implements Dao<Interesovanje> {
 
     @Override
     public String save(Interesovanje interesovanje) {
-        return "";
+        String documentId = interesovanje.getPodnosilac().getIdBroj().getValue() + ".xml";
+        daoUtils.createResource(collectionId, interesovanje, documentId, Interesovanje.class);
+        return interesovanje.getPodnosilac().getIdBroj().getValue();
     }
 
     @Override
