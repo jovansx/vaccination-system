@@ -34,9 +34,9 @@ export class LoginComponent implements OnInit {
       (res: any) => {
         localStorage.setItem('token', res.token);
         const type = this._jwt.getTypeFromToken();
-        if (type === 'DOCTOR') {
+        if (type === 'DOKTOR') {
           this._router.navigate(['/home/doctor']);
-        } else if (type === 'PATIENT') {
+        } else if (type === 'PACIJENT') {
           this._router.navigate(['/home/patient']);
         } else {
           this._router.navigate(['/login']);

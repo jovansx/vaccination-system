@@ -16,12 +16,14 @@ import { JwtDecoderService } from './autentification/services/jwt-decoder.servic
 import { AuthService } from './autentification/services/auth.service';
 import { HeaderInterceptorService } from './autentification/services/header-interceptor.service';
 import { RegistrationComponent } from './registration/registration.component';
+import { PatientComponent } from './patient/patient.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     LoginComponent,
-    RegistrationComponent
+    RegistrationComponent,
+    PatientComponent
   ],
   imports: [
     BrowserModule,
