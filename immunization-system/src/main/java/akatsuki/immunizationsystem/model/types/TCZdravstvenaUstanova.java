@@ -8,7 +8,7 @@ import javax.xml.bind.annotation.*;
 
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "TCZdravstvenaUstanova", propOrder = {
-    "value"
+        "value"
 })
 @Data
 @NoArgsConstructor

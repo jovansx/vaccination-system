@@ -10,4 +10,5 @@ public class ImmunizationSystemApplication {
         SpringApplication.run(ImmunizationSystemApplication.class, args);
     }
 
+
 }
