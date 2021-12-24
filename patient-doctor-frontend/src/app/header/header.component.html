@@ -1,0 +1,23 @@
+<header class="header" fxLayout="row" fxLayoutAlign="space-between center">
+    <div
+      class="buttons-container"
+      fxLayout="row"
+      fxLayoutAlign="space-between start"
+    >
+      <mat-icon>local_hospital</mat-icon>
+      <button mat-stroked-button color="primary" 
+              [routerLink]="['/home/patient/documents']" 
+              [routerLinkActive]="'active-button'"
+              *ngIf="_type === 'PACIJENT'"
+              >Moji dokumenti</button>
+      <button mat-stroked-button color="primary" 
+              [routerLink]="['/home/patient/submit']" 
+              [routerLinkActive]="'active-button'"
+              *ngIf="_type === 'PACIJENT'"
+              >Podnesi</button>
+    </div>
+    <button id="logout" mat-flat-button color="primary" (click)="logout()">
+      Izloguj se
+    </button>
+  </header>
+  
