@@ -13,7 +13,18 @@ export class AuthService {
   constructor(private _http: HttpClient, private _router: Router, private _jwt: JwtDecoderService) {}
 
   public loginUser(userCredentials: Credentials): Observable<string> {
-    return this._http.post<string>('/authenticate', userCredentials);
+    let headers = new HttpHeaders({'Content-Type': 'application/xml'});
+    const xmlRegistration: string = 
+    `<?xml version="1.0" encoding="UTF-8"?>
+    <login>
+        <email>
+            ${userCredentials.email}
+        </email>
+        <password>
+            ${userCredentials.password}
+        </password>
+    </login>`;
+    return this._http.post<string>('/authenticate', xmlRegistration, {headers});
   }
 
   public registerUser(userDetails: RegistrationDetails): Observable<string> {
