@@ -9,8 +9,6 @@ import akatsuki.immunizationsystem.utils.modelmappers.IModelMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
-import java.util.UUID;
-
 @Service
 @RequiredArgsConstructor
 public class ZahtevZaSertifikatService {
@@ -31,7 +29,7 @@ public class ZahtevZaSertifikatService {
         if (zahtevZaSertifikat == null || zahtevZaSertifikat.isOdobren())
             throw new BadRequestRuntimeException("Dokument koji ste poslali nije validan.");
 
-        if(zahtevZaSertifikatDAO.getByIdBroj(zahtevZaSertifikat.getPodnosilac().getIdBroj().getValue()).isPresent())
+        if (zahtevZaSertifikatDAO.getByIdBroj(zahtevZaSertifikat.getPodnosilac().getIdBroj().getValue()).isPresent())
             throw new BadRequestRuntimeException("Osoba s id-om " + zahtevZaSertifikat.getPodnosilac().getIdBroj().getValue() + " je vec podnela zahtev za sertifikat.");
 
         return zahtevZaSertifikatDAO.save(zahtevZaSertifikat);

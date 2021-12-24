@@ -43,7 +43,7 @@ public class DaoUtils {
             col.setProperty(OutputKeys.INDENT, "yes");
             resources = col.listResources();
 
-            for(String documentId: resources) {
+            for (String documentId : resources) {
                 XMLResource res = (XMLResource) col.getResource(documentId);
                 Object objectContent = res.getContent();
                 xmlResourceList.add((String) objectContent);

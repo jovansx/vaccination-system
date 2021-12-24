@@ -2,7 +2,6 @@ package akatsuki.immunizationsystem.model.documents;
 
 import akatsuki.immunizationsystem.model.types.TCNazivVakcineIzvrseneVakcinacije;
 import akatsuki.immunizationsystem.model.types.TCZdravstvenaUstanova;
-import akatsuki.immunizationsystem.model.types.TNazivVakcineIzvrseneVakcinacije;
 import akatsuki.immunizationsystem.model.types.TPrimalac;
 import lombok.AllArgsConstructor;
 import lombok.Data;

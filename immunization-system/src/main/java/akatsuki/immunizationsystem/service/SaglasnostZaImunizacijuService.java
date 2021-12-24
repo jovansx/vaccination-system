@@ -1,18 +1,13 @@
 package akatsuki.immunizationsystem.service;
 
-import akatsuki.immunizationsystem.dao.IDao;
 import akatsuki.immunizationsystem.dao.ISaglasnostZaImunizacijuDAO;
 import akatsuki.immunizationsystem.exceptions.BadRequestRuntimeException;
-import akatsuki.immunizationsystem.exceptions.ConflictRuntimeException;
 import akatsuki.immunizationsystem.exceptions.NotFoundRuntimeException;
-import akatsuki.immunizationsystem.model.documents.Interesovanje;
 import akatsuki.immunizationsystem.model.documents.SaglasnostZaImunizaciju;
 import akatsuki.immunizationsystem.utils.Validator;
 import akatsuki.immunizationsystem.utils.modelmappers.IModelMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-
-import java.util.UUID;
 
 @Service
 @RequiredArgsConstructor

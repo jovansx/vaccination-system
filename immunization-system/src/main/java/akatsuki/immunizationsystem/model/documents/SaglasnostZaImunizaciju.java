@@ -210,7 +210,7 @@ public class SaglasnostZaImunizaciju {
             @AllArgsConstructor
             public static class Srpsko {
 
-                @XmlElement(name = "id_broj",namespace = "http://www.akatsuki.org/saglasnost_za_imunizaciju", required = true)
+                @XmlElement(name = "id_broj", namespace = "http://www.akatsuki.org/saglasnost_za_imunizaciju", required = true)
                 protected String idBroj;
             }
 
