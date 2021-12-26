@@ -52,14 +52,26 @@ public class SaglasnostZaImunizacijuDAO implements ISaglasnostZaImunizacijuDAO {
     @Override
     public String save(SaglasnostZaImunizaciju saglasnostZaImunizaciju) {
         String id;
-        if (saglasnostZaImunizaciju.getPacijent().getDrzavljanstvo().getStrano().getIdBroj() != null)
-            id = saglasnostZaImunizaciju.getPacijent().getDrzavljanstvo().getStrano().getIdBroj();
+        if (saglasnostZaImunizaciju.getPacijent().getDrzavljanstvo().getStrano() != null)
+            id = saglasnostZaImunizaciju.getPacijent().getDrzavljanstvo().getStrano().getIdBroj().getValue();
         else
-            id = saglasnostZaImunizaciju.getPacijent().getDrzavljanstvo().getSrpsko().getIdBroj();
+            id = saglasnostZaImunizaciju.getPacijent().getDrzavljanstvo().getSrpsko().getIdBroj().getValue();
 
-//        TODO treba index umesto onog sranja
-        daoUtils.createResource(collectionId, saglasnostZaImunizaciju, id + "_" + UUID.randomUUID() + ".xml", SaglasnostZaImunizaciju.class);
-        return id + ".xml";
+        int index = getDocumentIndex(id);
+        daoUtils.createResource(collectionId, saglasnostZaImunizaciju, id + "_" + index + ".xml", SaglasnostZaImunizaciju.class);
+        return id + "_" + index + ".xml";
+    }
+
+    private int getDocumentIndex(String id) {
+        int index = 0;
+        String fullId = id + "_" + index;
+        String resourceContent = daoUtils.getResource(collectionId, fullId);
+        while(!resourceContent.equals("")) {
+            index++;
+            fullId = id + "_" + index;
+            resourceContent = daoUtils.getResource(collectionId, fullId);
+        }
+        return index;
     }
 
     @Override

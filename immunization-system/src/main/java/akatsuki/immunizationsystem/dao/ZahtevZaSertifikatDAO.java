@@ -50,10 +50,22 @@ public class ZahtevZaSertifikatDAO implements IZahtevZaSertifikatDAO {
 
     @Override
     public String save(ZahtevZaSertifikat zahtevZaSertifikat) {
-//        TODO videti da umesto uuid stavimo index
-        String documentId = zahtevZaSertifikat.getPodnosilac().getIdBroj().getValue() + "_" + UUID.randomUUID() + ".xml";
+        int index = getDocumentIndex(zahtevZaSertifikat.getPodnosilac().getIdBroj().getValue());
+        String documentId = zahtevZaSertifikat.getPodnosilac().getIdBroj().getValue() + "_" + index + ".xml";
         daoUtils.createResource(collectionId, zahtevZaSertifikat, documentId, ZahtevZaSertifikat.class);
         return documentId;
+    }
+
+    private int getDocumentIndex(String id) {
+        int index = 0;
+        String fullId = id + "_" + index;
+        String resourceContent = daoUtils.getResource(collectionId, fullId);
+        while(!resourceContent.equals("")) {
+            index++;
+            fullId = id + "_" + index;
+            resourceContent = daoUtils.getResource(collectionId, fullId);
+        }
+        return index;
     }
 
     @Override
