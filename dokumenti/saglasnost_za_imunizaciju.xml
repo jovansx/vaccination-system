@@ -5,18 +5,16 @@
     xsi:schemaLocation="http://www.akatsuki.org saglasnost_za_imunizaciju.xsd
     http://www.akatsuki.org/tipovi tipovi.xsd"
     xmlns:pred="http://www.akatsuki.org/rdf/examples/predicate/"
-    about="http://www.akatsuki.org/saglasnosti/1510999800078">
+    about="http://www.akatsuki.org/saglasnosti/1510999800078_0">
     <pacijent datum_popunjavanja="1999-10-15">
         <drzavljanstvo>
             <srpsko>
-                <id_broj property="pred:id_broj" datatype="xs:string">1510999800048</id_broj>
+                <id_broj property="pred:id_broj" datatype="xs:string">1510999800078</id_broj>
             </srpsko>
         </drzavljanstvo>
-        <puno_ime>
-            <prezime property="pred:prezime" datatype="xs:string">Buljevic</prezime>
-            <ime property="pred:ime" datatype="xs:string">Aleksandar</ime>
-            <ime_roditelja>Mladen</ime_roditelja>
-        </puno_ime>
+        <prezime property="pred:prezime" datatype="xs:string">Buljevic</prezime>
+        <ime property="pred:ime" datatype="xs:string">Aleksandar</ime>
+        <ime_roditelja>Mladen</ime_roditelja>
         <pol property="pred:pol" datatype="xs:string">Muski</pol>
         <rodjenje>
             <datum_rodjenja>1999-10-15</datum_rodjenja>

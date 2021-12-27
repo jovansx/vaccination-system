@@ -12,6 +12,9 @@
             </xs:sequence>
             <xs:attribute name="datum" type="xs:date" use="required"/>
             <xs:attribute name="mesto" type="xs:string" use="required"/>
+            <xs:attribute name="odobren" type="xs:boolean"/>
+            <xs:attribute name="about" type="xs:string" use="required"/>
+            <xs:attribute name="href" type="xs:string"/>
         </xs:complexType>
     </xs:element>
 </xs:schema>

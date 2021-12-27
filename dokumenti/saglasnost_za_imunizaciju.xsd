@@ -32,15 +32,9 @@
                                     </xs:choice>
                                 </xs:complexType>
                             </xs:element>
-                            <xs:element name="puno_ime">
-                                <xs:complexType>
-                                    <xs:sequence>
-                                        <xs:element name="prezime" type="t:TPrezime"/>
-                                        <xs:element name="ime" type="t:TIme"/>
-                                        <xs:element name="ime_roditelja" type="xs:string"/>
-                                    </xs:sequence>
-                                </xs:complexType>
-                            </xs:element>
+                            <xs:element name="prezime" type="t:TPrezime"/>
+                            <xs:element name="ime" type="t:TIme"/>
+                            <xs:element name="ime_roditelja" type="xs:string"/>
                             <xs:element name="pol" type="t:TCPol"/>
                             <xs:element name="rodjenje">
                                 <xs:complexType>
@@ -189,7 +183,4 @@
             <xs:attribute name="href" type="xs:string"/>
         </xs:complexType>
     </xs:element>
-
-
-
 </xs:schema>
