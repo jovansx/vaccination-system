@@ -66,7 +66,7 @@ public class SaglasnostZaImunizaciju {
             protected String ime;
             @XmlElement(namespace = "http://www.akatsuki.org/saglasnost_za_imunizaciju", required = true)
             protected String prezime;
-            @XmlElement(namespace = "http://www.akatsuki.org/tipovi", required = true)
+            @XmlElement(namespace = "http://www.akatsuki.org/saglasnost_za_imunizaciju", required = true)
             protected String telefon;
         }
 
@@ -143,7 +143,9 @@ public class SaglasnostZaImunizaciju {
     @XmlAccessorType(XmlAccessType.FIELD)
     @XmlType(name = "", propOrder = {
             "drzavljanstvo",
-            "punoIme",
+            "prezime",
+            "ime",
+            "imeRoditelja",
             "pol",
             "rodjenje",
             "prebivaliste",
@@ -163,7 +165,11 @@ public class SaglasnostZaImunizaciju {
         @XmlElement(namespace = "http://www.akatsuki.org/saglasnost_za_imunizaciju", required = true)
         protected Drzavljanstvo drzavljanstvo;
         @XmlElement(namespace = "http://www.akatsuki.org/saglasnost_za_imunizaciju", required = true)
-        protected PunoIme punoIme;
+        protected TPrezime prezime;
+        @XmlElement(namespace = "http://www.akatsuki.org/saglasnost_za_imunizaciju", required = true)
+        protected TIme ime;
+        @XmlElement(name = "ime_roditelja", namespace = "http://www.akatsuki.org/saglasnost_za_imunizaciju", required = true)
+        protected String imeRoditelja;
         @XmlElement(namespace = "http://www.akatsuki.org/saglasnost_za_imunizaciju", required = true)
         protected TCPol pol;
         @XmlElement(namespace = "http://www.akatsuki.org/saglasnost_za_imunizaciju", required = true)
@@ -283,25 +289,6 @@ public class SaglasnostZaImunizaciju {
                 @XmlElement(namespace = "http://www.akatsuki.org/saglasnost_za_imunizaciju", required = true)
                 protected BigInteger broj;
             }
-        }
-
-        @XmlAccessorType(XmlAccessType.FIELD)
-        @XmlType(name = "", propOrder = {
-                "prezime",
-                "ime",
-                "imeRoditelja"
-        })
-        @Data
-        @NoArgsConstructor
-        @AllArgsConstructor
-        public static class PunoIme {
-
-            @XmlElement(namespace = "http://www.akatsuki.org/tipovi", required = true)
-            protected TPrezime prezime;
-            @XmlElement(namespace = "http://www.akatsuki.org/tipovi", required = true)
-            protected TIme ime;
-            @XmlElement(name = "ime_roditelja", namespace = "http://www.akatsuki.org/saglasnost_za_imunizaciju", required = true)
-            protected String imeRoditelja;
         }
 
         @XmlAccessorType(XmlAccessType.FIELD)

@@ -238,13 +238,6 @@ public class ObjectFactory {
     }
 
     /**
-     * Create an instance of {@link SaglasnostZaImunizaciju.Pacijent.PunoIme }
-     */
-    public SaglasnostZaImunizaciju.Pacijent.PunoIme createSaglasnostZaImunizacijuPacijentPunoIme() {
-        return new SaglasnostZaImunizaciju.Pacijent.PunoIme();
-    }
-
-    /**
      * Create an instance of {@link SaglasnostZaImunizaciju.Pacijent.Rodjenje }
      */
     public SaglasnostZaImunizaciju.Pacijent.Rodjenje createSaglasnostZaImunizacijuPacijentRodjenje() {
