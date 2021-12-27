@@ -4,11 +4,12 @@
     xmlns:t="http://www.akatsuki.org/tipovi"
     xsi:schemaLocation="http://www.akatsuki.org zahtev_za_sertifikat.xsd
     http://www.akatsuki.org/tipovi tipovi.xsd"
-    datum="2021-10-03" mesto="Novi Sad">
+    datum="2021-10-03" mesto="Novi Sad"
+    about="http://www.akatsuki.org/saglasnosti/1510999800078_0">
     <podnosilac>
         <t:ime property="pred:ime" datatype="xs:string">Aleksandar</t:ime>
         <t:prezime property="pred:prezime" datatype="xs:string">Buljevic</t:prezime>
-        <t:id_broj property="pred:id_broj" datatype="xs:string">1510999800012</t:id_broj>
+        <t:id_broj property="pred:id_broj" datatype="xs:string">1510999800078</t:id_broj>
         <t:pol property="pred:pol" datatype="xs:string">Muski</t:pol>
         <t:datum_rodjenja>2021-10-15</t:datum_rodjenja>
     </podnosilac>
