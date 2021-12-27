@@ -2,6 +2,7 @@
 <zahtev_za_sertifikat xmlns="http://www.akatsuki.org/zahtev_za_sertifikat"
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     xmlns:t="http://www.akatsuki.org/tipovi"
+    xmlns:pred="http://www.akatsuki.org/rdf/examples/predicate/"
     xsi:schemaLocation="http://www.akatsuki.org zahtev_za_sertifikat.xsd
     http://www.akatsuki.org/tipovi tipovi.xsd"
     datum="2021-10-03" mesto="Novi Sad"
