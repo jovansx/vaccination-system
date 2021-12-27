@@ -1,5 +1,6 @@
 package akatsuki.immunizationsystem.service;
 
+import akatsuki.immunizationsystem.dao.DigitalniSertifikatDAO;
 import akatsuki.immunizationsystem.dao.IZahtevZaSertifikatDAO;
 import akatsuki.immunizationsystem.exceptions.BadRequestRuntimeException;
 import akatsuki.immunizationsystem.exceptions.NotFoundRuntimeException;
@@ -14,12 +15,13 @@ import org.springframework.stereotype.Service;
 @RequiredArgsConstructor
 public class ZahtevZaSertifikatService {
     private final IZahtevZaSertifikatDAO zahtevZaSertifikatDAO;
+    private final DigitalniSertifikatDAO digitalniSertifikatDAO;
     private final Validator validator;
     private final IModelMapper<ZahtevZaSertifikat> mapper;
     private final MetadataExtractor extractor;
 
     public String getZahtevZaSertifikat(String idBrojIndex) throws RuntimeException {
-        if (!validator.isIdDozaValid(idBrojIndex))
+        if (!validator.isIdValid(idBrojIndex.split("_")[0]))
             throw new BadRequestRuntimeException("Id koji ste uneli nije validan.");
         ZahtevZaSertifikat zahtevZaSertifikat = zahtevZaSertifikatDAO.get(idBrojIndex).orElseThrow(() -> new NotFoundRuntimeException("Saglasnost sa id-jem " + idBrojIndex + " nije pronadjena."));
         return mapper.convertToXml(zahtevZaSertifikat);
@@ -31,8 +33,9 @@ public class ZahtevZaSertifikatService {
         if (zahtevZaSertifikat == null || zahtevZaSertifikat.isOdobren())
             throw new BadRequestRuntimeException("Dokument koji ste poslali nije validan.");
 
-        if (zahtevZaSertifikatDAO.getByIdBroj(zahtevZaSertifikat.getPodnosilac().getIdBroj().getValue()).isPresent())
-            throw new BadRequestRuntimeException("Osoba s id-om " + zahtevZaSertifikat.getPodnosilac().getIdBroj().getValue() + " je vec podnela zahtev za sertifikat.");
+        if(digitalniSertifikatDAO.get(zahtevZaSertifikat.getPodnosilac().getIdBroj().getValue()).isPresent()) {
+            throw new BadRequestRuntimeException("Osobi sa id-jem " + zahtevZaSertifikat.getPodnosilac().getIdBroj().getValue() + " je vec izdat digitalni zeleni sertifikat");
+        }
 
         if (!extractor.extractAndSaveToRdf(zahtevXml, "/zahtevi"))
             throw new BadRequestRuntimeException("Ekstrakcija metapodataka nije uspela.");

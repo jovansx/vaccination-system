@@ -30,4 +30,8 @@ public class ZahtevZaSertifikat {
     protected String mesto;
     @XmlAttribute(name = "odobren", required = true)
     protected boolean odobren;
+    @XmlAttribute(name = "about", required = true)
+    protected String about;
+    @XmlAttribute(name = "href")
+    protected String href;
 }
