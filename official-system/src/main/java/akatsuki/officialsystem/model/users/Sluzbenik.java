@@ -1,7 +1,5 @@
 package akatsuki.officialsystem.model.users;
 
-
-import akatsuki.officialsystem.model.users.enums.TipKorisnika;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -9,23 +7,19 @@ import lombok.NoArgsConstructor;
 import javax.xml.bind.annotation.*;
 
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "Korisnik", propOrder = {
+@XmlType(name = "Sluzbenik", propOrder = {
         "ime",
         "prezime",
         "idBroj",
         "fiksniTelefon",
         "email",
-        "sifra",
-        "tip",
+        "sifra"
 })
-@XmlSeeAlso({
-        Doktor.class,
-        Pacijent.class,
-})
+@XmlRootElement(name = "sluzbenik")
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public abstract class Korisnik {
+public class Sluzbenik {
     @XmlElement(required = true, name = "id_broj")
     private String idBroj;
     @XmlElement(required = true)
@@ -38,6 +32,4 @@ public abstract class Korisnik {
     private String email;
     @XmlElement(required = true)
     private String sifra;
-    @XmlElement(required = true)
-    private TipKorisnika tip;
 }
