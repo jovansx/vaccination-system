@@ -2,9 +2,10 @@
 <izvestaj_o_imunizaciji  
     xmlns="http://www.akatsuki.org/izvestaj_o_imunizaciji"
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-    xmlns:t="http://www.akatsuki.org/tipovi"
     xsi:schemaLocation="http://www.akatsuki.org izvestaj_o_imunizaciji.xsd
-    http://www.akatsuki.org/tipovi tipovi.xsd" datum_izdavanja="2021-09-11">
+    http://www.akatsuki.org/tipovi tipovi.xsd" datum_izdavanja="2021-09-11"
+    xmlns:pred="http://www.akatsuki.org/rdf/examples/predicate/"
+    about="http://www.akatsuki.org/izvestaji/2021-08-01_2021-09-01">
     <period>
         <od>2021-08-01</od>
         <do>2021-09-01</do>

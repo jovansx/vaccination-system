@@ -13,7 +13,7 @@ import java.util.Optional;
 @RequiredArgsConstructor
 public class SluzbenikDAO implements IDao<Sluzbenik> {
 
-    private final String collectionId = "/db/vaccination-system/sluzbenici";
+    private final String collectionId = "/db/official-system/sluzbenici";
     private final DaoUtils daoUtils;
     private final IModelMapper<Sluzbenik> mapper;
 

@@ -1,7 +1,5 @@
 package akatsuki.immunizationsystem.dao;
 
-import akatsuki.immunizationsystem.model.documents.IzvestajOImunizaciji;
-import akatsuki.immunizationsystem.model.documents.SaglasnostZaImunizaciju;
 import akatsuki.immunizationsystem.model.users.Korisnik;
 import akatsuki.immunizationsystem.utils.modelmappers.IModelMapper;
 import lombok.RequiredArgsConstructor;
