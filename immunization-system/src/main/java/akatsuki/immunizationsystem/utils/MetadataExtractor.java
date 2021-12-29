@@ -51,7 +51,7 @@ public class MetadataExtractor {
             ex.printStackTrace();
         } finally {
             File generatedFile = new File("generated_rdf.rdf");
-//            generatedFile.delete();
+            generatedFile.delete();
         }
         return false;
     }
