@@ -19,29 +19,13 @@
                 <xs:element name="dokumenti">
                     <xs:complexType>
                         <xs:sequence>
-                            <xs:element name="interesovanje_za_imunizaciju">
-                                <xs:simpleType>
-                                    <xs:restriction base="xs:int">
-                                        <xs:minInclusive value="0"/>
-                                    </xs:restriction>
-                                </xs:simpleType>
-                            </xs:element>
+                            <xs:element name="interesovanje_za_imunizaciju"
+                                type="TCBrojInteresovanja"> </xs:element>
                             <xs:element name="zeleni_sertifikat">
                                 <xs:complexType>
                                     <xs:sequence>
-                                        <xs:element name="primljeno">
-                                            <xs:simpleType>
-                                                <xs:restriction base="xs:int">
-                                                  <xs:minInclusive value="0"/>
-                                                </xs:restriction>
-                                            </xs:simpleType>
-                                        </xs:element>
-                                        <xs:element name="izdato">
-                                            <xs:simpleType>
-                                                <xs:restriction base="xs:int">
-                                                  <xs:minInclusive value="0"/>
-                                                </xs:restriction>
-                                            </xs:simpleType>
+                                        <xs:element name="primljeno" type="TCPrimljenoZelenih"> </xs:element>
+                                        <xs:element name="izdato" type="TCIzdatoZelenih">
                                         </xs:element>
                                     </xs:sequence>
                                 </xs:complexType>
@@ -116,4 +100,33 @@
             <xs:attribute name="datum_izdavanja" type="xs:date"/>
         </xs:complexType>
     </xs:element>
+    <xs:complexType name="TCBrojInteresovanja">
+        <xs:simpleContent>
+            <xs:extension base="TIntZeroGrater">
+                <xs:attribute fixed="pred:broj_interesovanja" name="property" use="required"/>
+                <xs:attribute fixed="xs:int" name="datatype" use="required"/>
+            </xs:extension>
+        </xs:simpleContent>
+    </xs:complexType>
+    <xs:complexType name="TCPrimljenoZelenih">
+        <xs:simpleContent>
+            <xs:extension base="TIntZeroGrater">
+                <xs:attribute fixed="pred:primljeno_zelenih" name="property" use="required"/>
+                <xs:attribute fixed="xs:int" name="datatype" use="required"/>
+            </xs:extension>
+        </xs:simpleContent>
+    </xs:complexType>
+    <xs:complexType name="TCIzdatoZelenih">
+        <xs:simpleContent>
+            <xs:extension base="TIntZeroGrater">
+                <xs:attribute fixed="pred:izdato_zelenih" name="property" use="required"/>
+                <xs:attribute fixed="xs:int" name="datatype" use="required"/>
+            </xs:extension>
+        </xs:simpleContent>
+    </xs:complexType>
+    <xs:simpleType name="TIntZeroGrater">
+        <xs:restriction base="xs:int">
+            <xs:minInclusive value="0"/>
+        </xs:restriction>
+    </xs:simpleType>
 </xs:schema>

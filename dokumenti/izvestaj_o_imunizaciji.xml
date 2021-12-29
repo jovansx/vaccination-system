@@ -10,10 +10,10 @@
         <do>2021-09-01</do>
     </period>
     <dokumenti>
-        <interesovanje_za_imunizaciju>2758</interesovanje_za_imunizaciju>
+        <interesovanje_za_imunizaciju property="pred:broj_interesovanja" datatype="xs:int">2758</interesovanje_za_imunizaciju>
         <zeleni_sertifikat>
-            <primljeno>453</primljeno>
-            <izdato>428</izdato>
+            <primljeno property="pred:primljeno_zelenih" datatype="xs:int">453</primljeno>
+            <izdato property="pred:izdato_zelenih" datatype="xs:int">428</izdato>
         </zeleni_sertifikat>
     </dokumenti>
     <doze_vakcina izdato="3225">
