@@ -12,7 +12,7 @@ import java.util.Optional;
 @RequiredArgsConstructor
 public class IzvestajOImunizacijiDAO implements IDao<IzvestajOImunizaciji> {
 
-    private final String collectionId = "/db/vaccination-system/izvestaji";
+    private final String collectionId = "/db/official-system/izvestaji";
     private final DaoUtils daoUtils;
     private final IModelMapper<IzvestajOImunizaciji> mapper;
 

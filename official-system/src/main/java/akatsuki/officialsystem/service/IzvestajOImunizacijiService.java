@@ -5,6 +5,7 @@ import akatsuki.officialsystem.exceptions.BadRequestRuntimeException;
 import akatsuki.officialsystem.exceptions.ConflictRuntimeException;
 import akatsuki.officialsystem.exceptions.NotFoundRuntimeException;
 import akatsuki.officialsystem.model.documents.IzvestajOImunizaciji;
+import akatsuki.officialsystem.utils.MetadataExtractor;
 import akatsuki.officialsystem.utils.Validator;
 import akatsuki.officialsystem.utils.modelmappers.IModelMapper;
 import lombok.RequiredArgsConstructor;
@@ -18,6 +19,7 @@ public class IzvestajOImunizacijiService {
     private final IDao<IzvestajOImunizaciji> izvestajOImunizacijiIDao;
     private final Validator validator;
     private final IModelMapper<IzvestajOImunizaciji> mapper;
+    private final MetadataExtractor extractor;
 
     public String getIzvestajOImunizaciji(String periodOdDo) throws RuntimeException {
         if (!validator.isDatePeriodOk(periodOdDo))
@@ -42,6 +44,8 @@ public class IzvestajOImunizacijiService {
         if (izvestajOImunizacijiIDao.get(periodOdDo).isPresent())
             throw new ConflictRuntimeException("U periodu od " + firstDate + " do " + secondDate + " je vec podnet izvestaj.");
 
+        if (!extractor.extractAndSaveToRdf(izvestajOImunizacijiXml, "/izvestaji"))
+            throw new BadRequestRuntimeException("Ekstrakcija metapodataka nije uspela.");
         return izvestajOImunizacijiIDao.save(izvestajOImunizaciji);
     }
 

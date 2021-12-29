@@ -1,5 +1,8 @@
 package akatsuki.officialsystem.model.documents;
 
+import akatsuki.officialsystem.model.types.TCBrojInteresovanja;
+import akatsuki.officialsystem.model.types.TCIzdatoZelenih;
+import akatsuki.officialsystem.model.types.TCPrimljenoZelenih;
 import akatsuki.officialsystem.model.types.TNazivVakcine;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -30,6 +33,8 @@ public class IzvestajOImunizaciji {
     @XmlAttribute(name = "datum_izdavanja")
     @XmlSchemaType(name = "date")
     protected XMLGregorianCalendar datumIzdavanja;
+    @XmlAttribute(name = "about", required = true)
+    protected String about;
 
     @XmlAccessorType(XmlAccessType.FIELD)
     @XmlType(name = "", propOrder = {
@@ -41,8 +46,8 @@ public class IzvestajOImunizaciji {
     @AllArgsConstructor
     public static class Dokumenti {
 
-        @XmlElement(name = "interesovanje_za_imunizaciju", namespace = "http://www.akatsuki.org/izvestaj_o_imunizaciji")
-        protected int interesovanjeZaImunizaciju;
+        @XmlElement(name = "interesovanje_za_imunizaciju", namespace = "http://www.akatsuki.org/izvestaj_o_imunizaciji", required = true)
+        protected TCBrojInteresovanja interesovanjeZaImunizaciju;
         @XmlElement(name = "zeleni_sertifikat", namespace = "http://www.akatsuki.org/izvestaj_o_imunizaciji", required = true)
         protected ZeleniSertifikat zeleniSertifikat;
 
@@ -56,10 +61,10 @@ public class IzvestajOImunizaciji {
         @AllArgsConstructor
         public static class ZeleniSertifikat {
 
-            @XmlElement(namespace = "http://www.akatsuki.org/izvestaj_o_imunizaciji")
-            protected int primljeno;
-            @XmlElement(namespace = "http://www.akatsuki.org/izvestaj_o_imunizaciji")
-            protected int izdato;
+            @XmlElement(namespace = "http://www.akatsuki.org/izvestaj_o_imunizaciji", required = true)
+            protected TCPrimljenoZelenih primljeno;
+            @XmlElement(namespace = "http://www.akatsuki.org/izvestaj_o_imunizaciji", required = true)
+            protected TCIzdatoZelenih izdato;
         }
     }
 

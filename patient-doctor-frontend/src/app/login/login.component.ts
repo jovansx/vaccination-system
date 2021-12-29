@@ -1,3 +1,4 @@
+import * as xml2js from 'xml2js';
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
@@ -6,6 +7,7 @@ import { convertResponseError } from 'src/app/error-converter.function';
 import { AuthService } from '../autentification/services/auth.service';
 import { JwtDecoderService } from '../autentification/services/jwt-decoder.service';
 import { ValidatorService } from '../services/validator.service';
+import { XmlConverterService } from '../services/xml-converter.service';
 
 @Component({
   selector: 'app-login',
@@ -20,7 +22,7 @@ export class LoginComponent implements OnInit {
   });
 
   constructor(private _auth: AuthService, private _router: Router, private _jwt: JwtDecoderService,
-     private _toastr: ToastrService, public validator: ValidatorService) {
+     private _toastr: ToastrService, public validator: ValidatorService, private _xml_parser: XmlConverterService) {
        validator.setForm(this.loginForm);
      }
 
@@ -32,7 +34,8 @@ export class LoginComponent implements OnInit {
     }
     this._auth.loginUser(this.loginForm.value).subscribe(
       (res: any) => {
-        localStorage.setItem('token', res.token);
+        let response = this._xml_parser.parseXmlToObject(res);
+        localStorage.setItem('token', response.JWTTOKEN[0]);
         const type = this._jwt.getTypeFromToken();
         if (type === 'DOKTOR') {
           this._router.navigate(['/home/doctor']);

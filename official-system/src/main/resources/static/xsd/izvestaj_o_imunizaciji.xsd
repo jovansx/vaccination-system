@@ -97,6 +97,7 @@
                     </xs:complexType>
                 </xs:element>
             </xs:sequence>
+            <xs:attribute name="about" type="xs:string" use="required"/>
             <xs:attribute name="datum_izdavanja" type="xs:date"/>
         </xs:complexType>
     </xs:element>

@@ -4,6 +4,8 @@ import { AuthService } from '../autentification/services/auth.service';
 import { ValidatorService } from '../services/validator.service';
 import { convertResponseError } from 'src/app/error-converter.function';
 import { ToastrService } from 'ngx-toastr';
+import { XmlConverterService } from '../services/xml-converter.service';
+import { JwtDecoderService } from '../autentification/services/jwt-decoder.service';
 
 @Component({
   selector: 'app-login',
@@ -17,12 +19,12 @@ export class LoginComponent implements OnInit {
     password: new FormControl('', [Validators.required]),
   });
 
-  constructor(private _auth: AuthService, public validator: ValidatorService, private _toastr: ToastrService) { 
+  constructor(private _auth: AuthService, public validator: ValidatorService, private _toastr: ToastrService,
+    private _xml_parser: XmlConverterService, private _jwt: JwtDecoderService) { 
     validator.setForm(this.loginForm);
   }
 
   ngOnInit(): void {
-    console.log("bla")
   }
 
   loginUser(): void {
@@ -31,7 +33,8 @@ export class LoginComponent implements OnInit {
     }
     this._auth.loginUser(this.loginForm.value).subscribe(
       (res: any) => {
-        localStorage.setItem('token', res.token);
+        let response = this._xml_parser.parseXmlToObject(res);
+        localStorage.setItem('token', response.JWTTOKEN[0]);
       },
       (err: any) => this._toastr.error(convertResponseError(err), "Don't exist!")
     );

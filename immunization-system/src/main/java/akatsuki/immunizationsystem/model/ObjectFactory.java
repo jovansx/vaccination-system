@@ -56,13 +56,6 @@ public class ObjectFactory {
     }
 
     /**
-     * Create an instance of {@link IzvestajOImunizaciji }
-     */
-    public IzvestajOImunizaciji createIzvestajOImunizaciji() {
-        return new IzvestajOImunizaciji();
-    }
-
-    /**
      * Create an instance of {@link PotvrdaOVakcinaciji }
      */
     public PotvrdaOVakcinaciji createPotvrdaOVakcinaciji() {
@@ -126,34 +119,6 @@ public class ObjectFactory {
     }
 
     /**
-     * Create an instance of {@link IzvestajOImunizaciji.DozeVakcina }
-     */
-    public IzvestajOImunizaciji.DozeVakcina createIzvestajOImunizacijiDozeVakcina() {
-        return new IzvestajOImunizaciji.DozeVakcina();
-    }
-
-    /**
-     * Create an instance of {@link IzvestajOImunizaciji.DozeVakcina.RaspodelaPoProizvodjacima }
-     */
-    public IzvestajOImunizaciji.DozeVakcina.RaspodelaPoProizvodjacima createIzvestajOImunizacijiDozeVakcinaRaspodelaPoProizvodjacima() {
-        return new IzvestajOImunizaciji.DozeVakcina.RaspodelaPoProizvodjacima();
-    }
-
-    /**
-     * Create an instance of {@link IzvestajOImunizaciji.DozeVakcina.RaspodelaPoDozama }
-     */
-    public IzvestajOImunizaciji.DozeVakcina.RaspodelaPoDozama createIzvestajOImunizacijiDozeVakcinaRaspodelaPoDozama() {
-        return new IzvestajOImunizaciji.DozeVakcina.RaspodelaPoDozama();
-    }
-
-    /**
-     * Create an instance of {@link IzvestajOImunizaciji.Dokumenti }
-     */
-    public IzvestajOImunizaciji.Dokumenti createIzvestajOImunizacijiDokumenti() {
-        return new IzvestajOImunizaciji.Dokumenti();
-    }
-
-    /**
      * Create an instance of {@link DigitalniSertifikat.Testovi }
      */
     public DigitalniSertifikat.Testovi createDigitalniSertifikatTestovi() {
@@ -200,13 +165,6 @@ public class ObjectFactory {
      */
     public Interesovanje.Vakcine createInteresovanjeVakcine() {
         return new Interesovanje.Vakcine();
-    }
-
-    /**
-     * Create an instance of {@link IzvestajOImunizaciji.Period }
-     */
-    public IzvestajOImunizaciji.Period createIzvestajOImunizacijiPeriod() {
-        return new IzvestajOImunizaciji.Period();
     }
 
     /**
@@ -284,27 +242,6 @@ public class ObjectFactory {
      */
     public PotvrdaOVakcinaciji.PrimljeneVakcine.Doza createPotvrdaOVakcinacijiPrimljeneVakcineDoza() {
         return new PotvrdaOVakcinaciji.PrimljeneVakcine.Doza();
-    }
-
-    /**
-     * Create an instance of {@link IzvestajOImunizaciji.DozeVakcina.RaspodelaPoProizvodjacima.Proizvodjac }
-     */
-    public IzvestajOImunizaciji.DozeVakcina.RaspodelaPoProizvodjacima.Proizvodjac createIzvestajOImunizacijiDozeVakcinaRaspodelaPoProizvodjacimaProizvodjac() {
-        return new IzvestajOImunizaciji.DozeVakcina.RaspodelaPoProizvodjacima.Proizvodjac();
-    }
-
-    /**
-     * Create an instance of {@link IzvestajOImunizaciji.DozeVakcina.RaspodelaPoDozama.Doza }
-     */
-    public IzvestajOImunizaciji.DozeVakcina.RaspodelaPoDozama.Doza createIzvestajOImunizacijiDozeVakcinaRaspodelaPoDozamaDoza() {
-        return new IzvestajOImunizaciji.DozeVakcina.RaspodelaPoDozama.Doza();
-    }
-
-    /**
-     * Create an instance of {@link IzvestajOImunizaciji.Dokumenti.ZeleniSertifikat }
-     */
-    public IzvestajOImunizaciji.Dokumenti.ZeleniSertifikat createIzvestajOImunizacijiDokumentiZeleniSertifikat() {
-        return new IzvestajOImunizaciji.Dokumenti.ZeleniSertifikat();
     }
 
     /**
