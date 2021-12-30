@@ -194,6 +194,12 @@ public class SaglasnostZaImunizaciju {
         @XmlSchemaType(name = "date")
         protected XMLGregorianCalendar datumPopunjavanja;
 
+        public String getIdBrojFromDrzavljanstvo() {
+            if (getDrzavljanstvo().getSrpsko().getIdBroj().getValue() == null)
+                return getDrzavljanstvo().getStrano().getIdBroj().getValue();
+            return getDrzavljanstvo().getSrpsko().getIdBroj().getValue();
+        }
+
         @XmlAccessorType(XmlAccessType.FIELD)
         @XmlType(name = "", propOrder = {
                 "srpsko",

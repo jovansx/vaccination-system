@@ -5,7 +5,10 @@ import akatsuki.immunizationsystem.utils.modelmappers.IModelMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
+import java.util.Optional;
 
 @Component
 @RequiredArgsConstructor
@@ -30,8 +33,7 @@ public class SaglasnostZaImunizacijuDAO implements ISaglasnostZaImunizacijuDAO {
         List<String> resourceContent = daoUtils.getResourcesByCollectionId(collectionId);
         for (String resource : resourceContent) {
             SaglasnostZaImunizaciju saglasnostZaImunizaciju = mapper.convertToObject(resource);
-            if (saglasnostZaImunizaciju.getPacijent().getDrzavljanstvo().getSrpsko().getIdBroj().equals(jmbg)
-                    || saglasnostZaImunizaciju.getPacijent().getDrzavljanstvo().getStrano().getIdBroj().equals(jmbg)) {
+            if (saglasnostZaImunizaciju.getPacijent().getIdBrojFromDrzavljanstvo().equals(jmbg)) {
                 return Optional.of(saglasnostZaImunizaciju);
             }
         }
@@ -51,25 +53,29 @@ public class SaglasnostZaImunizacijuDAO implements ISaglasnostZaImunizacijuDAO {
 
     @Override
     public String save(SaglasnostZaImunizaciju saglasnostZaImunizaciju) {
-        String id;
-        if (saglasnostZaImunizaciju.getPacijent().getDrzavljanstvo().getStrano() != null)
-            id = saglasnostZaImunizaciju.getPacijent().getDrzavljanstvo().getStrano().getIdBroj().getValue();
-        else
-            id = saglasnostZaImunizaciju.getPacijent().getDrzavljanstvo().getSrpsko().getIdBroj().getValue();
-
+        String id = saglasnostZaImunizaciju.getPacijent().getIdBrojFromDrzavljanstvo();
         int index = getDocumentIndex(id);
         daoUtils.createResource(collectionId, saglasnostZaImunizaciju, id + "_" + index + ".xml", SaglasnostZaImunizaciju.class);
         return id + "_" + index + ".xml";
     }
 
     private int getDocumentIndex(String id) {
-        int index = 0;
+        int index = 1;
         String fullId = id + "_" + index;
-        String resourceContent = daoUtils.getResource(collectionId, fullId);
-        while(!resourceContent.equals("")) {
+        String resourceContent = "";
+        try {
+            resourceContent = daoUtils.getResource(collectionId, fullId);
+
+        } catch (Exception ignored) {
+        }
+        while (!resourceContent.equals("")) {
             index++;
             fullId = id + "_" + index;
-            resourceContent = daoUtils.getResource(collectionId, fullId);
+            try {
+                resourceContent = daoUtils.getResource(collectionId, fullId);
+
+            } catch (Exception ignored) {
+            }
         }
         return index;
     }

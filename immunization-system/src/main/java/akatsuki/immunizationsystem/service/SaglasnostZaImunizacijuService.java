@@ -20,11 +20,15 @@ public class SaglasnostZaImunizacijuService {
     private final IModelMapper<SaglasnostZaImunizaciju> mapper;
     private final MetadataExtractor extractor;
 
+    private final PotvrdaOIzvrsenojVakcinacijiService potvrdaOIzvrsenojVakcinacijiService;
+    private final InteresovanjeService interesovanjeService;
+
+
     public String getSaglasnostZaImunizaciju(String idBrojIndex) throws RuntimeException {
         String idBroj = idBrojIndex.split("_")[0];
         if (!validator.isIdValid(idBroj)) {
             String message;
-            if(idBroj.length() == 13) {
+            if (idBroj.length() == 13) {
                 message = "Jmbg";
             } else {
                 message = "Broj pasosa";
@@ -41,18 +45,29 @@ public class SaglasnostZaImunizacijuService {
         if (saglasnostZaImunizaciju == null)
             throw new BadRequestRuntimeException("Dokument koji ste poslali nije validan.");
 
-        String id;
-        if(saglasnostZaImunizaciju.getPacijent().getDrzavljanstvo().getSrpsko() == null) {
-            id = saglasnostZaImunizaciju.getPacijent().getDrzavljanstvo().getStrano().getIdBroj().getValue();
-        } else {
-            id = saglasnostZaImunizaciju.getPacijent().getDrzavljanstvo().getSrpsko().getIdBroj().getValue();
-        }
-        if(digitalniSertifikatDAO.get(id).isPresent()) {
+        String id = saglasnostZaImunizaciju.getPacijent().getIdBrojFromDrzavljanstvo();
+        if (digitalniSertifikatDAO.get(id).isPresent()) {
             throw new BadRequestRuntimeException("Osobi sa id-jem " + id + " je vec izdat digitalni zeleni sertifikat");
         }
 
         if (!extractor.extractAndSaveToRdf(saglasnostXml, "/saglasnosti"))
             throw new BadRequestRuntimeException("Ekstrakcija metapodataka nije uspela.");
+
+        setLinkToThisDocument(saglasnostZaImunizaciju);
+
         return saglasnostZaImunizacijuIDao.save(saglasnostZaImunizaciju);
     }
+
+    private void setLinkToThisDocument(SaglasnostZaImunizaciju saglasnostZaImunizaciju) {
+        try {
+            potvrdaOIzvrsenojVakcinacijiService.getPotvrdaOIzvrsenojVakcinaciji(
+                    saglasnostZaImunizaciju.getPacijent().getIdBrojFromDrzavljanstvo() + "_1");
+            potvrdaOIzvrsenojVakcinacijiService.setReference(saglasnostZaImunizaciju.getPacijent().getIdBrojFromDrzavljanstvo() + "_1",
+                    saglasnostZaImunizaciju.getPacijent().getIdBrojFromDrzavljanstvo() + "_2");
+        } catch (Exception ignored) {
+            interesovanjeService.setReference(saglasnostZaImunizaciju.getPacijent().getIdBrojFromDrzavljanstvo(),
+                    saglasnostZaImunizaciju.getPacijent().getIdBrojFromDrzavljanstvo() + "_1");
+        }
+    }
+
 }

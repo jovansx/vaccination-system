@@ -8,7 +8,6 @@ import akatsuki.immunizationsystem.model.users.Pacijent;
 import akatsuki.immunizationsystem.utils.Validator;
 import akatsuki.immunizationsystem.utils.modelmappers.IModelMapper;
 import lombok.RequiredArgsConstructor;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -24,7 +23,7 @@ public class PacijentService {
 
     public String createPacijenta(String pacijentXml) {
         Pacijent pacijent = (Pacijent) mapper.convertToObject(pacijentXml);
-        if(!validator.isIdValid(pacijent.getIdBroj()))
+        if (!validator.isIdValid(pacijent.getIdBroj()))
             throw new BadRequestRuntimeException("Id koji ste uneli nije validan.");
 
         if (pacijentXml == null)

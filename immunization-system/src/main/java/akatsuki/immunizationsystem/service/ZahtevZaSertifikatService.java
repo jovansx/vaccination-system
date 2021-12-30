@@ -33,7 +33,7 @@ public class ZahtevZaSertifikatService {
         if (zahtevZaSertifikat == null || zahtevZaSertifikat.isOdobren())
             throw new BadRequestRuntimeException("Dokument koji ste poslali nije validan.");
 
-        if(digitalniSertifikatDAO.get(zahtevZaSertifikat.getPodnosilac().getIdBroj().getValue()).isPresent()) {
+        if (digitalniSertifikatDAO.get(zahtevZaSertifikat.getPodnosilac().getIdBroj().getValue()).isPresent()) {
             throw new BadRequestRuntimeException("Osobi sa id-jem " + zahtevZaSertifikat.getPodnosilac().getIdBroj().getValue() + " je vec izdat digitalni zeleni sertifikat");
         }
 
