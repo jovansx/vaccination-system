@@ -24,4 +24,9 @@ export class AuthService {
     </login>`;
     return this._http.post<string>('/authenticate', xmlLogin, {responseType: 'text' as 'json'});
   }
+
+  public logoutUser(): void {
+    localStorage.removeItem('token');
+    this._router.navigate(['/login']);
+  }
 }

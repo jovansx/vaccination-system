@@ -12,11 +12,15 @@ import { AuthService } from './autentification/services/auth.service';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { HeaderInterceptorService } from './autentification/services/header-interceptor.service';
+import { VaccinePageComponent } from './vaccine-page/vaccine-page.component';
+import { HeaderComponent } from './header/header.component';
 
 @NgModule({
   declarations: [
     AppComponent,
-    LoginComponent
+    LoginComponent,
+    VaccinePageComponent,
+    HeaderComponent
   ],
   imports: [
     BrowserModule,
