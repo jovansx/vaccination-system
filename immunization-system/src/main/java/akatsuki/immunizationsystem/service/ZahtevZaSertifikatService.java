@@ -4,6 +4,8 @@ import akatsuki.immunizationsystem.dao.DigitalniSertifikatDAO;
 import akatsuki.immunizationsystem.dao.IZahtevZaSertifikatDAO;
 import akatsuki.immunizationsystem.exceptions.BadRequestRuntimeException;
 import akatsuki.immunizationsystem.exceptions.NotFoundRuntimeException;
+import akatsuki.immunizationsystem.model.documents.Interesovanje;
+import akatsuki.immunizationsystem.model.documents.PotvrdaOVakcinaciji;
 import akatsuki.immunizationsystem.model.documents.ZahtevZaSertifikat;
 import akatsuki.immunizationsystem.utils.MetadataExtractor;
 import akatsuki.immunizationsystem.utils.Validator;
@@ -15,15 +17,15 @@ import org.springframework.stereotype.Service;
 @RequiredArgsConstructor
 public class ZahtevZaSertifikatService {
     private final IZahtevZaSertifikatDAO zahtevZaSertifikatDAO;
-    private final DigitalniSertifikatDAO digitalniSertifikatDAO;
     private final Validator validator;
     private final IModelMapper<ZahtevZaSertifikat> mapper;
     private final MetadataExtractor extractor;
+    private final PotvrdaOIzvrsenojVakcinacijiService potvrdaOIzvrsenojVakcinacijiService;
 
-    public String getZahtevZaSertifikat(String idBrojIndex) throws RuntimeException {
-        if (!validator.isIdValid(idBrojIndex.split("_")[0]))
+    public String getZahtevZaSertifikat(String idBroj) throws RuntimeException {
+        if (!validator.isIdValid(idBroj))
             throw new BadRequestRuntimeException("Id koji ste uneli nije validan.");
-        ZahtevZaSertifikat zahtevZaSertifikat = zahtevZaSertifikatDAO.get(idBrojIndex).orElseThrow(() -> new NotFoundRuntimeException("Saglasnost sa id-jem " + idBrojIndex + " nije pronadjena."));
+        ZahtevZaSertifikat zahtevZaSertifikat = zahtevZaSertifikatDAO.get(idBroj).orElseThrow(() -> new NotFoundRuntimeException("Zahtev za sertifikat sa id-jem " + idBroj + " nije pronadjena."));
         return mapper.convertToXml(zahtevZaSertifikat);
     }
 
@@ -33,12 +35,29 @@ public class ZahtevZaSertifikatService {
         if (zahtevZaSertifikat == null || zahtevZaSertifikat.isOdobren())
             throw new BadRequestRuntimeException("Dokument koji ste poslali nije validan.");
 
-        if(digitalniSertifikatDAO.get(zahtevZaSertifikat.getPodnosilac().getIdBroj().getValue()).isPresent()) {
-            throw new BadRequestRuntimeException("Osobi sa id-jem " + zahtevZaSertifikat.getPodnosilac().getIdBroj().getValue() + " je vec izdat digitalni zeleni sertifikat");
-        }
+        if(zahtevZaSertifikatDAO.get(zahtevZaSertifikat.getPodnosilac().getIdBroj().getValue()).isPresent())
+            throw new NotFoundRuntimeException("Osoba sa id-jem " + zahtevZaSertifikat.getPodnosilac().getIdBroj().getValue() + " je vec podnela zahtev.");
 
         if (!extractor.extractAndSaveToRdf(zahtevXml, "/zahtevi"))
             throw new BadRequestRuntimeException("Ekstrakcija metapodataka nije uspela.");
+
+        setLinkToThisDocument(zahtevZaSertifikat);
+
         return zahtevZaSertifikatDAO.save(zahtevZaSertifikat);
+    }
+
+    private void setLinkToThisDocument(ZahtevZaSertifikat zahtevZaSertifikat) {
+//        potvrdaOIzvrsenojVakcinacijiService.getPotvrdaOIzvrsenojVakcinaciji(
+//                    zahtevZaSertifikat.getPodnosilac().getIdBroj().getValue() + "_2");
+        potvrdaOIzvrsenojVakcinacijiService.setReference(zahtevZaSertifikat.getPodnosilac().getIdBroj().getValue() + "_2",
+                    zahtevZaSertifikat.getPodnosilac().getIdBroj().getValue());
+    }
+
+    public void setReference(String objectId, String referencedObjectId) {
+        ZahtevZaSertifikat zahtevZaSertifikat = zahtevZaSertifikatDAO.get(objectId).get();
+        zahtevZaSertifikat.setRel("pred:parentTo");
+        zahtevZaSertifikat.setHref("http://www.akatsuki.org/digitalni-sertifikati/" + referencedObjectId);
+
+        zahtevZaSertifikatDAO.save(zahtevZaSertifikat);
     }
 }

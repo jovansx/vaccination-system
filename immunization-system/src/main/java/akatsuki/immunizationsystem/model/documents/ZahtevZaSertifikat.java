@@ -28,10 +28,13 @@ public class ZahtevZaSertifikat {
     protected XMLGregorianCalendar datum;
     @XmlAttribute(name = "mesto", required = true)
     protected String mesto;
+//    AKO JE FALSE, ONDA JE CEKANJE, U SUPORTNOM JE PRIHVACEN. KAD SE ODBIJE, OBRISE SE
     @XmlAttribute(name = "odobren", required = true)
     protected boolean odobren;
     @XmlAttribute(name = "about", required = true)
     protected String about;
+    @XmlAttribute(name = "rel")
+    protected String rel;
     @XmlAttribute(name = "href")
     protected String href;
 }

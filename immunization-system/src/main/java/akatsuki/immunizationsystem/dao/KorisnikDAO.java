@@ -40,7 +40,9 @@ public class KorisnikDAO implements IDao<Korisnik> {
     }
 
     @Override
-    public Collection<Korisnik> getAll() { return null;}
+    public Collection<Korisnik> getAll() {
+        return null;
+    }
 
     @Override
     public String save(Korisnik korisnik) {

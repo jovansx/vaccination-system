@@ -27,6 +27,8 @@ public class SaglasnostZaImunizaciju {
     protected EvidencijaOVakcinaciji evidencijaOVakcinaciji;
     @XmlAttribute(name = "about", required = true)
     protected String about;
+    @XmlAttribute(name = "rel")
+    protected String rel;
     @XmlAttribute(name = "href")
     protected String href;
 
@@ -193,6 +195,12 @@ public class SaglasnostZaImunizaciju {
         @XmlAttribute(name = "datum_popunjavanja", required = true)
         @XmlSchemaType(name = "date")
         protected XMLGregorianCalendar datumPopunjavanja;
+
+        public String getIdBrojFromDrzavljanstvo() {
+            if (getDrzavljanstvo().getSrpsko().getIdBroj().getValue() == null)
+                return getDrzavljanstvo().getStrano().getIdBroj().getValue();
+            return getDrzavljanstvo().getSrpsko().getIdBroj().getValue();
+        }
 
         @XmlAccessorType(XmlAccessType.FIELD)
         @XmlType(name = "", propOrder = {

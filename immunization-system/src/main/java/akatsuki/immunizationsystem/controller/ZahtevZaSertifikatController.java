@@ -11,9 +11,9 @@ import org.springframework.web.bind.annotation.*;
 public class ZahtevZaSertifikatController {
     private final ZahtevZaSertifikatService zahtevZaSertifikatService;
 
-    @GetMapping("/{idBrojIndex}")
-    public String getZahtevZaSertifikat(@PathVariable String idBrojIndex) {
-        return zahtevZaSertifikatService.getZahtevZaSertifikat(idBrojIndex);
+    @GetMapping("/{idBroj}")
+    public String getZahtevZaSertifikat(@PathVariable String idBroj) {
+        return zahtevZaSertifikatService.getZahtevZaSertifikat(idBroj);
     }
 
     @PostMapping

@@ -27,8 +27,7 @@ public class ZahtevZaSertifikatModelMapper implements IModelMapper<ZahtevZaSerti
             Schema schema = schemaFactory.newSchema(file);
             unmarshaller.setSchema(schema);
             return (ZahtevZaSertifikat) unmarshaller.unmarshal(new StringReader(xmlString));
-        } catch (Exception e) {
-            e.printStackTrace();
+        } catch (Exception ignored) {
         }
         return null;
     }
