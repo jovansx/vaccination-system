@@ -14,6 +14,7 @@ import { FlexLayoutModule } from '@angular/flex-layout';
 import { HeaderInterceptorService } from './autentification/services/header-interceptor.service';
 import { VaccinePageComponent } from './vaccine-page/vaccine-page.component';
 import { HeaderComponent } from './header/header.component';
+import { VaccineService } from './autentification/services/vaccine.service';
 
 @NgModule({
   declarations: [
@@ -35,6 +36,7 @@ import { HeaderComponent } from './header/header.component';
   ],
   providers: [
     AuthService,
+    VaccineService,
     { provide: HTTP_INTERCEPTORS, useClass: HeaderInterceptorService, multi: true }
   ],
   bootstrap: [AppComponent]
