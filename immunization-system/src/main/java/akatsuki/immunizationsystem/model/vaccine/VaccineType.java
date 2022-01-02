@@ -8,6 +8,7 @@ public enum VaccineType {
     MODERNA("Moderna");
 
     public final String label;
+
     VaccineType(String label) {
         this.label = label;
     }

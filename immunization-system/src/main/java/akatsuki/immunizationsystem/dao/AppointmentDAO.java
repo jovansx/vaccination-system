@@ -1,14 +1,11 @@
 package akatsuki.immunizationsystem.dao;
 
 import akatsuki.immunizationsystem.model.appointments.Appointment;
-import akatsuki.immunizationsystem.model.users.Korisnik;
 import akatsuki.immunizationsystem.utils.modelmappers.IModelMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
-import java.util.Calendar;
 import java.util.Collection;
-import java.util.GregorianCalendar;
 import java.util.Optional;
 
 @Component

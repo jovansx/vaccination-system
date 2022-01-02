@@ -25,6 +25,13 @@ public class PotvrdaOIzvrsenojVakcinacijiService {
     private final SaglasnostZaImunizacijuService saglasnostZaImunizacijuService;
     private final RestTemplate restTemplate;
 
+    public static VaccineType getVaccineTypeFromStringValue(String givenName) {
+        return Stream.of(VaccineType.values())
+                .filter(direction -> direction.label.equals(givenName))
+                .findFirst()
+                .orElse(null);
+    }
+
     public String getPotvrdaOIzvrsenojVakcinaciji(String idBrojDoza) throws RuntimeException {
         if (!validator.isIdDozaValid(idBrojDoza))
             throw new BadRequestRuntimeException("Id i doza " + idBrojDoza + " nije validan.");
@@ -55,13 +62,6 @@ public class PotvrdaOIzvrsenojVakcinacijiService {
         return potvrdaOVakcinacijiIDao.save(potvrdaOVakcinaciji);
     }
 
-    public static VaccineType getVaccineTypeFromStringValue(String givenName) {
-        return Stream.of(VaccineType.values())
-                .filter(direction -> direction.label.equals(givenName))
-                .findFirst()
-                .orElse(null);
-    }
-
     private void decreaseAmountOfVaccine(PotvrdaOVakcinaciji potvrdaOVakcinaciji) {
         VaccineType vaccine = getVaccineTypeFromStringValue(potvrdaOVakcinaciji.getNazivVakcine().getValue());
 
@@ -88,7 +88,7 @@ public class PotvrdaOIzvrsenojVakcinacijiService {
 
         potvrdaOVakcinaciji.setRel("pred:parentTo");
 
-        if(!referencedObjectId.contains("_"))
+        if (!referencedObjectId.contains("_"))
             potvrdaOVakcinaciji.setHref("http://www.akatsuki.org/zahtevi/" + referencedObjectId);
         else
             potvrdaOVakcinaciji.setHref("http://www.akatsuki.org/saglasnosti/" + referencedObjectId);

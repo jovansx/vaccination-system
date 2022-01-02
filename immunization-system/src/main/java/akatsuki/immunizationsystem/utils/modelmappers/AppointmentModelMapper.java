@@ -1,7 +1,6 @@
 package akatsuki.immunizationsystem.utils.modelmappers;
 
 import akatsuki.immunizationsystem.model.appointments.Appointment;
-import akatsuki.immunizationsystem.model.users.Korisnik;
 import org.springframework.stereotype.Component;
 
 import javax.xml.bind.JAXBContext;

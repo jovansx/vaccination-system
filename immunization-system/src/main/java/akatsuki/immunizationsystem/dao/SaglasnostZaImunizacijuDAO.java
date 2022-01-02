@@ -83,7 +83,7 @@ public class SaglasnostZaImunizacijuDAO implements ISaglasnostZaImunizacijuDAO {
     @Override
     public void update(SaglasnostZaImunizaciju saglasnostZaImunizaciju) {
         String id = saglasnostZaImunizaciju.getAbout().split("http://www.akatsuki.org/saglasnosti/")[1];
-        daoUtils.createResource(collectionId, saglasnostZaImunizaciju,  id + ".xml", SaglasnostZaImunizaciju.class);
+        daoUtils.createResource(collectionId, saglasnostZaImunizaciju, id + ".xml", SaglasnostZaImunizaciju.class);
     }
 
     @Override

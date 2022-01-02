@@ -45,19 +45,19 @@ public class DbConfiguration {
 
             date = new Date();
             calendar.setTime(date);
-            Appointment appointment1 = new Appointment("1010998800070", DatatypeFactory.newInstance().newXMLGregorianCalendar(calendar));
+            Appointment appointment1 = new Appointment(DatatypeFactory.newInstance().newXMLGregorianCalendar(calendar), "1010998800070");
             appointmentIDao.save(appointment1);
 
             calendar.add(Calendar.MINUTE, Appointment.DURATION_IN_MINUTES);
-            Appointment appointment2 = new Appointment("1010998800070", DatatypeFactory.newInstance().newXMLGregorianCalendar(calendar));
+            Appointment appointment2 = new Appointment(DatatypeFactory.newInstance().newXMLGregorianCalendar(calendar), "1010998800070");
             appointmentIDao.save(appointment2);
 
             calendar.add(Calendar.MINUTE, Appointment.DURATION_IN_MINUTES);
-            Appointment appointment3 = new Appointment("1010998800070", DatatypeFactory.newInstance().newXMLGregorianCalendar(calendar));
+            Appointment appointment3 = new Appointment(DatatypeFactory.newInstance().newXMLGregorianCalendar(calendar), "1010998800070");
             appointmentIDao.save(appointment3);
 
             calendar.add(Calendar.MINUTE, Appointment.DURATION_IN_MINUTES);
-            Appointment appointment4 = new Appointment("1010998800070", DatatypeFactory.newInstance().newXMLGregorianCalendar(calendar));
+            Appointment appointment4 = new Appointment(DatatypeFactory.newInstance().newXMLGregorianCalendar(calendar), "1010998800070");
             appointmentIDao.save(appointment4);
 
             log.info("Database is populated");

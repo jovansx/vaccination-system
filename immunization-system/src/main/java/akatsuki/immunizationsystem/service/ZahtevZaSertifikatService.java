@@ -1,11 +1,8 @@
 package akatsuki.immunizationsystem.service;
 
-import akatsuki.immunizationsystem.dao.DigitalniSertifikatDAO;
 import akatsuki.immunizationsystem.dao.IZahtevZaSertifikatDAO;
 import akatsuki.immunizationsystem.exceptions.BadRequestRuntimeException;
 import akatsuki.immunizationsystem.exceptions.NotFoundRuntimeException;
-import akatsuki.immunizationsystem.model.documents.Interesovanje;
-import akatsuki.immunizationsystem.model.documents.PotvrdaOVakcinaciji;
 import akatsuki.immunizationsystem.model.documents.ZahtevZaSertifikat;
 import akatsuki.immunizationsystem.utils.MetadataExtractor;
 import akatsuki.immunizationsystem.utils.Validator;
@@ -35,7 +32,7 @@ public class ZahtevZaSertifikatService {
         if (zahtevZaSertifikat == null || zahtevZaSertifikat.isOdobren())
             throw new BadRequestRuntimeException("Dokument koji ste poslali nije validan.");
 
-        if(zahtevZaSertifikatDAO.get(zahtevZaSertifikat.getPodnosilac().getIdBroj().getValue()).isPresent())
+        if (zahtevZaSertifikatDAO.get(zahtevZaSertifikat.getPodnosilac().getIdBroj().getValue()).isPresent())
             throw new NotFoundRuntimeException("Osoba sa id-jem " + zahtevZaSertifikat.getPodnosilac().getIdBroj().getValue() + " je vec podnela zahtev.");
 
         if (!extractor.extractAndSaveToRdf(zahtevXml, "/zahtevi"))
@@ -50,7 +47,7 @@ public class ZahtevZaSertifikatService {
 //        potvrdaOIzvrsenojVakcinacijiService.getPotvrdaOIzvrsenojVakcinaciji(
 //                    zahtevZaSertifikat.getPodnosilac().getIdBroj().getValue() + "_2");
         potvrdaOIzvrsenojVakcinacijiService.setReference(zahtevZaSertifikat.getPodnosilac().getIdBroj().getValue() + "_2",
-                    zahtevZaSertifikat.getPodnosilac().getIdBroj().getValue());
+                zahtevZaSertifikat.getPodnosilac().getIdBroj().getValue());
     }
 
     public void setReference(String objectId, String referencedObjectId) {

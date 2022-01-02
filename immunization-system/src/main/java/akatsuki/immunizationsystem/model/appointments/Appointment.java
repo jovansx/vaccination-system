@@ -22,12 +22,11 @@ import java.util.Calendar;
 public class Appointment {
     public static final int DURATION_IN_MINUTES = 15;
     public static final SimpleDateFormat formatter = new SimpleDateFormat("yyyy_MM_dd_hh_mm");
-
-    @XmlElement(required = true, name = "pacijent_id")
-    private String pacijentId;
     @XmlElement(required = true, name = "termin")
     @XmlSchemaType(name = "dateTime")
     protected XMLGregorianCalendar termin;
+    @XmlElement(required = true, name = "pacijent_id")
+    private String pacijentId;
 
     public String formatTimeToString() {
         Calendar calendar = termin.toGregorianCalendar();
