@@ -64,8 +64,13 @@ public class PotvrdaOIzvrsenojVakcinacijiService {
 
     public void setReference(String objectId, String referencedObjectId) {
         PotvrdaOVakcinaciji potvrdaOVakcinaciji = potvrdaOVakcinacijiIDao.get(objectId).get();
+
         potvrdaOVakcinaciji.setRel("pred:parentTo");
-        potvrdaOVakcinaciji.setHref("http://www.akatsuki.org/saglasnosti/" + referencedObjectId);
+
+        if(!referencedObjectId.contains("_"))
+            potvrdaOVakcinaciji.setHref("http://www.akatsuki.org/zahtevi/" + referencedObjectId);
+        else
+            potvrdaOVakcinaciji.setHref("http://www.akatsuki.org/saglasnosti/" + referencedObjectId);
 
         potvrdaOVakcinacijiIDao.save(potvrdaOVakcinaciji);
     }

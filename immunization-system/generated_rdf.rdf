@@ -1,20 +1,14 @@
 <rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:h="http://www.w3.org/1999/xhtml">
-  <rdf:Description rdf:about="http://www.akatsuki.org/potvrde/1510999800012_2">
-    <pred:ime xmlns:pred="http://www.akatsuki.org/rdf/examples/predicate/" rdf:datatype="http://www.w3.org/1999/02/22-rdf-syntax-ns#XMLLiteral">Jovan</pred:ime>
+  <rdf:Description rdf:about="http://www.akatsuki.org/digitalni-sertifikati/1510999800012">
+    <pred:ime xmlns:pred="http://www.akatsuki.org/rdf/examples/predicate/" rdf:datatype="http://www.w3.org/1999/02/22-rdf-syntax-ns#XMLLiteral">Aleksandar</pred:ime>
   </rdf:Description>
-  <rdf:Description rdf:about="http://www.akatsuki.org/potvrde/1510999800012_2">
-    <pred:prezime xmlns:pred="http://www.akatsuki.org/rdf/examples/predicate/" rdf:datatype="http://www.w3.org/1999/02/22-rdf-syntax-ns#XMLLiteral">Simic</pred:prezime>
+  <rdf:Description rdf:about="http://www.akatsuki.org/digitalni-sertifikati/1510999800012">
+    <pred:prezime xmlns:pred="http://www.akatsuki.org/rdf/examples/predicate/" rdf:datatype="http://www.w3.org/1999/02/22-rdf-syntax-ns#XMLLiteral">Buljevic</pred:prezime>
   </rdf:Description>
-  <rdf:Description rdf:about="http://www.akatsuki.org/potvrde/1510999800012_2">
+  <rdf:Description rdf:about="http://www.akatsuki.org/digitalni-sertifikati/1510999800012">
     <pred:id_broj xmlns:pred="http://www.akatsuki.org/rdf/examples/predicate/" rdf:datatype="http://www.w3.org/1999/02/22-rdf-syntax-ns#XMLLiteral">1510999800012</pred:id_broj>
   </rdf:Description>
-  <rdf:Description rdf:about="http://www.akatsuki.org/potvrde/1510999800012_2">
+  <rdf:Description rdf:about="http://www.akatsuki.org/digitalni-sertifikati/1510999800012">
     <pred:pol xmlns:pred="http://www.akatsuki.org/rdf/examples/predicate/" rdf:datatype="http://www.w3.org/1999/02/22-rdf-syntax-ns#XMLLiteral">Muski</pred:pol>
-  </rdf:Description>
-  <rdf:Description rdf:about="http://www.akatsuki.org/potvrde/1510999800012_2">
-    <pred:zdravstvena_ustanova xmlns:pred="http://www.akatsuki.org/rdf/examples/predicate/" rdf:datatype="http://www.w3.org/1999/02/22-rdf-syntax-ns#XMLLiteral">Promenada u Novom Sadu</pred:zdravstvena_ustanova>
-  </rdf:Description>
-  <rdf:Description rdf:about="http://www.akatsuki.org/potvrde/1510999800012_2">
-    <pred:vakcina xmlns:pred="http://www.akatsuki.org/rdf/examples/predicate/" rdf:datatype="http://www.w3.org/1999/02/22-rdf-syntax-ns#XMLLiteral">Sinopharm</pred:vakcina>
   </rdf:Description>
 </rdf:RDF>

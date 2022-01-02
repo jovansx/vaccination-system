@@ -4,6 +4,8 @@ import akatsuki.immunizationsystem.dao.DigitalniSertifikatDAO;
 import akatsuki.immunizationsystem.dao.IZahtevZaSertifikatDAO;
 import akatsuki.immunizationsystem.exceptions.BadRequestRuntimeException;
 import akatsuki.immunizationsystem.exceptions.NotFoundRuntimeException;
+import akatsuki.immunizationsystem.model.documents.Interesovanje;
+import akatsuki.immunizationsystem.model.documents.PotvrdaOVakcinaciji;
 import akatsuki.immunizationsystem.model.documents.ZahtevZaSertifikat;
 import akatsuki.immunizationsystem.utils.MetadataExtractor;
 import akatsuki.immunizationsystem.utils.Validator;
@@ -18,6 +20,7 @@ public class ZahtevZaSertifikatService {
     private final Validator validator;
     private final IModelMapper<ZahtevZaSertifikat> mapper;
     private final MetadataExtractor extractor;
+    private final PotvrdaOIzvrsenojVakcinacijiService potvrdaOIzvrsenojVakcinacijiService;
 
     public String getZahtevZaSertifikat(String idBroj) throws RuntimeException {
         if (!validator.isIdValid(idBroj))
@@ -29,7 +32,7 @@ public class ZahtevZaSertifikatService {
     public String createZahtevZaSertifikat(String zahtevXml) throws RuntimeException {
         ZahtevZaSertifikat zahtevZaSertifikat = mapper.convertToObject(zahtevXml);
 
-        if (zahtevZaSertifikat == null && zahtevZaSertifikat.isOdobren())
+        if (zahtevZaSertifikat == null || zahtevZaSertifikat.isOdobren())
             throw new BadRequestRuntimeException("Dokument koji ste poslali nije validan.");
 
         if(zahtevZaSertifikatDAO.get(zahtevZaSertifikat.getPodnosilac().getIdBroj().getValue()).isPresent())
@@ -38,8 +41,23 @@ public class ZahtevZaSertifikatService {
         if (!extractor.extractAndSaveToRdf(zahtevXml, "/zahtevi"))
             throw new BadRequestRuntimeException("Ekstrakcija metapodataka nije uspela.");
 
-        
+        setLinkToThisDocument(zahtevZaSertifikat);
 
         return zahtevZaSertifikatDAO.save(zahtevZaSertifikat);
+    }
+
+    private void setLinkToThisDocument(ZahtevZaSertifikat zahtevZaSertifikat) {
+//        potvrdaOIzvrsenojVakcinacijiService.getPotvrdaOIzvrsenojVakcinaciji(
+//                    zahtevZaSertifikat.getPodnosilac().getIdBroj().getValue() + "_2");
+        potvrdaOIzvrsenojVakcinacijiService.setReference(zahtevZaSertifikat.getPodnosilac().getIdBroj().getValue() + "_2",
+                    zahtevZaSertifikat.getPodnosilac().getIdBroj().getValue());
+    }
+
+    public void setReference(String objectId, String referencedObjectId) {
+        ZahtevZaSertifikat zahtevZaSertifikat = zahtevZaSertifikatDAO.get(objectId).get();
+        zahtevZaSertifikat.setRel("pred:parentTo");
+        zahtevZaSertifikat.setHref("http://www.akatsuki.org/digitalni-sertifikati/" + referencedObjectId);
+
+        zahtevZaSertifikatDAO.save(zahtevZaSertifikat);
     }
 }

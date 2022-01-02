@@ -53,30 +53,9 @@ public class ZahtevZaSertifikatDAO implements IZahtevZaSertifikatDAO {
 
     @Override
     public String save(ZahtevZaSertifikat zahtevZaSertifikat) {
-        int index = getDocumentIndex(zahtevZaSertifikat.getPodnosilac().getIdBroj().getValue());
-        String documentId = zahtevZaSertifikat.getPodnosilac().getIdBroj().getValue() + "_" + index + ".xml";
+        String documentId = zahtevZaSertifikat.getPodnosilac().getIdBroj().getValue() + ".xml";
         daoUtils.createResource(collectionId, zahtevZaSertifikat, documentId, ZahtevZaSertifikat.class);
         return documentId;
-    }
-
-    private int getDocumentIndex(String id) {
-        int index = 1;
-        String fullId = id + "_" + index;
-        String resourceContent = "";
-        try {
-            resourceContent = daoUtils.getResource(collectionId, fullId);
-        } catch (Exception ignored) {
-        }
-        while (!resourceContent.equals("")) {
-            index++;
-            fullId = id + "_" + index;
-            try {
-                resourceContent = daoUtils.getResource(collectionId, fullId);
-
-            } catch (Exception ignored) {
-            }
-        }
-        return index;
     }
 
     @Override
