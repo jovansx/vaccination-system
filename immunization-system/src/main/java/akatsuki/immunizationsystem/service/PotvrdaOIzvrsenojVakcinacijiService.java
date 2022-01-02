@@ -5,10 +5,12 @@ import akatsuki.immunizationsystem.exceptions.BadRequestRuntimeException;
 import akatsuki.immunizationsystem.exceptions.ConflictRuntimeException;
 import akatsuki.immunizationsystem.exceptions.NotFoundRuntimeException;
 import akatsuki.immunizationsystem.model.documents.PotvrdaOVakcinaciji;
+import akatsuki.immunizationsystem.model.documents.SaglasnostZaImunizaciju;
 import akatsuki.immunizationsystem.utils.MetadataExtractor;
 import akatsuki.immunizationsystem.utils.Validator;
 import akatsuki.immunizationsystem.utils.modelmappers.IModelMapper;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -18,6 +20,7 @@ public class PotvrdaOIzvrsenojVakcinacijiService {
     private final Validator validator;
     private final IModelMapper<PotvrdaOVakcinaciji> mapper;
     private final MetadataExtractor extractor;
+    private final SaglasnostZaImunizacijuService saglasnostZaImunizacijuService;
 
     public String getPotvrdaOIzvrsenojVakcinaciji(String idBrojDoza) throws RuntimeException {
         if (!validator.isIdDozaValid(idBrojDoza))
@@ -42,7 +45,21 @@ public class PotvrdaOIzvrsenojVakcinacijiService {
         if (!extractor.extractAndSaveToRdf(potvrdaOIzvrsenojVakcinacijiXml, "/potvrde"))
             throw new BadRequestRuntimeException("Ekstrakcija metapodataka nije uspela.");
 
+        setLinkToThisDocument(potvrdaOVakcinaciji);
+
         return potvrdaOVakcinacijiIDao.save(potvrdaOVakcinaciji);
+    }
+
+    private void setLinkToThisDocument(PotvrdaOVakcinaciji potvrdaOVakcinaciji) {
+        try {
+            saglasnostZaImunizacijuService.getSaglasnostZaImunizaciju(
+                    potvrdaOVakcinaciji.getPrimalac().getIdBroj().getValue() + "_2");
+            saglasnostZaImunizacijuService.setReference(potvrdaOVakcinaciji.getPrimalac().getIdBroj().getValue() + "_2",
+                    potvrdaOVakcinaciji.getPrimalac().getIdBroj().getValue() + "_2");
+        } catch (Exception ignored) {
+            saglasnostZaImunizacijuService.setReference(potvrdaOVakcinaciji.getPrimalac().getIdBroj().getValue() + "_1",
+                    potvrdaOVakcinaciji.getPrimalac().getIdBroj().getValue() + "_1");
+        }
     }
 
     public void setReference(String objectId, String referencedObjectId) {

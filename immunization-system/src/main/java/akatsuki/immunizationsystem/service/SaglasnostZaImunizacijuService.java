@@ -8,20 +8,33 @@ import akatsuki.immunizationsystem.model.documents.SaglasnostZaImunizaciju;
 import akatsuki.immunizationsystem.utils.MetadataExtractor;
 import akatsuki.immunizationsystem.utils.Validator;
 import akatsuki.immunizationsystem.utils.modelmappers.IModelMapper;
-import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Service;
 
 @Service
-@RequiredArgsConstructor
 public class SaglasnostZaImunizacijuService {
-    private final ISaglasnostZaImunizacijuDAO saglasnostZaImunizacijuIDao;
-    private final DigitalniSertifikatDAO digitalniSertifikatDAO;
-    private final Validator validator;
-    private final IModelMapper<SaglasnostZaImunizaciju> mapper;
-    private final MetadataExtractor extractor;
+    private ISaglasnostZaImunizacijuDAO saglasnostZaImunizacijuIDao;
+    private DigitalniSertifikatDAO digitalniSertifikatDAO;
+    private Validator validator;
+    private IModelMapper<SaglasnostZaImunizaciju> mapper;
+    private MetadataExtractor extractor;
+    private InteresovanjeService interesovanjeService;
+    private PotvrdaOIzvrsenojVakcinacijiService potvrdaOIzvrsenojVakcinacijiService;
 
-    private final PotvrdaOIzvrsenojVakcinacijiService potvrdaOIzvrsenojVakcinacijiService;
-    private final InteresovanjeService interesovanjeService;
+    @Autowired
+    public void setValidator(Validator validator, ISaglasnostZaImunizacijuDAO saglasnostZaImunizacijuIDao, DigitalniSertifikatDAO digitalniSertifikatDAO,
+                             IModelMapper<SaglasnostZaImunizaciju> mapper, MetadataExtractor extractor,
+                             InteresovanjeService interesovanjeService,
+                             @Lazy PotvrdaOIzvrsenojVakcinacijiService potvrdaOIzvrsenojVakcinacijiService) {
+        this.saglasnostZaImunizacijuIDao = saglasnostZaImunizacijuIDao;
+        this.digitalniSertifikatDAO = digitalniSertifikatDAO;
+        this.validator = validator;
+        this.mapper = mapper;
+        this.extractor = extractor;
+        this.interesovanjeService = interesovanjeService;
+        this.potvrdaOIzvrsenojVakcinacijiService = potvrdaOIzvrsenojVakcinacijiService;
+    }
 
 
     public String getSaglasnostZaImunizaciju(String idBrojIndex) throws RuntimeException {
@@ -68,6 +81,14 @@ public class SaglasnostZaImunizacijuService {
             interesovanjeService.setReference(saglasnostZaImunizaciju.getPacijent().getIdBrojFromDrzavljanstvo(),
                     saglasnostZaImunizaciju.getPacijent().getIdBrojFromDrzavljanstvo() + "_1");
         }
+    }
+
+    public void setReference(String objectId, String referencedObjectId) {
+        SaglasnostZaImunizaciju saglasnostZaImunizaciju = saglasnostZaImunizacijuIDao.get(objectId).get();
+        saglasnostZaImunizaciju.setRel("pred:parentTo");
+        saglasnostZaImunizaciju.setHref("http://www.akatsuki.org/potvrde/" + referencedObjectId);
+
+        saglasnostZaImunizacijuIDao.update(saglasnostZaImunizaciju);
     }
 
 }

@@ -15,5 +15,5 @@ Saglasnost za imunizaciju
  - http://www.akatsuki.org/saglasnost_za_imunizaciju/{{id_broj}}_{{indeks}}  //Promenjeno sa index -> id_broj + index
 
 Zahtev za izdavanje digitalnog zelenog sertifikata
- - http://www.akatsuki.org/zahtev_za_sertifikat/{{id_broj}}_{{indeks}}
+ - http://www.akatsuki.org/zahtev_za_sertifikat/{{id_broj}}
 
