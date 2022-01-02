@@ -3,13 +3,17 @@ package akatsuki.immunizationsystem.service;
 import akatsuki.immunizationsystem.dao.IDao;
 import akatsuki.immunizationsystem.exceptions.BadRequestRuntimeException;
 import akatsuki.immunizationsystem.exceptions.ConflictRuntimeException;
+import akatsuki.immunizationsystem.exceptions.NotFoundRuntimeException;
 import akatsuki.immunizationsystem.model.users.Korisnik;
 import akatsuki.immunizationsystem.model.users.Pacijent;
+import akatsuki.immunizationsystem.model.users.enums.TipKorisnika;
 import akatsuki.immunizationsystem.utils.Validator;
 import akatsuki.immunizationsystem.utils.modelmappers.IModelMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+
+import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -35,5 +39,19 @@ public class PacijentService {
         pacijent.setSifra(encoder.encode(pacijent.getSifra()));
 
         return pacijentIDao.save(pacijent);
+    }
+
+    public String getTrenutnaForma(String idBroj) {
+        // TODO: logika
+        return "interesovanje";
+    }
+
+    public Pacijent getDetailsForInteresovanje(String idBroj) {
+        Optional<Korisnik> korisnik = pacijentIDao.get(idBroj);
+        if (korisnik.isEmpty())
+            throw new NotFoundRuntimeException("Osoba s id-om " + idBroj + " ne postoji.");
+        if (korisnik.get().getTip().equals(TipKorisnika.DOKTOR))
+            throw new ConflictRuntimeException("Osoba s id-om " + idBroj + " nije validna.");
+        return (Pacijent) korisnik.get();
     }
 }

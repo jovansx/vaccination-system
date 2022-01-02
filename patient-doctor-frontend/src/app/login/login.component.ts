@@ -1,4 +1,3 @@
-import * as xml2js from 'xml2js';
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { Router } from '@angular/router';

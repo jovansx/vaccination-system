@@ -1,2 +1,32 @@
 <app-header></app-header>
-<p>patient-submit works!</p>
+
+<div id="main-container">
+    <div class="interesovanje-container" *ngIf="formType == 'interesovanje'" fxLayout="column" fxLayoutAlign="space-between center">
+        <h1>
+            Podnesite interesovanje za zeljenom vakcinom <mat-icon>vaccine</mat-icon>
+        </h1>
+        <section [formGroup]="interesovanjeForm">
+            <h4>Izaberite tip vakcine:</h4>
+            <p><mat-checkbox formControlName="phizer">Pfizer-BioNTech</mat-checkbox></p>
+            <p><mat-checkbox formControlName="sputnik">Sputnik V (Gamaleya istrazivacki centar)</mat-checkbox></p>
+            <p><mat-checkbox formControlName="sinopharm">Sinopharm</mat-checkbox></p>
+            <p><mat-checkbox formControlName="astra">AstraZeneca</mat-checkbox></p>
+            <p><mat-checkbox formControlName="moderna">Moderna</mat-checkbox></p>
+            <p><mat-checkbox formControlName="biloKoja">Bilo koja</mat-checkbox></p>
+        </section>
+        <mat-radio-group aria-label="Select an option" [(ngModel)]="dobrovoljniDavalac" fxLayout="row" fxLayoutAlign="start center">
+            <h4>Da li ste dobrovoljni davalac krvi:</h4>
+            <mat-radio-button value='true' [checked]='true'>Da</mat-radio-button>
+            <mat-radio-button value='false'>Ne</mat-radio-button>
+        </mat-radio-group>
+        <button id="send-btn" mat-flat-button color="primary" (click)="submitInteresovanje()">Send</button>
+    </div>
+
+    <div *ngIf="formType == 'saglasnost'">
+        saglasnost
+    </div>
+
+    <div *ngIf="formType == 'zahtev'">
+        zahtev
+    </div>
+</div>

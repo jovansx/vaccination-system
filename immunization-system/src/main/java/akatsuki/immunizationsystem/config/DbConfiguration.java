@@ -38,7 +38,7 @@ public class DbConfiguration {
                     "Markovic", "(021) 823-1112", "marko@gmail.com", "$2a$12$GfYvRDS42Ki3Dk3w39svpeKozJOFYPFYxwgP6l0eEyuadTf5gE5Ry",
                     TipKorisnika.PACIJENT, Pol.MUSKI, DatatypeFactory.newInstance().newXMLGregorianCalendar(calendar), TipDrzavljanstva.SRPSKO,
                     "Novi Sad", "Veternik", "Vladike Maksima", "12",
-                    "061 111 111", "Lazar", "Sombor", RadniStatus.STUDENT, Zanimanje.PROSVETA);
+                    "0648736578", "Lazar", "Sombor", RadniStatus.STUDENT, Zanimanje.PROSVETA);
 
             korisnikIDao.save(doktor1);
             korisnikIDao.save(pacijent1);
