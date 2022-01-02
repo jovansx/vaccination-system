@@ -17,6 +17,7 @@ public class InteresovanjeController {
         return interesovanjeService.getInteresovanje(idBroj);
     }
 
+
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     public String createInteresovanje(@RequestBody String interesovanjeXml) {
