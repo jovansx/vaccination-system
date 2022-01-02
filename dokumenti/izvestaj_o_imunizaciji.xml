@@ -2,18 +2,19 @@
 <izvestaj_o_imunizaciji  
     xmlns="http://www.akatsuki.org/izvestaj_o_imunizaciji"
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-    xmlns:t="http://www.akatsuki.org/tipovi"
     xsi:schemaLocation="http://www.akatsuki.org izvestaj_o_imunizaciji.xsd
-    http://www.akatsuki.org/tipovi tipovi.xsd" datum_izdavanja="2021-09-11">
+    http://www.akatsuki.org/tipovi tipovi.xsd" datum_izdavanja="2021-09-11"
+    xmlns:pred="http://www.akatsuki.org/rdf/examples/predicate/"
+    about="http://www.akatsuki.org/izvestaji/2021-08-01_2021-09-01">
     <period>
         <od>2021-08-01</od>
         <do>2021-09-01</do>
     </period>
     <dokumenti>
-        <interesovanje_za_imunizaciju>2758</interesovanje_za_imunizaciju>
+        <interesovanje_za_imunizaciju property="pred:broj_interesovanja" datatype="xs:int">2758</interesovanje_za_imunizaciju>
         <zeleni_sertifikat>
-            <primljeno>453</primljeno>
-            <izdato>428</izdato>
+            <primljeno property="pred:primljeno_zelenih" datatype="xs:int">453</primljeno>
+            <izdato property="pred:izdato_zelenih" datatype="xs:int">428</izdato>
         </zeleni_sertifikat>
     </dokumenti>
     <doze_vakcina izdato="3225">

@@ -1,23 +1,54 @@
 package akatsuki.immunizationsystem.service;
 
+import akatsuki.immunizationsystem.dao.DigitalniSertifikatDAO;
 import akatsuki.immunizationsystem.dao.ISaglasnostZaImunizacijuDAO;
 import akatsuki.immunizationsystem.exceptions.BadRequestRuntimeException;
 import akatsuki.immunizationsystem.exceptions.NotFoundRuntimeException;
 import akatsuki.immunizationsystem.model.documents.SaglasnostZaImunizaciju;
+import akatsuki.immunizationsystem.utils.MetadataExtractor;
 import akatsuki.immunizationsystem.utils.Validator;
 import akatsuki.immunizationsystem.utils.modelmappers.IModelMapper;
-import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Service;
 
 @Service
-@RequiredArgsConstructor
 public class SaglasnostZaImunizacijuService {
-    private final ISaglasnostZaImunizacijuDAO saglasnostZaImunizacijuIDao;
-    private final Validator validator;
-    private final IModelMapper<SaglasnostZaImunizaciju> mapper;
+    private ISaglasnostZaImunizacijuDAO saglasnostZaImunizacijuIDao;
+    private DigitalniSertifikatDAO digitalniSertifikatDAO;
+    private Validator validator;
+    private IModelMapper<SaglasnostZaImunizaciju> mapper;
+    private MetadataExtractor extractor;
+    private InteresovanjeService interesovanjeService;
+    private PotvrdaOIzvrsenojVakcinacijiService potvrdaOIzvrsenojVakcinacijiService;
+
+    @Autowired
+    public void setValidator(Validator validator, ISaglasnostZaImunizacijuDAO saglasnostZaImunizacijuIDao, DigitalniSertifikatDAO digitalniSertifikatDAO,
+                             IModelMapper<SaglasnostZaImunizaciju> mapper, MetadataExtractor extractor,
+                             InteresovanjeService interesovanjeService,
+                             @Lazy PotvrdaOIzvrsenojVakcinacijiService potvrdaOIzvrsenojVakcinacijiService) {
+        this.saglasnostZaImunizacijuIDao = saglasnostZaImunizacijuIDao;
+        this.digitalniSertifikatDAO = digitalniSertifikatDAO;
+        this.validator = validator;
+        this.mapper = mapper;
+        this.extractor = extractor;
+        this.interesovanjeService = interesovanjeService;
+        this.potvrdaOIzvrsenojVakcinacijiService = potvrdaOIzvrsenojVakcinacijiService;
+    }
+
 
     public String getSaglasnostZaImunizaciju(String idBrojIndex) throws RuntimeException {
-//        TODO vidi da li treba da se validira s validatorom
+        String idBroj = idBrojIndex.split("_")[0];
+        if (!validator.isIdValid(idBroj)) {
+            String message;
+            if (idBroj.length() == 13) {
+                message = "Jmbg";
+            } else {
+                message = "Broj pasosa";
+            }
+            throw new BadRequestRuntimeException(message + " koji ste uneli nije validan.");
+        }
+
         SaglasnostZaImunizaciju saglasnostZaImunizaciju = saglasnostZaImunizacijuIDao.get(idBrojIndex).orElseThrow(() -> new NotFoundRuntimeException("Saglasnost sa id-jem " + idBrojIndex + " nije pronadjena."));
         return mapper.convertToXml(saglasnostZaImunizaciju);
     }
@@ -27,25 +58,37 @@ public class SaglasnostZaImunizacijuService {
         if (saglasnostZaImunizaciju == null)
             throw new BadRequestRuntimeException("Dokument koji ste poslali nije validan.");
 
-        // kada dobije termin za vakcinu moze podneti saglasnost
-        // ne treba ova provera dole posto moze da podnosi vise saglasnosti
-        // moze podneti AKO ima termin za prijem vakcine
-        // moracemo nekako vezati dokument saglasnosti za terminom za vakcinu
-        // interesovanje za prijem - termin za prijem vakcine - dokument saglasnosti (object or null)
-        // ako postoji tvoj neki termin za prijem vakcine u buducnosti proveri da li je dokument u njemu null
-        // onda nije jos podneo i moze, ako nije null onda je podneo i ne moze
-        // ako ima dzs onda isto ne moze
+        String id = saglasnostZaImunizaciju.getPacijent().getIdBrojFromDrzavljanstvo();
+        if (digitalniSertifikatDAO.get(id).isPresent()) {
+            throw new BadRequestRuntimeException("Osobi sa id-jem " + id + " je vec izdat digitalni zeleni sertifikat");
+        }
 
-//        if(saglasnostZaImunizaciju.getPacijent().getDrzavljanstvo().getSrpsko() == null) {
-//            if(saglasnostZaImunizacijuIDao.getByBrojPasosa(saglasnostZaImunizaciju.getPacijent().getDrzavljanstvo().getStrano().getBrojPasosa()).isPresent()) {
-//                throw new ConflictRuntimeException("Osoba sa brojem pasosa " + saglasnostZaImunizaciju.getPacijent().getDrzavljanstvo().getStrano().getBrojPasosa() + " je vec podnela saglasnost za imunizaciju.");
-//            }
-//        } else {
-//            if(saglasnostZaImunizacijuIDao.getByJmbg(saglasnostZaImunizaciju.getPacijent().getDrzavljanstvo().getSrpsko().getJmbg()).isPresent()) {
-//                throw new ConflictRuntimeException("Osoba s jmbg-om " + saglasnostZaImunizaciju.getPacijent().getDrzavljanstvo().getSrpsko().getJmbg() + " je vec podnela saglasnost za imunizaciju.");
-//            }
-//        }
+        if (!extractor.extractAndSaveToRdf(saglasnostXml, "/saglasnosti"))
+            throw new BadRequestRuntimeException("Ekstrakcija metapodataka nije uspela.");
+
+        setLinkToThisDocument(saglasnostZaImunizaciju);
 
         return saglasnostZaImunizacijuIDao.save(saglasnostZaImunizaciju);
     }
+
+    private void setLinkToThisDocument(SaglasnostZaImunizaciju saglasnostZaImunizaciju) {
+        try {
+            potvrdaOIzvrsenojVakcinacijiService.getPotvrdaOIzvrsenojVakcinaciji(
+                    saglasnostZaImunizaciju.getPacijent().getIdBrojFromDrzavljanstvo() + "_1");
+            potvrdaOIzvrsenojVakcinacijiService.setReference(saglasnostZaImunizaciju.getPacijent().getIdBrojFromDrzavljanstvo() + "_1",
+                    saglasnostZaImunizaciju.getPacijent().getIdBrojFromDrzavljanstvo() + "_2");
+        } catch (Exception ignored) {
+            interesovanjeService.setReference(saglasnostZaImunizaciju.getPacijent().getIdBrojFromDrzavljanstvo(),
+                    saglasnostZaImunizaciju.getPacijent().getIdBrojFromDrzavljanstvo() + "_1");
+        }
+    }
+
+    public void setReference(String objectId, String referencedObjectId) {
+        SaglasnostZaImunizaciju saglasnostZaImunizaciju = saglasnostZaImunizacijuIDao.get(objectId).get();
+        saglasnostZaImunizaciju.setRel("pred:parentTo");
+        saglasnostZaImunizaciju.setHref("http://www.akatsuki.org/potvrde/" + referencedObjectId);
+
+        saglasnostZaImunizacijuIDao.update(saglasnostZaImunizaciju);
+    }
+
 }

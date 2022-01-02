@@ -5,7 +5,10 @@ import akatsuki.immunizationsystem.utils.modelmappers.IModelMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
+import java.util.Optional;
 
 @Component
 @RequiredArgsConstructor
@@ -30,8 +33,7 @@ public class SaglasnostZaImunizacijuDAO implements ISaglasnostZaImunizacijuDAO {
         List<String> resourceContent = daoUtils.getResourcesByCollectionId(collectionId);
         for (String resource : resourceContent) {
             SaglasnostZaImunizaciju saglasnostZaImunizaciju = mapper.convertToObject(resource);
-            if (saglasnostZaImunizaciju.getPacijent().getDrzavljanstvo().getSrpsko().getIdBroj().equals(jmbg)
-                    || saglasnostZaImunizaciju.getPacijent().getDrzavljanstvo().getStrano().getIdBroj().equals(jmbg)) {
+            if (saglasnostZaImunizaciju.getPacijent().getIdBrojFromDrzavljanstvo().equals(jmbg)) {
                 return Optional.of(saglasnostZaImunizaciju);
             }
         }
@@ -51,20 +53,37 @@ public class SaglasnostZaImunizacijuDAO implements ISaglasnostZaImunizacijuDAO {
 
     @Override
     public String save(SaglasnostZaImunizaciju saglasnostZaImunizaciju) {
-        String id;
-        if (saglasnostZaImunizaciju.getPacijent().getDrzavljanstvo().getStrano().getIdBroj() != null)
-            id = saglasnostZaImunizaciju.getPacijent().getDrzavljanstvo().getStrano().getIdBroj();
-        else
-            id = saglasnostZaImunizaciju.getPacijent().getDrzavljanstvo().getSrpsko().getIdBroj();
+        String id = saglasnostZaImunizaciju.getPacijent().getIdBrojFromDrzavljanstvo();
+        int index = getDocumentIndex(id);
+        daoUtils.createResource(collectionId, saglasnostZaImunizaciju, id + "_" + index + ".xml", SaglasnostZaImunizaciju.class);
+        return id + "_" + index + ".xml";
+    }
 
-//        TODO treba index umesto onog sranja
-        daoUtils.createResource(collectionId, saglasnostZaImunizaciju, id + "_" + UUID.randomUUID() + ".xml", SaglasnostZaImunizaciju.class);
-        return id + ".xml";
+    private int getDocumentIndex(String id) {
+        int index = 1;
+        String fullId = id + "_" + index;
+        String resourceContent = "";
+        try {
+            resourceContent = daoUtils.getResource(collectionId, fullId);
+
+        } catch (Exception ignored) {
+        }
+        while (!resourceContent.equals("")) {
+            index++;
+            fullId = id + "_" + index;
+            try {
+                resourceContent = daoUtils.getResource(collectionId, fullId);
+
+            } catch (Exception ignored) {
+            }
+        }
+        return index;
     }
 
     @Override
     public void update(SaglasnostZaImunizaciju saglasnostZaImunizaciju) {
-
+        String id = saglasnostZaImunizaciju.getAbout().split("http://www.akatsuki.org/saglasnosti/")[1];
+        daoUtils.createResource(collectionId, saglasnostZaImunizaciju,  id + ".xml", SaglasnostZaImunizaciju.class);
     }
 
     @Override

@@ -32,16 +32,10 @@
                                     </xs:choice>
                                 </xs:complexType>
                             </xs:element>
-                            <xs:element name="puno_ime">
-                                <xs:complexType>
-                                    <xs:sequence>
-                                        <xs:element name="prezime" type="xs:string"/>
-                                        <xs:element name="ime" type="xs:string"/>
-                                        <xs:element name="ime_roditelja" type="xs:string"/>
-                                    </xs:sequence>
-                                </xs:complexType>
-                            </xs:element>
-                            <xs:element name="pol" type="t:TPol"/>
+                            <xs:element name="prezime" type="t:TPrezime"/>
+                            <xs:element name="ime" type="t:TIme"/>
+                            <xs:element name="ime_roditelja" type="xs:string"/>
+                            <xs:element name="pol" type="t:TCPol"/>
                             <xs:element name="rodjenje">
                                 <xs:complexType>
                                     <xs:sequence>
@@ -62,14 +56,14 @@
                                             </xs:complexType>
                                         </xs:element>
                                         <xs:element name="mesto_stanovanja" type="xs:string"/>
-                                        <xs:element name="opstina" type="xs:string"/>
+                                        <xs:element name="opstina" type="t:TLokacija"/>
                                     </xs:sequence>
                                 </xs:complexType>
                             </xs:element>
                             <xs:element name="fiksni_telefon" type="t:TFiksniTelefon"/>
                             <xs:element name="mobilni_telefon" type="t:TTelefon"/>
 
-                            <xs:element name="imejl" type="t:TEmail"/>
+                            <xs:element name="email" type="t:TEmail"/>
                             <xs:element name="radni_status">
                                 <xs:simpleType>
                                     <xs:restriction base="xs:string">
@@ -185,9 +179,8 @@
                     </xs:complexType>
                 </xs:element>
             </xs:sequence>
+            <xs:attribute name="about" type="xs:string" use="required"/>
+            <xs:attribute name="href" type="xs:string"/>
         </xs:complexType>
     </xs:element>
-
-
-
 </xs:schema>

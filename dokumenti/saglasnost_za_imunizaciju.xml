@@ -3,19 +3,19 @@
     xmlns="http://www.akatsuki.org/saglasnost_za_imunizaciju"
     xmlns:t="http://www.akatsuki.org/tipovi"
     xsi:schemaLocation="http://www.akatsuki.org saglasnost_za_imunizaciju.xsd
-    http://www.akatsuki.org/tipovi tipovi.xsd">
+    http://www.akatsuki.org/tipovi tipovi.xsd"
+    xmlns:pred="http://www.akatsuki.org/rdf/examples/predicate/"
+    about="http://www.akatsuki.org/saglasnosti/1510999800078_0">
     <pacijent datum_popunjavanja="1999-10-15">
         <drzavljanstvo>
             <srpsko>
                 <id_broj property="pred:id_broj" datatype="xs:string">1510999800078</id_broj>
             </srpsko>
         </drzavljanstvo>
-        <puno_ime>
-            <prezime>Buljevic</prezime>
-            <ime>Aleksandar</ime>
-            <ime_roditelja>Mladen</ime_roditelja>
-        </puno_ime>
-        <pol>Muski</pol>
+        <prezime property="pred:prezime" datatype="xs:string">Buljevic</prezime>
+        <ime property="pred:ime" datatype="xs:string">Aleksandar</ime>
+        <ime_roditelja>Mladen</ime_roditelja>
+        <pol property="pred:pol" datatype="xs:string">Muski</pol>
         <rodjenje>
             <datum_rodjenja>1999-10-15</datum_rodjenja>
             <mesto_rodjenja>Veternik</mesto_rodjenja>
@@ -26,11 +26,11 @@
                 <broj>69</broj>
             </adresa>
             <mesto_stanovanja>Veternik</mesto_stanovanja>
-            <opstina>Novi Sad</opstina>
+            <opstina property="pred:lokacija" datatype="xs:string">Novi Sad</opstina>
         </prebivaliste>
-        <fiksni_telefon>(021) 332-3564</fiksni_telefon>
-        <mobilni_telefon>0643323564</mobilni_telefon>
-        <imejl>aleksandarb99@gmail.com</imejl>
+        <fiksni_telefon>(021) 641-3876</fiksni_telefon>
+        <mobilni_telefon>0691782912</mobilni_telefon>
+        <email>abuljevic8@gmail.com</email>
         <radni_status>student</radni_status>
         <zanimanje>drugo</zanimanje>
         <socijalna_zastita>
@@ -51,7 +51,7 @@
         <lekar>
             <ime>Jovan</ime>
             <prezime>Simic</prezime>
-            <telefon>(021) 332-3564</telefon>
+            <telefon>(021) 641-3876</telefon>
         </lekar>
         <vakcine>
             <vakcina>

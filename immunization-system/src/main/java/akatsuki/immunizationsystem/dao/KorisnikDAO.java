@@ -1,7 +1,5 @@
 package akatsuki.immunizationsystem.dao;
 
-import akatsuki.immunizationsystem.model.documents.IzvestajOImunizaciji;
-import akatsuki.immunizationsystem.model.documents.SaglasnostZaImunizaciju;
 import akatsuki.immunizationsystem.model.users.Korisnik;
 import akatsuki.immunizationsystem.utils.modelmappers.IModelMapper;
 import lombok.RequiredArgsConstructor;
@@ -42,7 +40,9 @@ public class KorisnikDAO implements IDao<Korisnik> {
     }
 
     @Override
-    public Collection<Korisnik> getAll() { return null;}
+    public Collection<Korisnik> getAll() {
+        return null;
+    }
 
     @Override
     public String save(Korisnik korisnik) {

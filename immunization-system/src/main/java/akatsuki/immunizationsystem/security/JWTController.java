@@ -1,7 +1,7 @@
 package akatsuki.immunizationsystem.security;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
+import org.springframework.http.MediaType;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.DisabledException;
@@ -20,8 +20,8 @@ public class JWTController {
     @Autowired
     private JWTUserDetailsService userDetailsService;
 
-    @PostMapping(value = "/api/authenticate")
-    public ResponseEntity<?> createAuthenticationToken(@RequestBody String xmlLogin) throws Exception {
+    @PostMapping(value = "/api/authenticate", produces = MediaType.APPLICATION_XML_VALUE)
+    public JWTResponse createAuthenticationToken(@RequestBody String xmlLogin) throws Exception {
 
         String[] parts1 = xmlLogin.split("<email>");
         String[] parts2 = parts1[1].split("</email>");
@@ -37,7 +37,7 @@ public class JWTController {
 
         final String token = jwtTokenUtil.generateToken(userDetails);
 
-        return ResponseEntity.ok(new JWTResponse(token));
+        return new JWTResponse(token);
     }
 
     private void authenticate(String username, String password) throws Exception {

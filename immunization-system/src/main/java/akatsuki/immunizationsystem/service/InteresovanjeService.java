@@ -39,4 +39,12 @@ public class InteresovanjeService {
             throw new BadRequestRuntimeException("Ekstrakcija metapodataka nije uspela.");
         return interesovanjeDAO.save(interesovanje);
     }
+
+    public void setReference(String objectId, String referencedObjectId) {
+        Interesovanje interesovanje = interesovanjeDAO.get(objectId).get();
+        interesovanje.setRel("pred:parentTo");
+        interesovanje.setHref("http://www.akatsuki.org/saglasnosti/" + referencedObjectId);
+
+        interesovanjeDAO.save(interesovanje);
+    }
 }

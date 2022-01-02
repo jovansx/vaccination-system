@@ -5,7 +5,10 @@ import akatsuki.immunizationsystem.utils.modelmappers.IModelMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
+import java.util.Optional;
 
 @Component
 @RequiredArgsConstructor
@@ -50,8 +53,7 @@ public class ZahtevZaSertifikatDAO implements IZahtevZaSertifikatDAO {
 
     @Override
     public String save(ZahtevZaSertifikat zahtevZaSertifikat) {
-//        TODO videti da umesto uuid stavimo index
-        String documentId = zahtevZaSertifikat.getPodnosilac().getIdBroj().getValue() + "_" + UUID.randomUUID() + ".xml";
+        String documentId = zahtevZaSertifikat.getPodnosilac().getIdBroj().getValue() + ".xml";
         daoUtils.createResource(collectionId, zahtevZaSertifikat, documentId, ZahtevZaSertifikat.class);
         return documentId;
     }

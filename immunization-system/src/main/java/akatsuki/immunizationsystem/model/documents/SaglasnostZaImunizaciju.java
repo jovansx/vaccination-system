@@ -1,7 +1,6 @@
 package akatsuki.immunizationsystem.model.documents;
 
-import akatsuki.immunizationsystem.model.types.TNazivVakcine;
-import akatsuki.immunizationsystem.model.types.TPol;
+import akatsuki.immunizationsystem.model.types.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -26,6 +25,12 @@ public class SaglasnostZaImunizaciju {
     protected Pacijent pacijent;
     @XmlElement(name = "evidencija_o_vakcinaciji", namespace = "http://www.akatsuki.org/saglasnost_za_imunizaciju", required = true)
     protected EvidencijaOVakcinaciji evidencijaOVakcinaciji;
+    @XmlAttribute(name = "about", required = true)
+    protected String about;
+    @XmlAttribute(name = "rel")
+    protected String rel;
+    @XmlAttribute(name = "href")
+    protected String href;
 
     @XmlAccessorType(XmlAccessType.FIELD)
     @XmlType(name = "", propOrder = {
@@ -140,13 +145,15 @@ public class SaglasnostZaImunizaciju {
     @XmlAccessorType(XmlAccessType.FIELD)
     @XmlType(name = "", propOrder = {
             "drzavljanstvo",
-            "punoIme",
+            "prezime",
+            "ime",
+            "imeRoditelja",
             "pol",
             "rodjenje",
             "prebivaliste",
             "fiksniTelefon",
             "mobilniTelefon",
-            "imejl",
+            "email",
             "radniStatus",
             "zanimanje",
             "socijalnaZastita",
@@ -159,11 +166,14 @@ public class SaglasnostZaImunizaciju {
 
         @XmlElement(namespace = "http://www.akatsuki.org/saglasnost_za_imunizaciju", required = true)
         protected Drzavljanstvo drzavljanstvo;
-        @XmlElement(name = "puno_ime", namespace = "http://www.akatsuki.org/saglasnost_za_imunizaciju", required = true)
-        protected PunoIme punoIme;
         @XmlElement(namespace = "http://www.akatsuki.org/saglasnost_za_imunizaciju", required = true)
-        @XmlSchemaType(name = "string")
-        protected TPol pol;
+        protected TPrezime prezime;
+        @XmlElement(namespace = "http://www.akatsuki.org/saglasnost_za_imunizaciju", required = true)
+        protected TIme ime;
+        @XmlElement(name = "ime_roditelja", namespace = "http://www.akatsuki.org/saglasnost_za_imunizaciju", required = true)
+        protected String imeRoditelja;
+        @XmlElement(namespace = "http://www.akatsuki.org/saglasnost_za_imunizaciju", required = true)
+        protected TCPol pol;
         @XmlElement(namespace = "http://www.akatsuki.org/saglasnost_za_imunizaciju", required = true)
         protected Rodjenje rodjenje;
         @XmlElement(namespace = "http://www.akatsuki.org/saglasnost_za_imunizaciju", required = true)
@@ -173,7 +183,7 @@ public class SaglasnostZaImunizaciju {
         @XmlElement(name = "mobilni_telefon", namespace = "http://www.akatsuki.org/saglasnost_za_imunizaciju", required = true)
         protected String mobilniTelefon;
         @XmlElement(namespace = "http://www.akatsuki.org/saglasnost_za_imunizaciju", required = true)
-        protected String imejl;
+        protected String email;
         @XmlElement(name = "radni_status", namespace = "http://www.akatsuki.org/saglasnost_za_imunizaciju", required = true)
         protected String radniStatus;
         @XmlElement(namespace = "http://www.akatsuki.org/saglasnost_za_imunizaciju", required = true)
@@ -185,6 +195,12 @@ public class SaglasnostZaImunizaciju {
         @XmlAttribute(name = "datum_popunjavanja", required = true)
         @XmlSchemaType(name = "date")
         protected XMLGregorianCalendar datumPopunjavanja;
+
+        public String getIdBrojFromDrzavljanstvo() {
+            if (getDrzavljanstvo().getSrpsko().getIdBroj().getValue() == null)
+                return getDrzavljanstvo().getStrano().getIdBroj().getValue();
+            return getDrzavljanstvo().getSrpsko().getIdBroj().getValue();
+        }
 
         @XmlAccessorType(XmlAccessType.FIELD)
         @XmlType(name = "", propOrder = {
@@ -211,7 +227,7 @@ public class SaglasnostZaImunizaciju {
             public static class Srpsko {
 
                 @XmlElement(name = "id_broj", namespace = "http://www.akatsuki.org/saglasnost_za_imunizaciju", required = true)
-                protected String idBroj;
+                protected TCIdBroj idBroj;
             }
 
 
@@ -228,7 +244,7 @@ public class SaglasnostZaImunizaciju {
                 @XmlElement(namespace = "http://www.akatsuki.org/saglasnost_za_imunizaciju", required = true)
                 protected String naziv;
                 @XmlElement(name = "id_broj", namespace = "http://www.akatsuki.org/saglasnost_za_imunizaciju", required = true)
-                protected String idBroj;
+                protected TCIdBroj idBroj;
             }
         }
 
@@ -264,7 +280,7 @@ public class SaglasnostZaImunizaciju {
             @XmlElement(name = "mesto_stanovanja", namespace = "http://www.akatsuki.org/saglasnost_za_imunizaciju", required = true)
             protected String mestoStanovanja;
             @XmlElement(namespace = "http://www.akatsuki.org/saglasnost_za_imunizaciju", required = true)
-            protected String opstina;
+            protected TLokacija opstina;
 
             @XmlAccessorType(XmlAccessType.FIELD)
             @XmlType(name = "", propOrder = {
@@ -281,25 +297,6 @@ public class SaglasnostZaImunizaciju {
                 @XmlElement(namespace = "http://www.akatsuki.org/saglasnost_za_imunizaciju", required = true)
                 protected BigInteger broj;
             }
-        }
-
-        @XmlAccessorType(XmlAccessType.FIELD)
-        @XmlType(name = "", propOrder = {
-                "prezime",
-                "ime",
-                "imeRoditelja"
-        })
-        @Data
-        @NoArgsConstructor
-        @AllArgsConstructor
-        public static class PunoIme {
-
-            @XmlElement(namespace = "http://www.akatsuki.org/saglasnost_za_imunizaciju", required = true)
-            protected String prezime;
-            @XmlElement(namespace = "http://www.akatsuki.org/saglasnost_za_imunizaciju", required = true)
-            protected String ime;
-            @XmlElement(name = "ime_roditelja", namespace = "http://www.akatsuki.org/saglasnost_za_imunizaciju", required = true)
-            protected String imeRoditelja;
         }
 
         @XmlAccessorType(XmlAccessType.FIELD)

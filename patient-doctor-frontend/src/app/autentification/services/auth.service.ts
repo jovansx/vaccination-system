@@ -13,7 +13,6 @@ export class AuthService {
   constructor(private _http: HttpClient, private _router: Router, private _jwt: JwtDecoderService) {}
 
   public loginUser(userCredentials: Credentials): Observable<string> {
-    let headers = new HttpHeaders({'Content-Type': 'application/xml'});
     const xmlRegistration: string = 
     `<?xml version="1.0" encoding="UTF-8"?>
     <login>
@@ -24,10 +23,10 @@ export class AuthService {
             ${userCredentials.password}
         </password>
     </login>`;
-    return this._http.post<string>('/authenticate', xmlRegistration, {headers});
+    return this._http.post<string>('/authenticate', xmlRegistration, {responseType: 'text' as 'json'});
   }
 
-  public registerUser(userDetails: RegistrationDetails): Observable<string> {
+  public registerUser(userDetails: RegistrationDetails): Observable<void> {
     let headers = new HttpHeaders({'Content-Type': 'application/xml'});
 
     const xmlRegistration: string = 
@@ -52,7 +51,7 @@ export class AuthService {
       <ulica>${userDetails.ulica}</ulica>
       <brojKuce>${userDetails.brojKuce}</brojKuce>
     </pacijent>`;
-    return this._http.post<string>('/register-user', xmlRegistration, {headers});
+    return this._http.post<void>('/pacijenti', xmlRegistration, {headers});
   }
 
   public logoutUser(): void {
