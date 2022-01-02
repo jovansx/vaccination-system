@@ -1,6 +1,7 @@
 package akatsuki.immunizationsystem.config;
 
 import akatsuki.immunizationsystem.dao.IDao;
+import akatsuki.immunizationsystem.model.appointments.Appointment;
 import akatsuki.immunizationsystem.model.users.Doktor;
 import akatsuki.immunizationsystem.model.users.Korisnik;
 import akatsuki.immunizationsystem.model.users.Pacijent;
@@ -13,6 +14,7 @@ import org.springframework.context.annotation.Configuration;
 import javax.xml.datatype.DatatypeFactory;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
 
@@ -21,7 +23,7 @@ import java.util.GregorianCalendar;
 public class DbConfiguration {
 
     @Bean
-    public CommandLineRunner populateDatabase(IDao<Korisnik> korisnikIDao) {
+    public CommandLineRunner populateDatabase(IDao<Korisnik> korisnikIDao, IDao<Appointment> appointmentIDao) {
         return (args) -> {
             Doktor doktor1 = new Doktor("Promenada u Novom Sadu", "1010998800071", "Nikola",
                     "Nikolic", "(021) 823-1111", "nikola@gmail.com", "$2a$12$CLdgTeAs50lbVLOBELp7yele07svd3/1nNGefNJ6Lb5Qx/08eBMFa", TipKorisnika.DOKTOR);
@@ -40,6 +42,23 @@ public class DbConfiguration {
 
             korisnikIDao.save(doktor1);
             korisnikIDao.save(pacijent1);
+
+            date = new Date();
+            calendar.setTime(date);
+            Appointment appointment1 = new Appointment("1010998800070", DatatypeFactory.newInstance().newXMLGregorianCalendar(calendar));
+            appointmentIDao.save(appointment1);
+
+            calendar.add(Calendar.MINUTE, Appointment.DURATION_IN_MINUTES);
+            Appointment appointment2 = new Appointment("1010998800070", DatatypeFactory.newInstance().newXMLGregorianCalendar(calendar));
+            appointmentIDao.save(appointment2);
+
+            calendar.add(Calendar.MINUTE, Appointment.DURATION_IN_MINUTES);
+            Appointment appointment3 = new Appointment("1010998800070", DatatypeFactory.newInstance().newXMLGregorianCalendar(calendar));
+            appointmentIDao.save(appointment3);
+
+            calendar.add(Calendar.MINUTE, Appointment.DURATION_IN_MINUTES);
+            Appointment appointment4 = new Appointment("1010998800070", DatatypeFactory.newInstance().newXMLGregorianCalendar(calendar));
+            appointmentIDao.save(appointment4);
 
             log.info("Database is populated");
         };

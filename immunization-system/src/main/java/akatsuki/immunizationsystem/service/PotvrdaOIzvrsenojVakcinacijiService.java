@@ -5,13 +5,15 @@ import akatsuki.immunizationsystem.exceptions.BadRequestRuntimeException;
 import akatsuki.immunizationsystem.exceptions.ConflictRuntimeException;
 import akatsuki.immunizationsystem.exceptions.NotFoundRuntimeException;
 import akatsuki.immunizationsystem.model.documents.PotvrdaOVakcinaciji;
-import akatsuki.immunizationsystem.model.documents.SaglasnostZaImunizaciju;
+import akatsuki.immunizationsystem.model.vaccine.VaccineType;
 import akatsuki.immunizationsystem.utils.MetadataExtractor;
 import akatsuki.immunizationsystem.utils.Validator;
 import akatsuki.immunizationsystem.utils.modelmappers.IModelMapper;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.client.RestTemplate;
+
+import java.util.stream.Stream;
 
 @Service
 @RequiredArgsConstructor
@@ -21,6 +23,7 @@ public class PotvrdaOIzvrsenojVakcinacijiService {
     private final IModelMapper<PotvrdaOVakcinaciji> mapper;
     private final MetadataExtractor extractor;
     private final SaglasnostZaImunizacijuService saglasnostZaImunizacijuService;
+    private final RestTemplate restTemplate;
 
     public String getPotvrdaOIzvrsenojVakcinaciji(String idBrojDoza) throws RuntimeException {
         if (!validator.isIdDozaValid(idBrojDoza))
@@ -47,7 +50,25 @@ public class PotvrdaOIzvrsenojVakcinacijiService {
 
         setLinkToThisDocument(potvrdaOVakcinaciji);
 
+        decreaseAmountOfVaccine(potvrdaOVakcinaciji);
+
         return potvrdaOVakcinacijiIDao.save(potvrdaOVakcinaciji);
+    }
+
+    public static VaccineType getVaccineTypeFromStringValue(String givenName) {
+        return Stream.of(VaccineType.values())
+                .filter(direction -> direction.label.equals(givenName))
+                .findFirst()
+                .orElse(null);
+    }
+
+    private void decreaseAmountOfVaccine(PotvrdaOVakcinaciji potvrdaOVakcinaciji) {
+        VaccineType vaccine = getVaccineTypeFromStringValue(potvrdaOVakcinaciji.getNazivVakcine().getValue());
+
+        int dozesSize = potvrdaOVakcinaciji.getPrimljeneVakcine().getDoza().size();
+
+        restTemplate.put("http://localhost:8083/api/vakcine/" + vaccine.name() + "/" +
+                potvrdaOVakcinaciji.getPrimljeneVakcine().getDoza().get(dozesSize - 1).getSerija(), null);
     }
 
     private void setLinkToThisDocument(PotvrdaOVakcinaciji potvrdaOVakcinaciji) {

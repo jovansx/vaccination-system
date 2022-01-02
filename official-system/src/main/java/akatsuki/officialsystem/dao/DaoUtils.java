@@ -73,8 +73,7 @@ public class DaoUtils {
             res = (XMLResource) col.getResource(documentId + ".xml");
             if (res != null)
                 responseContent = (String) res.getContent();
-        } catch (Exception ex) {
-            ex.printStackTrace();
+        } catch (Exception ignored) {
         } finally {
             if (col != null) {
                 try {
