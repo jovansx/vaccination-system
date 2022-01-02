@@ -2,6 +2,7 @@ package akatsuki.officialsystem.utils.modelmappers;
 
 import akatsuki.officialsystem.model.vaccine.Vaccine;
 import akatsuki.officialsystem.model.vaccine.VaccineDTO;
+import akatsuki.officialsystem.model.vaccine.VaccinesDTO;
 import org.springframework.stereotype.Component;
 
 import javax.xml.bind.JAXBContext;
@@ -11,14 +12,14 @@ import java.io.StringReader;
 import java.io.StringWriter;
 
 @Component
-public class VaccineDTOModelMapper implements IModelMapper<VaccineDTO> {
+public class VaccinesDTOModelMapper implements IModelMapper<VaccinesDTO> {
 
     @Override
-    public VaccineDTO convertToObject(String xmlString) {
+    public VaccinesDTO convertToObject(String xmlString) {
         try {
-            JAXBContext jaxbContext = JAXBContext.newInstance(VaccineDTO.class);
+            JAXBContext jaxbContext = JAXBContext.newInstance(VaccinesDTO.class);
             Unmarshaller unmarshaller = jaxbContext.createUnmarshaller();
-            return (VaccineDTO) unmarshaller.unmarshal(new StringReader(xmlString));
+            return (VaccinesDTO) unmarshaller.unmarshal(new StringReader(xmlString));
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -26,10 +27,10 @@ public class VaccineDTOModelMapper implements IModelMapper<VaccineDTO> {
     }
 
     @Override
-    public String convertToXml(VaccineDTO object) {
+    public String convertToXml(VaccinesDTO object) {
         StringWriter sw = new StringWriter();
         try {
-            JAXBContext jaxbContext = JAXBContext.newInstance(Vaccine.class);
+            JAXBContext jaxbContext = JAXBContext.newInstance(VaccinesDTO.class);
             Marshaller marshaller = jaxbContext.createMarshaller();
             marshaller.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, Boolean.TRUE);
             marshaller.marshal(object, sw);
