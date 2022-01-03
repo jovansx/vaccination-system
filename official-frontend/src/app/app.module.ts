@@ -14,14 +14,16 @@ import { FlexLayoutModule } from '@angular/flex-layout';
 import { HeaderInterceptorService } from './autentification/services/header-interceptor.service';
 import { VaccinePageComponent } from './vaccine-page/vaccine-page.component';
 import { HeaderComponent } from './header/header.component';
-import { VaccineService } from './services/vaccine.service'
+import { VaccineService } from './services/vaccine.service';
+import { ReportPageComponent } from './report-page/report-page.component'
 
 @NgModule({
   declarations: [
     AppComponent,
     LoginComponent,
     VaccinePageComponent,
-    HeaderComponent
+    HeaderComponent,
+    ReportPageComponent
   ],
   imports: [
     BrowserModule,

@@ -1,0 +1,83 @@
+<app-header></app-header>
+
+<div class="report-page-container">
+    <h1>Izvestaji</h1>
+    <mat-divider></mat-divider>
+    <div class="report-filter-panel" fxLayout="row" fxLayoutAlign="end center">
+        Od: 
+        <mat-form-field appearance="fill" class="mr-30 ml-20">
+            <!-- <mat-label>Choose a date</mat-label> -->
+            <input matInput [matDatepicker]="picker_from">
+            <mat-datepicker-toggle matSuffix [for]="picker_from"></mat-datepicker-toggle>
+            <mat-datepicker #picker_from></mat-datepicker>
+        </mat-form-field>
+        Do: 
+        <mat-form-field appearance="fill" class="mr-20 ml-20">
+            <!-- <mat-label>Choose a date</mat-label> -->
+            <input matInput [matDatepicker]="picker_to" [(ngModel)]="dateTo">
+            <mat-datepicker-toggle matSuffix [for]="picker_to"></mat-datepicker-toggle>
+            <mat-datepicker #picker_to></mat-datepicker>
+        </mat-form-field>
+        <button mat-button>
+            <mat-icon>search</mat-icon>
+        </button>
+        
+    </div>
+    <div class="report-info-panel" fxLayout="row">
+        <div fxLayout="column" fxFlex="40">
+            <h2>Dokumenti</h2>
+            <mat-divider></mat-divider>
+            <div class="documents-panel">
+                <div class="report-input-panel" fxLayout="row" fxLayoutAlign="space-between center"> 
+                    <p>Broj interesovanja za imunizaciju:</p>
+                    <input/>
+                </div>
+                
+                <div class="report-input-panel" fxLayout="row" fxLayoutAlign="space-between center">
+                    <p>Podnesenih zahteva za digitalni zeleni sertifikat:</p>
+                    <input/>
+                </div>
+                <div class="report-input-panel" fxLayout="row" fxLayoutAlign="space-between center">
+                    <p>Izdato digitalnih zelenih sertifikata:</p>
+                    <input/>
+                </div>
+            </div>
+            
+            <div class="vaccine-doses">
+                <h2>Doze vakcina</h2>
+                <mat-divider></mat-divider>
+                <h3 style="margin-top:20px">Raspodela po dozama</h3>
+                <div fxLayout="row" fxLayoutAlign="space-between center">
+                    <p>Izdato doza vakcina:</p>
+                    <input/>
+                </div>
+                <div fxLayout="row" fxLayoutAlign="space-between center">
+                    <p>Doza broj 1:</p>
+                    <input/>
+                </div>
+                <div fxLayout="row" fxLayoutAlign="space-between center">
+                    <p>Doza broj 2:</p>
+                    <input/>
+                </div>
+                <h3>Raspodela po proizvodjacima</h3>
+                <div fxLayout="row" fxLayoutAlign="space-between center">
+                    <p>Pfizer-BioNTech:</p>
+                    <input/>
+                </div>
+                <div fxLayout="row" fxLayoutAlign="space-between center">
+                    <p>Sinopharm:</p>
+                    <input/>
+                </div>
+                <div fxLayout="row" fxLayoutAlign="space-between center">
+                    <p>AstraZeneca:</p>
+                    <input/>
+                </div>
+                <div fxLayout="row" fxLayoutAlign="space-between center">
+                    <p>Sputnik V:</p>
+                    <input/>
+                </div>
+            </div>
+        </div>
+        
+    </div>
+  </div>
