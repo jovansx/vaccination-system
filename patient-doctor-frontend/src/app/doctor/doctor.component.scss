@@ -23,3 +23,8 @@ mat-card {
   background-color: var(--light-header);
   color: white;
 }
+
+.scroller-div {
+  height: 60vh;
+  overflow-y: scroll;
+}

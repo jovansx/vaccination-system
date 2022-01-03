@@ -37,6 +37,22 @@ export class DoctorComponent implements OnInit {
     drzavljanstvo: new FormControl({ value: 'SRPSKO', disabled: true }, [Validators.required]),
     mobilniTelefon: new FormControl({ value: '0691782912', disabled: true }, [Validators.required, Validators.pattern("[0-9]{10}")]),
     fiksniTelefon: new FormControl({ value: '(021) 641-3876', disabled: true }, [Validators.required, Validators.pattern("\\([0-9]{3}\\) [0-9]{3}-[0-9]{4}")]),
+  
+    mestoRodjenja: new FormControl({ value: 'Novi Sad', disabled: true }, [Validators.required]),
+    datumRodjenja: new FormControl({ value: '15.10.1999', disabled: true }, [Validators.required]),
+
+    opstina: new FormControl({ value: 'Novi Sad', disabled: true }, [Validators.required]),
+    mestoStanovanja: new FormControl({ value: 'Novi Sad', disabled: true }, [Validators.required]),
+    ulica: new FormControl({ value: 'Kralja Aleksandra', disabled: true }, [Validators.required]),
+    brojKuce: new FormControl({ value: '22', disabled: true }, [Validators.required]),
+    email: new FormControl({ value: 'jovan@gmail.com', disabled: true }, [Validators.required]),
+    radniStatus: new FormControl({ value: 'student', disabled: true }, [Validators.required]),
+    zanimanje: new FormControl({ value: 'drugo', disabled: true }, [Validators.required]),
+    socijalnaZastita: new FormControl({ value: 'IMA', disabled: true }, [Validators.required]),
+
+    sedisteSocZastite: new FormControl({ value: 'EPS Novi Sad', disabled: true }, [Validators.required]),
+    saglasnost: new FormControl({ value: 'IMA', disabled: true }, [Validators.required]),
+    nazivLeka: new FormControl({ value: 'Aspirin', disabled: true }, [Validators.required]),
   });
 
   constructor( public validator: ValidatorService) { 
