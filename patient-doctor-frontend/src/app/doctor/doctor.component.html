@@ -280,6 +280,51 @@
             validator.validateRequired("prezime")
           }}</mat-error>
         </mat-form-field>
+        <mat-form-field *ngIf="firstVaccination" appearance="fill">
+          <mat-label>Izaberi vakcinu</mat-label>
+          <mat-select formControlName="izaberiVakcinu">
+            <mat-option
+              *ngIf="
+                ifVaccineInAvailableVaccines('Pfizer-BioNTech') ||
+                ifVaccineInAvailableVaccines('Bilo koja')
+              "
+              value="Pfizer-BioNTech"
+              >Pfizer-BioNTech</mat-option
+            >
+            <mat-option
+              *ngIf="
+                ifVaccineInAvailableVaccines('Sputnik V') ||
+                ifVaccineInAvailableVaccines('Bilo koja')
+              "
+              value="Sputnik V"
+              >Sputnik V</mat-option
+            >
+            <mat-option
+              *ngIf="
+                ifVaccineInAvailableVaccines('Sinopharm') ||
+                ifVaccineInAvailableVaccines('Bilo koja')
+              "
+              value="Sinopharm"
+              >Sinopharm</mat-option
+            >
+            <mat-option
+              *ngIf="
+                ifVaccineInAvailableVaccines('AstraZeneca') ||
+                ifVaccineInAvailableVaccines('Bilo koja')
+              "
+              value="AstraZeneca"
+              >AstraZeneca</mat-option
+            >
+            <mat-option
+              *ngIf="
+                ifVaccineInAvailableVaccines('Moderna') ||
+                ifVaccineInAvailableVaccines('Bilo koja')
+              "
+              value="Moderna"
+              >Moderna</mat-option
+            >
+          </mat-select>
+        </mat-form-field>
         <mat-form-field appearance="fill">
           <mat-label>Izaberi nacin davanja</mat-label>
           <mat-select formControlName="nacinDavanjaVakcine">
