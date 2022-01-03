@@ -35,10 +35,6 @@
         <zanimanje>drugo</zanimanje>
         <socijalna_zastita>
             <korisnik>true</korisnik>
-            <sediste>
-                <naziv>EPS</naziv>
-                <opstina>Novi Sad</opstina>
-            </sediste>
         </socijalna_zastita>
         <izjava_saglasnosti>
             <saglasnost>true</saglasnost>
@@ -54,15 +50,6 @@
             <telefon>(021) 641-3876</telefon>
         </lekar>
         <vakcine>
-            <vakcina>
-                <naziv>Pfizer-BioNTech</naziv>
-                <datum_izdavanja>2021-09-09</datum_izdavanja>
-                <nacin_davanja>IM</nacin_davanja>
-                <ekstremitet>DR</ekstremitet>
-                <serija>238</serija>
-                <proizvodjac>Pfizer-BioNTech</proizvodjac>
-                <nezeljena_reakcija>Temperatura</nezeljena_reakcija>
-            </vakcina>
             <vakcina>
                 <naziv>Pfizer-BioNTech</naziv>
                 <datum_izdavanja>2021-09-09</datum_izdavanja>

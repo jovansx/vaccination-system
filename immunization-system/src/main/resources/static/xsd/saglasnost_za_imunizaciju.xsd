@@ -51,7 +51,7 @@
                                             <xs:complexType>
                                                 <xs:sequence>
                                                   <xs:element name="ulica" type="xs:string"/>
-                                                  <xs:element name="broj" type="xs:integer"/>
+                                                  <xs:element name="broj" type="xs:string"/>
                                                 </xs:sequence>
                                             </xs:complexType>
                                         </xs:element>
@@ -92,7 +92,7 @@
                                 <xs:complexType>
                                     <xs:sequence>
                                         <xs:element name="korisnik" type="xs:boolean"/>
-                                        <xs:element name="sediste">
+                                        <xs:element name="sediste" minOccurs="0">
                                             <xs:complexType>
                                                 <xs:sequence>
                                                   <xs:element name="naziv" type="xs:string"/>
@@ -115,7 +115,7 @@
                         <xs:attribute name="datum_popunjavanja" use="required" type="xs:date"/>
                     </xs:complexType>
                 </xs:element>
-                <xs:element name="evidencija_o_vakcinaciji">
+                <xs:element name="evidencija_o_vakcinaciji" minOccurs="0">
                     <xs:complexType>
                         <xs:sequence>
                             <xs:element name="zdravstvena_ustanova" type="xs:string"/>
@@ -126,14 +126,13 @@
                                         <xs:element name="ime" type="xs:string"/>
                                         <xs:element name="prezime" type="xs:string"/>
                                         <xs:element name="telefon" type="t:TFiksniTelefon"/>
-
                                     </xs:sequence>
                                 </xs:complexType>
                             </xs:element>
                             <xs:element name="vakcine">
                                 <xs:complexType>
                                     <xs:sequence>
-                                        <xs:sequence minOccurs="2" maxOccurs="unbounded">
+                                        <xs:sequence minOccurs="1" maxOccurs="unbounded">
                                             <xs:element name="vakcina">
                                                 <xs:complexType>
                                                   <xs:sequence>

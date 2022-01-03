@@ -13,6 +13,8 @@ import {MatListModule} from '@angular/material/list';
 import {MatDialogModule} from '@angular/material/dialog';
 import {MatMenuModule} from '@angular/material/menu';
 import {MatDatepickerModule} from '@angular/material/datepicker';
+import {MatCheckboxModule} from '@angular/material/checkbox';
+import {MatRadioModule} from '@angular/material/radio';
 
 @NgModule({
   exports: [
@@ -28,7 +30,9 @@ import {MatDatepickerModule} from '@angular/material/datepicker';
     MatListModule,
     MatDialogModule,
     MatMenuModule,
-    MatDatepickerModule
+    MatDatepickerModule,
+    MatCheckboxModule,
+    MatRadioModule
   ]
 })
 export class MaterialModule {}

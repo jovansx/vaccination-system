@@ -21,6 +21,7 @@ export class RegistrationComponent implements OnInit {
     email: new FormControl('', [Validators.required, Validators.email]),
     sifra: new FormControl('', [Validators.required]),
     drzavljanstvo: new FormControl('SRPSKO', [Validators.required]),
+    nazivDrzavljanstva: new FormControl(''),
     idBroj: new FormControl('', [Validators.required]),
     pol: new FormControl('MUSKI', [Validators.required]),
     zanimanje: new FormControl('ZDRAVSTVENA_ZASTITA', [Validators.required]),
