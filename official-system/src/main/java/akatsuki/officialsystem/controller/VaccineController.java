@@ -21,11 +21,6 @@ public class VaccineController {
 
     @PutMapping
     public void updateAmount(@RequestBody String xmlUpdateVaccineAmount) {
-//        <updateVaccine>
-//                <type>CODE</type>
-//                <serialNumber>2</>
-//        <amount>345</amount>
-//                </updateVaccine>
         vaccineService.updateAmount(xmlUpdateVaccineAmount);
     }
 
