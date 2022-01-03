@@ -13,10 +13,8 @@ import akatsuki.immunizationsystem.utils.modelmappers.IModelMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
-import javax.xml.datatype.DatatypeConfigurationException;
 import javax.xml.datatype.DatatypeFactory;
 import java.text.DateFormat;
-import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
@@ -31,6 +29,7 @@ public class InteresovanjeService {
     private final IModelMapper<Interesovanje> mapper;
     private final MetadataExtractor extractor;
     private final DaoUtils utils;
+    private final EmailService emailService;
 
     private final IDao<Appointment> appointmentIDao;
     private final IModelMapper<Appointment> mapper2;
@@ -55,7 +54,8 @@ public class InteresovanjeService {
         if (!extractor.extractAndSaveToRdf(interesovanjeXml, "/interesovanja"))
             throw new BadRequestRuntimeException("Ekstrakcija metapodataka nije uspela.");
 
-        createAppointment(interesovanje);
+        Appointment appointment = createAppointment(interesovanje);
+        emailService.notifyPatientAboutReservedAppointment(interesovanje, appointment);
 
         return interesovanjeDAO.save(interesovanje);
     }
@@ -68,7 +68,7 @@ public class InteresovanjeService {
         interesovanjeDAO.save(interesovanje);
     }
 
-    private void createAppointment(Interesovanje interesovanje) {
+    private Appointment createAppointment(Interesovanje interesovanje) {
         try {
             List<String> retVal = utils.execute("(//termin/text())[1]", "/db/vaccination-system/termini");
             String[] parts = retVal.get(0).split(":[0-9]{2}.[0-9]{3}\\+[0-9]{2}.[0-9]{2}");
@@ -79,6 +79,8 @@ public class InteresovanjeService {
             calendar.add(Calendar.MINUTE, Appointment.DURATION_IN_MINUTES);
             Appointment appointment = new Appointment(interesovanje.getPodnosilac().getIdBroj().getValue(), DatatypeFactory.newInstance().newXMLGregorianCalendar(calendar));
             appointmentIDao.save(appointment);
+            return appointment;
         } catch (Exception ignored) {}
+        return null;
     }
 }

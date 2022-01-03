@@ -81,7 +81,8 @@ export class PatientSubmitComponent implements OnInit {
 
     this._interesovanja_service.sendInteresovanje(interesovanjeXml).subscribe(
       () => {
-        this._toastr.success("Uspesno ste podneli interesovanje!")
+        this._declareCurrentForm();
+        this._toastr.success("Uspesno ste podneli interesovanje!");
       }, 
       (err: any) => {
         this._toastr.error(convertResponseError(err), "Ne bi trebalo da se dogodi!")

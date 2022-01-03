@@ -49,7 +49,10 @@ public class PacijentService {
 
     public String getTrenutnaForma(String idBroj) {
         // TODO: logika
-        return "interesovanje";
+        List<String> retVal = utils.execute("//*[text() = '" + idBroj + "']", "/db/vaccination-system/interesovanja");
+        if (retVal.size() == 0)
+            return "interesovanje";
+        return "saglasnost";
     }
 
     public Pacijent getDetailsForInteresovanje(String idBroj) {
