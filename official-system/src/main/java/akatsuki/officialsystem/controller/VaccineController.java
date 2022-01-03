@@ -3,10 +3,7 @@ package akatsuki.officialsystem.controller;
 import akatsuki.officialsystem.model.vaccine.VaccineType;
 import akatsuki.officialsystem.service.VaccineService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.Locale;
 
@@ -20,5 +17,15 @@ public class VaccineController {
     @PutMapping("/{vaccineType}/{serialNumber}")
     public void decreaseAmount(@PathVariable VaccineType vaccineType, @PathVariable Long serialNumber) {
         vaccineService.decreaseAmount(vaccineType, serialNumber);
+    }
+
+    @PutMapping
+    public void updateAmount(@RequestBody String xmlUpdateVaccineAmount) {
+        vaccineService.updateAmount(xmlUpdateVaccineAmount);
+    }
+
+    @GetMapping
+    public String getAll() {
+        return vaccineService.getAll();
     }
 }
