@@ -70,7 +70,7 @@ public class InteresovanjeService {
 
     private Appointment createAppointment(Interesovanje interesovanje) {
         try {
-            List<String> retVal = utils.execute("(//termin/text())[1]", "/db/vaccination-system/termini");
+            List<String> retVal = utils.execute("(//termin/text())[last()]", "/db/vaccination-system/termini");
             String[] parts = retVal.get(0).split(":[0-9]{2}.[0-9]{3}\\+[0-9]{2}.[0-9]{2}");
             DateFormat format2 = new SimpleDateFormat("yyyy-MM-dd'T'hh:mm");
             Date date = format2.parse(parts[0]);
