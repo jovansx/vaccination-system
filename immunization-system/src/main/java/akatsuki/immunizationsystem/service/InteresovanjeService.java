@@ -77,7 +77,7 @@ public class InteresovanjeService {
             GregorianCalendar calendar = new GregorianCalendar();
             calendar.setTime(date);
             calendar.add(Calendar.MINUTE, Appointment.DURATION_IN_MINUTES);
-            Appointment appointment = new Appointment(interesovanje.getPodnosilac().getIdBroj().getValue(), DatatypeFactory.newInstance().newXMLGregorianCalendar(calendar));
+            Appointment appointment = new Appointment(DatatypeFactory.newInstance().newXMLGregorianCalendar(calendar), interesovanje.getPodnosilac().getIdBroj().getValue());
             appointmentIDao.save(appointment);
             return appointment;
         } catch (Exception ignored) {}
