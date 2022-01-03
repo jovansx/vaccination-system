@@ -1,6 +1,7 @@
 package akatsuki.immunizationsystem.dao;
 
 import akatsuki.immunizationsystem.config.DbConnection;
+import akatsuki.immunizationsystem.model.documents.SaglasnostZaImunizaciju;
 import org.springframework.stereotype.Component;
 import org.xmldb.api.DatabaseManager;
 import org.xmldb.api.base.Collection;
@@ -133,5 +134,28 @@ public class DaoUtils {
             return getOrCreateCollection(collectionUri, ++pathSegmentOffset);
         } else
             return col;
+    }
+
+    public void deleteResource(String collectionId, String documentId) {
+        XMLResource res;
+        Collection col = null;
+        try {
+            col = DatabaseManager.getCollection(dbConnection.getDbUrl() + collectionId, dbConnection.getUsername(), dbConnection.getPassword());
+            col.setProperty(OutputKeys.INDENT, "yes");
+
+            res = (XMLResource) col.getResource(documentId + ".xml");
+            if (res != null) {
+                col.removeResource(res);
+            }
+        } catch (Exception ignored) {
+        } finally {
+            if (col != null) {
+                try {
+                    col.close();
+                } catch (XMLDBException ex) {
+                    ex.printStackTrace();
+                }
+            }
+        }
     }
 }

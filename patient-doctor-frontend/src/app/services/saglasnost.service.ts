@@ -12,4 +12,9 @@ export class SaglasnostService {
   getCurrentSaglasnost(id : String): Observable<string> {
     return this.http.get<string>('/saglasnosti/by-patient-id/'+id, {responseType: 'text' as 'json'});
   }
+
+  deleteCurrentSaglasnost(id: string): Observable<void> {
+    return this.http.delete<void>('/saglasnosti/'+id);
+  }
+
 }

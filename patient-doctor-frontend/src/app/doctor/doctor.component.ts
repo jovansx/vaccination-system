@@ -230,4 +230,20 @@ setZeroIfNeed(number : String) : String {
   return number;
 }
 
+getDocumentId() : string {
+  let parts = this.document.$.ABOUT.split("/")
+  return parts[parts.length - 1];
+}
+
+didntShowUp() : void {
+  this.saglasnostService.deleteCurrentSaglasnost(this.getDocumentId()).subscribe(
+    (res: any) => {
+      this.getCurrentAppointment();
+      this._toastr.success("You have successfully processed vaccination.", "Congratulations!")
+    },
+    (err: any) => this._toastr.error(convertResponseError(err), "Don't exist!")
+  );
+}
+
+
 }

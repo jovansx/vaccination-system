@@ -21,12 +21,13 @@ public class SaglasnostZaImunizacijuService {
     private MetadataExtractor extractor;
     private InteresovanjeService interesovanjeService;
     private PotvrdaOIzvrsenojVakcinacijiService potvrdaOIzvrsenojVakcinacijiService;
+    private AppointmentService appointmentService;
 
     @Autowired
     public void setValidator(Validator validator, ISaglasnostZaImunizacijuDAO saglasnostZaImunizacijuIDao, DigitalniSertifikatDAO digitalniSertifikatDAO,
                              IModelMapper<SaglasnostZaImunizaciju> mapper, MetadataExtractor extractor,
                              InteresovanjeService interesovanjeService,
-                             @Lazy PotvrdaOIzvrsenojVakcinacijiService potvrdaOIzvrsenojVakcinacijiService) {
+                             @Lazy PotvrdaOIzvrsenojVakcinacijiService potvrdaOIzvrsenojVakcinacijiService, AppointmentService appointmentService) {
         this.saglasnostZaImunizacijuIDao = saglasnostZaImunizacijuIDao;
         this.digitalniSertifikatDAO = digitalniSertifikatDAO;
         this.validator = validator;
@@ -34,6 +35,7 @@ public class SaglasnostZaImunizacijuService {
         this.extractor = extractor;
         this.interesovanjeService = interesovanjeService;
         this.potvrdaOIzvrsenojVakcinacijiService = potvrdaOIzvrsenojVakcinacijiService;
+        this.appointmentService = appointmentService;
     }
 
     public String getSaglasnostByPatientId(String patientId) {
@@ -63,6 +65,13 @@ public class SaglasnostZaImunizacijuService {
 
         SaglasnostZaImunizaciju saglasnostZaImunizaciju = saglasnostZaImunizacijuIDao.get(idBrojIndex).orElseThrow(() -> new NotFoundRuntimeException("Saglasnost sa id-jem " + idBrojIndex + " nije pronadjena."));
         return mapper.convertToXml(saglasnostZaImunizaciju);
+    }
+
+    public void deleteSaglasnostZaImunizaciju(String idBrojIndex) {
+        SaglasnostZaImunizaciju saglasnostZaImunizaciju = saglasnostZaImunizacijuIDao.get(idBrojIndex).orElseThrow(() -> new NotFoundRuntimeException("Saglasnost sa id-jem " + idBrojIndex + " nije pronadjena."));
+        saglasnostZaImunizacijuIDao.delete(saglasnostZaImunizaciju);
+        appointmentService.setFirstAppointmentToObradjen();
+//   TODO RESETUJE TERMIN TOM PACIJENTU
     }
 
     public String createSaglasnostZaImunizaciju(String saglasnostXml) throws RuntimeException {
