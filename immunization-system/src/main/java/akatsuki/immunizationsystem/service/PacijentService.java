@@ -16,6 +16,7 @@ import org.springframework.stereotype.Service;
 
 import javax.xml.datatype.XMLGregorianCalendar;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
@@ -29,7 +30,6 @@ public class PacijentService {
     private final IModelMapper<Korisnik> mapper;
     private final PasswordEncoder encoder;
     private final DaoUtils utils;
-
 
     public String createPacijenta(String pacijentXml) {
         Pacijent pacijent = (Pacijent) mapper.convertToObject(pacijentXml);
@@ -56,14 +56,15 @@ public class PacijentService {
         retVal = utils.execute("//*[text() = '" + idBroj + "']", "/db/vaccination-system/saglasnosti");
         if (retVal.size() == 0) return "saglasnost-1";
 
+        List<String> potvrde = new ArrayList<>();
         if (retVal.size() == 1) {
-            retVal = utils.execute("//*[text() = '" + idBroj + "']", "/db/vaccination-system/potvrde");
-            if (retVal.size() == 1) return "saglasnost-2";
-            if (retVal.size() == 0) return "nista";
+            potvrde = utils.execute("//*[text() = '" + idBroj + "']", "/db/vaccination-system/potvrde");
+            if (potvrde.size() == 1) return "saglasnost-2";
+            if (potvrde.size() == 0) return "nista";
         }
 
         retVal = utils.execute("//*[text() = '" + idBroj + "']", "/db/vaccination-system/zahtevi");
-        if (retVal.size() == 0) return "zahtev";
+        if (retVal.size() == 0 && potvrde.size() == 2) return "zahtev";
 
         return "nista";
     }
