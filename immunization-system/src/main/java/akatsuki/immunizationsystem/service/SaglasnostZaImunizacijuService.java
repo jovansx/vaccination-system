@@ -36,6 +36,18 @@ public class SaglasnostZaImunizacijuService {
         this.potvrdaOIzvrsenojVakcinacijiService = potvrdaOIzvrsenojVakcinacijiService;
     }
 
+    public String getSaglasnostByPatientId(String patientId) {
+        String saglasnostXml = "";
+        try {
+            saglasnostXml = getSaglasnostZaImunizaciju(patientId+"_2");
+        } catch (Exception ignored){}
+        if(saglasnostXml.equals("")){
+            try {
+                saglasnostXml = getSaglasnostZaImunizaciju(patientId+"_1");
+            } catch (Exception ignored){}
+        }
+        return saglasnostXml;
+    }
 
     public String getSaglasnostZaImunizaciju(String idBrojIndex) throws RuntimeException {
         String idBroj = idBrojIndex.split("_")[0];

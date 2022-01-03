@@ -4,7 +4,6 @@ import akatsuki.immunizationsystem.dao.IDao;
 import akatsuki.immunizationsystem.exceptions.BadRequestRuntimeException;
 import akatsuki.immunizationsystem.exceptions.ConflictRuntimeException;
 import akatsuki.immunizationsystem.exceptions.NotFoundRuntimeException;
-import akatsuki.immunizationsystem.model.appointments.Appointment;
 import akatsuki.immunizationsystem.model.documents.Interesovanje;
 import akatsuki.immunizationsystem.utils.MetadataExtractor;
 import akatsuki.immunizationsystem.utils.Validator;
@@ -19,9 +18,6 @@ public class InteresovanjeService {
     private final Validator validator;
     private final IModelMapper<Interesovanje> mapper;
     private final MetadataExtractor extractor;
-
-    private final IDao<Appointment> appointmentIDao;
-    private final IModelMapper<Appointment> mapper2;
 
 
     public String getInteresovanje(String idBroj) throws RuntimeException {

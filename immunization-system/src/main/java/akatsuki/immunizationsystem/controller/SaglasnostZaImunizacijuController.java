@@ -16,6 +16,11 @@ public class SaglasnostZaImunizacijuController {
         return saglasnostZaImunizacijuService.getSaglasnostZaImunizaciju(idBrojIndex);
     }
 
+    @GetMapping("/by-patient-id/{patientId}")
+    public String getSaglasnostByPatientId(@PathVariable String patientId) {
+        return saglasnostZaImunizacijuService.getSaglasnostByPatientId(patientId);
+    }
+
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     public String createSaglasnostZaImunizaciju(@RequestBody String saglasnostXml) {

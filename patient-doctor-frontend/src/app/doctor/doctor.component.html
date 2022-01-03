@@ -53,12 +53,7 @@
             <mat-label>Drzavljanstvo</mat-label>
             <mat-select formControlName="drzavljanstvo">
               <mat-option value="SRPSKO">Srpsko</mat-option>
-              <mat-option value="STRANO_SA_BORAVKOM"
-                >Strano sa boravkom</mat-option
-              >
-              <mat-option value="STRANO_BEZ_BORAVKA"
-                >Strano bez boravka</mat-option
-              >
+              <mat-option value="STRANO">Strano</mat-option>
             </mat-select>
           </mat-form-field>
           <mat-form-field appearance="fill">
@@ -326,8 +321,9 @@
   >
     <div fxFlex>
       <mat-card
+        *ngIf="termin"
         style="text-align: center; margin-left: 24px; margin-bottom: 24px"
-        ><h1>Zakazani termin: 14:15</h1></mat-card
+        ><h1>Zakazani termin: {{ termin }}</h1></mat-card
       >
     </div>
     <div fxFlex fxLayout="row" f fxLayoutAlign="end center">
