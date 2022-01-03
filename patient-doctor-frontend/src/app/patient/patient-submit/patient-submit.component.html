@@ -22,7 +22,8 @@
         <button class="send-btn" mat-flat-button color="primary" (click)="submitInteresovanje()">Send</button>
     </div>
 
-    <form class="content-container" [formGroup]="inputForm" (ngSubmit)="submitSaglasnost()" *ngIf="formType == 'saglasnost'" fxLayout="column" fxLayoutAlign="space-around center">
+    <form class="content-container" [formGroup]="inputForm" (ngSubmit)="submitSaglasnost()"
+     *ngIf="formType == 'saglasnost-1' || formType == 'saglasnost-2'" fxLayout="column" fxLayoutAlign="space-around center">
         <h1>
             Podnesite saglasnost za iskazanim vakcinama
         </h1>

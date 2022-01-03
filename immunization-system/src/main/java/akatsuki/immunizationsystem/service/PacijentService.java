@@ -49,27 +49,23 @@ public class PacijentService {
 
     public String getTrenutnaForma(String idBroj) {
         // TODO: Kasnije dodaj komplikovaniju logiku
-        String INTERESOVANJE = "interesovanje";
-        String SAGLASNOST = "saglasnost";
-        String ZAHTEV = "zahtev";
-        String NISTA = "nista";
 
         List<String> retVal = utils.execute("//*[text() = '" + idBroj + "']", "/db/vaccination-system/interesovanja");
-        if (retVal.size() == 0) return INTERESOVANJE;
+        if (retVal.size() == 0) return "interesovanje";
 
         retVal = utils.execute("//*[text() = '" + idBroj + "']", "/db/vaccination-system/saglasnosti");
-        if (retVal.size() == 0) return SAGLASNOST;
+        if (retVal.size() == 0) return "saglasnost-1";
 
         if (retVal.size() == 1) {
             retVal = utils.execute("//*[text() = '" + idBroj + "']", "/db/vaccination-system/potvrde");
-            if (retVal.size() == 1) return SAGLASNOST;
-            if (retVal.size() == 0) return NISTA;
+            if (retVal.size() == 1) return "saglasnost-2";
+            if (retVal.size() == 0) return "nista";
         }
 
         retVal = utils.execute("//*[text() = '" + idBroj + "']", "/db/vaccination-system/zahtevi");
-        if (retVal.size() == 0) return ZAHTEV;
+        if (retVal.size() == 0) return "zahtev";
 
-        return NISTA;
+        return "nista";
     }
 
     public Pacijent getPacijent(String idBroj) {

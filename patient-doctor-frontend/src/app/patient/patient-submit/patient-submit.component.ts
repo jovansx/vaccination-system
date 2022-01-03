@@ -15,7 +15,7 @@ import { XmlConverterService } from 'src/app/services/xml-converter.service';
   styleUrls: ['./patient-submit.component.scss']
 })
 export class PatientSubmitComponent implements OnInit {
-  formType: string = ""; // Moguce opcije: interesovanje, saglasnost, zahtev za zeleni, nista
+  formType: string = ""; // Moguce opcije: interesovanje, saglasnost-1, saglasnost-2, zahtev za zeleni, nista
   dobrovoljniDavalac: boolean = true;
 
   interesovanjeForm: FormGroup;
@@ -28,6 +28,7 @@ export class PatientSubmitComponent implements OnInit {
   });
   patient: any;
   idBroj: string | null;
+  evidencijaOVakcinaciji: string = "";
 
   constructor(private _patient_service: PatientService, private _toastr: ToastrService, private _fb: FormBuilder,
               private _interesovanja_service: InteresovanjeService, private _xml_parser: XmlConverterService, private _jwt: JwtDecoderService,
@@ -149,6 +150,7 @@ export class PatientSubmitComponent implements OnInit {
       </strano>
       `;
     }
+    let index = this.formType === 'saglasnost-1' ? "1" : "2";
     const saglasnostXml: string = 
     `<?xml version="1.0" encoding="UTF-8"?>
     <saglasnost_za_imunizaciju xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
@@ -157,7 +159,7 @@ export class PatientSubmitComponent implements OnInit {
         xsi:schemaLocation="http://www.akatsuki.org saglasnost_za_imunizaciju.xsd
         http://www.akatsuki.org/tipovi tipovi.xsd"
         xmlns:pred="http://www.akatsuki.org/rdf/examples/predicate/"
-        about="http://www.akatsuki.org/saglasnosti/${this.idBroj}_1">
+        about="http://www.akatsuki.org/saglasnosti/${this.idBroj}_${index}">
         <pacijent datum_popunjavanja="${currentDate}">
             <drzavljanstvo>
                 ${drzavljanstvo}
@@ -192,6 +194,7 @@ export class PatientSubmitComponent implements OnInit {
                 <naziv_leka>${this.inputForm.controls['nazivLeka'].value}</naziv_leka>
             </izjava_saglasnosti>
         </pacijent>
+        ${this.formType === "saglasnost-2" && this.evidencijaOVakcinaciji !== "" ? this.evidencijaOVakcinaciji : ""}
     </saglasnost_za_imunizaciju>
     `;
 
@@ -227,6 +230,19 @@ export class PatientSubmitComponent implements OnInit {
   }
 
   private _getPatientDetailsForSaglasnost(): void {
+    if (this.formType === "saglasnost-2") {
+      this._saglasnost_service.getSaglasnost(this.idBroj + "_1").subscribe(
+        (res: any) => {
+          let evidencija: string = res.split("</pacijent>")[1];
+          let cutIndexPosition = evidencija.indexOf("</saglasnost_za_imunizaciju>");
+          this.evidencijaOVakcinaciji = evidencija.substring(0, cutIndexPosition);
+        }, 
+        (err: any) => {
+          this._toastr.error(convertResponseError(err), "Ne bi trebalo da se dogodi!")
+        }
+      );
+    }
+
     this._patient_service.getPatientDetailsForSaglasnost().subscribe(
       (res: any) => {
         let response = this._xml_parser.parseXmlToObject(res);
@@ -265,7 +281,7 @@ export class PatientSubmitComponent implements OnInit {
         this.formType = response.DOKUMENT[0];
         if (this.formType == "interesovanje")
           this._getPatientDetailsForInteresovanje();
-        else if (this.formType === "saglasnost")
+        else if (this.formType === "saglasnost-1" || this.formType === "saglasnost-2")
           this._getPatientDetailsForSaglasnost();
       }, 
       (err: any) => {
