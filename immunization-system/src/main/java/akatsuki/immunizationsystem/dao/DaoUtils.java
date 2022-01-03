@@ -3,11 +3,10 @@ package akatsuki.immunizationsystem.dao;
 import akatsuki.immunizationsystem.config.DbConnection;
 import org.springframework.stereotype.Component;
 import org.xmldb.api.DatabaseManager;
-import org.xmldb.api.base.Collection;
-import org.xmldb.api.base.Database;
-import org.xmldb.api.base.XMLDBException;
+import org.xmldb.api.base.*;
 import org.xmldb.api.modules.CollectionManagementService;
 import org.xmldb.api.modules.XMLResource;
+import org.xmldb.api.modules.XPathQueryService;
 
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.Marshaller;
@@ -101,6 +100,46 @@ public class DaoUtils {
         } catch (Exception e) {
             e.printStackTrace();
         }
+    }
+
+    public List<String> execute(String xPath, String collectionId) {
+
+        List<String> retVal = new ArrayList<>();
+        Collection col = null;
+        try {
+            col = DatabaseManager.getCollection(dbConnection.getDbUrl() + collectionId, dbConnection.getUsername(), dbConnection.getPassword());
+            XPathQueryService xpathService = (XPathQueryService) col.getService("XPathQueryService", "1.0");
+            xpathService.setProperty("indent", "yes");
+            // xpathService.setNamespace("", TARGET_NAMESPACE);
+            ResourceSet result = xpathService.query(xPath);
+            ResourceIterator i = result.getIterator();
+            Resource res;
+
+            while (i.hasMoreResources()) {
+//                try {
+                res = i.nextResource();
+                retVal.add(res.getContent().toString());
+//                } finally {
+//
+//                    // don't forget to cleanup resources
+//                    try {
+//                        ((EXistResource) res).freeResources();
+//                    } catch (XMLDBException xe) {
+//                        xe.printStackTrace();
+//                    }
+//                }
+            }
+        } catch(Exception ignored) {
+        } finally {
+            if(col != null) {
+                try {
+                    col.close();
+                } catch (XMLDBException xe) {
+                    xe.printStackTrace();
+                }
+            }
+        }
+        return retVal;
     }
 
     private Collection getOrCreateCollection(String collectionUri, int pathSegmentOffset) throws XMLDBException {

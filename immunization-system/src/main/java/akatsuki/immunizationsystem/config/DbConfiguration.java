@@ -43,7 +43,9 @@ public class DbConfiguration {
             korisnikIDao.save(doktor1);
             korisnikIDao.save(pacijent1);
 
-            date = new Date();
+            DateFormat format2 = new SimpleDateFormat("yyyy-MM-dd hh:mm");
+            date = format2.parse("2022-01-05 08:00");
+            //TODO - iznad 2 linije zameniti sa date = new Date(); kad bude trebalo
             calendar.setTime(date);
             Appointment appointment1 = new Appointment("1010998800070", DatatypeFactory.newInstance().newXMLGregorianCalendar(calendar));
             appointmentIDao.save(appointment1);

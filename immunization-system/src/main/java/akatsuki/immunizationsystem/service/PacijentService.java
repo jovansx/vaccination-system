@@ -1,5 +1,6 @@
 package akatsuki.immunizationsystem.service;
 
+import akatsuki.immunizationsystem.dao.DaoUtils;
 import akatsuki.immunizationsystem.dao.IDao;
 import akatsuki.immunizationsystem.exceptions.BadRequestRuntimeException;
 import akatsuki.immunizationsystem.exceptions.ConflictRuntimeException;
@@ -13,6 +14,10 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import javax.xml.datatype.XMLGregorianCalendar;
+import java.time.LocalDateTime;
+import java.util.Date;
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -23,6 +28,7 @@ public class PacijentService {
     private final Validator validator;
     private final IModelMapper<Korisnik> mapper;
     private final PasswordEncoder encoder;
+    private final DaoUtils utils;
 
 
     public String createPacijenta(String pacijentXml) {
