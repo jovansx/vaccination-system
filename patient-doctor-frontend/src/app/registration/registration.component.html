@@ -61,6 +61,10 @@
         <mat-option value="STRANO_BEZ_BORAVKA">Strano bez boravka</mat-option>
       </mat-select>
     </mat-form-field>
+    <mat-form-field appearance="fill" *ngIf="registrationForm.controls['drzavljanstvo'].value != 'SRPSKO'">
+      <mat-label>Naziv drzavljanstva</mat-label>
+      <input matInput formControlName="nazivDrzavljanstva"/>
+    </mat-form-field>
     <mat-form-field appearance="fill">
       <mat-label>{{registrationForm.controls['drzavljanstvo'].value === 'SRPSKO' ? "Unesite jmbg" : "Unesite broj pasosa"}}</mat-label>
       <input matInput formControlName="idBroj" required />

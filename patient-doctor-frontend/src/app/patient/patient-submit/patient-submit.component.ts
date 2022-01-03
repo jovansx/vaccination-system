@@ -1,10 +1,12 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup } from '@angular/forms';
+import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { ToastrService } from 'ngx-toastr';
 import { JwtDecoderService } from 'src/app/autentification/services/jwt-decoder.service';
 import { convertResponseError } from 'src/app/error-converter.function';
 import { InteresovanjeService } from 'src/app/services/interesovanje.service';
 import { PatientService } from 'src/app/services/patient.service';
+import { SaglasnostService } from 'src/app/services/saglasnost.service';
+import { ValidatorService } from 'src/app/services/validator.service';
 import { XmlConverterService } from 'src/app/services/xml-converter.service';
 
 @Component({
@@ -13,15 +15,23 @@ import { XmlConverterService } from 'src/app/services/xml-converter.service';
   styleUrls: ['./patient-submit.component.scss']
 })
 export class PatientSubmitComponent implements OnInit {
-  formType: string = "interesovanje"; // Moguce opcije: interesovanje, saglasnost, zahtev za zeleni
+  formType: string = ""; // Moguce opcije: interesovanje, saglasnost, zahtev za zeleni, nista
   dobrovoljniDavalac: boolean = true;
 
   interesovanjeForm: FormGroup;
+  saglasnostForm: FormGroup;
+  korisnikSocZas: FormGroup;
+  inputForm: FormGroup = new FormGroup({
+    nazivSedista: new FormControl('', [Validators.required]),
+    opstina: new FormControl('', [Validators.required]),
+    nazivLeka: new FormControl('', [Validators.required]),
+  });
   patient: any;
   idBroj: string | null;
 
   constructor(private _patient_service: PatientService, private _toastr: ToastrService, private _fb: FormBuilder,
-              private _interesovanja_service: InteresovanjeService, private _xml_parser: XmlConverterService, private _jwt: JwtDecoderService) { 
+              private _interesovanja_service: InteresovanjeService, private _xml_parser: XmlConverterService, private _jwt: JwtDecoderService,
+              public validator: ValidatorService, private _saglasnost_service: SaglasnostService) { 
     this.idBroj = this._jwt.getIdFromToken();
     this.interesovanjeForm = _fb.group({
       phizer: false,
@@ -31,10 +41,17 @@ export class PatientSubmitComponent implements OnInit {
       moderna: false,
       biloKoja: false,
     });
+    this.saglasnostForm = _fb.group({
+      saglasan: false,
+    });
+    this.korisnikSocZas = _fb.group({
+      korisnik: false,
+    });
+    this.validator.setForm(this.inputForm);
   }
 
   ngOnInit(): void {
-    this._getPatientDetailsForInteresovanje();
+    this._declareCurrentForm();
   }
 
   public submitInteresovanje(): void {
@@ -90,6 +107,105 @@ export class PatientSubmitComponent implements OnInit {
     );
   }
 
+  private _getCurrentDate() {
+    let today = new Date();
+    let date = today.getFullYear()+'-'+(this._setZeroIfNeed((today.getMonth()+1)+""))+'-'+this._setZeroIfNeed(today.getDate()+"");
+    return date;
+  }
+  
+  private _setZeroIfNeed(number : String) : String {
+    if(number.length == 1)
+      return "0"+number;
+    return number;
+  }
+
+  public submitSaglasnost(): void {
+    if (this.korisnikSocZas.controls['korisnik'].value && this.inputForm.invalid) return;
+    if (!this.korisnikSocZas.controls['korisnik'].value && this.inputForm.controls['nazivLeka'].value === "") return;
+
+    let currentDate = this._getCurrentDate();
+    let sediste = "";
+    if (this.korisnikSocZas.controls['korisnik'].value) {
+      sediste =
+      `
+      <sediste>
+        <naziv>${this.inputForm.controls['nazivSedista'].value}</naziv>
+        <opstina>${this.inputForm.controls['opstina'].value}</opstina>
+      </sediste>
+      `;
+    }
+
+    let drzavljanstvo = `
+    <srpsko>
+      <id_broj property="pred:id_broj" datatype="xs:string">${this.idBroj}</id_broj>
+    </srpsko>
+    `;
+    if (this.patient.drzavljanstvo != 'srpsko') {
+      drzavljanstvo =
+      `
+      <strano>
+        <naziv>${this.patient.nazivDrzavljanstva}</naziv>
+        <id_broj property="pred:id_broj" datatype="xs:string">${this.idBroj}</id_broj>
+      </strano>
+      `;
+    }
+    const saglasnostXml: string = 
+    `<?xml version="1.0" encoding="UTF-8"?>
+    <saglasnost_za_imunizaciju xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xmlns="http://www.akatsuki.org/saglasnost_za_imunizaciju"
+        xmlns:t="http://www.akatsuki.org/tipovi"
+        xsi:schemaLocation="http://www.akatsuki.org saglasnost_za_imunizaciju.xsd
+        http://www.akatsuki.org/tipovi tipovi.xsd"
+        xmlns:pred="http://www.akatsuki.org/rdf/examples/predicate/"
+        about="http://www.akatsuki.org/saglasnosti/${this.idBroj}_1">
+        <pacijent datum_popunjavanja="${currentDate}">
+            <drzavljanstvo>
+                ${drzavljanstvo}
+            </drzavljanstvo>
+            <prezime property="pred:prezime" datatype="xs:string">${this.patient.prezime}</prezime>
+            <ime property="pred:ime" datatype="xs:string">${this.patient.ime}</ime>
+            <ime_roditelja>${this.patient.imeRoditelja}</ime_roditelja>
+            <pol property="pred:pol" datatype="xs:string">${this.patient.pol}</pol>
+            <rodjenje>
+                <datum_rodjenja>${this.patient.datumRodjenja}</datum_rodjenja>
+                <mesto_rodjenja>${this.patient.mestoRodjenja}</mesto_rodjenja>
+            </rodjenje>
+            <prebivaliste>
+                <adresa>
+                    <ulica>${this.patient.ulica}</ulica>
+                    <broj>${this.patient.brojKuce}</broj>
+                </adresa>
+                <mesto_stanovanja>${this.patient.mestoStanovanja}</mesto_stanovanja>
+                <opstina property="pred:lokacija" datatype="xs:string">${this.patient.lokacija}</opstina>
+            </prebivaliste>
+            <fiksni_telefon>${this.patient.fiksniTelefon}</fiksni_telefon>
+            <mobilni_telefon>${this.patient.mobilniTelefon}</mobilni_telefon>
+            <email>${this.patient.email}</email>
+            <radni_status>${this.patient.radniStatus}</radni_status>
+            <zanimanje>${this.patient.zanimanje}</zanimanje>
+            <socijalna_zastita>
+                <korisnik>${this.korisnikSocZas.controls['korisnik'].value}</korisnik>
+                ${sediste}
+            </socijalna_zastita>
+            <izjava_saglasnosti>
+                <saglasnost>true</saglasnost>
+                <naziv_leka>${this.inputForm.controls['nazivLeka'].value}</naziv_leka>
+            </izjava_saglasnosti>
+        </pacijent>
+    </saglasnost_za_imunizaciju>
+    `;
+
+    this._saglasnost_service.sendSaglasnost(saglasnostXml).subscribe(
+      () => {
+        this._declareCurrentForm();
+        this._toastr.success("Uspesno ste podneli saglasnost!");
+      }, 
+      (err: any) => {
+        this._toastr.error(convertResponseError(err), "Ne bi trebalo da se dogodi!")
+      }
+    );
+  }
+
   private _getPatientDetailsForInteresovanje(): void {
     this._patient_service.getPatientDetailsForInteresovanje().subscribe(
       (res: any) => {
@@ -103,7 +219,36 @@ export class PatientSubmitComponent implements OnInit {
           lokacija: response.LOKACIJA[0],
           drzavljanstvo: response.DRZAVLJANSTVO[0],
         }
-        this._declareCurrentForm();
+      }, 
+      (err: any) => {
+        this._toastr.error(convertResponseError(err), "Ne bi trebalo da se dogodi!")
+      }
+    );
+  }
+
+  private _getPatientDetailsForSaglasnost(): void {
+    this._patient_service.getPatientDetailsForSaglasnost().subscribe(
+      (res: any) => {
+        let response = this._xml_parser.parseXmlToObject(res);
+        this.patient = {
+          brojKuce: response.BROJKUCE[0],
+          datumRodjenja: response.DATUMRODJENJA[0],
+          ime: response.IME[0],
+          imeRoditelja: response.IMERODITELJA[0],
+          prezime: response.PREZIME[0],
+          email: response.EMAIL[0],
+          fiksniTelefon: response.FIKSNITELEFON[0],
+          mobilniTelefon: response.MOBILNITELEFON[0],
+          lokacija: response.LOKACIJA[0],
+          drzavljanstvo: response.TIPDRZAVLJANSTVA[0],
+          nazivDrzavljanstva: response?.NAZIVDRZAVLJANSTVA !== undefined ? response.NAZIVDRZAVLJANSTVA[0] : undefined,
+          mestoRodjenja: response.MESTORODJENJA[0],
+          mestoStanovanja: response.MESTOSTANOVANJA[0],
+          pol: response.POL[0],
+          radniStatus: response.RADNISTATUS[0],
+          ulica: response.ULICA[0],
+          zanimanje: response.ZANIMANJE[0],
+        }
       }, 
       (err: any) => {
         this._toastr.error(convertResponseError(err), "Ne bi trebalo da se dogodi!")
@@ -118,6 +263,10 @@ export class PatientSubmitComponent implements OnInit {
       (res: any) => {
         let response = this._xml_parser.parseXmlToObject(res);
         this.formType = response.DOKUMENT[0];
+        if (this.formType == "interesovanje")
+          this._getPatientDetailsForInteresovanje();
+        else if (this.formType === "saglasnost")
+          this._getPatientDetailsForSaglasnost();
       }, 
       (err: any) => {
         this._toastr.error(convertResponseError(err), "Ne bi trebalo da se dogodi!")

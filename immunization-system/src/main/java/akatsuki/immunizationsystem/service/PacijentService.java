@@ -48,14 +48,31 @@ public class PacijentService {
     }
 
     public String getTrenutnaForma(String idBroj) {
-        // TODO: logika
+        // TODO: Kasnije dodaj komplikovaniju logiku
+        String INTERESOVANJE = "interesovanje";
+        String SAGLASNOST = "saglasnost";
+        String ZAHTEV = "zahtev";
+        String NISTA = "nista";
+
         List<String> retVal = utils.execute("//*[text() = '" + idBroj + "']", "/db/vaccination-system/interesovanja");
-        if (retVal.size() == 0)
-            return "interesovanje";
-        return "saglasnost";
+        if (retVal.size() == 0) return INTERESOVANJE;
+
+        retVal = utils.execute("//*[text() = '" + idBroj + "']", "/db/vaccination-system/saglasnosti");
+        if (retVal.size() == 0) return SAGLASNOST;
+
+        if (retVal.size() == 1) {
+            retVal = utils.execute("//*[text() = '" + idBroj + "']", "/db/vaccination-system/potvrde");
+            if (retVal.size() == 1) return SAGLASNOST;
+            if (retVal.size() == 0) return NISTA;
+        }
+
+        retVal = utils.execute("//*[text() = '" + idBroj + "']", "/db/vaccination-system/zahtevi");
+        if (retVal.size() == 0) return ZAHTEV;
+
+        return NISTA;
     }
 
-    public Pacijent getDetailsForInteresovanje(String idBroj) {
+    public Pacijent getPacijent(String idBroj) {
         Optional<Korisnik> korisnik = pacijentIDao.get(idBroj);
         if (korisnik.isEmpty())
             throw new NotFoundRuntimeException("Osoba s id-om " + idBroj + " ne postoji.");

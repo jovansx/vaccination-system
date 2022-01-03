@@ -18,4 +18,9 @@ export class PatientService {
     let idBroj = this._jwt.getIdFromToken();
     return this._http.get<string>(`/pacijenti/interesovanje-detalji/${idBroj}`, {responseType: 'text' as 'json'});
   }
+
+  public getPatientDetailsForSaglasnost(): Observable<string> {
+    let idBroj = this._jwt.getIdFromToken();
+    return this._http.get<string>(`/pacijenti/saglasnost-detalji/${idBroj}`, {responseType: 'text' as 'json'});
+  }
 }

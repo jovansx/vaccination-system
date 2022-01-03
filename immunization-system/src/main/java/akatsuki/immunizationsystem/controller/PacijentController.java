@@ -2,6 +2,7 @@ package akatsuki.immunizationsystem.controller;
 
 import akatsuki.immunizationsystem.dtos.AktivnaFormaDTO;
 import akatsuki.immunizationsystem.dtos.PacijentInteresovanjeDTO;
+import akatsuki.immunizationsystem.dtos.PacijentSaglasnostDTO;
 import akatsuki.immunizationsystem.model.documents.SaglasnostZaImunizaciju;
 import akatsuki.immunizationsystem.model.users.Pacijent;
 import akatsuki.immunizationsystem.service.PacijentService;
@@ -31,7 +32,13 @@ public class PacijentController {
 
     @GetMapping(value = "/interesovanje-detalji/{idBroj}", produces = MediaType.APPLICATION_XML_VALUE)
     public PacijentInteresovanjeDTO getDetailsForInteresovanje(@PathVariable String idBroj) {
-        Pacijent pacijent = pacijentService.getDetailsForInteresovanje(idBroj);
+        Pacijent pacijent = pacijentService.getPacijent(idBroj);
         return new PacijentInteresovanjeDTO(pacijent);
+    }
+
+    @GetMapping(value = "/saglasnost-detalji/{idBroj}", produces = MediaType.APPLICATION_XML_VALUE)
+    public PacijentSaglasnostDTO getDetailsForSaglasnost(@PathVariable String idBroj) {
+        Pacijent pacijent = pacijentService.getPacijent(idBroj);
+        return new PacijentSaglasnostDTO(pacijent);
     }
 }

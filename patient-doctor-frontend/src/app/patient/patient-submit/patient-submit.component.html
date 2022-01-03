@@ -1,9 +1,9 @@
 <app-header></app-header>
 
 <div id="main-container">
-    <div class="interesovanje-container" *ngIf="formType == 'interesovanje'" fxLayout="column" fxLayoutAlign="space-between center">
+    <div class="content-container" *ngIf="formType == 'interesovanje'" fxLayout="column" fxLayoutAlign="space-between center">
         <h1>
-            Podnesite interesovanje za zeljenom vakcinom <mat-icon>vaccine</mat-icon>
+            Podnesite interesovanje za zeljenom vakcinom
         </h1>
         <section [formGroup]="interesovanjeForm">
             <h4>Izaberite tip vakcine:</h4>
@@ -19,14 +19,43 @@
             <mat-radio-button value='true' [checked]='true'>Da</mat-radio-button>
             <mat-radio-button value='false'>Ne</mat-radio-button>
         </mat-radio-group>
-        <button id="send-btn" mat-flat-button color="primary" (click)="submitInteresovanje()">Send</button>
+        <button class="send-btn" mat-flat-button color="primary" (click)="submitInteresovanje()">Send</button>
     </div>
 
-    <div *ngIf="formType == 'saglasnost'">
-        saglasnost
-    </div>
+    <form class="content-container" [formGroup]="inputForm" (ngSubmit)="submitSaglasnost()" *ngIf="formType == 'saglasnost'" fxLayout="column" fxLayoutAlign="space-around center">
+        <h1>
+            Podnesite saglasnost za iskazanim vakcinama
+        </h1>
+        <section [formGroup]="korisnikSocZas">
+            <p><mat-checkbox formControlName="korisnik">Da li ste korisnik socijalne zastite?</mat-checkbox></p>
+        </section>
+        <mat-form-field appearance="fill" *ngIf="korisnikSocZas.controls['korisnik'].value">
+            <mat-label>Unesite naziv socijalne zastite</mat-label>
+            <input matInput formControlName="nazivSedista" required />
+            <mat-error *ngIf="inputForm.invalid">{{ validator.validateRequired('nazivSedista') }}</mat-error>
+        </mat-form-field>
+        <mat-form-field appearance="fill" *ngIf="korisnikSocZas.controls['korisnik'].value">
+            <mat-label>Unesite opstinu</mat-label>
+            <input matInput formControlName="opstina" required />
+            <mat-error *ngIf="inputForm.invalid">{{ validator.validateRequired('opstina') }}</mat-error>
+        </mat-form-field>
+        <mat-form-field appearance="fill">
+            <mat-label>Unesite naziv leka</mat-label>
+            <input matInput formControlName="nazivLeka" required />
+            <mat-error *ngIf="inputForm.invalid">{{ validator.validateRequired('nazivLeka') }}</mat-error>
+        </mat-form-field>
+        <section [formGroup]="saglasnostForm">
+            <p><mat-checkbox formControlName="saglasan">Saglasan sam da primim vakcinu na svoj rizik</mat-checkbox></p>
+        </section>
+        <button class="send-btn" mat-flat-button color="primary" type="submit" [disabled]="!saglasnostForm.controls['saglasan'].value">Send</button>
+    </form>
 
     <div *ngIf="formType == 'zahtev'">
         zahtev
+    </div>
+
+    
+    <div *ngIf="formType == 'nista'">
+        <h2>Trenutno nije moguce da podnesete bilo kakav dokument!</h2>
     </div>
 </div>

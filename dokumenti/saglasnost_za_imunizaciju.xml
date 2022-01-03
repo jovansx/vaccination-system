@@ -35,48 +35,10 @@
         <zanimanje>drugo</zanimanje>
         <socijalna_zastita>
             <korisnik>true</korisnik>
-            <sediste>
-                <naziv>EPS</naziv>
-                <opstina>Novi Sad</opstina>
-            </sediste>
         </socijalna_zastita>
         <izjava_saglasnosti>
             <saglasnost>true</saglasnost>
             <naziv_leka>Aspirin</naziv_leka>
         </izjava_saglasnosti>
     </pacijent>
-    <evidencija_o_vakcinaciji>
-        <zdravstvena_ustanova>Veternik</zdravstvena_ustanova>
-        <vakcinacijski_punkt>2</vakcinacijski_punkt>
-        <lekar>
-            <ime>Jovan</ime>
-            <prezime>Simic</prezime>
-            <telefon>(021) 641-3876</telefon>
-        </lekar>
-        <vakcine>
-            <vakcina>
-                <naziv>Pfizer-BioNTech</naziv>
-                <datum_izdavanja>2021-09-09</datum_izdavanja>
-                <nacin_davanja>IM</nacin_davanja>
-                <ekstremitet>DR</ekstremitet>
-                <serija>238</serija>
-                <proizvodjac>Pfizer-BioNTech</proizvodjac>
-                <nezeljena_reakcija>Temperatura</nezeljena_reakcija>
-            </vakcina>
-            <vakcina>
-                <naziv>Pfizer-BioNTech</naziv>
-                <datum_izdavanja>2021-09-09</datum_izdavanja>
-                <nacin_davanja>IM</nacin_davanja>
-                <ekstremitet>DR</ekstremitet>
-                <serija>238</serija>
-                <proizvodjac>Pfizer-BioNTech</proizvodjac>
-                <nezeljena_reakcija>Temperatura</nezeljena_reakcija>
-            </vakcina>
-            <kontraindikacije>
-                <datum_utvrdjivanja>2021-09-09</datum_utvrdjivanja>
-                <dijagnoza>Malaksalost</dijagnoza>
-            </kontraindikacije>
-            <odluka_komisije>true</odluka_komisije>
-        </vakcine>
-    </evidencija_o_vakcinaciji>
 </saglasnost_za_imunizaciju>

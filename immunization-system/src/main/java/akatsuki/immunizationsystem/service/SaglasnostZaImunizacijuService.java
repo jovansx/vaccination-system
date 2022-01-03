@@ -54,7 +54,7 @@ public class SaglasnostZaImunizacijuService {
         return mapper.convertToXml(saglasnostZaImunizaciju);
     }
 
-    public String createSaglasnostZaImunizaciju(String saglasnostXml) throws RuntimeException {
+    public void createSaglasnostZaImunizaciju(String saglasnostXml) throws RuntimeException {
         SaglasnostZaImunizaciju saglasnostZaImunizaciju = mapper.convertToObject(saglasnostXml);
         if (saglasnostZaImunizaciju == null)
             throw new BadRequestRuntimeException("Dokument koji ste poslali nije validan.");
@@ -69,7 +69,7 @@ public class SaglasnostZaImunizacijuService {
 
         setLinkToThisDocument(saglasnostZaImunizaciju);
 
-        return saglasnostZaImunizacijuIDao.save(saglasnostZaImunizaciju);
+        saglasnostZaImunizacijuIDao.save(saglasnostZaImunizaciju);
     }
 
     private void setLinkToThisDocument(SaglasnostZaImunizaciju saglasnostZaImunizaciju) {
