@@ -1,4 +1,5 @@
 import { Routes } from '@angular/router';
+import { DoctorComponent } from '../doctor/doctor.component';
 import { LoginComponent } from '../login/login.component';
 import { PatientDocumentsComponent } from '../patient/patient-documents/patient-documents.component';
 import { PatientSubmitComponent } from '../patient/patient-submit/patient-submit.component';
@@ -21,6 +22,10 @@ export const routes: Routes = [
   {
     path: 'home/patient/submit',
     component: PatientSubmitComponent,
+  },
+  {
+    path: 'home/doctor',
+    component: DoctorComponent,
   },
     { path: '**', redirectTo: '/login' },
 ];

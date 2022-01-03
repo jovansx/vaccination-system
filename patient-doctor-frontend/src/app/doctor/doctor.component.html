@@ -1,0 +1,263 @@
+<app-header></app-header>
+<div
+  class="doctor-container"
+  fxLayout="column"
+  fxLayoutAlign="space-between center"
+>
+  <div class="wrapper-container">
+    <div
+      class="main-container"
+      fxLayout="row"
+      fxLayoutAlign="space-evenly start"
+      [formGroup]="vaccinattionForm"
+    >
+      <div
+        fxFlex
+        class="row-container"
+        fxLayout="column"
+        fxLayoutAlign="space-evenly"
+      >
+        <mat-card style="text-align: center; margin-bottom: 20px"
+          ><h2>Licni podaci</h2></mat-card
+        >
+        <mat-form-field appearance="fill">
+          <mat-label>Ime</mat-label>
+          <input matInput formControlName="ime" required />
+          <mat-error *ngIf="vaccinattionForm.invalid">{{
+            validator.validateRequired("ime")
+          }}</mat-error>
+        </mat-form-field>
+        <mat-form-field appearance="fill">
+          <mat-label>Ime oca</mat-label>
+          <input matInput formControlName="imeOca" required />
+          <mat-error *ngIf="vaccinattionForm.invalid">{{
+            validator.validateRequired("imeOca")
+          }}</mat-error>
+        </mat-form-field>
+        <mat-form-field appearance="fill">
+          <mat-label>Prezime</mat-label>
+          <input matInput formControlName="prezime" required />
+          <mat-error *ngIf="vaccinattionForm.invalid">{{
+            validator.validateRequired("prezime")
+          }}</mat-error>
+        </mat-form-field>
+        <mat-form-field appearance="fill">
+          <mat-label>Pol</mat-label>
+          <mat-select formControlName="pol">
+            <mat-option value="MUSKI">Muski</mat-option>
+            <mat-option value="ZENSKI">Zenski</mat-option>
+          </mat-select>
+        </mat-form-field>
+        <mat-form-field appearance="fill">
+          <mat-label>Drzavljanstvo</mat-label>
+          <mat-select formControlName="drzavljanstvo">
+            <mat-option value="SRPSKO">Srpsko</mat-option>
+            <mat-option value="STRANO_SA_BORAVKOM"
+              >Strano sa boravkom</mat-option
+            >
+            <mat-option value="STRANO_BEZ_BORAVKA"
+              >Strano bez boravka</mat-option
+            >
+          </mat-select>
+        </mat-form-field>
+        <mat-form-field appearance="fill">
+          <mat-label>{{
+            vaccinattionForm.controls["drzavljanstvo"].value === "SRPSKO"
+              ? "Jmbg"
+              : "Broj pasosa"
+          }}</mat-label>
+          <input matInput formControlName="idBroj" required />
+          <mat-error *ngIf="vaccinattionForm.invalid">{{
+            validator.validateRequired("idBroj")
+          }}</mat-error>
+        </mat-form-field>
+        <mat-form-field appearance="fill">
+          <mat-label>Fiksni telefon</mat-label>
+          <input matInput formControlName="fiksniTelefon" required />
+          <mat-error *ngIf="vaccinattionForm.invalid">{{
+            validator.validatePattern("fiksniTelefon", "(ddd) ddd-dddd")
+          }}</mat-error>
+        </mat-form-field>
+        <mat-form-field appearance="fill">
+          <mat-label>Mobilni telefon</mat-label>
+          <input matInput formControlName="mobilniTelefon" required />
+          <mat-error *ngIf="vaccinattionForm.invalid">{{
+            validator.validatePattern("mobilniTelefon", "dddddddddd")
+          }}</mat-error>
+        </mat-form-field>
+      </div>
+      <div
+        style="margin-left: 20px; margin-right: 10px"
+        fxFlex
+        class="row-container"
+        fxLayout="column"
+        fxLayoutAlign="space-evenly"
+      >
+        <mat-card style="text-align: center; margin-bottom: 20px"
+          ><h2>Istorija vakcinacije</h2></mat-card
+        >
+
+        <mat-form-field appearance="fill">
+          <mat-label>Izabrana vakcina</mat-label>
+          <input matInput formControlName="izabranaVakcina" required />
+          <mat-error *ngIf="vaccinattionForm.invalid">{{
+            validator.validateRequired("ime")
+          }}</mat-error>
+        </mat-form-field>
+
+        <mat-form-field appearance="fill">
+          <mat-label>Datum izdavanja</mat-label>
+          <input matInput formControlName="datumIzdavanja" required />
+          <mat-error *ngIf="vaccinattionForm.invalid">{{
+            validator.validateRequired("prezime")
+          }}</mat-error>
+        </mat-form-field>
+        <mat-form-field appearance="fill">
+          <mat-label>Nacin davanja</mat-label>
+          <mat-select formControlName="nacinDavanja">
+            <mat-option value="IM">IM</mat-option>
+            <mat-option value="IN">IN</mat-option>
+          </mat-select>
+        </mat-form-field>
+        <mat-form-field appearance="fill">
+          <mat-label>Ekstremitet</mat-label>
+          <mat-select formControlName="ekstremitet">
+            <mat-option value="DR">Desna ruka</mat-option>
+            <mat-option value="LR">Leva ruka</mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+      <div
+        style="margin-left: 10px; margin-right: 20px"
+        fxFlex
+        class="row-container"
+        fxLayout="column"
+        fxLayoutAlign="space-evenly"
+      >
+        <mat-card style="text-align: center; margin-bottom: 20px"
+          ><h2>Podaci lekara</h2></mat-card
+        >
+        <mat-form-field appearance="fill">
+          <mat-label>Ime lekara</mat-label>
+          <input matInput formControlName="imeLekara" required />
+          <mat-error *ngIf="vaccinattionForm.invalid">{{
+            validator.validateRequired("ime")
+          }}</mat-error>
+        </mat-form-field>
+        <mat-form-field appearance="fill">
+          <mat-label>Prezime lekara</mat-label>
+          <input matInput formControlName="prezimeLekara" required />
+          <mat-error *ngIf="vaccinattionForm.invalid">{{
+            validator.validateRequired("prezime")
+          }}</mat-error>
+        </mat-form-field>
+        <mat-form-field appearance="fill">
+          <mat-label>Fiksni telefon lekara</mat-label>
+          <input matInput formControlName="fiksniTelefonLekara" required />
+          <mat-error *ngIf="vaccinattionForm.invalid">{{
+            validator.validatePattern("fiksniTelefon", "(ddd) ddd-dddd")
+          }}</mat-error>
+        </mat-form-field>
+        <mat-form-field appearance="fill">
+          <mat-label>Zdravstvena ustanova</mat-label>
+          <input matInput formControlName="zdravstvenaUstanova" required />
+          <mat-error *ngIf="vaccinattionForm.invalid">{{
+            validator.validateRequired("ime")
+          }}</mat-error>
+        </mat-form-field>
+        <mat-form-field appearance="fill">
+          <mat-label>Unesite punkt</mat-label>
+          <input matInput formControlName="punkt" required />
+          <mat-error *ngIf="vaccinattionForm.invalid">{{
+            validator.validatePattern("punkt", " su samo cifre")
+          }}</mat-error>
+        </mat-form-field>
+      </div>
+      <div
+        fxFlex
+        class="row-container"
+        fxLayout="column"
+        fxLayoutAlign="space-evenly"
+      >
+        <mat-card style="text-align: center; margin-bottom: 20px"
+          ><h2>Podaci vakcinacije</h2></mat-card
+        >
+        <mat-form-field appearance="fill">
+          <mat-label>Danasnji datum izdavanja</mat-label>
+          <input matInput formControlName="datumIzdavanjaVakcine" required />
+          <mat-error *ngIf="vaccinattionForm.invalid">{{
+            validator.validateRequired("prezime")
+          }}</mat-error>
+        </mat-form-field>
+        <mat-form-field appearance="fill">
+          <mat-label>Izaberi nacin davanja</mat-label>
+          <mat-select formControlName="nacinDavanjaVakcine">
+            <mat-option value="IM">IM</mat-option>
+            <mat-option value="IN">IN</mat-option>
+          </mat-select>
+        </mat-form-field>
+        <mat-form-field appearance="fill">
+          <mat-label>Izaberi ekstremitet</mat-label>
+          <mat-select formControlName="ekstremitetVakcine">
+            <mat-option value="DR">Desna ruka</mat-option>
+            <mat-option value="LR">Leva ruka</mat-option>
+          </mat-select>
+        </mat-form-field>
+        <mat-form-field appearance="fill">
+          <mat-label>Unesite seriju</mat-label>
+          <input matInput formControlName="serijaVakcine" required />
+          <mat-error *ngIf="vaccinattionForm.invalid">{{
+            validator.validatePattern("serijaVakcine", " su samo cifre")
+          }}</mat-error>
+        </mat-form-field>
+        <mat-form-field appearance="fill">
+          <mat-label>Unesite kontraindikaciju ukoliko se desila</mat-label>
+          <input matInput formControlName="kontraindikacije" />
+        </mat-form-field>
+        <mat-form-field appearance="fill">
+          <mat-label>Izaberi odluka komisije</mat-label>
+          <mat-select formControlName="odlukaKomisije">
+            <mat-option value="DA">Da</mat-option>
+            <mat-option value="NE">Ne</mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+    </div>
+  </div>
+
+  <div
+    class="container-with-actions"
+    fxLayout="row"
+    fxLayoutAlign="start center"
+  >
+    <div fxFlex>
+      <mat-card
+        style="text-align: center; margin-left: 24px; margin-bottom: 24px"
+        ><h1>Zakazani termin: 14:15</h1></mat-card
+      >
+    </div>
+    <div fxFlex fxLayout="row" f fxLayoutAlign="end center">
+      <button
+        style="margin-right: 24px; margin-bottom: 5px"
+        mat-raised-button
+        color="primary"
+      >
+        Pojavio se
+      </button>
+      <button
+        style="margin-right: 24px; margin-bottom: 5px"
+        mat-raised-button
+        color="warn"
+      >
+        Nije se pojavio
+      </button>
+      <button
+        style="margin-right: 24px; margin-bottom: 5px"
+        mat-raised-button
+        color="primary"
+      >
+        Sacuvaj
+      </button>
+    </div>
+  </div>
+</div>
