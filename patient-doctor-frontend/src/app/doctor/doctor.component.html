@@ -6,6 +6,7 @@
 >
   <div class="wrapper-container">
     <div
+      *ngIf="document"
       class="main-container"
       fxLayout="row"
       fxLayoutAlign="space-evenly start"
@@ -176,6 +177,7 @@
         </div>
       </div>
       <div
+        *ngIf="!firstVaccination"
         style="margin-left: 20px; margin-right: 10px"
         fxFlex
         class="row-container"
@@ -312,6 +314,30 @@
         </mat-form-field>
       </div>
     </div>
+    <h1
+      *ngIf="!document"
+      style="
+        text-align: center;
+        margin-top: 300px;
+        margin-left: 100px;
+        margin-right: 100px;
+        color: black;
+      "
+    >
+      Ucitava se stranica ...
+    </h1>
+    <h1
+      *ngIf="document == false"
+      style="
+        text-align: center;
+        margin-top: 300px;
+        margin-left: 100px;
+        margin-right: 100px;
+        color: black;
+      "
+    >
+      Nema aktivnih vakcinacija ...
+    </h1>
   </div>
 
   <div

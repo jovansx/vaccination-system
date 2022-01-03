@@ -16,18 +16,20 @@ import { XmlConverterService } from '../services/xml-converter.service';
 export class DoctorComponent implements OnInit {
 
   vaccinattionForm: FormGroup = new FormGroup({
-    fiksniTelefonLekara: new FormControl({ value: '(021) 641-3876', disabled: true }, [Validators.required, Validators.pattern("\\([0-9]{3}\\) [0-9]{3}-[0-9]{4}")]),
-    imeLekara: new FormControl({ value: 'Jelena', disabled: true }, [Validators.required,]),
-    prezimeLekara: new FormControl({ value: 'Stojanovic', disabled: true }, [Validators.required]),
-    zdravstvenaUstanova: new FormControl({ value: 'Promenada', disabled: true }, [Validators.required]),
+    // 3 KOLONA
+    fiksniTelefonLekara: new FormControl({ value: '', disabled: true }, [Validators.required, Validators.pattern("\\([0-9]{3}\\) [0-9]{3}-[0-9]{4}")]),
+    imeLekara: new FormControl({ value: '', disabled: true }, [Validators.required,]),
+    prezimeLekara: new FormControl({ value: '', disabled: true }, [Validators.required]),
+    zdravstvenaUstanova: new FormControl({ value: '', disabled: true }, [Validators.required]),
     punkt: new FormControl({ value: '', disabled: true }, [Validators.required, Validators.pattern("[0-9]+")]),
 
-    datumIzdavanjaVakcine: new FormControl({ value: '21.10.2022', disabled: true }, [Validators.required,]),
-    nacinDavanjaVakcine: new FormControl({ value: 'IM', disabled: false }, [Validators.required,]),
-    ekstremitetVakcine: new FormControl({ value: 'DR', disabled: false }, [Validators.required,]),
+    // 4 KOLONA
+    datumIzdavanjaVakcine: new FormControl({ value: '', disabled: true }, [Validators.required,]),
+    nacinDavanjaVakcine: new FormControl({ value: '', disabled: false }, [Validators.required,]),
+    ekstremitetVakcine: new FormControl({ value: '', disabled: false }, [Validators.required,]),
     serijaVakcine: new FormControl({ value: '', disabled: false }, [Validators.required, Validators.pattern("[0-9]+")]),
     kontraindikacije: new FormControl({ value: '', disabled: false }, []),
-    odlukaKomisije: new FormControl({ value: "NE", disabled: false }, [Validators.required]),
+    odlukaKomisije: new FormControl({ value: "", disabled: false }, [Validators.required]),
     
     // 2 KOLONA
     datumIzdavanja: new FormControl({ value: '', disabled: true }, [Validators.required,]),
@@ -63,6 +65,7 @@ export class DoctorComponent implements OnInit {
   termin : String | undefined;
   document : any;
   doktor : any;
+  firstVaccination : boolean = true;
 
   constructor( public validator: ValidatorService, private appointmentService: AppointmentService,
     private saglasnostService : SaglasnostService,
@@ -80,7 +83,6 @@ export class DoctorComponent implements OnInit {
     this.doctorService.getDoctorInfo().subscribe(
       (res: any) => {
         this.doktor = this._xml_parser.parseXmlToObject(res);
-        console.log(this.doktor)
       },
       (err: any) => this._toastr.error(convertResponseError(err), "Don't exist!")
     );
@@ -89,6 +91,11 @@ export class DoctorComponent implements OnInit {
   getCurrentAppointment() : void {
     this.appointmentService.getCurrentAppointment().subscribe(
       (res: any) => {
+        if(res == null) {
+          this._toastr.info("Trenutno nema aktivnih termina!", "Attention!")
+          this.document = false
+          return;
+        }
         let response = this._xml_parser.parseXmlToObject(res);
         let pacijentId = response.PACIJENT_ID[0];
         let date : String = response.TERMIN[0];
@@ -103,8 +110,6 @@ export class DoctorComponent implements OnInit {
       this.saglasnostService.getCurrentSaglasnost(pacijentId).subscribe(
         (res: any) => {
           this.document = this._xml_parser.parseXmlToObject(res);
-          console.log(this.document)
-
           this.setValues()
         },
         (err: any) => this._toastr.error(convertResponseError(err), "Don't exist!")
@@ -155,6 +160,7 @@ export class DoctorComponent implements OnInit {
 
 // 2 KOLONA
   if(this.document.EVIDENCIJA_O_VAKCINACIJI[0].VAKCINE[0].VAKCINA.length != 0) {
+    this.firstVaccination = false;
     this.vaccinattionForm.controls['izabranaVakcina'].setValue(this.document.EVIDENCIJA_O_VAKCINACIJI[0].VAKCINE[0].VAKCINA[0].NAZIV[0])
     this.vaccinattionForm.controls['datumIzdavanja'].setValue(this.document.EVIDENCIJA_O_VAKCINACIJI[0].VAKCINE[0].VAKCINA[0].DATUM_IZDAVANJA[0])
     this.vaccinattionForm.controls['nacinDavanja'].setValue(this.document.EVIDENCIJA_O_VAKCINACIJI[0].VAKCINE[0].VAKCINA[0].NACIN_DAVANJA[0])
@@ -177,6 +183,8 @@ export class DoctorComponent implements OnInit {
   this.vaccinattionForm.controls['datumIzdavanjaVakcine'].setValue(this.getCurrentDate())
   this.vaccinattionForm.controls['kontraindikacije'].setValue(this.document.EVIDENCIJA_O_VAKCINACIJI[0].VAKCINE[0].KONTRAINDIKACIJE[0].DIJAGNOZA[0])
 }
+
+
 
 getCurrentDate() {
   let today = new Date();
