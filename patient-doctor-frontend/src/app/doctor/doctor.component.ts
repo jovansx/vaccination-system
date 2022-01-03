@@ -3,6 +3,7 @@ import { FormControl, FormGroup, SelectControlValueAccessor, Validators } from '
 import { ToastrService } from 'ngx-toastr';
 import { convertResponseError } from '../error-converter.function';
 import { AppointmentService } from '../services/appointment.service';
+import { DoctorService } from '../services/doctor.service';
 import { SaglasnostService } from '../services/saglasnost.service';
 import { ValidatorService } from '../services/validator.service';
 import { XmlConverterService } from '../services/xml-converter.service';
@@ -60,17 +61,29 @@ export class DoctorComponent implements OnInit {
   });
 
   termin : String | undefined;
-
   document : any;
+  doktor : any;
 
   constructor( public validator: ValidatorService, private appointmentService: AppointmentService,
     private saglasnostService : SaglasnostService,
-      private _xml_parser: XmlConverterService, private _toastr: ToastrService) { 
+      private _xml_parser: XmlConverterService,
+      private doctorService : DoctorService, private _toastr: ToastrService) { 
     validator.setForm(this.vaccinattionForm);
   }
 
   ngOnInit(): void {
+    this.getDoctorInfo()
     this.getCurrentAppointment()
+  }
+
+  getDoctorInfo() : void {
+    this.doctorService.getDoctorInfo().subscribe(
+      (res: any) => {
+        this.doktor = this._xml_parser.parseXmlToObject(res);
+        console.log(this.doktor)
+      },
+      (err: any) => this._toastr.error(convertResponseError(err), "Don't exist!")
+    );
   }
 
   getCurrentAppointment() : void {
@@ -91,6 +104,7 @@ export class DoctorComponent implements OnInit {
         (res: any) => {
           this.document = this._xml_parser.parseXmlToObject(res);
           console.log(this.document)
+
           this.setValues()
         },
         (err: any) => this._toastr.error(convertResponseError(err), "Don't exist!")
@@ -105,7 +119,6 @@ export class DoctorComponent implements OnInit {
     this.vaccinattionForm.controls['imeOca'].setValue(this.document.PACIJENT[0].IME_RODITELJA[0])
     this.vaccinattionForm.controls['prezime'].setValue(this.document.PACIJENT[0].PREZIME[0]["_"])
     this.vaccinattionForm.controls['pol'].setValue(this.document.PACIJENT[0].POL[0]["_"].toUpperCase())
-
     if(this.document.PACIJENT[0].DRZAVLJANSTVO[0].SRPSKO != undefined) {
       this.vaccinattionForm.controls['drzavljanstvo'].setValue('SRPSKO')
       this.vaccinattionForm.controls['idBroj'].setValue(this.document.PACIJENT[0].DRZAVLJANSTVO[0].SRPSKO[0].ID_BROJ[0]["_"])
@@ -114,7 +127,6 @@ export class DoctorComponent implements OnInit {
       this.vaccinattionForm.controls['drzavljanstvo'].setValue('STRANO')
       this.vaccinattionForm.controls['idBroj'].setValue(this.document.PACIJENT[0].DRZAVLJANSTVO[0].STRANO[0].ID_BROJ[0]["_"])
     }
-
     this.vaccinattionForm.controls['mobilniTelefon'].setValue(this.document.PACIJENT[0].MOBILNI_TELEFON[0])
     this.vaccinattionForm.controls['fiksniTelefon'].setValue(this.document.PACIJENT[0].FIKSNI_TELEFON[0])
     this.vaccinattionForm.controls['mestoRodjenja'].setValue(this.document.PACIJENT[0].RODJENJE[0].MESTO_RODJENJA[0])
@@ -124,29 +136,21 @@ export class DoctorComponent implements OnInit {
     this.vaccinattionForm.controls['ulica'].setValue(this.document.PACIJENT[0].PREBIVALISTE[0].ADRESA[0].ULICA[0])
     this.vaccinattionForm.controls['brojKuce'].setValue(this.document.PACIJENT[0].PREBIVALISTE[0].ADRESA[0].BROJ[0])
     this.vaccinattionForm.controls['email'].setValue(this.document.PACIJENT[0].EMAIL[0])
-
     this.vaccinattionForm.controls['radniStatus'].setValue(this.document.PACIJENT[0].RADNI_STATUS[0])
     this.vaccinattionForm.controls['zanimanje'].setValue(this.document.PACIJENT[0].ZANIMANJE[0])
-
-    if(this.document.PACIJENT[0].SOCIJALNA_ZASTITA[0].KORISNIK[0] === 'true') {
+    if(this.document.PACIJENT[0].SOCIJALNA_ZASTITA[0].KORISNIK[0] === 'true')
       this.vaccinattionForm.controls['socijalnaZastita'].setValue("IMA")
-    } else {
+    else 
       this.vaccinattionForm.controls['socijalnaZastita'].setValue("NEMA")
-    }
-
     if(this.document.PACIJENT[0].DRZAVLJANSTVO[0].STRANO != undefined) {
       this.vaccinattionForm.controls['drzavljanstvo'].setValue('STRANO')
       this.vaccinattionForm.controls['idBroj'].setValue(this.document.PACIJENT[0].DRZAVLJANSTVO[0].STRANO[0].ID_BROJ[0]["_"])
     }
-
     this.vaccinattionForm.controls['sedisteSocZastite'].setValue(this.document.PACIJENT[0].SOCIJALNA_ZASTITA[0].SEDISTE[0].NAZIV[0]+" "+this.document.PACIJENT[0].SOCIJALNA_ZASTITA[0].SEDISTE[0].OPSTINA[0])
-
-    if(this.document.PACIJENT[0].IZJAVA_SAGLASNOSTI[0].SAGLASNOST[0] === 'true') {
+    if(this.document.PACIJENT[0].IZJAVA_SAGLASNOSTI[0].SAGLASNOST[0] === 'true')
       this.vaccinattionForm.controls['saglasnost'].setValue("IMA")
-    } else {
+    else 
       this.vaccinattionForm.controls['saglasnost'].setValue("NEMA")
-    }
-
     this.vaccinattionForm.controls['nazivLeka'].setValue(this.document.PACIJENT[0].IZJAVA_SAGLASNOSTI[0].NAZIV_LEKA[0])
 
 // 2 KOLONA
@@ -155,16 +159,14 @@ export class DoctorComponent implements OnInit {
     this.vaccinattionForm.controls['datumIzdavanja'].setValue(this.document.EVIDENCIJA_O_VAKCINACIJI[0].VAKCINE[0].VAKCINA[0].DATUM_IZDAVANJA[0])
     this.vaccinattionForm.controls['nacinDavanja'].setValue(this.document.EVIDENCIJA_O_VAKCINACIJI[0].VAKCINE[0].VAKCINA[0].NACIN_DAVANJA[0])
     this.vaccinattionForm.controls['ekstremitet'].setValue(this.document.EVIDENCIJA_O_VAKCINACIJI[0].VAKCINE[0].VAKCINA[0].EKSTREMITET[0])
-
   }
 
 // 3 KOLONA
-    this.vaccinattionForm.controls['imeLekara'].setValue(this.document.EVIDENCIJA_O_VAKCINACIJI[0].LEKAR[0].IME[0])
-    this.vaccinattionForm.controls['prezimeLekara'].setValue(this.document.EVIDENCIJA_O_VAKCINACIJI[0].LEKAR[0].PREZIME[0])
-    this.vaccinattionForm.controls['fiksniTelefonLekara'].setValue(this.document.EVIDENCIJA_O_VAKCINACIJI[0].LEKAR[0].TELEFON[0])
-    this.vaccinattionForm.controls['zdravstvenaUstanova'].setValue(this.document.EVIDENCIJA_O_VAKCINACIJI[0].ZDRAVSTVENA_USTANOVA[0])
-    this.vaccinattionForm.controls['punkt'].setValue(this.document.EVIDENCIJA_O_VAKCINACIJI[0].VAKCINACIJSKI_PUNKT[0])
-
+    this.vaccinattionForm.controls['imeLekara'].setValue(this.doktor.IME[0])
+    this.vaccinattionForm.controls['prezimeLekara'].setValue(this.doktor.PREZIME[0])
+    this.vaccinattionForm.controls['fiksniTelefonLekara'].setValue(this.doktor.FIKSNI_TELEFON[0])
+    this.vaccinattionForm.controls['zdravstvenaUstanova'].setValue(this.doktor.ZDRAVSTVENA_USTANOVA[0])
+    this.vaccinattionForm.controls['punkt'].setValue(this.doktor.PUNKT[0])
 
 // 4 KOLONA
   if(this.document.EVIDENCIJA_O_VAKCINACIJI[0].VAKCINE[0].ODLUKA_KOMISIJE[0] === 'true') {
@@ -172,12 +174,14 @@ export class DoctorComponent implements OnInit {
   } else {
     this.vaccinattionForm.controls['odlukaKomisije'].setValue("NE")
   }
+  this.vaccinattionForm.controls['datumIzdavanjaVakcine'].setValue(this.getCurrentDate())
+  this.vaccinattionForm.controls['kontraindikacije'].setValue(this.document.EVIDENCIJA_O_VAKCINACIJI[0].VAKCINE[0].KONTRAINDIKACIJE[0].DIJAGNOZA[0])
+}
+
+getCurrentDate() {
   let today = new Date();
   let date = today.getFullYear()+'-'+(this.setZeroIfNeed((today.getMonth()+1)+""))+'-'+this.setZeroIfNeed(today.getDate()+"");
-
-  this.vaccinattionForm.controls['datumIzdavanjaVakcine'].setValue(date)
-  this.vaccinattionForm.controls['kontraindikacije'].setValue(this.document.EVIDENCIJA_O_VAKCINACIJI[0].VAKCINE[0].KONTRAINDIKACIJE[0].DIJAGNOZA[0])
-
+  return date;
 }
 
 setZeroIfNeed(number : String) : String {
