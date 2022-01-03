@@ -1,20 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-export interface Vaccine {
-  name: string;
-  code: string;
-  series: number;
-  manufacturer: string;
-  sideEffects: string;
-  amount: number;
-}
-
-const ELEMENT_DATA: Vaccine[] = [
-  {name: 'Hydrogen', code: 'PFIZER', series: 1, manufacturer: 'Britanski proizvodjac', sideEffects: 'Temperatura', amount: 203},
-  {name: 'Helium', code: 'SPUTNIK_V', series: 1, manufacturer: 'Britanski proizvodjac', sideEffects: 'Temperatura', amount: 536},
-  {name: 'Lithium', code: 'SINOPHARM', series: 1, manufacturer: 'Britanski proizvodjac', sideEffects: 'Temperatura', amount: 358},
-  {name: 'Beryllium', code: 'ASTRA_ZENECA', series: 1, manufacturer: 'Britanski proizvodjac', sideEffects: 'Temperatura', amount: 1204},
-  {name: 'Boron', code: 'MODERNA', series: 1, manufacturer: 'Britanski proizvodjac', sideEffects: 'Temperatura', amount: 2243}
-];
+import { IVaccine, Vaccine } from '../models/vaccine.model';
+import { VaccineService } from '../services/vaccine.service';
+import { XmlConverterService } from '../services/xml-converter.service';
 
 @Component({
   selector: 'app-vaccine-page',
@@ -23,13 +10,28 @@ const ELEMENT_DATA: Vaccine[] = [
 })
 export class VaccinePageComponent implements OnInit {
   displayedColumns: string[] = ['name', 'series', 'manufacturer', 'sideEffects', 'amount', 'edit'];
-  dataSource = ELEMENT_DATA;
-  constructor() { }
+  vaccines: IVaccine[] = []
+
+  constructor(private vaccineService: VaccineService, private _xml_parser: XmlConverterService) { }
 
   ngOnInit(): void {
+    this.getAllVaccines()
   }
 
-  saveChanges(element: any): void {
-    console.log(element)
+  async saveChanges(element: IVaccine) {
+    await this.vaccineService.updateAmount(element)
+    this.getAllVaccines()
+  }
+
+  getAllVaccines() {
+    this.vaccineService.getAll()
+      .subscribe(res => {
+        let response = this._xml_parser.parseXmlToObject(res);
+        let vaccinesArray: IVaccine[] = []
+        response.VACCINES.forEach((element: { NAME: string[]; TYPE: string[]; SERIES: number[]; MANUFACTURER: string[]; SIDEEFFECT: string[]; AMOUNT: number[]; }) => {
+          vaccinesArray.push(new Vaccine(element.NAME[0], element.TYPE[0],element.SERIES[0],element.MANUFACTURER[0], element.SIDEEFFECT[0], element.AMOUNT[0]))
+        });
+        this.vaccines = [...vaccinesArray]
+      })
   }
 }

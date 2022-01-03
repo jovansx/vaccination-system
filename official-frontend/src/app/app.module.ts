@@ -14,7 +14,7 @@ import { FlexLayoutModule } from '@angular/flex-layout';
 import { HeaderInterceptorService } from './autentification/services/header-interceptor.service';
 import { VaccinePageComponent } from './vaccine-page/vaccine-page.component';
 import { HeaderComponent } from './header/header.component';
-import { VaccineService } from './autentification/services/vaccine.service';
+import { VaccineService } from './services/vaccine.service'
 
 @NgModule({
   declarations: [
