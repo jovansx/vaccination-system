@@ -133,7 +133,7 @@
                             <xs:element name="vakcine">
                                 <xs:complexType>
                                     <xs:sequence>
-                                        <xs:sequence minOccurs="2" maxOccurs="unbounded">
+                                        <xs:sequence minOccurs="0" maxOccurs="2">
                                             <xs:element name="vakcina">
                                                 <xs:complexType>
                                                   <xs:sequence>
