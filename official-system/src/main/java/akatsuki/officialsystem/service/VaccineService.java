@@ -58,8 +58,10 @@ public class VaccineService {
         Vaccine vaccine = vaccineIDao.get(id).get();
 
         for (Vaccine.Serie series : vaccine.getSeries()) {
-            if(series.getSerialNumber() == serialNumber)
+            if(series.getSerialNumber() == serialNumber) {
                 series.setAmount(amount);
+                break;
+            }
         }
 
         vaccineIDao.save(vaccine);
@@ -71,11 +73,10 @@ public class VaccineService {
         List<VaccineDTO> vaccinesDTOList = new ArrayList<>();
         for(Vaccine vaccine: vaccines) {
             for (Vaccine.Serie series : vaccine.getSeries()) {
-                vaccinesDTOList.add(new VaccineDTO(vaccine.getType(), vaccine.getSideEffect(), vaccine.getManufacturer(), series.getSerialNumber(), series.getAmount()));
+                vaccinesDTOList.add(new VaccineDTO(vaccine.getType(), vaccine.getType().name() ,vaccine.getSideEffect(), vaccine.getManufacturer(), series.getSerialNumber(), series.getAmount()));
             }
         }
         VaccinesDTO vaccinesDTO = new VaccinesDTO(vaccinesDTOList);
-        String xml = vaccineDTOmapper.convertToXml(vaccinesDTO);
-        return xml;
+        return vaccineDTOmapper.convertToXml(vaccinesDTO);
     }
 }

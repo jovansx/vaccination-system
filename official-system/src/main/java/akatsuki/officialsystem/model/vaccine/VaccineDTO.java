@@ -10,6 +10,7 @@ import java.util.List;
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "VaccineDTO", propOrder = {
         "type",
+        "name",
         "sideEffect",
         "manufacturer",
         "series",
@@ -22,6 +23,8 @@ import java.util.List;
 public class VaccineDTO {
     @XmlElement(required = true)
     private VaccineType type;
+    @XmlElement(required = true)
+    private String name;
     @XmlElement(required = true)
     private String sideEffect;
     @XmlElement(required = true)
