@@ -6,6 +6,7 @@ import akatsuki.immunizationsystem.exceptions.BadRequestRuntimeException;
 import akatsuki.immunizationsystem.exceptions.NotFoundRuntimeException;
 import akatsuki.immunizationsystem.model.documents.SaglasnostZaImunizaciju;
 import akatsuki.immunizationsystem.utils.MetadataExtractor;
+import akatsuki.immunizationsystem.utils.PdfTransformer;
 import akatsuki.immunizationsystem.utils.Validator;
 import akatsuki.immunizationsystem.utils.modelmappers.IModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,12 +22,13 @@ public class SaglasnostZaImunizacijuService {
     private MetadataExtractor extractor;
     private InteresovanjeService interesovanjeService;
     private PotvrdaOIzvrsenojVakcinacijiService potvrdaOIzvrsenojVakcinacijiService;
+    private PdfTransformer pdfTransformer;
 
     @Autowired
     public void setValidator(Validator validator, ISaglasnostZaImunizacijuDAO saglasnostZaImunizacijuIDao, DigitalniSertifikatDAO digitalniSertifikatDAO,
                              IModelMapper<SaglasnostZaImunizaciju> mapper, MetadataExtractor extractor,
                              InteresovanjeService interesovanjeService,
-                             @Lazy PotvrdaOIzvrsenojVakcinacijiService potvrdaOIzvrsenojVakcinacijiService) {
+                             @Lazy PotvrdaOIzvrsenojVakcinacijiService potvrdaOIzvrsenojVakcinacijiService, PdfTransformer pdfTransformer) {
         this.saglasnostZaImunizacijuIDao = saglasnostZaImunizacijuIDao;
         this.digitalniSertifikatDAO = digitalniSertifikatDAO;
         this.validator = validator;
@@ -34,6 +36,7 @@ public class SaglasnostZaImunizacijuService {
         this.extractor = extractor;
         this.interesovanjeService = interesovanjeService;
         this.potvrdaOIzvrsenojVakcinacijiService = potvrdaOIzvrsenojVakcinacijiService;
+        this.pdfTransformer = pdfTransformer;
     }
 
 
@@ -91,4 +94,11 @@ public class SaglasnostZaImunizacijuService {
         saglasnostZaImunizacijuIDao.update(saglasnostZaImunizaciju);
     }
 
+    public void generatePdf(String idBroj) {
+        try {
+            pdfTransformer.generatePDF();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
 }
