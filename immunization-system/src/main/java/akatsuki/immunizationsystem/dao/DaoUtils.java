@@ -173,4 +173,27 @@ public class DaoUtils {
         } else
             return col;
     }
+
+    public void deleteResource(String collectionId, String documentId) {
+        XMLResource res;
+        Collection col = null;
+        try {
+            col = DatabaseManager.getCollection(dbConnection.getDbUrl() + collectionId, dbConnection.getUsername(), dbConnection.getPassword());
+            col.setProperty(OutputKeys.INDENT, "yes");
+
+            res = (XMLResource) col.getResource(documentId + ".xml");
+            if (res != null) {
+                col.removeResource(res);
+            }
+        } catch (Exception ignored) {
+        } finally {
+            if (col != null) {
+                try {
+                    col.close();
+                } catch (XMLDBException ex) {
+                    ex.printStackTrace();
+                }
+            }
+        }
+    }
 }

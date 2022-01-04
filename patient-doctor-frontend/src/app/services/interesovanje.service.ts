@@ -12,4 +12,9 @@ export class InteresovanjeService {
   public sendInteresovanje(interesovanjeXml: string): Observable<void> {
     return this._http.post<void>('/interesovanja', interesovanjeXml);
   }
+
+  public getInteresovanje(id: string): Observable<string> {
+    return this._http.get<string>('/interesovanja/'+id, {responseType: 'text' as 'json'});
+  }
+
 }

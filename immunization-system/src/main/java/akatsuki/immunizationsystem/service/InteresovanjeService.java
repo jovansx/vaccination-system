@@ -1,6 +1,5 @@
 package akatsuki.immunizationsystem.service;
 
-import akatsuki.immunizationsystem.dao.DaoUtils;
 import akatsuki.immunizationsystem.dao.IDao;
 import akatsuki.immunizationsystem.exceptions.BadRequestRuntimeException;
 import akatsuki.immunizationsystem.exceptions.ConflictRuntimeException;
@@ -14,14 +13,6 @@ import akatsuki.immunizationsystem.utils.modelmappers.IModelMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
-import javax.xml.datatype.DatatypeFactory;
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.GregorianCalendar;
-import java.util.List;
-
 @Service
 @RequiredArgsConstructor
 public class InteresovanjeService {
@@ -29,12 +20,10 @@ public class InteresovanjeService {
     private final Validator validator;
     private final IModelMapper<Interesovanje> mapper;
     private final MetadataExtractor extractor;
-    private final DaoUtils utils;
     private final EmailService emailService;
     private final PdfTransformer pdfTransformer;
 
-    private final IDao<Appointment> appointmentIDao;
-    private final IModelMapper<Appointment> mapper2;
+    private final AppointmentService appointmentService;
 
 
     public String getInteresovanje(String idBroj) throws RuntimeException {
@@ -45,7 +34,7 @@ public class InteresovanjeService {
         return mapper.convertToXml(interesovanje);
     }
 
-    public String createInteresovanje(String interesovanjeXml) throws RuntimeException {
+    public void createInteresovanje(String interesovanjeXml) throws RuntimeException {
         Interesovanje interesovanje = mapper.convertToObject(interesovanjeXml);
         if (interesovanje == null)
             throw new BadRequestRuntimeException("Dokument koji ste poslali nije validan.");
@@ -56,10 +45,10 @@ public class InteresovanjeService {
         if (!extractor.extractAndSaveToRdf(interesovanjeXml, "/interesovanja"))
             throw new BadRequestRuntimeException("Ekstrakcija metapodataka nije uspela.");
 
-        Appointment appointment = createAppointment(interesovanje);
+        Appointment appointment = appointmentService.createAppointment(interesovanje.getPodnosilac().getIdBroj().getValue());
         emailService.notifyPatientAboutReservedAppointment(interesovanje, appointment);
 
-        return interesovanjeDAO.save(interesovanje);
+        interesovanjeDAO.save(interesovanje);
     }
 
     public void setReference(String objectId, String referencedObjectId) {
@@ -68,22 +57,6 @@ public class InteresovanjeService {
         interesovanje.setHref("http://www.akatsuki.org/saglasnosti/" + referencedObjectId);
 
         interesovanjeDAO.save(interesovanje);
-    }
-
-    private Appointment createAppointment(Interesovanje interesovanje) {
-        try {
-            List<String> retVal = utils.execute("(//termin/text())[last()]", "/db/vaccination-system/termini");
-            String[] parts = retVal.get(0).split(":[0-9]{2}.[0-9]{3}\\+[0-9]{2}.[0-9]{2}");
-            DateFormat format2 = new SimpleDateFormat("yyyy-MM-dd'T'hh:mm");
-            Date date = format2.parse(parts[0]);
-            GregorianCalendar calendar = new GregorianCalendar();
-            calendar.setTime(date);
-            calendar.add(Calendar.MINUTE, Appointment.DURATION_IN_MINUTES);
-            Appointment appointment = new Appointment(DatatypeFactory.newInstance().newXMLGregorianCalendar(calendar), interesovanje.getPodnosilac().getIdBroj().getValue());
-            appointmentIDao.save(appointment);
-            return appointment;
-        } catch (Exception ignored) {}
-        return null;
     }
 
     public void generatePdf(String idBroj) {

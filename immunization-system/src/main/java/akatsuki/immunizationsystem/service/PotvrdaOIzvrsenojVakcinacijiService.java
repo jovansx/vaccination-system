@@ -32,6 +32,12 @@ public class PotvrdaOIzvrsenojVakcinacijiService {
                 .orElse(null);
     }
 
+    public String getSerijuPrveVakcine(String idBrojDoza) {
+        PotvrdaOVakcinaciji potvrdaOVakcinaciji = potvrdaOVakcinacijiIDao.get(idBrojDoza).
+                orElseThrow(() -> new NotFoundRuntimeException("Nije pronadjena potvrda sa unetim " + idBrojDoza + "."));
+        return potvrdaOVakcinaciji.getPrimljeneVakcine().getDoza().get(0).getSerija();
+    }
+
     public String getPotvrdaOIzvrsenojVakcinaciji(String idBrojDoza) throws RuntimeException {
         if (!validator.isIdDozaValid(idBrojDoza))
             throw new BadRequestRuntimeException("Id i doza " + idBrojDoza + " nije validan.");
@@ -95,4 +101,5 @@ public class PotvrdaOIzvrsenojVakcinacijiService {
 
         potvrdaOVakcinacijiIDao.save(potvrdaOVakcinaciji);
     }
+
 }
