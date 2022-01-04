@@ -34,7 +34,7 @@ public class SaglasnostZaImunizacijuService {
     public void setValidator(Validator validator, ISaglasnostZaImunizacijuDAO saglasnostZaImunizacijuIDao, DigitalniSertifikatDAO digitalniSertifikatDAO,
                              IModelMapper<SaglasnostZaImunizaciju> mapper, IModelMapper<Interesovanje> interesovanjeIModelMapper, MetadataExtractor extractor,
                              InteresovanjeService interesovanjeService,
-                             AppointmentService appointmentService, EmailService emailService
+                             AppointmentService appointmentService, EmailService emailService,
                              @Lazy PotvrdaOIzvrsenojVakcinacijiService potvrdaOIzvrsenojVakcinacijiService, PdfTransformer pdfTransformer) {
         this.saglasnostZaImunizacijuIDao = saglasnostZaImunizacijuIDao;
         this.digitalniSertifikatDAO = digitalniSertifikatDAO;

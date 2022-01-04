@@ -30,7 +30,7 @@ import { DoctorComponent } from './doctor/doctor.component';
     PatientDocumentsComponent,
     HeaderComponent,
     PatientSubmitComponent,
-    DocumentCardComponent
+    DocumentCardComponent,
     PatientSubmitComponent,
     DoctorComponent
   ],
