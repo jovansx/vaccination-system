@@ -7,7 +7,7 @@
     http://www.akatsuki.org/tipovi tipovi.xsd"
     datum="2021-10-03" mesto="Novi Sad"
 	odobren="false"
-    about="http://www.akatsuki.org/saglasnosti/1510999800078">
+    about="http://www.akatsuki.org/zahtevi/1510999800078">
     <podnosilac>
         <t:ime property="pred:ime" datatype="xs:string">Aleksandar</t:ime>
         <t:prezime property="pred:prezime" datatype="xs:string">Buljevic</t:prezime>

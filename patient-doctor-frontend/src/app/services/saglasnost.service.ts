@@ -25,4 +25,7 @@ export class SaglasnostService {
     return this._http.put<void>('/saglasnosti', saglasnostXml);
   }
 
+  public getSaglasnost(id: string): Observable<string> {
+    return this._http.get<string>(`/saglasnosti/${id}`, {responseType: 'text' as 'json'});
+  }
 }

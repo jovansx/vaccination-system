@@ -9,10 +9,9 @@
   }
   
   .form-container {
-    width: 30vw;
+    width: 70vw;
     height: 80vh;
-    overflow: scroll;
-    margin: auto;
+    overflow-y: scroll;
     background-color: white;
     border-radius: 20px;
     box-shadow: 0px 0px 5px grey;
@@ -20,8 +19,8 @@
   }
   
   .form-container > mat-form-field {
-    width: 80%;
-    margin: 0 20px;
+    width: 40%;
+    margin: 0 5%;
     font-size: large;
   }
 
@@ -30,7 +29,9 @@
   }
   
   #registration {
-    width: 50%;
+    width: 40%;
+    margin: 0px 5%;
+    margin-bottom: 40px;
   }
   
   #back-to-login {

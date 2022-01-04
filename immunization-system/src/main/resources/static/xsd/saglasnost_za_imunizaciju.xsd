@@ -51,7 +51,7 @@
                                             <xs:complexType>
                                                 <xs:sequence>
                                                   <xs:element name="ulica" type="xs:string"/>
-                                                  <xs:element name="broj" type="xs:integer"/>
+                                                  <xs:element name="broj" type="xs:string"/>
                                                 </xs:sequence>
                                             </xs:complexType>
                                         </xs:element>
@@ -126,14 +126,17 @@
                                         <xs:element name="ime" type="xs:string"/>
                                         <xs:element name="prezime" type="xs:string"/>
                                         <xs:element name="telefon" type="t:TFiksniTelefon"/>
-
                                     </xs:sequence>
                                 </xs:complexType>
                             </xs:element>
                             <xs:element name="vakcine">
                                 <xs:complexType>
                                     <xs:sequence>
+<<<<<<< HEAD
                                         <xs:sequence minOccurs="0" maxOccurs="2">
+=======
+                                        <xs:sequence minOccurs="1" maxOccurs="unbounded">
+>>>>>>> develop
                                             <xs:element name="vakcina">
                                                 <xs:complexType>
                                                   <xs:sequence>

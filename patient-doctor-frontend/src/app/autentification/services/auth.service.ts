@@ -29,6 +29,10 @@ export class AuthService {
   public registerUser(userDetails: RegistrationDetails): Observable<void> {
     let headers = new HttpHeaders({'Content-Type': 'application/xml'});
 
+    let nazivDrzavljanstva = "";
+    if (userDetails.nazivDrzavljanstva != "") {
+      nazivDrzavljanstva = `<naziv_drzavljanstva>${userDetails.nazivDrzavljanstva}</naziv_drzavljanstva>`
+    }
     const xmlRegistration: string = 
     `<pacijent>
       <ime>${userDetails.ime}</ime>
@@ -41,6 +45,7 @@ export class AuthService {
       <pol>${userDetails.pol}</pol>
       <datum_rodjenja>${userDetails.datumRodjenja}</datum_rodjenja>
       <tip_drzavljanstva>${userDetails.drzavljanstvo}</tip_drzavljanstva>
+      ${nazivDrzavljanstva}
       <lokacija>${userDetails.opstina}</lokacija>
       <mesto_stanovanja>${userDetails.mestoStanovanja}</mesto_stanovanja>
       <mobilni_telefon>${userDetails.mobilniTelefon}</mobilni_telefon>

@@ -1,14 +1,13 @@
 package akatsuki.officialsystem.dao;
 
 import akatsuki.officialsystem.model.documents.IzvestajOImunizaciji;
+import akatsuki.officialsystem.model.users.Sluzbenik;
 import akatsuki.officialsystem.model.vaccine.Vaccine;
 import akatsuki.officialsystem.utils.modelmappers.IModelMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
-import java.util.Collection;
-import java.util.Locale;
-import java.util.Optional;
+import java.util.*;
 
 @Component
 @RequiredArgsConstructor
@@ -30,7 +29,13 @@ public class VaccineDAO implements IDao<Vaccine> {
 
     @Override
     public Collection<Vaccine> getAll() {
-        return null;
+        List<String> resourceContent = daoUtils.getResourcesByCollectionId(collectionId);
+        List<Vaccine> vaccines = new ArrayList<>();
+        for (String resource : resourceContent) {
+            Vaccine vaccine = mapper.convertToObject(resource);
+            vaccines.add(vaccine);
+        }
+        return vaccines;
     }
 
     @Override

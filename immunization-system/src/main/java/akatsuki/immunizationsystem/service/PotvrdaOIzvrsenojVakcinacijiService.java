@@ -63,7 +63,7 @@ public class PotvrdaOIzvrsenojVakcinacijiService {
 
         setLinkToThisDocument(potvrdaOVakcinaciji);
 
-//        decreaseAmountOfVaccine(potvrdaOVakcinaciji);
+        decreaseAmountOfVaccine(potvrdaOVakcinaciji);
 
         return potvrdaOVakcinacijiIDao.save(potvrdaOVakcinaciji);
     }

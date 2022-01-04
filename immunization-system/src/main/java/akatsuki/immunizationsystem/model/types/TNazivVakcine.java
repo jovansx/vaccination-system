@@ -1,5 +1,7 @@
 package akatsuki.immunizationsystem.model.types;
 
+import lombok.Getter;
+
 import javax.xml.bind.annotation.XmlEnum;
 import javax.xml.bind.annotation.XmlEnumValue;
 import javax.xml.bind.annotation.XmlType;
@@ -20,6 +22,8 @@ public enum TNazivVakcine {
     MODERNA("Moderna"),
     @XmlEnumValue("Bilo koja")
     BILO_KOJA("Bilo koja");
+
+    @Getter
     private final String value;
 
     TNazivVakcine(String v) {

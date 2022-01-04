@@ -14,6 +14,7 @@ import javax.xml.datatype.XMLGregorianCalendar;
         "pol",
         "datumRodjenja",
         "tipDrzavljanstva",
+        "nazivDrzavljanstva",
         "lokacija",
         "mestoStanovanja",
         "mobilniTelefon",
@@ -40,6 +41,9 @@ public class Pacijent extends Korisnik {
 
     @XmlElement(required = true, name = "tip_drzavljanstva")
     protected TipDrzavljanstva tipDrzavljanstva;
+
+    @XmlElement(name = "naziv_drzavljanstva")
+    protected String nazivDrzavljanstva;
 
     //    OVO JE OPSTINA
     @XmlElement(required = true)

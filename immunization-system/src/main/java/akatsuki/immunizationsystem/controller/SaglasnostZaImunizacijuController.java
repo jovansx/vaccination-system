@@ -23,8 +23,8 @@ public class SaglasnostZaImunizacijuController {
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public String createSaglasnostZaImunizaciju(@RequestBody String saglasnostXml) {
-        return saglasnostZaImunizacijuService.createSaglasnostZaImunizaciju(saglasnostXml);
+    public void createSaglasnostZaImunizaciju(@RequestBody String saglasnostXml) {
+        saglasnostZaImunizacijuService.createSaglasnostZaImunizaciju(saglasnostXml);
     }
 
     @PutMapping

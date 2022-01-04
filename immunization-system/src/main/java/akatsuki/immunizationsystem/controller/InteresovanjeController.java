@@ -20,7 +20,7 @@ public class InteresovanjeController {
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public String createInteresovanje(@RequestBody String interesovanjeXml) {
-        return interesovanjeService.createInteresovanje(interesovanjeXml);
+    public void createInteresovanje(@RequestBody String interesovanjeXml) {
+        interesovanjeService.createInteresovanje(interesovanjeXml);
     }
 }
