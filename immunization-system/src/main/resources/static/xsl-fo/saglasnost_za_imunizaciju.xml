@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<saglasnost_za_imunizaciju xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns="http://www.akatsuki.org/saglasnost_za_imunizaciju"
+    xmlns:t="http://www.akatsuki.org/tipovi"
+    xsi:schemaLocation="http://www.akatsuki.org saglasnost_za_imunizaciju.xsd
+    http://www.akatsuki.org/tipovi tipovi.xsd"
+    xmlns:pred="http://www.akatsuki.org/rdf/examples/predicate/"
+    about="http://www.akatsuki.org/saglasnosti/1510999800078_0">
+    <pacijent datum_popunjavanja="1999-10-15">
+        <drzavljanstvo>
+            <srpsko>
+                <id_broj property="pred:id_broj" datatype="xs:string">1510999800078</id_broj>
+            </srpsko>
+        </drzavljanstvo>
+        <prezime property="pred:prezime" datatype="xs:string">Buljevic</prezime>
+        <ime property="pred:ime" datatype="xs:string">Aleksandar</ime>
+        <ime_roditelja>Mladen</ime_roditelja>
+        <pol property="pred:pol" datatype="xs:string">Muski</pol>
+        <rodjenje>
+            <datum_rodjenja>1999-10-15</datum_rodjenja>
+            <mesto_rodjenja>Veternik</mesto_rodjenja>
+        </rodjenje>
+        <prebivaliste>
+            <adresa>
+                <ulica>Vladike Maksima</ulica>
+                <broj>69</broj>
+            </adresa>
+            <mesto_stanovanja>Veternik</mesto_stanovanja>
+            <opstina property="pred:lokacija" datatype="xs:string">Novi Sad</opstina>
+        </prebivaliste>
+        <fiksni_telefon>(021) 641-3876</fiksni_telefon>
+        <mobilni_telefon>0691782912</mobilni_telefon>
+        <email>abuljevic8@gmail.com</email>
+        <radni_status>student</radni_status>
+        <zanimanje>drugo</zanimanje>
+        <socijalna_zastita>
+            <korisnik>true</korisnik>
+        </socijalna_zastita>
+        <izjava_saglasnosti>
+            <saglasnost>true</saglasnost>
+            <naziv_leka>Aspirin</naziv_leka>
+        </izjava_saglasnosti>
+    </pacijent>
+    <evidencija_o_vakcinaciji>
+        <zdravstvena_ustanova>Veternik</zdravstvena_ustanova>
+        <vakcinacijski_punkt>2</vakcinacijski_punkt>
+        <lekar>
+            <ime>Jovan</ime>
+            <prezime>Simic</prezime>
+            <telefon>(021) 641-3876</telefon>
+        </lekar>
+        <vakcine>
+            <vakcina>
+                <naziv>Pfizer-BioNTech</naziv>
+                <datum_izdavanja>2021-09-09</datum_izdavanja>
+                <nacin_davanja>IM</nacin_davanja>
+                <ekstremitet>DR</ekstremitet>
+                <serija>238</serija>
+                <proizvodjac>Pfizer-BioNTech</proizvodjac>
+                <nezeljena_reakcija>Temperatura</nezeljena_reakcija>
+            </vakcina>
+            <kontraindikacije>
+                <datum_utvrdjivanja>2021-09-09</datum_utvrdjivanja>
+                <dijagnoza>Malaksalost</dijagnoza>
+            </kontraindikacije>
+            <odluka_komisije>true</odluka_komisije>
+        </vakcine>
+    </evidencija_o_vakcinaciji>
+</saglasnost_za_imunizaciju>

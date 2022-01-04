@@ -8,6 +8,7 @@ import akatsuki.immunizationsystem.exceptions.NotFoundRuntimeException;
 import akatsuki.immunizationsystem.model.appointments.Appointment;
 import akatsuki.immunizationsystem.model.documents.Interesovanje;
 import akatsuki.immunizationsystem.utils.MetadataExtractor;
+import akatsuki.immunizationsystem.utils.PdfTransformer;
 import akatsuki.immunizationsystem.utils.Validator;
 import akatsuki.immunizationsystem.utils.modelmappers.IModelMapper;
 import lombok.RequiredArgsConstructor;
@@ -30,6 +31,7 @@ public class InteresovanjeService {
     private final MetadataExtractor extractor;
     private final DaoUtils utils;
     private final EmailService emailService;
+    private final PdfTransformer pdfTransformer;
 
     private final IDao<Appointment> appointmentIDao;
     private final IModelMapper<Appointment> mapper2;
@@ -82,5 +84,13 @@ public class InteresovanjeService {
             return appointment;
         } catch (Exception ignored) {}
         return null;
+    }
+
+    public void generatePdf(String idBroj) {
+        try {
+            pdfTransformer.generatePDF();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 }
