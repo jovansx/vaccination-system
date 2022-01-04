@@ -8,6 +8,7 @@ import { PatientService } from 'src/app/services/patient.service';
 import { SaglasnostService } from 'src/app/services/saglasnost.service';
 import { ValidatorService } from 'src/app/services/validator.service';
 import { XmlConverterService } from 'src/app/services/xml-converter.service';
+import { ZahtevService } from 'src/app/services/zahtev.service';
 
 @Component({
   selector: 'app-patient-submit',
@@ -29,10 +30,18 @@ export class PatientSubmitComponent implements OnInit {
   patient: any;
   idBroj: string | null;
   evidencijaOVakcinaciji: string = "";
+  zahtevForm: FormGroup = new FormGroup({
+    razlogZahteva: new FormControl(''),
+    ime: new FormControl({value:"", disabled: true}),
+    prezime: new FormControl({value:"", disabled: true}),
+    lokacija: new FormControl({value:"", disabled: true}),
+    datumRodjenja: new FormControl({value:"", disabled: true}),
+    pol: new FormControl({value:"", disabled: true}),
+  });
 
   constructor(private _patient_service: PatientService, private _toastr: ToastrService, private _fb: FormBuilder,
               private _interesovanja_service: InteresovanjeService, private _xml_parser: XmlConverterService, private _jwt: JwtDecoderService,
-              public validator: ValidatorService, private _saglasnost_service: SaglasnostService) { 
+              public validator: ValidatorService, private _saglasnost_service: SaglasnostService, private _zahtev_service: ZahtevService) { 
     this.idBroj = this._jwt.getIdFromToken();
     this.interesovanjeForm = _fb.group({
       phizer: false,
@@ -209,6 +218,41 @@ export class PatientSubmitComponent implements OnInit {
     );
   }
 
+  public submitZahtev(): void {
+
+    const zahtevXml: string = 
+    `<?xml version="1.0" encoding="UTF-8"?>
+    <zahtev_za_sertifikat xmlns="http://www.akatsuki.org/zahtev_za_sertifikat"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xmlns:t="http://www.akatsuki.org/tipovi"
+        xmlns:pred="http://www.akatsuki.org/rdf/examples/predicate/"
+        xsi:schemaLocation="http://www.akatsuki.org zahtev_za_sertifikat.xsd
+        http://www.akatsuki.org/tipovi tipovi.xsd"
+        datum="${this._getCurrentDate()}" mesto="${this.patient.lokacija}"
+        odobren="false"
+        about="http://www.akatsuki.org/zahtevi/${this.idBroj}">
+        <podnosilac>
+            <t:ime property="pred:ime" datatype="xs:string">${this.patient.ime}</t:ime>
+            <t:prezime property="pred:prezime" datatype="xs:string">${this.patient.prezime}</t:prezime>
+            <t:id_broj property="pred:id_broj" datatype="xs:string">${this.idBroj}</t:id_broj>
+            <t:pol property="pred:pol" datatype="xs:string">${this.patient.pol}</t:pol>
+            <t:datum_rodjenja>${this.patient.datumRodjenja}</t:datum_rodjenja>
+        </podnosilac>
+        <razlog_podnosenja_zahteva>${this.zahtevForm.controls['razlogZahteva'].value}</razlog_podnosenja_zahteva>
+    </zahtev_za_sertifikat>
+    `;
+
+    this._zahtev_service.sendZahtev(zahtevXml).subscribe(
+      () => {
+        this._declareCurrentForm();
+        this._toastr.success("Uspesno ste podneli zahtev!");
+      }, 
+      (err: any) => {
+        this._toastr.error(convertResponseError(err), "Ne bi trebalo da se dogodi!")
+      }
+    );
+  }
+
   private _getPatientDetailsForInteresovanje(): void {
     this._patient_service.getPatientDetailsForInteresovanje().subscribe(
       (res: any) => {
@@ -272,6 +316,25 @@ export class PatientSubmitComponent implements OnInit {
     );
   }
 
+  private _getPatientDetailsForZahtev(): void {
+    this._patient_service.getPatientDetailsForZahtev().subscribe(
+      (res: any) => {
+        let response = this._xml_parser.parseXmlToObject(res);
+        this.patient = {
+          ime: response.IME[0],
+          prezime: response.PREZIME[0],
+          lokacija: response.LOKACIJA[0],
+          datumRodjenja: response.DATUMRODJENJA[0],
+          pol: response.POL[0]
+        }
+        this.zahtevForm.patchValue(this.patient);
+      }, 
+      (err: any) => {
+        this._toastr.error(convertResponseError(err), "Ne bi trebalo da se dogodi!")
+      }
+    );
+  }
+
   private _declareCurrentForm(): void {
     if (this.idBroj == null) return;
 
@@ -283,6 +346,8 @@ export class PatientSubmitComponent implements OnInit {
           this._getPatientDetailsForInteresovanje();
         else if (this.formType === "saglasnost-1" || this.formType === "saglasnost-2")
           this._getPatientDetailsForSaglasnost();
+        else if (this.formType === "zahtev") 
+          this._getPatientDetailsForZahtev();
       }, 
       (err: any) => {
         this._toastr.error(convertResponseError(err), "Ne bi trebalo da se dogodi!")

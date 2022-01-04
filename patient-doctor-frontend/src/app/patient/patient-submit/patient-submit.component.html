@@ -51,11 +51,36 @@
         <button class="send-btn" mat-flat-button color="primary" type="submit" [disabled]="!saglasnostForm.controls['saglasan'].value">Send</button>
     </form>
 
-    <div *ngIf="formType == 'zahtev'">
-        zahtev
-    </div>
-
-    
+    <form *ngIf="formType == 'zahtev'" class="content-container" [formGroup]="zahtevForm" (ngSubmit)="submitZahtev()" fxLayout="column" fxLayoutAlign="space-around center">
+        <h1>
+            Podnesite zahtev za zeleni sertifikat
+        </h1>
+        <mat-form-field appearance="fill">
+            <mat-label>Ime</mat-label>
+            <input matInput formControlName="ime"/>
+        </mat-form-field>
+        <mat-form-field appearance="fill">
+            <mat-label>Prezime</mat-label>
+            <input matInput formControlName="prezime"/>
+        </mat-form-field>
+        <mat-form-field appearance="fill">
+            <mat-label>Pol</mat-label>
+            <input matInput formControlName="pol"/>
+        </mat-form-field>
+        <mat-form-field appearance="fill">
+            <mat-label>Lokacija</mat-label>
+            <input matInput formControlName="lokacija"/>
+        </mat-form-field>
+        <mat-form-field appearance="fill">
+            <mat-label>Datum rodjenja</mat-label>
+            <input matInput formControlName="datumRodjenja"/>
+        </mat-form-field>
+        <mat-form-field class="example-full-width" appearance="fill">
+            <mat-label>Razlog podnosenja zahteva</mat-label>
+            <textarea matInput placeholder="Npr. Zelim zahtev jer eto" formControlName="razlogZahteva"></textarea>
+        </mat-form-field>
+        <button class="send-btn" mat-flat-button color="primary" type="submit">Send</button>
+    </form>
     <div *ngIf="formType == 'nista'">
         <h2>Trenutno nije moguce da podnesete bilo kakav dokument!</h2>
     </div>

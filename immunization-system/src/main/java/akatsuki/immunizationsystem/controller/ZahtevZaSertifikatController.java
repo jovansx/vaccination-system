@@ -18,7 +18,7 @@ public class ZahtevZaSertifikatController {
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public String createZahtevZaSertifikat(@RequestBody String zahtevXml) {
-        return zahtevZaSertifikatService.createZahtevZaSertifikat(zahtevXml);
+    public void createZahtevZaSertifikat(@RequestBody String zahtevXml) {
+        zahtevZaSertifikatService.createZahtevZaSertifikat(zahtevXml);
     }
 }

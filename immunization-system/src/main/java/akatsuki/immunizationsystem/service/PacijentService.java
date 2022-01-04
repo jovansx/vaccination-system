@@ -56,9 +56,8 @@ public class PacijentService {
         retVal = utils.execute("//*[text() = '" + idBroj + "']", "/db/vaccination-system/saglasnosti");
         if (retVal.size() == 0) return "saglasnost-1";
 
-        List<String> potvrde = new ArrayList<>();
+        List<String> potvrde = utils.execute("//*[text() = '" + idBroj + "']", "/db/vaccination-system/potvrde");
         if (retVal.size() == 1) {
-            potvrde = utils.execute("//*[text() = '" + idBroj + "']", "/db/vaccination-system/potvrde");
             if (potvrde.size() == 1) return "saglasnost-2";
             if (potvrde.size() == 0) return "nista";
         }
