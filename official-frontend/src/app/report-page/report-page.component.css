@@ -46,3 +46,16 @@ padding: 20px;
 .vaccine-doses h3 {
     text-decoration: underline;
 }
+
+.report-actions-panel {
+    background-color: #eee;
+    padding: 20px;
+}
+
+.p-50 {
+    padding: 50px;
+}
+
+.report-list {
+    background-color: white;
+}
