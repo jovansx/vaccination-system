@@ -1,7 +1,6 @@
 package akatsuki.immunizationsystem.dao;
 
 import akatsuki.immunizationsystem.config.DbConnection;
-import akatsuki.immunizationsystem.model.documents.SaglasnostZaImunizaciju;
 import org.springframework.stereotype.Component;
 import org.xmldb.api.DatabaseManager;
 import org.xmldb.api.base.Collection;

@@ -27,6 +27,11 @@ public class SaglasnostZaImunizacijuController {
         return saglasnostZaImunizacijuService.createSaglasnostZaImunizaciju(saglasnostXml);
     }
 
+    @PutMapping
+    public void updateSaglasnostZaImunizaciju(@RequestBody String saglasnostXml) {
+        saglasnostZaImunizacijuService.updateSaglasnostZaImunizaciju(saglasnostXml);
+    }
+
     @DeleteMapping("/{idBrojIndex}")
     public void deleteSaglasnostZaImunizaciju(@PathVariable String idBrojIndex) {
         saglasnostZaImunizacijuService.deleteSaglasnostZaImunizaciju(idBrojIndex);

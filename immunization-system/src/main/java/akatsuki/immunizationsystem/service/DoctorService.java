@@ -16,7 +16,7 @@ public class DoctorService {
 
 
     public String getBasicDocktorInfo(String doctorId) {
-        Doktor doktor =(Doktor) korisnikIDao.get(doctorId).get();
+        Doktor doktor = (Doktor) korisnikIDao.get(doctorId).get();
         return mapper.convertToXml(doktor);
     }
 }

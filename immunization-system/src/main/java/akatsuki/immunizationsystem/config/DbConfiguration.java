@@ -25,7 +25,7 @@ public class DbConfiguration {
     @Bean
     public CommandLineRunner populateDatabase(IDao<Korisnik> korisnikIDao, IDao<Appointment> appointmentIDao) {
         return (args) -> {
-            Doktor doktor1 = new Doktor("Promenada u Novom Sadu", 1,"1010998800071", "Nikola",
+            Doktor doktor1 = new Doktor("Promenada u Novom Sadu", 1, "1010998800071", "Nikola",
                     "Nikolic", "(021) 823-1111", "nikola@gmail.com", "$2a$12$CLdgTeAs50lbVLOBELp7yele07svd3/1nNGefNJ6Lb5Qx/08eBMFa", TipKorisnika.DOKTOR);
 
             DateFormat format = new SimpleDateFormat("yyyy-MM-dd");

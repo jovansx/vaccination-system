@@ -41,12 +41,14 @@ public class SaglasnostZaImunizacijuService {
     public String getSaglasnostByPatientId(String patientId) {
         String saglasnostXml = "";
         try {
-            saglasnostXml = getSaglasnostZaImunizaciju(patientId+"_2");
-        } catch (Exception ignored){}
-        if(saglasnostXml.equals("")){
+            saglasnostXml = getSaglasnostZaImunizaciju(patientId + "_2");
+        } catch (Exception ignored) {
+        }
+        if (saglasnostXml.equals("")) {
             try {
-                saglasnostXml = getSaglasnostZaImunizaciju(patientId+"_1");
-            } catch (Exception ignored){}
+                saglasnostXml = getSaglasnostZaImunizaciju(patientId + "_1");
+            } catch (Exception ignored) {
+            }
         }
         return saglasnostXml;
     }
@@ -71,7 +73,7 @@ public class SaglasnostZaImunizacijuService {
         SaglasnostZaImunizaciju saglasnostZaImunizaciju = saglasnostZaImunizacijuIDao.get(idBrojIndex).orElseThrow(() -> new NotFoundRuntimeException("Saglasnost sa id-jem " + idBrojIndex + " nije pronadjena."));
         saglasnostZaImunizacijuIDao.delete(saglasnostZaImunizaciju);
         appointmentService.setFirstAppointmentToObradjen();
-//   TODO RESETUJE TERMIN TOM PACIJENTU
+        System.out.println("DODAJ KOD ZA TERMIN");
     }
 
     public String createSaglasnostZaImunizaciju(String saglasnostXml) throws RuntimeException {
@@ -90,6 +92,22 @@ public class SaglasnostZaImunizacijuService {
         setLinkToThisDocument(saglasnostZaImunizaciju);
 
         return saglasnostZaImunizacijuIDao.save(saglasnostZaImunizaciju);
+    }
+
+    public void updateSaglasnostZaImunizaciju(String saglasnostXml) throws RuntimeException {
+        SaglasnostZaImunizaciju saglasnostZaImunizaciju = mapper.convertToObject(saglasnostXml);
+        if (saglasnostZaImunizaciju == null)
+            throw new BadRequestRuntimeException("Dokument koji ste poslali nije validan.");
+
+        String id = saglasnostZaImunizaciju.getPacijent().getIdBrojFromDrzavljanstvo();
+        if (digitalniSertifikatDAO.get(id).isPresent()) {
+            throw new BadRequestRuntimeException("Osobi sa id-jem " + id + " je vec izdat digitalni zeleni sertifikat");
+        }
+
+        if (saglasnostZaImunizaciju.getEvidencijaOVakcinaciji().getVakcine().getVakcina().size() == 1)
+            System.out.println("DODAJ KOD ZA TERMIN");
+
+        saglasnostZaImunizacijuIDao.update(saglasnostZaImunizaciju);
     }
 
     private void setLinkToThisDocument(SaglasnostZaImunizaciju saglasnostZaImunizaciju) {

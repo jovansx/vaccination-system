@@ -5,6 +5,7 @@ import { convertResponseError } from '../error-converter.function';
 import { AppointmentService } from '../services/appointment.service';
 import { DoctorService } from '../services/doctor.service';
 import { InteresovanjeService } from '../services/interesovanje.service';
+import { PotvrdaService } from '../services/potvrda.service';
 import { SaglasnostService } from '../services/saglasnost.service';
 import { ValidatorService } from '../services/validator.service';
 import { XmlConverterService } from '../services/xml-converter.service';
@@ -25,10 +26,10 @@ export class DoctorComponent implements OnInit {
     punkt: new FormControl({ value: '', disabled: true }, [Validators.required, Validators.pattern("[0-9]+")]),
 
     // 4 KOLONA
-    izaberiVakcinu: new FormControl({ value: '', disabled: false }, [Validators.required,]),
+    izaberiVakcinu: new FormControl({ value: 'a', disabled: false }, [Validators.required,]),
     datumIzdavanjaVakcine: new FormControl({ value: '', disabled: true }, [Validators.required,]),
-    nacinDavanjaVakcine: new FormControl({ value: '', disabled: false }, [Validators.required,]),
-    ekstremitetVakcine: new FormControl({ value: '', disabled: false }, [Validators.required,]),
+    nacinDavanjaVakcine: new FormControl({ value: 'IM', disabled: false }, [Validators.required,]),
+    ekstremitetVakcine: new FormControl({ value: 'DR', disabled: false }, [Validators.required,]),
     serijaVakcine: new FormControl({ value: '', disabled: false }, [Validators.required, Validators.pattern("[0-9]+")]),
     kontraindikacije: new FormControl({ value: '', disabled: false }, []),
     odlukaKomisije: new FormControl({ value: "", disabled: false }, [Validators.required]),
@@ -38,7 +39,6 @@ export class DoctorComponent implements OnInit {
     nacinDavanja: new FormControl({ value: '', disabled: true }, [Validators.required,]),
     ekstremitet: new FormControl({ value: '', disabled: true }, [Validators.required,]),
     izabranaVakcina: new FormControl({ value: '', disabled: true }, [Validators.required,]),
-
 
     // 1 KOLONA
     ime: new FormControl({ value: '', disabled: true }, [Validators.required,]),
@@ -65,13 +65,19 @@ export class DoctorComponent implements OnInit {
   });
 
   termin : String | undefined;
-  document : any;
+  document : any = undefined;
   doktor : any;
   firstVaccination : boolean = true;
   availableVaccines : string[] = [];
+  saglasnost : string | undefined;
+  sentDocumentsCounter : number = 0;
+  pacijentId : string | undefined;
+
+  serijaPrveVakcine : string = "";
 
   constructor( public validator: ValidatorService, private appointmentService: AppointmentService,
-    private saglasnostService : SaglasnostService, private interesovanjeService : InteresovanjeService,
+    private saglasnostService : SaglasnostService, private potvrdaService : PotvrdaService,
+    private interesovanjeService : InteresovanjeService,
       private _xml_parser: XmlConverterService,
       private doctorService : DoctorService, private _toastr: ToastrService) { 
     validator.setForm(this.vaccinattionForm);
@@ -92,29 +98,44 @@ export class DoctorComponent implements OnInit {
   }
 
   getCurrentAppointment() : void {
+    this.document = undefined;
+    this.termin = undefined;
     this.appointmentService.getCurrentAppointment().subscribe(
       (res: any) => {
-        if(res == null) {
-          this._toastr.info("Trenutno nema aktivnih termina!", "Attention!")
-          this.document = false
+        if(res == "") {
+          this._toastr.info("Trenutno nema aktivnih termina!", "Paznja!")
+          this.document = "Nema termina"
           return;
         }
         let response = this._xml_parser.parseXmlToObject(res);
-        let pacijentId = response.PACIJENT_ID[0];
+        this.pacijentId = response.PACIJENT_ID[0];
         let date : String = response.TERMIN[0];
         this.termin = date.substring(11, 16);
-        this.getCurrentSaglasnost(pacijentId);
+        this.getCurrentSaglasnost(this.pacijentId as string);
       },
       (err: any) => this._toastr.error(convertResponseError(err), "Don't exist!")
     );
   }
 
+  refresh() : void {
+    this.getCurrentAppointment();
+  }
+
     getCurrentSaglasnost(pacijentId : string) : void {
       this.saglasnostService.getCurrentSaglasnost(pacijentId).subscribe(
         (res: any) => {
+          if(res == "") {
+            this._toastr.info("Trenutno nema saglasnosti!", "Paznja!")
+            this.document = "Nema saglasnosti"
+            return;
+          }
+
+          this.saglasnost = res;
           this.document = this._xml_parser.parseXmlToObject(res);
-          if(this.document.EVIDENCIJA_O_VAKCINACIJI != undefined)
+          if(this.document.EVIDENCIJA_O_VAKCINACIJI != undefined) {
             this.firstVaccination = false;
+            this.getSerijuPrveVakcine();
+          }
           else
             this.getAvailableVaccines(pacijentId);
           this.setValues()
@@ -122,6 +143,15 @@ export class DoctorComponent implements OnInit {
         (err: any) => this._toastr.error(convertResponseError(err), "Don't exist!")
       );
     }
+
+  getSerijuPrveVakcine() {
+    this.potvrdaService.getSerijuPrveVakcine(this.pacijentId+"_1").subscribe(
+      (res: any) => {
+       this.serijaPrveVakcine = res;
+      },
+      (err: any) => this._toastr.error(convertResponseError(err), "Don't exist!")
+    );
+  }
 
   getAvailableVaccines(pacijentId : string) : void {
     this.interesovanjeService.getInteresovanje(pacijentId).subscribe(
@@ -134,6 +164,10 @@ export class DoctorComponent implements OnInit {
           else
             this.availableVaccines.push("Sputnik V");
         });
+        if(this.availableVaccines[0] === "Bilo koja")
+          this.vaccinattionForm.controls["izaberiVakcinu"].setValue("Pfizer-BioNTech");
+        else
+          this.vaccinattionForm.controls["izaberiVakcinu"].setValue(this.availableVaccines[0]);
       },
       (err: any) => this._toastr.error(convertResponseError(err), "Don't exist!")
     );
@@ -244,6 +278,179 @@ didntShowUp() : void {
     (err: any) => this._toastr.error(convertResponseError(err), "Don't exist!")
   );
 }
+
+getProizvodjac() : string {
+  if(this.vaccinattionForm.controls['izaberiVakcinu'].value === "Pfizer-BioNTech")
+    return "Americki proizvodjac";
+  else if(this.vaccinattionForm.controls['izaberiVakcinu'].value === "Sputnik V")
+    return "Ruski proizvodjac";
+  else if(this.vaccinattionForm.controls['izaberiVakcinu'].value === "Sinopharm")
+    return "Kineski proizvodjac";
+  else if(this.vaccinattionForm.controls['izaberiVakcinu'].value === "AstraZeneca")
+    return "Britanski proizvodjac";
+  else if(this.vaccinattionForm.controls['izaberiVakcinu'].value === "Moderna")
+    return "Britanski proizvodjac";
+  return ""
+}
+
+sendDocuments() : void {
+  if(this.vaccinattionForm.invalid){
+    this._toastr.info("Forma nije validno popunjena!", "Paznja!")
+    return;
+  }
+  let novaSaglasnost = "";
+  let odlukaKomisijeString = this.vaccinattionForm.controls['odlukaKomisije'].value === "DA" ? "true" : "false";
+  if(this.firstVaccination) {
+    let evidencija = `<evidencija_o_vakcinaciji>
+      <zdravstvena_ustanova>${this.vaccinattionForm.controls['zdravstvenaUstanova'].value}</zdravstvena_ustanova>
+      <vakcinacijski_punkt>${this.vaccinattionForm.controls['punkt'].value}</vakcinacijski_punkt>
+      <lekar>
+          <ime>${this.vaccinattionForm.controls['imeLekara'].value}</ime>
+          <prezime>${this.vaccinattionForm.controls['prezimeLekara'].value}</prezime>
+          <telefon>${this.vaccinattionForm.controls['fiksniTelefonLekara'].value}</telefon>
+      </lekar>
+      <vakcine>
+          <vakcina>
+              <naziv>${this.vaccinattionForm.controls['izaberiVakcinu'].value}</naziv>
+              <datum_izdavanja>${this.vaccinattionForm.controls['datumIzdavanjaVakcine'].value}</datum_izdavanja>
+              <nacin_davanja>${this.vaccinattionForm.controls['nacinDavanjaVakcine'].value}</nacin_davanja>
+              <ekstremitet>${this.vaccinattionForm.controls['ekstremitetVakcine'].value}</ekstremitet>
+              <serija>${this.vaccinattionForm.controls['serijaVakcine'].value}</serija>
+              <proizvodjac>${this.getProizvodjac()}</proizvodjac>
+              <nezeljena_reakcija>Temperatura</nezeljena_reakcija>
+          </vakcina>
+          <kontraindikacije>
+              <datum_utvrdjivanja>${this.vaccinattionForm.controls['datumIzdavanjaVakcine'].value}</datum_utvrdjivanja>
+              <dijagnoza>${this.vaccinattionForm.controls['kontraindikacije'].value}</dijagnoza>
+          </kontraindikacije>
+          <odluka_komisije>${odlukaKomisijeString}</odluka_komisije>
+      </vakcine>
+    </evidencija_o_vakcinaciji>
+    </saglasnost_za_imunizaciju>`;
+    novaSaglasnost = this.saglasnost?.replace("</saglasnost_za_imunizaciju>", evidencija) as string
+  } else {
+    let evidencija = `</vakcina>
+    <vakcina>
+      <naziv>${this.vaccinattionForm.controls['izabranaVakcina'].value}</naziv>
+      <datum_izdavanja>${this.vaccinattionForm.controls['datumIzdavanjaVakcine'].value}</datum_izdavanja>
+      <nacin_davanja>${this.vaccinattionForm.controls['nacinDavanjaVakcine'].value}</nacin_davanja>
+      <ekstremitet>${this.vaccinattionForm.controls['ekstremitetVakcine'].value}</ekstremitet>
+      <serija>${this.vaccinattionForm.controls['serijaVakcine'].value}</serija>
+      <proizvodjac>${this.getProizvodjac()}</proizvodjac>
+      <nezeljena_reakcija>Temperatura</nezeljena_reakcija>
+    </vakcina>
+  <kontraindikacije>
+    <datum_utvrdjivanja>${this.vaccinattionForm.controls['datumIzdavanjaVakcine'].value}</datum_utvrdjivanja>
+    <dijagnoza>${this.vaccinattionForm.controls['kontraindikacije'].value}</dijagnoza>
+  </kontraindikacije>
+  <odluka_komisije>${odlukaKomisijeString}</odluka_komisije>
+  </vakcine>
+  </evidencija_o_vakcinaciji>
+  </saglasnost_za_imunizaciju>`;
+    novaSaglasnost = this.saglasnost?.replace("</vakcina>", evidencija) as string
+  }
+  this.sendSaglasnost(novaSaglasnost);
+  
+  let novaPotvrda = "";
+
+  if(this.firstVaccination) {
+    novaPotvrda = `<?xml version="1.0" encoding="UTF-8"?>
+    <potvrda_o_vakcinaciji 
+        xmlns="http://www.akatsuki.org/potvrda_o_izvrsenoj_vakcinaciji"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xmlns:t="http://www.akatsuki.org/tipovi"
+        xsi:schemaLocation="http://www.akatsuki.org potvrda_o_izvrsenoj_vakcinaciji.xsd
+        http://www.akatsuki.org/tipovi tipovi.xsd"
+        datum_izdavanja="${this.vaccinattionForm.controls['datumIzdavanjaVakcine'].value}"
+        xmlns:pred="http://www.akatsuki.org/rdf/examples/predicate/"
+        about="http://www.akatsuki.org/potvrde/${this.pacijentId+"_1"}">
+        <primalac>
+            <t:ime property="pred:ime" datatype="xs:string">${this.vaccinattionForm.controls['ime'].value}</t:ime>
+            <t:prezime property="pred:prezime" datatype="xs:string">${this.vaccinattionForm.controls['prezime'].value}</t:prezime>
+            <t:id_broj property="pred:id_broj" datatype="xs:string">${this.vaccinattionForm.controls['idBroj'].value}</t:id_broj>
+            <t:pol property="pred:pol" datatype="xs:string">${this.capitalizeFirstLetter(this.vaccinattionForm.controls['pol'].value)}</t:pol>
+            <t:datum_rodjenja>${this.vaccinattionForm.controls['datumRodjenja'].value}</t:datum_rodjenja>
+        </primalac>
+        <primljene_vakcine>
+            <doza broj="1">
+                <datum_davanja>${this.vaccinattionForm.controls['datumIzdavanjaVakcine'].value}</datum_davanja>
+                <serija>${this.vaccinattionForm.controls['serijaVakcine'].value}</serija>
+            </doza>
+        </primljene_vakcine>
+        <zdravstvena_ustanova property="pred:zdravstvena_ustanova" datatype="xs:string">${this.vaccinattionForm.controls['zdravstvenaUstanova'].value}</zdravstvena_ustanova>
+        <naziv_vakcine property="pred:vakcina" datatype="xs:string">${this.vaccinattionForm.controls['izaberiVakcinu'].value}</naziv_vakcine>
+        <qr_code>url</qr_code>
+    </potvrda_o_vakcinaciji>`;
+  } else {
+    novaPotvrda = `<?xml version="1.0" encoding="UTF-8"?>
+    <potvrda_o_vakcinaciji 
+        xmlns="http://www.akatsuki.org/potvrda_o_izvrsenoj_vakcinaciji"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xmlns:t="http://www.akatsuki.org/tipovi"
+        xsi:schemaLocation="http://www.akatsuki.org potvrda_o_izvrsenoj_vakcinaciji.xsd
+        http://www.akatsuki.org/tipovi tipovi.xsd"
+        datum_izdavanja="${this.vaccinattionForm.controls['datumIzdavanjaVakcine'].value}"
+        xmlns:pred="http://www.akatsuki.org/rdf/examples/predicate/"
+        about="http://www.akatsuki.org/potvrde/${this.pacijentId+"_2"}">
+        <primalac>
+            <t:ime property="pred:ime" datatype="xs:string">${this.vaccinattionForm.controls['ime'].value}</t:ime>
+            <t:prezime property="pred:prezime" datatype="xs:string">${this.vaccinattionForm.controls['prezime'].value}</t:prezime>
+            <t:id_broj property="pred:id_broj" datatype="xs:string">${this.vaccinattionForm.controls['idBroj'].value}</t:id_broj>
+            <t:pol property="pred:pol" datatype="xs:string">${this.capitalizeFirstLetter(this.vaccinattionForm.controls['pol'].value)}</t:pol>
+            <t:datum_rodjenja>${this.vaccinattionForm.controls['datumRodjenja'].value}</t:datum_rodjenja>
+        </primalac>
+        <primljene_vakcine>
+            <doza broj="1">
+                <datum_davanja>${this.vaccinattionForm.controls['datumIzdavanja'].value}</datum_davanja>
+                <serija>${this.serijaPrveVakcine}</serija>
+            </doza>
+            <doza broj="1">
+                <datum_davanja>${this.vaccinattionForm.controls['datumIzdavanjaVakcine'].value}</datum_davanja>
+                <serija>${this.vaccinattionForm.controls['serijaVakcine'].value}</serija>
+            </doza>
+        </primljene_vakcine>
+        <zdravstvena_ustanova property="pred:zdravstvena_ustanova" datatype="xs:string">${this.vaccinattionForm.controls['zdravstvenaUstanova'].value}</zdravstvena_ustanova>
+        <naziv_vakcine property="pred:vakcina" datatype="xs:string">${this.vaccinattionForm.controls['izabranaVakcina'].value}</naziv_vakcine>
+        <qr_code>url</qr_code>
+    </potvrda_o_vakcinaciji>`;
+  }
+  console.log(novaPotvrda)
+  this.sendPotvrdu(novaPotvrda);
+  }
+
+  capitalizeFirstLetter(text : string) {
+    text = text.toLowerCase();
+    return text.charAt(0).toUpperCase() + text.slice(1);
+  }
+
+  sendPotvrdu(porvrda: string) {
+    this.potvrdaService.sendPotvrdu(porvrda).subscribe(
+      (res: any) => {
+        this.sentDocumentsCounter++;
+        if(this.sentDocumentsCounter == 2) {
+          this.sentDocumentsCounter = 0;
+          this.getCurrentAppointment();
+          this._toastr.success("You have successfully processed vaccination.", "Congratulations!")
+        }
+      },
+      (err: any) => this._toastr.error(convertResponseError(err), "Don't exist!")
+    );
+  }
+
+  sendSaglasnost(novaSaglasnost: string) : void {
+    this.saglasnostService.updateSaglasnost(novaSaglasnost).subscribe(
+      (res: any) => {
+        this.sentDocumentsCounter++;
+        if(this.sentDocumentsCounter == 2) {
+          this.sentDocumentsCounter = 0;
+          this.getCurrentAppointment();
+          this._toastr.success("You have successfully processed vaccination.", "Congratulations!")
+        }
+      },
+      (err: any) => this._toastr.error(convertResponseError(err), "Don't exist!")
+    );
+  }
+
 
 
 }

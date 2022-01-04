@@ -17,9 +17,14 @@ public class PotvrdaOIzvrsenojVakcinacijiController {
         return potvrdaOIzvrsenojVakcinacijiService.getPotvrdaOIzvrsenojVakcinaciji(idBrojDoza);
     }
 
+    @GetMapping("/serie-of-first-vacine/{idBrojDoza}")
+    public String getSerijuPrveVakcine(@PathVariable String idBrojDoza) {
+        return potvrdaOIzvrsenojVakcinacijiService.getSerijuPrveVakcine(idBrojDoza);
+    }
+
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public String createPotvrdaOIzvrsenojVakcinaciji(@RequestBody String potvrdaOIzvrsenojVakcinacijiXml) {
-        return potvrdaOIzvrsenojVakcinacijiService.createPotvrdaOIzvrsenojVakcinaciji(potvrdaOIzvrsenojVakcinacijiXml);
+    public void createPotvrdaOIzvrsenojVakcinaciji(@RequestBody String potvrdaOIzvrsenojVakcinacijiXml) {
+        potvrdaOIzvrsenojVakcinacijiService.createPotvrdaOIzvrsenojVakcinaciji(potvrdaOIzvrsenojVakcinacijiXml);
     }
 }

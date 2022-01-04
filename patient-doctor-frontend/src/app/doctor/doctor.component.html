@@ -6,7 +6,11 @@
 >
   <div class="wrapper-container">
     <div
-      *ngIf="document"
+      *ngIf="
+        document != undefined &&
+        document !== 'Nema termina' &&
+        document !== 'Nema saglasnosti'
+      "
       class="main-container"
       fxLayout="row"
       fxLayoutAlign="space-evenly start"
@@ -360,7 +364,7 @@
       </div>
     </div>
     <h1
-      *ngIf="!document"
+      *ngIf="document == undefined"
       style="
         text-align: center;
         margin-top: 300px;
@@ -372,7 +376,7 @@
       Ucitava se stranica ...
     </h1>
     <h1
-      *ngIf="document == false"
+      *ngIf="document === 'Nema termina'"
       style="
         text-align: center;
         margin-top: 300px;
@@ -381,7 +385,19 @@
         color: black;
       "
     >
-      Nema aktivnih vakcinacija ...
+      Nema termina
+    </h1>
+    <h1
+      *ngIf="document === 'Nema saglasnosti'"
+      style="
+        text-align: center;
+        margin-top: 300px;
+        margin-left: 100px;
+        margin-right: 100px;
+        color: black;
+      "
+    >
+      Nema saglasnosti za imunizaciju
     </h1>
   </div>
 
@@ -399,13 +415,29 @@
     </div>
     <div fxFlex fxLayout="row" f fxLayoutAlign="end center">
       <button
+        [disabled]="
+          document !== 'Nema saglasnosti' && document !== 'Nema termina'
+        "
+        style="margin-right: 24px; margin-bottom: 5px"
+        mat-raised-button
+        color="preimary"
+        (click)="refresh()"
+      >
+        Osvezi
+      </button>
+      <button
+        [disabled]="vaccinattionForm.invalid"
         style="margin-right: 24px; margin-bottom: 5px"
         mat-raised-button
         color="primary"
+        (click)="sendDocuments()"
       >
         Pojavio se
       </button>
       <button
+        [disabled]="
+          document === 'Nema saglasnosti' || document === 'Nema termina'
+        "
         style="margin-right: 24px; margin-bottom: 5px"
         mat-raised-button
         color="warn"

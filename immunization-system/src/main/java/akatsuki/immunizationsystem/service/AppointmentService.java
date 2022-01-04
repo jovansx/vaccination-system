@@ -18,6 +18,8 @@ public class AppointmentService {
     public String getCurrentAppointment() {
         List<Appointment> appointmentList = (List<Appointment>) appointmentIDao.getAll();
         appointmentList = appointmentList.stream().filter(a -> !a.isObradjeno()).collect(Collectors.toList());
+        if (appointmentList.size() == 0)
+            return "";
         return mapper.convertToXml(appointmentList.get(0));
     }
 
