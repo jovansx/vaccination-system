@@ -1,0 +1,18 @@
+div {
+    height: 90vh;
+    overflow-y: auto;
+    overflow-x: hidden;
+    flex-wrap: wrap;
+    background-color: var(--light-grey);
+
+}
+
+app-document-card {
+    margin: 20px;
+    box-shadow: 0px 0px 10px black;
+}
+
+app-document-card:hover {
+    transform: scale(1.05);
+    box-shadow: 0px 0px 20px black;
+}
