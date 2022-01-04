@@ -1,6 +1,5 @@
 package akatsuki.immunizationsystem.service;
 
-import akatsuki.immunizationsystem.dao.DaoUtils;
 import akatsuki.immunizationsystem.dao.IDao;
 import akatsuki.immunizationsystem.exceptions.BadRequestRuntimeException;
 import akatsuki.immunizationsystem.exceptions.ConflictRuntimeException;
@@ -8,30 +7,23 @@ import akatsuki.immunizationsystem.exceptions.NotFoundRuntimeException;
 import akatsuki.immunizationsystem.model.appointments.Appointment;
 import akatsuki.immunizationsystem.model.documents.Interesovanje;
 import akatsuki.immunizationsystem.utils.MetadataExtractor;
+import akatsuki.immunizationsystem.utils.PdfTransformer;
 import akatsuki.immunizationsystem.utils.Validator;
 import akatsuki.immunizationsystem.utils.modelmappers.IModelMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
-import javax.xml.datatype.DatatypeFactory;
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.GregorianCalendar;
-import java.util.List;
-
 @Service
 @RequiredArgsConstructor
 public class InteresovanjeService {
     private final IDao<Interesovanje> interesovanjeDAO;
-
     private final Validator validator;
     private final IModelMapper<Interesovanje> mapper;
     private final MetadataExtractor extractor;
     private final EmailService emailService;
+    private final PdfTransformer pdfTransformer;
 
-    private AppointmentService appointmentService;
+    private final AppointmentService appointmentService;
 
 
     public String getInteresovanje(String idBroj) throws RuntimeException {
@@ -65,5 +57,13 @@ public class InteresovanjeService {
         interesovanje.setHref("http://www.akatsuki.org/saglasnosti/" + referencedObjectId);
 
         interesovanjeDAO.save(interesovanje);
+    }
+
+    public void generatePdf(String idBroj) {
+        try {
+            pdfTransformer.generatePDF();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 }

@@ -8,6 +8,7 @@ import akatsuki.immunizationsystem.model.appointments.Appointment;
 import akatsuki.immunizationsystem.model.documents.Interesovanje;
 import akatsuki.immunizationsystem.model.documents.SaglasnostZaImunizaciju;
 import akatsuki.immunizationsystem.utils.MetadataExtractor;
+import akatsuki.immunizationsystem.utils.PdfTransformer;
 import akatsuki.immunizationsystem.utils.Validator;
 import akatsuki.immunizationsystem.utils.modelmappers.IModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,10 +22,10 @@ public class SaglasnostZaImunizacijuService {
     private Validator validator;
     private IModelMapper<SaglasnostZaImunizaciju> mapper;
     private IModelMapper<Interesovanje> interesovanjeIModelMapper;
-
     private MetadataExtractor extractor;
     private InteresovanjeService interesovanjeService;
     private PotvrdaOIzvrsenojVakcinacijiService potvrdaOIzvrsenojVakcinacijiService;
+    private PdfTransformer pdfTransformer;
     private AppointmentService appointmentService;
 
     private EmailService emailService;
@@ -33,8 +34,8 @@ public class SaglasnostZaImunizacijuService {
     public void setValidator(Validator validator, ISaglasnostZaImunizacijuDAO saglasnostZaImunizacijuIDao, DigitalniSertifikatDAO digitalniSertifikatDAO,
                              IModelMapper<SaglasnostZaImunizaciju> mapper, IModelMapper<Interesovanje> interesovanjeIModelMapper, MetadataExtractor extractor,
                              InteresovanjeService interesovanjeService,
-                             @Lazy PotvrdaOIzvrsenojVakcinacijiService potvrdaOIzvrsenojVakcinacijiService,
-                             AppointmentService appointmentService, EmailService emailService) {
+                             AppointmentService appointmentService, EmailService emailService,
+                             @Lazy PotvrdaOIzvrsenojVakcinacijiService potvrdaOIzvrsenojVakcinacijiService, PdfTransformer pdfTransformer) {
         this.saglasnostZaImunizacijuIDao = saglasnostZaImunizacijuIDao;
         this.digitalniSertifikatDAO = digitalniSertifikatDAO;
         this.validator = validator;
@@ -42,6 +43,7 @@ public class SaglasnostZaImunizacijuService {
         this.extractor = extractor;
         this.interesovanjeService = interesovanjeService;
         this.potvrdaOIzvrsenojVakcinacijiService = potvrdaOIzvrsenojVakcinacijiService;
+        this.pdfTransformer = pdfTransformer;
         this.appointmentService = appointmentService;
         this.emailService = emailService;
         this.interesovanjeIModelMapper = interesovanjeIModelMapper;
@@ -148,4 +150,11 @@ public class SaglasnostZaImunizacijuService {
         saglasnostZaImunizacijuIDao.update(saglasnostZaImunizaciju);
     }
 
+    public void generatePdf(String idBroj) {
+        try {
+            pdfTransformer.generatePDF();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
 }

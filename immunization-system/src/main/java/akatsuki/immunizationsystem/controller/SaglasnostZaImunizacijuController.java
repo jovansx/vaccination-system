@@ -27,6 +27,11 @@ public class SaglasnostZaImunizacijuController {
         saglasnostZaImunizacijuService.createSaglasnostZaImunizaciju(saglasnostXml);
     }
 
+    @GetMapping("/pdf/{idBroj}")
+    public void getSaglasnostPdf(@PathVariable String idBroj) {
+        saglasnostZaImunizacijuService.generatePdf(idBroj);
+    }
+
     @PutMapping
     public void updateSaglasnostZaImunizaciju(@RequestBody String saglasnostXml) {
         saglasnostZaImunizacijuService.updateSaglasnostZaImunizaciju(saglasnostXml);

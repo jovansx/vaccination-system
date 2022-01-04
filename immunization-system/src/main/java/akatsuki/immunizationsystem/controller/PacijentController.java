@@ -1,9 +1,6 @@
 package akatsuki.immunizationsystem.controller;
 
-import akatsuki.immunizationsystem.dtos.AktivnaFormaDTO;
-import akatsuki.immunizationsystem.dtos.PacijentInteresovanjeDTO;
-import akatsuki.immunizationsystem.dtos.PacijentSaglasnostDTO;
-import akatsuki.immunizationsystem.dtos.PacijentZahtevDTO;
+import akatsuki.immunizationsystem.dtos.*;
 import akatsuki.immunizationsystem.model.documents.SaglasnostZaImunizaciju;
 import akatsuki.immunizationsystem.model.users.Pacijent;
 import akatsuki.immunizationsystem.service.PacijentService;
@@ -11,6 +8,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("/api/pacijenti")
@@ -47,5 +46,13 @@ public class PacijentController {
     public PacijentZahtevDTO getDetailsForZahtev(@PathVariable String idBroj) {
         Pacijent pacijent = pacijentService.getPacijent(idBroj);
         return new PacijentZahtevDTO(pacijent);
+    }
+
+    @GetMapping(value = "/moji-dokumenti/{idBroj}", produces = MediaType.APPLICATION_XML_VALUE)
+    public PacijentDokumentiDTO getPatientDocuments(@PathVariable String idBroj) {
+        PacijentDokumentiDTO dto = new PacijentDokumentiDTO();
+        List<DokumentIdDTO> dokumenti = pacijentService.getPatientDocuments(idBroj);
+        dto.setDokumenti(dokumenti);
+        return dto;
     }
 }

@@ -17,10 +17,14 @@ public class InteresovanjeController {
         return interesovanjeService.getInteresovanje(idBroj);
     }
 
-
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     public void createInteresovanje(@RequestBody String interesovanjeXml) {
         interesovanjeService.createInteresovanje(interesovanjeXml);
+    }
+
+    @GetMapping("/pdf/{idBroj}")
+    public void getInteresovanjePdf(@PathVariable String idBroj) {
+        interesovanjeService.generatePdf(idBroj);
     }
 }

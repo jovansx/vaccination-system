@@ -19,6 +19,7 @@ import { RegistrationComponent } from './registration/registration.component';
 import { HeaderComponent } from './header/header.component';
 import { PatientSubmitComponent } from './patient/patient-submit/patient-submit.component';
 import { PatientDocumentsComponent } from './patient/patient-documents/patient-documents.component';
+import { DocumentCardComponent } from './utils/document-card/document-card.component';
 import { DoctorComponent } from './doctor/doctor.component';
 
 @NgModule({
@@ -28,6 +29,8 @@ import { DoctorComponent } from './doctor/doctor.component';
     RegistrationComponent,
     PatientDocumentsComponent,
     HeaderComponent,
+    PatientSubmitComponent,
+    DocumentCardComponent,
     PatientSubmitComponent,
     DoctorComponent
   ],
