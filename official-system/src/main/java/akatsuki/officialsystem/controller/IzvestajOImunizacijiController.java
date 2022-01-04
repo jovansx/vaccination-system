@@ -22,4 +22,9 @@ public class IzvestajOImunizacijiController {
     public String createIzvestajOImunizaciji(@RequestBody String izvestajOImunizacijiXml) {
         return izvestajOImunizacijiService.createIzvestajOImunizaciji(izvestajOImunizacijiXml);
     }
+
+    @GetMapping
+    public String getAll() {
+        return izvestajOImunizacijiService.getAll();
+    }
 }
