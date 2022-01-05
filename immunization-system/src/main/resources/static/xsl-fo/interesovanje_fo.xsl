@@ -7,58 +7,122 @@
     <xsl:template match="/">
         <fo:root>
             <fo:layout-master-set>
-                <fo:simple-page-master master-name="bookstore-page">
-                    <fo:region-body margin="0.75in"/>
+                <fo:simple-page-master
+                        master-name="interesovanje"
+                        page-height="29.7cm"
+                        page-width="21cm"
+                        margin-top="2.5cm"
+                        margin-bottom="2cm"
+                        margin-left="2cm"
+                        margin-right="2cm">
+                    <fo:region-body/>
                 </fo:simple-page-master>
             </fo:layout-master-set>
             
-            <fo:page-sequence master-reference="bookstore-page">
+            <fo:page-sequence master-reference="interesovanje">
                 <fo:flow flow-name="xsl-region-body">
-                    <fo:block font-family="sans-serif" font-size="24px" font-weight="bold" padding="20px" text-align="center">
-                        Interesovanje
+                    <fo:block font-family="sans-serif" font-size="15px" font-weight="bold" padding="20px" text-align="center">
+                        Iskazivanje interesovanja za vakcinisanje protiv COVID-19
                     </fo:block>
-                    <fo:block text-indent="20px" font-size="14px" padding="10px">
-                       Podnosilac interesovanja:
-                        <fo:inline font-weight="bold">
-                            <xsl:value-of select="//i:podnosilac/t:ime"/>
-                            <xsl:value-of select="concat(' ', //i:podnosilac/t:prezime)"/>
-                        </fo:inline>
+                    <xsl:if test="//i:drzavljanstvo/text() = 'srpsko'">
+                        <fo:block  font-size="13px" padding="10px">
+                            Drzavljanstvo:
+                            <fo:inline font-weight="bold">Drzavljanin Republike Srbije</fo:inline>
+                        </fo:block>
+                    </xsl:if>
+                    <xsl:if test="//i:drzavljanstvo/text() = 'strano sa boravkom'">
+                        <fo:block  font-size="13px" padding="10px">
+                            Drzavljanstvo:
+                            <fo:inline font-weight="bold">Strani drzavljanin sa boravkom u RS</fo:inline>
+                        </fo:block>
+                    </xsl:if>
+                    <xsl:if test="//i:drzavljanstvo/text() = 'strano bez boravka'">
+                        <fo:block  font-size="13px" padding="10px">
+                            Drzavljanstvo:
+                            <fo:inline font-weight="bold">Strani drzavljanin bez boravka u RS</fo:inline>
+                        </fo:block>
+                    </xsl:if>
+                    <xsl:choose>
+                        <xsl:when test="string-length(//t:id_broj/text()) = 13">
+                            <fo:block font-family="sans-serif" font-size="13px" padding="10px">
+                                JMBG:
+                                <fo:inline font-weight="bold">
+                                    <xsl:value-of select="concat(' ', //t:id_broj)"/>
+                                </fo:inline>
+                            </fo:block>
+                        </xsl:when>
+                        <xsl:otherwise>
+                            <fo:block font-family="sans-serif" font-size="13px" padding="10px">
+                                Broj pasosa:
+                                <fo:inline font-weight="bold">
+                                    <xsl:value-of select="concat(' ', //t:id_broj)"/>
+                                </fo:inline>
+                            </fo:block>
+                        </xsl:otherwise>
+                    </xsl:choose>
+                    <fo:block  font-size="13px" padding="10px">
+                       Ime:
+                        <fo:inline font-weight="bold"><xsl:value-of select="//i:podnosilac/t:ime"/></fo:inline>
                     </fo:block>
-                    <fo:block text-indent="20px" font-size="14px" padding="10px">
+                    <fo:block  font-size="13px" padding="10px">
+                        Prezime:
+                        <fo:inline font-weight="bold"><xsl:value-of select="concat(' ', //i:podnosilac/t:prezime)"/></fo:inline>
+                    </fo:block>
+                    <fo:block  font-size="13px" padding="10px">
                         Adresa elektronske poste:
                         <fo:inline font-weight="bold">
                             <xsl:value-of select="//i:podnosilac/t:email"/>
                         </fo:inline>
                     </fo:block>
-                    <fo:block text-indent="20px" font-size="14px" padding="10px">
-                        Mobilni telefon:
+                    <fo:block  font-size="13px" padding="10px">
+                        Broj mobilnog telefona (navesti broj u formatu 06X... bez razmaka i crtica):
                         <fo:inline font-weight="bold">
                             <xsl:value-of select="//i:podnosilac/t:mobilni_telefon"/>
                         </fo:inline>
                     </fo:block>
-                    <fo:block text-indent="20px" font-size="14px" padding="10px">
-                        Fiksni telefon:
+                    <fo:block  font-size="13px" padding="10px">
+                        Broj fiksnog telefona (navesti broj u formatu (DDD) DDD-DDD):
                         <fo:inline font-weight="bold">
                             <xsl:value-of select="//i:podnosilac/t:fiksni_telefon"/>
                         </fo:inline>
                     </fo:block>
-                    <fo:block text-indent="20px" font-size="14px" padding="10px">
+                    <fo:block  font-size="13px" padding="10px">
                         Lokacija:
                         <fo:inline font-weight="bold">
                             <xsl:value-of select="//i:podnosilac/t:lokacija"/>
                         </fo:inline>
                     </fo:block>
-                    <fo:block font-family="sans-serif" font-size="20px" padding="20px">
-                        Zahtevane vakcine:
+                    <fo:block font-family="sans-serif" font-size="13px" padding="20px">
+                        Iskazujem interesovanje da primim iskljucivo vakcinu sledecih proizvodjaca za koji Agencija
+                        za lekove i medicinska sredstva potvrdi bezbednost, efikasnost i kvalitet i izda dozvolu za upotrebu leka:
                     </fo:block>
                     <xsl:for-each select="//i:vakcine/i:vakcina">
-                        <fo:block font-size="14px" text-indent="40px" padding="5px">
-                            -
-                            <fo:inline font-weight="bold">
-                                <xsl:value-of select="@nazivVakcine"/>
-                            </fo:inline>
+                        <fo:block font-size="13px" text-indent="40px" padding="2px" margin="0">
+                            <fo:inline font-weight="bold"><xsl:value-of select="@nazivVakcine"/></fo:inline>
                         </fo:block>
                     </xsl:for-each>
+                    <fo:block font-family="sans-serif" font-size="13px" padding="20px">
+                        Da li ste dobrovoljni davalac krvi:
+                    </fo:block>
+                    <xsl:choose>
+                        <xsl:when test="//i:dobrovoljni_davalac_krvi = true()">
+                            <fo:block font-size="13px" text-indent="40px" padding="2px" margin="0">
+                                <fo:inline font-weight="bold">Da</fo:inline>
+                            </fo:block>
+                        </xsl:when>
+                        <xsl:otherwise>
+                            <fo:block font-size="13px" text-indent="40px" padding="2px" margin="0">
+                                <fo:inline font-weight="bold">Ne</fo:inline>
+                            </fo:block>
+                        </xsl:otherwise>
+                    </xsl:choose>
+                    <fo:block-container>
+                        <fo:block-container width="40%" left="60%" top="0in" position="absolute">
+                            <fo:block font-family="sans-serif" font-size="12px" text-align="center" linefeed-treatment="preserve" margin="0" border-top="1px solid black">
+                                Potpis
+                            </fo:block>
+                        </fo:block-container>
+                    </fo:block-container>
                 </fo:flow>
             </fo:page-sequence>
         </fo:root>
