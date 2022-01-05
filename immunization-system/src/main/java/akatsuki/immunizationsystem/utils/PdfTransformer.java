@@ -21,9 +21,9 @@ public class PdfTransformer {
 
     private final FopFactory fopFactory;
     private final TransformerFactory transformerFactory;
-    public static final String INPUT_FILE = "classpath:static/xsl-fo/potvrda.xml";
-    public static final String XSL_FILE = "classpath:static/xsl-fo/potvrda_fo.xsl";
-    public static final String OUTPUT_FILE = "src/main/resources/static/xsl-fo/potvrda.pdf";
+    public static final String INPUT_FILE = "classpath:static/xsl-fo/zahtev.xml";
+    public static final String XSL_FILE = "classpath:static/xsl-fo/zahtev_fo.xsl";
+    public static final String OUTPUT_FILE = "src/main/resources/static/xsl-fo/zahtev.pdf";
     public static final String FOX_XCONF = "classpath:static/xsl-fo/fop.xconf";
 
     public PdfTransformer() throws SAXException, IOException {
