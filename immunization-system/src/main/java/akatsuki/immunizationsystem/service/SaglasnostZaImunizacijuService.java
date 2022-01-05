@@ -153,11 +153,6 @@ public class SaglasnostZaImunizacijuService {
     }
 
     public ByteArrayInputStream generatePdf(String idBrojIndex) {
-        try {
-            return pdfTransformer.generatePDF(getSaglasnostZaImunizaciju(idBrojIndex), SaglasnostZaImunizaciju.class);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        return null;
+        return pdfTransformer.generatePDF(getSaglasnostZaImunizaciju(idBrojIndex), SaglasnostZaImunizaciju.class);
     }
 }

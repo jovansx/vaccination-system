@@ -5,11 +5,15 @@ import akatsuki.immunizationsystem.exceptions.BadRequestRuntimeException;
 import akatsuki.immunizationsystem.exceptions.ConflictRuntimeException;
 import akatsuki.immunizationsystem.exceptions.NotFoundRuntimeException;
 import akatsuki.immunizationsystem.model.documents.DigitalniSertifikat;
+import akatsuki.immunizationsystem.model.documents.Interesovanje;
 import akatsuki.immunizationsystem.utils.MetadataExtractor;
+import akatsuki.immunizationsystem.utils.PdfTransformer;
 import akatsuki.immunizationsystem.utils.Validator;
 import akatsuki.immunizationsystem.utils.modelmappers.IModelMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+
+import java.io.ByteArrayInputStream;
 
 @Service
 @RequiredArgsConstructor
@@ -19,6 +23,7 @@ public class DigitalniSertifikatService {
     private final IModelMapper<DigitalniSertifikat> mapper;
     private final MetadataExtractor extractor;
     private final ZahtevZaSertifikatService zahtevZaSertifikatService;
+    private final PdfTransformer pdfTransformer;
 
     public String getDigitalniSertifikat(String idBroj) throws RuntimeException {
         if (!validator.isIdValid(idBroj))
@@ -45,10 +50,12 @@ public class DigitalniSertifikatService {
     }
 
     private void setLinkToThisDocument(DigitalniSertifikat digitalniSertifikat) {
-//        potvrdaOIzvrsenojVakcinacijiService.getPotvrdaOIzvrsenojVakcinaciji(
-//                    zahtevZaSertifikat.getPodnosilac().getIdBroj().getValue() + "_2");
         zahtevZaSertifikatService.setReference(digitalniSertifikat.getPrimalac().getIdBroj().getValue(),
                 digitalniSertifikat.getPrimalac().getIdBroj().getValue());
+    }
+
+    public ByteArrayInputStream generatePdf(String idBroj) {
+        return pdfTransformer.generatePDF(getDigitalniSertifikat(idBroj), DigitalniSertifikat.class);
     }
 
 }

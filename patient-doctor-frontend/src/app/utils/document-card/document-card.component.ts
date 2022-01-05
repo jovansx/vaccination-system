@@ -26,12 +26,14 @@ export class DocumentCardComponent implements OnInit {
       return "interesovanja";
     else if(this.dokument.NAZIVDOKUMENTA[0] === "Saglasnost o imunizaciji 1" || this.dokument.NAZIVDOKUMENTA[0] === "Saglasnost o imunizaciji 2")
       return "saglasnosti";
-    // TODO dodati ostale dokumente
-    return "";
+    else if(this.dokument.NAZIVDOKUMENTA[0] === "Potvrda o vakcinaciji 1" || this.dokument.NAZIVDOKUMENTA[0] === "Potvrda o vakcinaciji 2")
+      return "potvrde";
+    else if(this.dokument.NAZIVDOKUMENTA[0] === "Zahtev za sertifikat")
+      return "zahtevi";
+    return "digitalni-sertifikati";
   }
 
   displayDocument() : void {
-    console.log(this.dokument)
     window.open(`${env.apiUrl}/${this.getTypeOfDocument()}/pdf/${this.dokument.IDDOKUMENTA}`, "_blank")
   }
 

@@ -4,6 +4,7 @@ import akatsuki.immunizationsystem.dao.IDao;
 import akatsuki.immunizationsystem.exceptions.BadRequestRuntimeException;
 import akatsuki.immunizationsystem.exceptions.ConflictRuntimeException;
 import akatsuki.immunizationsystem.exceptions.NotFoundRuntimeException;
+import akatsuki.immunizationsystem.model.documents.Interesovanje;
 import akatsuki.immunizationsystem.model.documents.PotvrdaOVakcinaciji;
 import akatsuki.immunizationsystem.model.vaccine.VaccineType;
 import akatsuki.immunizationsystem.utils.MetadataExtractor;
@@ -14,6 +15,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
+import java.io.ByteArrayInputStream;
 import java.util.stream.Stream;
 
 @Service
@@ -75,8 +77,8 @@ public class PotvrdaOIzvrsenojVakcinacijiService {
 
         int dozesSize = potvrdaOVakcinaciji.getPrimljeneVakcine().getDoza().size();
 
-        restTemplate.put("http://localhost:8083/api/vakcine/" + vaccine.name() + "/" +
-                potvrdaOVakcinaciji.getPrimljeneVakcine().getDoza().get(dozesSize - 1).getSerija(), null);
+//        restTemplate.put("http://localhost:8083/api/vakcine/" + vaccine.name() + "/" +
+//                potvrdaOVakcinaciji.getPrimljeneVakcine().getDoza().get(dozesSize - 1).getSerija(), null);
     }
 
     private void setLinkToThisDocument(PotvrdaOVakcinaciji potvrdaOVakcinaciji) {
@@ -104,11 +106,7 @@ public class PotvrdaOIzvrsenojVakcinacijiService {
         potvrdaOVakcinacijiIDao.save(potvrdaOVakcinaciji);
     }
 
-    public void generatePdf(String idBroj) {
-        try {
-//            pdfTransformer.generatePDF();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+    public ByteArrayInputStream generatePdf(String idBroj) {
+        return pdfTransformer.generatePDF(getPotvrdaOIzvrsenojVakcinaciji(idBroj), PotvrdaOVakcinaciji.class);
     }
 }

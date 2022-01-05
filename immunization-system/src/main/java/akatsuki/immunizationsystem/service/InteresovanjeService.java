@@ -62,11 +62,6 @@ public class InteresovanjeService {
     }
 
     public ByteArrayInputStream generatePdf(String idBroj) {
-        try {
-            return pdfTransformer.generatePDF(getInteresovanje(idBroj), Interesovanje.class);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        return null;
+        return pdfTransformer.generatePDF(getInteresovanje(idBroj), Interesovanje.class);
     }
 }
