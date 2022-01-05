@@ -16,7 +16,7 @@ export class DocumentCardComponent implements OnInit {
 
   @Input()
   dokument: any;
-  constructor(private interesovanjeService : InteresovanjeService, private _toastr: ToastrService, private _xml_parser: XmlConverterService) { }
+  constructor() { }
 
   ngOnInit(): void {
   }
@@ -33,12 +33,12 @@ export class DocumentCardComponent implements OnInit {
     return "digitalni-sertifikati";
   }
 
-  displayDocument() : void {
+  displayPdf() : void {
     window.open(`${env.apiUrl}/${this.getTypeOfDocument()}/pdf/${this.dokument.IDDOKUMENTA}`, "_blank")
   }
 
-  downloadDocument() : void {
-    console.log("1")
+  displayHtml() : void {
+    window.open(`${env.apiUrl}/${this.getTypeOfDocument()}/xhtml/${this.dokument.IDDOKUMENTA}`, "_blank")
   }
 
 }

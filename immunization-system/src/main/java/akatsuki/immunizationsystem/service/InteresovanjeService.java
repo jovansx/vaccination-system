@@ -67,7 +67,7 @@ public class InteresovanjeService {
         return pdfTransformer.generatePDF(getInteresovanje(idBroj), Interesovanje.class);
     }
 
-    public void generateXhtml() {
-        htmlTransformer.generateHTML();
+    public ByteArrayInputStream generateXhtml(String idBroj) {
+        return htmlTransformer.generateHTML(getInteresovanje(idBroj), Interesovanje.class);
     }
 }
