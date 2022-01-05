@@ -148,10 +148,20 @@
                         </fo:inline>
                     </fo:block>
                     <fo:block font-family="sans-serif" color="gray" font-size="12px" text-align="right">Zdravstvena ustanova / Medical institution</fo:block>
-                    <fo:block font-family="sans-serif" font-size="13px" padding="5px" margin-top="10px">Ova potvrda vazi bez potpisa i pecata</fo:block>
-                    <fo:block font-family="sans-serif" color="gray" font-size="12px">
-                        Ova potvrda vazi bez potpisa i pecata / This certification is valid without signatures and seals
-                    </fo:block>
+                    <fo:block-container>
+                        <fo:block-container width="75%" left="0in" top="0in" position="absolute">
+                            <fo:block font-family="sans-serif" font-size="11px" padding="5px" margin-top="90px">Ova potvrda vazi bez potpisa i pecata</fo:block>
+                            <fo:block font-family="sans-serif" color="gray" font-size="10px">
+                                Ova potvrda vazi bez potpisa i pecata / This certification is valid without signatures and seals
+                            </fo:block>
+                        </fo:block-container>
+                        <fo:block-container width="25%" left="75%" top="0in" position="absolute">
+                            <fo:block>
+                                <xsl:variable name="qrcode" select="//p:qr_code/text()"/>
+                                <fo:external-graphic src="url('data:image/jpeg;base64,{$qrcode}')"/>
+                            </fo:block>
+                        </fo:block-container>
+                    </fo:block-container>
                 </fo:flow>
             </fo:page-sequence>
         </fo:root>

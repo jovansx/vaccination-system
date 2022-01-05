@@ -16,10 +16,10 @@ public class QRCodeGenerator {
     public String getQRCodeImage(String url) {
         try {
             QRCodeWriter qrCodeWriter = new QRCodeWriter();
-            BitMatrix bitMatrix = qrCodeWriter.encode(url, BarcodeFormat.QR_CODE, 250, 250);
+            BitMatrix bitMatrix = qrCodeWriter.encode(url, BarcodeFormat.QR_CODE, 150, 150);
 
             ByteArrayOutputStream pngOutputStream = new ByteArrayOutputStream();
-            MatrixToImageConfig con = new MatrixToImageConfig(0xFF000002, 0xFFFFC041);
+            MatrixToImageConfig con = new MatrixToImageConfig(0xFF000002, 0xFFFFFF);
 
             MatrixToImageWriter.writeToStream(bitMatrix, "PNG", pngOutputStream, con);
             return Base64.getEncoder().encodeToString(pngOutputStream.toByteArray());
