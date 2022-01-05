@@ -36,7 +36,7 @@
                             </fo:block>
                         </fo:block-container>
                     </fo:block-container>
-                    <fo:block font-family="sans-serif" font-size="16px" text-align="center" font-weight="bold" margin-top="150px">
+                    <fo:block font-family="sans-serif" font-size="16px" text-align="center" font-weight="bold" margin-top="130px">
                         POTVRDA O IZVRSENOJ VAKCINACIJI PROTIV COVID-19
                     </fo:block>
                     <fo:block font-family="sans-serif" font-size="13px" text-align="center" color="gray">
@@ -79,6 +79,78 @@
                         <xsl:if test="//t:pol = 'Zenski'">
                             Female
                         </xsl:if>
+                    </fo:block>
+                    <xsl:choose>
+                        <xsl:when test="string-length(//t:id_broj/text()) = 13">
+                            <fo:block font-family="sans-serif" font-size="13px" padding="5px" margin-top="10px">
+                                <fo:inline font-weight="bold">JMBG:</fo:inline>
+                                <fo:inline>
+                                    <xsl:value-of select="concat(' ', //t:id_broj)"/>
+                                </fo:inline>
+                            </fo:block>
+                            <fo:block font-family="sans-serif" color="gray" font-size="12px">JMBG / Personal No.</fo:block>
+                        </xsl:when>
+                        <xsl:otherwise>
+                            <fo:block font-family="sans-serif" font-size="13px" padding="5px" margin-top="10px">
+                                <fo:inline font-weight="bold">Passport number:</fo:inline>
+                                <fo:inline>
+                                    <xsl:value-of select="concat(' ', //t:id_broj)"/>
+                                </fo:inline>
+                            </fo:block>
+                            <fo:block font-family="sans-serif" color="gray" font-size="12px">Passport number</fo:block>
+                        </xsl:otherwise>
+                    </xsl:choose>
+                    <xsl:for-each select="//p:doza">
+                        <fo:block font-family="sans-serif" font-size="13px" padding="5px" margin-top="10px">
+                            <fo:inline font-weight="bold">
+                                Datum davanja i broj serije
+                                <xsl:choose>
+                                    <xsl:when test="@broj = 1">prve</xsl:when>
+                                    <xsl:otherwise>druge</xsl:otherwise>
+                                </xsl:choose>
+                                doze vakcine:
+                            </fo:inline>
+                            <fo:inline>
+                                <xsl:value-of select="concat(' ', p:datum_davanja, ', serija: ', p:serija)"/>
+                            </fo:inline>
+                        </fo:block>
+                        <fo:block font-family="sans-serif" color="gray" font-size="12px">Datum
+                            <xsl:if test="@broj = 2">druge</xsl:if>
+                            vakcinacije /
+                            <xsl:if test="@broj = 2">Second</xsl:if>
+                            Vaccination Date</fo:block>
+                    </xsl:for-each>
+                    <fo:block font-family="sans-serif" font-size="13px" padding="5px" margin-top="10px">
+                        <fo:inline font-weight="bold">Zdravstvena ustanova koja vakcinise:</fo:inline>
+                        <fo:inline>
+                            <xsl:value-of select="concat(' ', //p:zdravstvena_ustanova)"/>
+                        </fo:inline>
+                    </fo:block>
+                    <fo:block font-family="sans-serif" color="gray" font-size="12px">Zdravstvena ustanova koja vakcinise / Health care institution of vaccination</fo:block>
+                    <fo:block font-family="sans-serif" font-size="13px" padding="5px" margin-top="10px">
+                        <fo:inline font-weight="bold">Naziv vakcine:</fo:inline>
+                        <fo:inline>
+                            <xsl:value-of select="concat(' ', //p:naziv_vakcine)"/>
+                        </fo:inline>
+                    </fo:block>
+                    <fo:block font-family="sans-serif" color="gray" font-size="12px">Naziv vakcine / Name of vaccine</fo:block>
+                    <fo:block font-family="sans-serif" font-size="13px" padding="5px" margin-top="10px">
+                        <fo:inline font-weight="bold">Datum izdavanja potvrde:</fo:inline>
+                        <fo:inline>
+                            <xsl:value-of select="concat(' ', //p:potvrda_o_vakcinaciji/@datum_izdavanja)"/>
+                        </fo:inline>
+                    </fo:block>
+                    <fo:block font-family="sans-serif" color="gray" font-size="12px">Datum izdavanja potvrde / Confirmation Release Date</fo:block>
+                    <fo:block font-family="sans-serif" font-size="13px" padding="5px" margin-top="10px" text-align="right" font-weight="bold">
+                        <fo:inline>Zdravstvena ustanova:</fo:inline>
+                        <fo:inline>
+                            <xsl:value-of select="concat(' ', //p:zdravstvena_ustanova)"/>
+                        </fo:inline>
+                    </fo:block>
+                    <fo:block font-family="sans-serif" color="gray" font-size="12px" text-align="right">Zdravstvena ustanova / Medical institution</fo:block>
+                    <fo:block font-family="sans-serif" font-size="13px" padding="5px" margin-top="10px">Ova potvrda vazi bez potpisa i pecata</fo:block>
+                    <fo:block font-family="sans-serif" color="gray" font-size="12px">
+                        Ova potvrda vazi bez potpisa i pecata / This certification is valid without signatures and seals
                     </fo:block>
                 </fo:flow>
             </fo:page-sequence>
