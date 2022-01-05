@@ -42,4 +42,9 @@ public class InteresovanjeController {
                 .contentType(MediaType.APPLICATION_PDF)
                 .body(new InputStreamResource(stream));
     }
+
+    @GetMapping(value = "/xhtml")
+    public void getInteresovanjeXhtml() {
+        interesovanjeService.generateXhtml();
+    }
 }
