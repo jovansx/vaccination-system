@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<potvrda_o_vakcinaciji 
+    xmlns="http://www.akatsuki.org/potvrda_o_izvrsenoj_vakcinaciji"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:t="http://www.akatsuki.org/tipovi"
+    xsi:schemaLocation="http://www.akatsuki.org potvrda_o_izvrsenoj_vakcinaciji.xsd
+    http://www.akatsuki.org/tipovi tipovi.xsd"
+    datum_izdavanja="2021-12-19">
+    <primalac>
+        <t:ime property="pred:ime" datatype="xs:string">Jovan</t:ime>
+        <t:prezime property="pred:prezime" datatype="xs:string">Simic</t:prezime>
+        <t:id_broj property="pred:id_broj" datatype="xs:string">3001999800078</t:id_broj>
+        <t:pol>Muski</t:pol>
+        <t:datum_rodjenja>1999-01-30</t:datum_rodjenja>
+    </primalac>
+    <primljene_vakcine>
+        <doza broj="1">
+            <datum_davanja>2021-11-05</datum_davanja>
+            <serija>12345</serija>
+        </doza>
+        <doza broj="2">
+            <datum_davanja>2021-11-06</datum_davanja>
+            <serija>23456</serija>
+        </doza>
+    </primljene_vakcine>
+    <zdravstvena_ustanova>Promenada u Novom Sadu</zdravstvena_ustanova>
+    <naziv_vakcine>Sinopharm</naziv_vakcine>
+    <qr_code>url</qr_code>
+</potvrda_o_vakcinaciji>

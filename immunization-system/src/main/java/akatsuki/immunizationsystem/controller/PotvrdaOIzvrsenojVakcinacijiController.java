@@ -27,4 +27,9 @@ public class PotvrdaOIzvrsenojVakcinacijiController {
     public void createPotvrdaOIzvrsenojVakcinaciji(@RequestBody String potvrdaOIzvrsenojVakcinacijiXml) {
         potvrdaOIzvrsenojVakcinacijiService.createPotvrdaOIzvrsenojVakcinaciji(potvrdaOIzvrsenojVakcinacijiXml);
     }
+
+    @GetMapping("/pdf/{idBroj}")
+    public void getPotvrdaPdf(@PathVariable String idBroj) {
+        potvrdaOIzvrsenojVakcinacijiService.generatePdf(idBroj);
+    }
 }
