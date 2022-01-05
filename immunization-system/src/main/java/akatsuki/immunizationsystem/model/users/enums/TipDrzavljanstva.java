@@ -6,6 +6,7 @@ public enum TipDrzavljanstva {
     STRANO_BEZ_BORAVKA("strano bez boravka");
 
     public final String label;
+
     TipDrzavljanstva(String label) {
         this.label = label;
     }

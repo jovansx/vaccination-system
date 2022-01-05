@@ -129,9 +129,9 @@ public class DaoUtils {
 //                    }
 //                }
             }
-        } catch(Exception ignored) {
+        } catch (Exception ignored) {
         } finally {
-            if(col != null) {
+            if (col != null) {
                 try {
                     col.close();
                 } catch (XMLDBException xe) {

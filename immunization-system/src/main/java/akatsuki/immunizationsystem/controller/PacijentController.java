@@ -1,7 +1,6 @@
 package akatsuki.immunizationsystem.controller;
 
 import akatsuki.immunizationsystem.dtos.*;
-import akatsuki.immunizationsystem.model.documents.SaglasnostZaImunizaciju;
 import akatsuki.immunizationsystem.model.users.Pacijent;
 import akatsuki.immunizationsystem.service.PacijentService;
 import lombok.RequiredArgsConstructor;

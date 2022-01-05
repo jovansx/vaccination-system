@@ -15,6 +15,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Service;
 
+import java.io.ByteArrayInputStream;
+
 @Service
 public class SaglasnostZaImunizacijuService {
     private ISaglasnostZaImunizacijuDAO saglasnostZaImunizacijuIDao;
@@ -150,11 +152,12 @@ public class SaglasnostZaImunizacijuService {
         saglasnostZaImunizacijuIDao.update(saglasnostZaImunizaciju);
     }
 
-    public void generatePdf(String idBroj) {
+    public ByteArrayInputStream generatePdf(String idBrojIndex) {
         try {
-            pdfTransformer.generatePDF();
+            return pdfTransformer.generatePDF(getSaglasnostZaImunizaciju(idBrojIndex), SaglasnostZaImunizaciju.class);
         } catch (Exception e) {
             e.printStackTrace();
         }
+        return null;
     }
 }

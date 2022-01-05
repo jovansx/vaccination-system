@@ -5,6 +5,7 @@ public enum Pol {
     ZENSKI("Zenski");
 
     public final String label;
+
     Pol(String label) {
         this.label = label;
     }
