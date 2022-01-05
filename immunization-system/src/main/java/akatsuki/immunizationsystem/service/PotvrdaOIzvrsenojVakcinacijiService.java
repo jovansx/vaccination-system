@@ -9,6 +9,7 @@ import akatsuki.immunizationsystem.model.documents.PotvrdaOVakcinaciji;
 import akatsuki.immunizationsystem.model.vaccine.VaccineType;
 import akatsuki.immunizationsystem.utils.MetadataExtractor;
 import akatsuki.immunizationsystem.utils.PdfTransformer;
+import akatsuki.immunizationsystem.utils.QRCodeGenerator;
 import akatsuki.immunizationsystem.utils.Validator;
 import akatsuki.immunizationsystem.utils.modelmappers.IModelMapper;
 import lombok.RequiredArgsConstructor;
@@ -28,6 +29,7 @@ public class PotvrdaOIzvrsenojVakcinacijiService {
     private final SaglasnostZaImunizacijuService saglasnostZaImunizacijuService;
     private final RestTemplate restTemplate;
     private final PdfTransformer pdfTransformer;
+    private final QRCodeGenerator qrCodeGenerator;
 
     public static VaccineType getVaccineTypeFromStringValue(String givenName) {
         return Stream.of(VaccineType.values())
@@ -69,6 +71,7 @@ public class PotvrdaOIzvrsenojVakcinacijiService {
 
         decreaseAmountOfVaccine(potvrdaOVakcinaciji);
 
+        potvrdaOVakcinaciji.setQrCode(qrCodeGenerator.getQRCodeImage("http://localhost:8081/api/potvrde/pdf/" + documentId));
         return potvrdaOVakcinacijiIDao.save(potvrdaOVakcinaciji);
     }
 

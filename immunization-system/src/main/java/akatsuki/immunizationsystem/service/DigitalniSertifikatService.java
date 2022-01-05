@@ -8,6 +8,7 @@ import akatsuki.immunizationsystem.model.documents.DigitalniSertifikat;
 import akatsuki.immunizationsystem.model.documents.Interesovanje;
 import akatsuki.immunizationsystem.utils.MetadataExtractor;
 import akatsuki.immunizationsystem.utils.PdfTransformer;
+import akatsuki.immunizationsystem.utils.QRCodeGenerator;
 import akatsuki.immunizationsystem.utils.Validator;
 import akatsuki.immunizationsystem.utils.modelmappers.IModelMapper;
 import lombok.RequiredArgsConstructor;
@@ -24,6 +25,7 @@ public class DigitalniSertifikatService {
     private final MetadataExtractor extractor;
     private final ZahtevZaSertifikatService zahtevZaSertifikatService;
     private final PdfTransformer pdfTransformer;
+    private final QRCodeGenerator qrCodeGenerator;
 
     public String getDigitalniSertifikat(String idBroj) throws RuntimeException {
         if (!validator.isIdValid(idBroj))
@@ -46,6 +48,8 @@ public class DigitalniSertifikatService {
 
         setLinkToThisDocument(digitalniSertifikat);
 
+        digitalniSertifikat.setQrCode(qrCodeGenerator.getQRCodeImage("http://localhost:8081/api/digitalni-sertifikati/pdf/"
+                + digitalniSertifikat.getPrimalac().getIdBroj().getValue()));
         return digitalniSertifikatDAO.save(digitalniSertifikat);
     }
 
