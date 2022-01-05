@@ -106,7 +106,7 @@ public class PotvrdaOIzvrsenojVakcinacijiService {
 
     public void generatePdf(String idBroj) {
         try {
-            pdfTransformer.generatePDF();
+//            pdfTransformer.generatePDF();
         } catch (Exception e) {
             e.printStackTrace();
         }

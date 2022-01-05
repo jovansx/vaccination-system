@@ -214,7 +214,8 @@ export class DoctorComponent implements OnInit {
       this.vaccinattionForm.controls['drzavljanstvo'].setValue('STRANO')
       this.vaccinattionForm.controls['idBroj'].setValue(this.document.PACIJENT[0].DRZAVLJANSTVO[0].STRANO[0].ID_BROJ[0]["_"])
     }
-    this.vaccinattionForm.controls['sedisteSocZastite'].setValue(this.document.PACIJENT[0].SOCIJALNA_ZASTITA[0].SEDISTE[0].NAZIV[0]+" "+this.document.PACIJENT[0].SOCIJALNA_ZASTITA[0].SEDISTE[0].OPSTINA[0])
+    if(this.document.PACIJENT[0].SOCIJALNA_ZASTITA[0].SEDISTE !== undefined)
+      this.vaccinattionForm.controls['sedisteSocZastite'].setValue(this.document.PACIJENT[0].SOCIJALNA_ZASTITA[0].SEDISTE[0].NAZIV[0]+" "+this.document.PACIJENT[0].SOCIJALNA_ZASTITA[0].SEDISTE[0].OPSTINA[0])
     if(this.document.PACIJENT[0].IZJAVA_SAGLASNOSTI[0].SAGLASNOST[0] === 'true')
       this.vaccinattionForm.controls['saglasnost'].setValue("IMA")
     else 
