@@ -1,4 +1,11 @@
 import { Component, Input, OnInit } from '@angular/core';
+import { ToastrService } from 'ngx-toastr';
+import { convertResponseError } from 'src/app/error-converter.function';
+import { InteresovanjeService } from 'src/app/services/interesovanje.service';
+import { XmlConverterService } from 'src/app/services/xml-converter.service';
+
+import { environment as env } from '../../../environments/environment';
+
 
 @Component({
   selector: 'app-document-card',
@@ -9,9 +16,28 @@ export class DocumentCardComponent implements OnInit {
 
   @Input()
   dokument: any;
-  constructor() { }
+  constructor(private interesovanjeService : InteresovanjeService, private _toastr: ToastrService, private _xml_parser: XmlConverterService) { }
 
   ngOnInit(): void {
   }
 
+  getTypeOfDocument() : string {
+    if(this.dokument.NAZIVDOKUMENTA[0] === "Interesovanje za vakcinacijom")
+      return "interesovanja";
+    else if(this.dokument.NAZIVDOKUMENTA[0] === "Saglasnost o imunizaciji 1" || this.dokument.NAZIVDOKUMENTA[0] === "Saglasnost o imunizaciji 2")
+      return "saglasnosti";
+    // TODO dodati ostale dokumente
+    return "";
+  }
+
+  displayDocument() : void {
+    console.log(this.dokument)
+    window.open(`${env.apiUrl}/${this.getTypeOfDocument()}/pdf/${this.dokument.IDDOKUMENTA}`, "_blank")
+  }
+
+  downloadDocument() : void {
+    console.log("1")
+  }
+
 }
+

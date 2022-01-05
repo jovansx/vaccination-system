@@ -31,7 +31,7 @@ public class EmailService {
 
         TPodnosilacInteresovanja p = interesovanje.getPodnosilac();
         StringBuilder vakcine = new StringBuilder();
-        for (TTipVakcine vakcina: interesovanje.getVakcine().getVakcina()) {
+        for (TTipVakcine vakcina : interesovanje.getVakcine().getVakcina()) {
             vakcine.append("\t-\t");
             vakcine.append(vakcina.getNazivVakcine().getValue());
             vakcine.append("\n");

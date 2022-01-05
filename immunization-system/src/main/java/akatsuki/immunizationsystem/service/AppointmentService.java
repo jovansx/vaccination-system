@@ -3,7 +3,6 @@ package akatsuki.immunizationsystem.service;
 import akatsuki.immunizationsystem.dao.DaoUtils;
 import akatsuki.immunizationsystem.dao.IDao;
 import akatsuki.immunizationsystem.model.appointments.Appointment;
-import akatsuki.immunizationsystem.model.documents.Interesovanje;
 import akatsuki.immunizationsystem.utils.modelmappers.IModelMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -52,7 +51,8 @@ public class AppointmentService {
             Appointment appointment = new Appointment(DatatypeFactory.newInstance().newXMLGregorianCalendar(calendar), idBroj, false);
             appointmentIDao.save(appointment);
             return appointment;
-        } catch (Exception ignored) {}
+        } catch (Exception ignored) {
+        }
         return null;
     }
 }
