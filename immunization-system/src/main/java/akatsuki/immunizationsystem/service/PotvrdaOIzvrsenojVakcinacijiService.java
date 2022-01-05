@@ -7,6 +7,7 @@ import akatsuki.immunizationsystem.exceptions.NotFoundRuntimeException;
 import akatsuki.immunizationsystem.model.documents.PotvrdaOVakcinaciji;
 import akatsuki.immunizationsystem.model.vaccine.VaccineType;
 import akatsuki.immunizationsystem.utils.MetadataExtractor;
+import akatsuki.immunizationsystem.utils.PdfTransformer;
 import akatsuki.immunizationsystem.utils.Validator;
 import akatsuki.immunizationsystem.utils.modelmappers.IModelMapper;
 import lombok.RequiredArgsConstructor;
@@ -24,6 +25,7 @@ public class PotvrdaOIzvrsenojVakcinacijiService {
     private final MetadataExtractor extractor;
     private final SaglasnostZaImunizacijuService saglasnostZaImunizacijuService;
     private final RestTemplate restTemplate;
+    private final PdfTransformer pdfTransformer;
 
     public static VaccineType getVaccineTypeFromStringValue(String givenName) {
         return Stream.of(VaccineType.values())
@@ -102,4 +104,11 @@ public class PotvrdaOIzvrsenojVakcinacijiService {
         potvrdaOVakcinacijiIDao.save(potvrdaOVakcinaciji);
     }
 
+    public void generatePdf(String idBroj) {
+        try {
+            pdfTransformer.generatePDF();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
 }
