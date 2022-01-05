@@ -132,11 +132,7 @@
                             <xs:element name="vakcine">
                                 <xs:complexType>
                                     <xs:sequence>
-<<<<<<< HEAD
                                         <xs:sequence minOccurs="0" maxOccurs="2">
-=======
-                                        <xs:sequence minOccurs="1" maxOccurs="unbounded">
->>>>>>> develop
                                             <xs:element name="vakcina">
                                                 <xs:complexType>
                                                   <xs:sequence>

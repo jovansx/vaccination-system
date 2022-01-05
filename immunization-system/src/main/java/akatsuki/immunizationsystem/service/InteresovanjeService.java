@@ -13,6 +13,8 @@ import akatsuki.immunizationsystem.utils.modelmappers.IModelMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.io.ByteArrayInputStream;
+
 @Service
 @RequiredArgsConstructor
 public class InteresovanjeService {
@@ -59,11 +61,12 @@ public class InteresovanjeService {
         interesovanjeDAO.save(interesovanje);
     }
 
-    public void generatePdf(String idBroj) {
+    public ByteArrayInputStream generatePdf(String idBroj) {
         try {
-            pdfTransformer.generatePDF();
+            return pdfTransformer.generatePDF(getInteresovanje(idBroj), Interesovanje.class);
         } catch (Exception e) {
             e.printStackTrace();
         }
+        return null;
     }
 }
