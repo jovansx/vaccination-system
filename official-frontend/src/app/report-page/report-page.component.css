@@ -59,3 +59,7 @@ padding: 20px;
 .report-list {
     background-color: white;
 }
+
+.report-input {
+    border:none;
+}
