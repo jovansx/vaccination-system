@@ -21,4 +21,10 @@ public class ZahtevZaSertifikatController {
     public String createZahtevZaSertifikat(@RequestBody String zahtevXml) {
         return zahtevZaSertifikatService.createZahtevZaSertifikat(zahtevXml);
     }
+
+    @GetMapping("/{periodOd}/{periodDo}")
+    public int getResourcesCount(@PathVariable String periodOd, @PathVariable String periodDo) {
+        return zahtevZaSertifikatService.getResourcesCountInPeriod(periodOd, periodDo);
+    }
+
 }

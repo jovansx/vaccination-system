@@ -4,8 +4,12 @@ import akatsuki.immunizationsystem.dao.IDao;
 import akatsuki.immunizationsystem.exceptions.BadRequestRuntimeException;
 import akatsuki.immunizationsystem.exceptions.ConflictRuntimeException;
 import akatsuki.immunizationsystem.exceptions.NotFoundRuntimeException;
+import akatsuki.immunizationsystem.model.documents.DigitalniSertifikat;
 import akatsuki.immunizationsystem.model.documents.PotvrdaOVakcinaciji;
+import akatsuki.immunizationsystem.model.dto.RaspodelaPoDozamaDTO;
+import akatsuki.immunizationsystem.model.dto.RaspodelaPoProizvodjacimaDTO;
 import akatsuki.immunizationsystem.model.vaccine.VaccineType;
+import akatsuki.immunizationsystem.utils.CalendarPeriod;
 import akatsuki.immunizationsystem.utils.MetadataExtractor;
 import akatsuki.immunizationsystem.utils.Validator;
 import akatsuki.immunizationsystem.utils.modelmappers.IModelMapper;
@@ -13,6 +17,10 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.List;
 import java.util.stream.Stream;
 
 @Service
@@ -21,6 +29,8 @@ public class PotvrdaOIzvrsenojVakcinacijiService {
     private final IDao<PotvrdaOVakcinaciji> potvrdaOVakcinacijiIDao;
     private final Validator validator;
     private final IModelMapper<PotvrdaOVakcinaciji> mapper;
+    private final IModelMapper<RaspodelaPoProizvodjacimaDTO> raspodelaPoProizvodjacimaDTOmapper;
+    private final IModelMapper<RaspodelaPoDozamaDTO> raspodelaPoDozamaDTOmapper;
     private final MetadataExtractor extractor;
     private final SaglasnostZaImunizacijuService saglasnostZaImunizacijuService;
     private final RestTemplate restTemplate;
@@ -39,6 +49,56 @@ public class PotvrdaOIzvrsenojVakcinacijiService {
         PotvrdaOVakcinaciji potvrdaOVakcinaciji = potvrdaOVakcinacijiIDao.get(idBrojDoza).
                 orElseThrow(() -> new NotFoundRuntimeException("Nije pronadjena potvrda sa unetim " + idBrojDoza + "."));
         return mapper.convertToXml(potvrdaOVakcinaciji);
+    }
+
+    public String getResourcesCountByDoze(String periodOd, String periodDo) {
+        List<PotvrdaOVakcinaciji> allPotvrde = (List<PotvrdaOVakcinaciji>) potvrdaOVakcinacijiIDao.getAll();
+        CalendarPeriod.calendarSetTimeByPeriod(periodOd, periodDo);
+        int doza1 = 0;
+        int doza2 = 0;
+        for(PotvrdaOVakcinaciji p: allPotvrde) {
+            Calendar datumIzdavanjaPotvrde = p.getDatumIzdavanja().toGregorianCalendar();
+            if(datumIzdavanjaPotvrde.compareTo(CalendarPeriod.periodOdCal) > 0 && datumIzdavanjaPotvrde.compareTo(CalendarPeriod.periodDoCal) < 0) {
+                if(p.getPrimljeneVakcine().getDoza().size() == 1) {
+                    doza1++;
+                } else {
+                    doza2++;
+                }
+
+            }
+        }
+        RaspodelaPoDozamaDTO raspodelaPoDozamaDTO = new RaspodelaPoDozamaDTO(doza1, doza2);
+        return raspodelaPoDozamaDTOmapper.convertToXml(raspodelaPoDozamaDTO);
+    }
+
+    public String getResourcesCountByProizvodjaci(String periodOd, String periodDo) {
+        List<PotvrdaOVakcinaciji> allPotvrde = (List<PotvrdaOVakcinaciji>) potvrdaOVakcinacijiIDao.getAll();
+
+        CalendarPeriod.calendarSetTimeByPeriod(periodOd, periodDo);
+
+        int pfizerBioNTech = 0;
+        int sputnikV = 0;
+        int sinopharm = 0;
+        int astraZeneca = 0;
+        int moderna = 0;
+        for(PotvrdaOVakcinaciji p: allPotvrde) {
+            Calendar datumIzdavanjaPotvrde = p.getDatumIzdavanja().toGregorianCalendar();
+            if(datumIzdavanjaPotvrde.compareTo(CalendarPeriod.periodOdCal) == 1 && datumIzdavanjaPotvrde.compareTo(CalendarPeriod.periodDoCal) == -1) {
+                if(p.getNazivVakcine().getValue().equals("Pfizer-BioNTech")) {
+                    pfizerBioNTech++;
+                } else if(p.getNazivVakcine().getValue().equals("Sputnik V")) {
+                    sputnikV++;
+                } else if(p.getNazivVakcine().getValue().equals("Sinopharm")) {
+                    sinopharm++;
+                } else if(p.getNazivVakcine().getValue().equals("AstraZeneca")) {
+                    astraZeneca++;
+                } else {
+                    moderna++;
+                }
+            }
+        }
+        RaspodelaPoProizvodjacimaDTO raspodelaPoProizvodjacimaDTO = new RaspodelaPoProizvodjacimaDTO(pfizerBioNTech, sputnikV, sinopharm, astraZeneca, moderna);
+        return raspodelaPoProizvodjacimaDTOmapper.convertToXml(raspodelaPoProizvodjacimaDTO);
     }
 
     public String createPotvrdaOIzvrsenojVakcinaciji(String potvrdaOIzvrsenojVakcinacijiXml) throws RuntimeException {

@@ -22,4 +22,14 @@ public class PotvrdaOIzvrsenojVakcinacijiController {
     public String createPotvrdaOIzvrsenojVakcinaciji(@RequestBody String potvrdaOIzvrsenojVakcinacijiXml) {
         return potvrdaOIzvrsenojVakcinacijiService.createPotvrdaOIzvrsenojVakcinaciji(potvrdaOIzvrsenojVakcinacijiXml);
     }
+
+    @GetMapping("/doze/{periodOd}/{periodDo}")
+    public String getResourcesCountByDoze(@PathVariable String periodOd, @PathVariable String periodDo) {
+        return potvrdaOIzvrsenojVakcinacijiService.getResourcesCountByDoze(periodOd, periodDo);
+    }
+
+    @GetMapping("/proizvodjaci/{periodOd}/{periodDo}")
+    public String getResourcesCountByProizvodjaci(@PathVariable String periodOd, @PathVariable String periodDo) {
+        return potvrdaOIzvrsenojVakcinacijiService.getResourcesCountByProizvodjaci(periodOd, periodDo);
+    }
 }

@@ -23,4 +23,9 @@ public class InteresovanjeController {
     public String createInteresovanje(@RequestBody String interesovanjeXml) {
         return interesovanjeService.createInteresovanje(interesovanjeXml);
     }
+
+    @GetMapping("/{periodOd}/{periodDo}")
+    public int getResourcesCount(@PathVariable String periodOd, @PathVariable String periodDo) {
+        return interesovanjeService.getResourcesCountInPeriod(periodOd, periodDo);
+    }
 }

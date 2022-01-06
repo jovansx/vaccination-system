@@ -45,6 +45,11 @@ public class KorisnikDAO implements IDao<Korisnik> {
     }
 
     @Override
+    public int getResourcesCount() {
+        return 0;
+    }
+
+    @Override
     public String save(Korisnik korisnik) {
         daoUtils.createResource(collectionId, korisnik, korisnik.getIdBroj() + ".xml", Korisnik.class);
         return korisnik.getIdBroj() + ".xml";

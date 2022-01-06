@@ -9,6 +9,8 @@ public interface IDao<T> {
 
     Collection<T> getAll();
 
+    int getResourcesCount();
+
     String save(T t);
 
     void update(T t);

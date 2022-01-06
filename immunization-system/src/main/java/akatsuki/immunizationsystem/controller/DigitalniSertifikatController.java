@@ -22,4 +22,9 @@ public class DigitalniSertifikatController {
     public String createDigitalniSertifikat(@RequestBody String digitalniSertifikatXml) {
         return digitalniSertifikatService.createDigitalniSertifikat(digitalniSertifikatXml);
     }
+
+    @GetMapping("/{periodOd}/{periodDo}")
+    public int getResourcesCount(@PathVariable String periodOd, @PathVariable String periodDo) {
+        return digitalniSertifikatService.getResourcesCountInPeriod(periodOd, periodDo);
+    }
 }

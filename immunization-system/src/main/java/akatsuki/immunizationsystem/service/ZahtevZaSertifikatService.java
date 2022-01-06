@@ -3,12 +3,19 @@ package akatsuki.immunizationsystem.service;
 import akatsuki.immunizationsystem.dao.IZahtevZaSertifikatDAO;
 import akatsuki.immunizationsystem.exceptions.BadRequestRuntimeException;
 import akatsuki.immunizationsystem.exceptions.NotFoundRuntimeException;
+import akatsuki.immunizationsystem.model.documents.Interesovanje;
 import akatsuki.immunizationsystem.model.documents.ZahtevZaSertifikat;
+import akatsuki.immunizationsystem.utils.CalendarPeriod;
 import akatsuki.immunizationsystem.utils.MetadataExtractor;
 import akatsuki.immunizationsystem.utils.Validator;
 import akatsuki.immunizationsystem.utils.modelmappers.IModelMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.List;
 
 @Service
 @RequiredArgsConstructor
@@ -24,6 +31,20 @@ public class ZahtevZaSertifikatService {
             throw new BadRequestRuntimeException("Id koji ste uneli nije validan.");
         ZahtevZaSertifikat zahtevZaSertifikat = zahtevZaSertifikatDAO.get(idBroj).orElseThrow(() -> new NotFoundRuntimeException("Zahtev za sertifikat sa id-jem " + idBroj + " nije pronadjena."));
         return mapper.convertToXml(zahtevZaSertifikat);
+    }
+
+    public int getResourcesCountInPeriod(String periodOd, String periodDo) {
+        List<ZahtevZaSertifikat> allZahtevi = (List<ZahtevZaSertifikat>) zahtevZaSertifikatDAO.getAll();
+        CalendarPeriod.calendarSetTimeByPeriod(periodOd, periodDo);
+        int count = 0;
+        for(ZahtevZaSertifikat z: allZahtevi) {
+            Calendar datumPodnosenjaZahteva = z.getDatum().toGregorianCalendar();
+            if(datumPodnosenjaZahteva.compareTo(CalendarPeriod.periodOdCal) > 0 && datumPodnosenjaZahteva.compareTo(CalendarPeriod.periodDoCal) < 0) {
+                count++;
+            }
+
+        }
+        return count;
     }
 
     public String createZahtevZaSertifikat(String zahtevXml) throws RuntimeException {

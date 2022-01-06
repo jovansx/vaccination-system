@@ -52,6 +52,11 @@ public class SaglasnostZaImunizacijuDAO implements ISaglasnostZaImunizacijuDAO {
     }
 
     @Override
+    public int getResourcesCount() {
+        return 0;
+    }
+
+    @Override
     public String save(SaglasnostZaImunizaciju saglasnostZaImunizaciju) {
         String id = saglasnostZaImunizaciju.getPacijent().getIdBrojFromDrzavljanstvo();
         int index = getDocumentIndex(id);
