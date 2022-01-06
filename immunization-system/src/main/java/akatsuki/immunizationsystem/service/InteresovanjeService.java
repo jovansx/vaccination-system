@@ -6,6 +6,7 @@ import akatsuki.immunizationsystem.exceptions.ConflictRuntimeException;
 import akatsuki.immunizationsystem.exceptions.NotFoundRuntimeException;
 import akatsuki.immunizationsystem.model.appointments.Appointment;
 import akatsuki.immunizationsystem.model.documents.Interesovanje;
+import akatsuki.immunizationsystem.utils.HtmlTransformer;
 import akatsuki.immunizationsystem.utils.MetadataExtractor;
 import akatsuki.immunizationsystem.utils.PdfTransformer;
 import akatsuki.immunizationsystem.utils.Validator;
@@ -24,6 +25,7 @@ public class InteresovanjeService {
     private final MetadataExtractor extractor;
     private final EmailService emailService;
     private final PdfTransformer pdfTransformer;
+    private final HtmlTransformer htmlTransformer;
 
     private final AppointmentService appointmentService;
 
@@ -63,5 +65,9 @@ public class InteresovanjeService {
 
     public ByteArrayInputStream generatePdf(String idBroj) {
         return pdfTransformer.generatePDF(getInteresovanje(idBroj), Interesovanje.class);
+    }
+
+    public ByteArrayInputStream generateXhtml(String idBroj) {
+        return htmlTransformer.generateHTML(getInteresovanje(idBroj), Interesovanje.class);
     }
 }
