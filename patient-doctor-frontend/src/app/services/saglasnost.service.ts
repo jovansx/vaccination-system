@@ -28,4 +28,12 @@ export class SaglasnostService {
   public getSaglasnost(id: string): Observable<string> {
     return this._http.get<string>(`/saglasnosti/${id}`, {responseType: 'text' as 'json'});
   }
+
+  public getSaglasnostXHTML(id: string): Observable<string> {
+    return this._http.get<string>('/saglasnosti/xhtml/'+id, {responseType: 'text' as 'json'});
+  }
+
+  public getSaglasnostPDF(id: string): Observable<string> {
+    return this._http.get<string>('/saglasnosti/pdf/'+id, {responseType: 'arraybuffer' as 'json'});
+  }
 }

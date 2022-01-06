@@ -20,9 +20,9 @@ import java.io.FileOutputStream;
 @Component
 public class HtmlTransformer {
 
-    public static String XSL_FILE;
     public static final String HTML_FILE = "document.html";
     private static final TransformerFactory transformerFactory;
+    public static String XSL_FILE;
 
     static {
         transformerFactory = TransformerFactory.newInstance();
