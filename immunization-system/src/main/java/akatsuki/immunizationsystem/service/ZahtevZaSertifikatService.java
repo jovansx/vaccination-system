@@ -5,6 +5,7 @@ import akatsuki.immunizationsystem.exceptions.BadRequestRuntimeException;
 import akatsuki.immunizationsystem.exceptions.NotFoundRuntimeException;
 import akatsuki.immunizationsystem.model.documents.Interesovanje;
 import akatsuki.immunizationsystem.model.documents.ZahtevZaSertifikat;
+import akatsuki.immunizationsystem.utils.HtmlTransformer;
 import akatsuki.immunizationsystem.utils.MetadataExtractor;
 import akatsuki.immunizationsystem.utils.PdfTransformer;
 import akatsuki.immunizationsystem.utils.Validator;
@@ -23,6 +24,7 @@ public class ZahtevZaSertifikatService {
     private final MetadataExtractor extractor;
     private final PotvrdaOIzvrsenojVakcinacijiService potvrdaOIzvrsenojVakcinacijiService;
     private final PdfTransformer pdfTransformer;
+    private final HtmlTransformer htmlTransformer;
 
 
     public String getZahtevZaSertifikat(String idBroj) throws RuntimeException {
@@ -64,5 +66,9 @@ public class ZahtevZaSertifikatService {
 
     public ByteArrayInputStream generatePdf(String idBroj) {
         return pdfTransformer.generatePDF(getZahtevZaSertifikat(idBroj), ZahtevZaSertifikat.class);
+    }
+
+    public ByteArrayInputStream generateXhtml(String idBroj) {
+        return htmlTransformer.generateHTML(getZahtevZaSertifikat(idBroj), ZahtevZaSertifikat.class);
     }
 }
