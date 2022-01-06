@@ -1,6 +1,7 @@
 package akatsuki.officialsystem.utils;
 
 import javax.xml.datatype.DatatypeConfigurationException;
+import javax.xml.datatype.DatatypeConstants;
 import javax.xml.datatype.DatatypeFactory;
 import javax.xml.datatype.XMLGregorianCalendar;
 import java.text.ParseException;
@@ -29,7 +30,8 @@ public class CalendarPeriod {
         try {
             Date periodOdDate = formatter.parse(date);
             calendar.setTime(periodOdDate);
-            xmlDate =  DatatypeFactory.newInstance().newXMLGregorianCalendar(calendar);
+            xmlDate =  DatatypeFactory.newInstance().newXMLGregorianCalendarDate(
+                    calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH)+1, calendar.get(Calendar.DAY_OF_MONTH), DatatypeConstants.FIELD_UNDEFINED);
         } catch (ParseException | DatatypeConfigurationException e) {}
         return xmlDate;
     }
@@ -38,7 +40,8 @@ public class CalendarPeriod {
         GregorianCalendar calendar = new GregorianCalendar();
         XMLGregorianCalendar xmlDate = null;
         try {
-            xmlDate =  DatatypeFactory.newInstance().newXMLGregorianCalendar(calendar);
+            xmlDate =  DatatypeFactory.newInstance().newXMLGregorianCalendarDate(
+                    calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH)+1, calendar.get(Calendar.DAY_OF_MONTH), DatatypeConstants.FIELD_UNDEFINED);
         } catch (DatatypeConfigurationException e) {}
         return xmlDate;
     }
