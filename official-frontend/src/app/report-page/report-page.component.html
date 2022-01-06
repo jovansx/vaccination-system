@@ -7,38 +7,38 @@
     Od: 
     <mat-form-field appearance="fill" class="mr-30 ml-20">
       <!-- <mat-label>Choose a date</mat-label> -->
-      <input matInput [matDatepicker]="picker_from">
+      <input matInput [matDatepicker]="picker_from" [formControl]="dateFrom">
       <mat-datepicker-toggle matSuffix [for]="picker_from"></mat-datepicker-toggle>
       <mat-datepicker #picker_from></mat-datepicker>
     </mat-form-field>
     Do: 
     <mat-form-field appearance="fill" class="mr-20 ml-20">
       <!-- <mat-label>Choose a date</mat-label> -->
-      <input matInput [matDatepicker]="picker_to" [(ngModel)]="dateTo">
+      <input matInput [matDatepicker]="picker_to" [formControl]="dateTo">
       <mat-datepicker-toggle matSuffix [for]="picker_to"></mat-datepicker-toggle>
       <mat-datepicker #picker_to></mat-datepicker>
     </mat-form-field>
-    <button mat-button>
+    <button mat-button (click)="getReportForPeriod()">
       <mat-icon>search</mat-icon>
     </button>
   </div>
-  <div class="report-info-panel" fxLayout="row">
-    <div fxLayout="column" fxFlex="40">
+  <div class="report-info-panel" fxLayout="row" [fxLayoutAlign]="allReportsLoaded ? 'center start' : 'space-around center'">
+    <div fxLayout="column" fxFlex="40" *ngIf="loaded">
       <h2>Dokumenti</h2>
       <mat-divider></mat-divider>
       <div class="documents-panel">
         <div class="report-input-panel" fxLayout="row" fxLayoutAlign="space-between center"> 
           <p>Broj interesovanja za imunizaciju:</p>
-          <input/>
+          <input [value]="izvestajOImunizaciji.brojInteresovanja" readonly/>
         </div>
         
         <div class="report-input-panel" fxLayout="row" fxLayoutAlign="space-between center">
           <p>Podnesenih zahteva za digitalni zeleni sertifikat:</p>
-          <input/>
+          <input [value]="izvestajOImunizaciji.primljenoSertifikata" readonly/>
         </div>
         <div class="report-input-panel" fxLayout="row" fxLayoutAlign="space-between center">
           <p>Izdato digitalnih zelenih sertifikata:</p>
-          <input/>
+          <input [value]="izvestajOImunizaciji.izdatoSertifikata" readonly/>
         </div>
       </div>
       
@@ -48,43 +48,57 @@
         <h3 style="margin-top:20px">Raspodela po dozama</h3>
         <div fxLayout="row" fxLayoutAlign="space-between center">
           <p>Izdato doza vakcina:</p>
-          <input/>
+          <input [value]="izvestajOImunizaciji.ukupnoIzdato" readonly/>
         </div>
         <div fxLayout="row" fxLayoutAlign="space-between center">
           <p>Doza broj 1:</p>
-          <input/>
+          <input [value]="izvestajOImunizaciji.doza1" readonly/>
         </div>
         <div fxLayout="row" fxLayoutAlign="space-between center">
           <p>Doza broj 2:</p>
-          <input/>
+          <input [value]="izvestajOImunizaciji.doza2" readonly/>
         </div>
         <h3>Raspodela po proizvodjacima</h3>
         <div fxLayout="row" fxLayoutAlign="space-between center">
           <p>Pfizer-BioNTech:</p>
-          <input/>
-        </div>
-        <div fxLayout="row" fxLayoutAlign="space-between center">
-          <p>Sinopharm:</p>
-          <input/>
-        </div>
-        <div fxLayout="row" fxLayoutAlign="space-between center">
-          <p>AstraZeneca:</p>
-          <input/>
+          <input [value]="izvestajOImunizaciji.pfizer" readonly/>
         </div>
         <div fxLayout="row" fxLayoutAlign="space-between center">
           <p>Sputnik V:</p>
-          <input/>
+          <input [value]="izvestajOImunizaciji.sputnikV" readonly/>
+        </div>
+        <div fxLayout="row" fxLayoutAlign="space-between center">
+          <p>Sinopharm:</p>
+          <input [value]="izvestajOImunizaciji.sinopharm" readonly/>
+        </div>
+        <div fxLayout="row" fxLayoutAlign="space-between center">
+          <p>AstraZeneca:</p>
+          <input [value]="izvestajOImunizaciji.astraZeneca" readonly/>
+        </div>
+        <div fxLayout="row" fxLayoutAlign="space-between center">
+          <p>Moderna:</p>
+          <input [value]="izvestajOImunizaciji.moderna" readonly/>
         </div>
       </div>
     </div>
-    <div fxFlex="60">
-      <div class="p-50">
+    <div [hidden]="loaded" fxFlex="40">
+      <mat-spinner></mat-spinner>
+    </div>
+    <div fxFlex="60" *ngIf="allReportsLoaded">
+      <div class="p-50" *ngIf="reportsPeriod.length > 0">
+        <h2>Svi izvestaji</h2>
         <mat-list role="list" class="report-list">
-          <mat-list-item role="listitem" *ngFor="let report of reportsPeriod">{{report.period}}</mat-list-item>
+          <mat-list-item role="listitem" *ngFor="let report of reportsPeriod">
+            <a [routerLink]="['/home/reports', report.id]">{{report.period}}</a>
+          </mat-list-item>
         </mat-list>
       </div>
     </div>
+    <div [hidden]="allReportsLoaded" fxFlex="60">
+      <mat-spinner style="margin: auto;"></mat-spinner>
+    </div>
   </div>
+  
   <div class="report-actions-panel" fxLayout="row" fxLayoutAlign="end center">
     <button mat-raised-button class="mr-20" (click)="getAllReports()">Izlistaj sve izvestaje</button>
     <button mat-raised-button color="primary">Sacuvaj izvestaj</button>

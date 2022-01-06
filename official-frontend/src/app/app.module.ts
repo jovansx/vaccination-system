@@ -15,7 +15,8 @@ import { HeaderInterceptorService } from './autentification/services/header-inte
 import { VaccinePageComponent } from './vaccine-page/vaccine-page.component';
 import { HeaderComponent } from './header/header.component';
 import { VaccineService } from './services/vaccine.service';
-import { ReportPageComponent } from './report-page/report-page.component'
+import { ReportPageComponent } from './report-page/report-page.component';
+import { SingleReportPageComponent } from './single-report-page/single-report-page.component'
 
 @NgModule({
   declarations: [
@@ -23,7 +24,8 @@ import { ReportPageComponent } from './report-page/report-page.component'
     LoginComponent,
     VaccinePageComponent,
     HeaderComponent,
-    ReportPageComponent
+    ReportPageComponent,
+    SingleReportPageComponent
   ],
   imports: [
     BrowserModule,
