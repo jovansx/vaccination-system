@@ -17,4 +17,12 @@ export class InteresovanjeService {
     return this._http.get<string>('/interesovanja/'+id, {responseType: 'text' as 'json'});
   }
 
+  public getInteresovanjeXHTML(id: string): Observable<string> {
+    return this._http.get<string>('/interesovanja/xhtml/'+id, {responseType: 'text' as 'json'});
+  }
+
+  public getInteresovanjePDF(id: string): Observable<string> {
+    return this._http.get<string>('/interesovanja/pdf/'+id, {responseType: 'arraybuffer' as 'json'});
+  }
+
 }

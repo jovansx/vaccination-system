@@ -415,7 +415,6 @@ sendDocuments() : void {
         <qr_code>url</qr_code>
     </potvrda_o_vakcinaciji>`;
   }
-  console.log(novaPotvrda)
   this.sendPotvrdu(novaPotvrda);
   }
 

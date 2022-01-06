@@ -18,4 +18,12 @@ export class PotvrdaService {
 
   }
 
+  public getPotvrdaXHTML(id: string): Observable<string> {
+    return this._http.get<string>('/potvrde/xhtml/'+id, {responseType: 'text' as 'json'});
+  }
+
+  public getPotvrdaPDF(id: string): Observable<string> {
+    return this._http.get<string>('/potvrde/pdf/'+id, {responseType: 'arraybuffer' as 'json'});
+  }
+
 }
