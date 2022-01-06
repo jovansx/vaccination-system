@@ -6,11 +6,9 @@ import akatsuki.immunizationsystem.exceptions.ConflictRuntimeException;
 import akatsuki.immunizationsystem.exceptions.NotFoundRuntimeException;
 import akatsuki.immunizationsystem.model.documents.Interesovanje;
 import akatsuki.immunizationsystem.model.documents.PotvrdaOVakcinaciji;
+import akatsuki.immunizationsystem.model.documents.ZahtevZaSertifikat;
 import akatsuki.immunizationsystem.model.vaccine.VaccineType;
-import akatsuki.immunizationsystem.utils.MetadataExtractor;
-import akatsuki.immunizationsystem.utils.PdfTransformer;
-import akatsuki.immunizationsystem.utils.QRCodeGenerator;
-import akatsuki.immunizationsystem.utils.Validator;
+import akatsuki.immunizationsystem.utils.*;
 import akatsuki.immunizationsystem.utils.modelmappers.IModelMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -29,6 +27,7 @@ public class PotvrdaOIzvrsenojVakcinacijiService {
     private final SaglasnostZaImunizacijuService saglasnostZaImunizacijuService;
     private final RestTemplate restTemplate;
     private final PdfTransformer pdfTransformer;
+    private final HtmlTransformer htmlTransformer;
     private final QRCodeGenerator qrCodeGenerator;
 
     public static VaccineType getVaccineTypeFromStringValue(String givenName) {
@@ -111,5 +110,9 @@ public class PotvrdaOIzvrsenojVakcinacijiService {
 
     public ByteArrayInputStream generatePdf(String idBroj) {
         return pdfTransformer.generatePDF(getPotvrdaOIzvrsenojVakcinaciji(idBroj), PotvrdaOVakcinaciji.class);
+    }
+
+    public ByteArrayInputStream generateXhtml(String idBroj) {
+        return htmlTransformer.generateHTML(getPotvrdaOIzvrsenojVakcinaciji(idBroj), PotvrdaOVakcinaciji.class);
     }
 }
