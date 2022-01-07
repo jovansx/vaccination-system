@@ -1,4 +1,4 @@
-import { IzvestajOImunizaciji } from "./models/report.model";
+import { IzvestajOImunizaciji } from "../models/report.model";
 
 
 export const makeReportFromResponse = (response: any): IzvestajOImunizaciji => {

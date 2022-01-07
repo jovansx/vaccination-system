@@ -5,7 +5,7 @@ import { combineLatest, of } from 'rxjs';
 import { switchMap } from 'rxjs/operators';
 import { ReportService } from '../services/report.service';
 import { XmlConverterService } from '../services/xml-converter.service';
-import { makeReportFromResponse } from '../utils';
+import { makeReportFromResponse } from '../utils/utils';
 
 @Component({
   selector: 'app-report-info-panel',

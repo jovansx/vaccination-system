@@ -4,7 +4,7 @@ import { ReportService } from '../services/report.service';
 import { XmlConverterService } from '../services/xml-converter.service';
 import { FormControl } from '@angular/forms';
 import { format } from 'date-fns'
-import { makeReportFromResponse } from '../utils';
+import { makeReportFromResponse } from '../utils/utils';
 
 @Component({
   selector: 'app-report-page',
