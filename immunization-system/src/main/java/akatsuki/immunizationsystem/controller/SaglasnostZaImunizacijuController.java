@@ -47,6 +47,20 @@ public class SaglasnostZaImunizacijuController {
                 .body(new InputStreamResource(stream));
     }
 
+    @GetMapping(value = "/xhtml/{idBroj}", produces = MediaType.TEXT_HTML_VALUE)
+    public ResponseEntity<InputStreamResource> getSaglasnostXhtml(@PathVariable String idBroj) {
+        ByteArrayInputStream stream = saglasnostZaImunizacijuService.generateXhtml(idBroj);
+        if (stream == null)
+            return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
+        HttpHeaders headers = new HttpHeaders();
+        headers.add("Content-Disposition", "inline; filename=details.html");
+        return ResponseEntity
+                .ok()
+                .headers(headers)
+                .contentType(MediaType.TEXT_HTML)
+                .body(new InputStreamResource(stream));
+    }
+
     @PutMapping
     public void updateSaglasnostZaImunizaciju(@RequestBody String saglasnostXml) {
         saglasnostZaImunizacijuService.updateSaglasnostZaImunizaciju(saglasnostXml);

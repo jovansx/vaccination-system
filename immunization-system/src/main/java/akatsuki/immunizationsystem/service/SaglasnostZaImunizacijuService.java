@@ -7,6 +7,7 @@ import akatsuki.immunizationsystem.exceptions.NotFoundRuntimeException;
 import akatsuki.immunizationsystem.model.appointments.Appointment;
 import akatsuki.immunizationsystem.model.documents.Interesovanje;
 import akatsuki.immunizationsystem.model.documents.SaglasnostZaImunizaciju;
+import akatsuki.immunizationsystem.utils.HtmlTransformer;
 import akatsuki.immunizationsystem.utils.MetadataExtractor;
 import akatsuki.immunizationsystem.utils.PdfTransformer;
 import akatsuki.immunizationsystem.utils.Validator;
@@ -28,6 +29,7 @@ public class SaglasnostZaImunizacijuService {
     private InteresovanjeService interesovanjeService;
     private PotvrdaOIzvrsenojVakcinacijiService potvrdaOIzvrsenojVakcinacijiService;
     private PdfTransformer pdfTransformer;
+    private HtmlTransformer htmlTransformer;
     private AppointmentService appointmentService;
 
     private EmailService emailService;
@@ -37,7 +39,7 @@ public class SaglasnostZaImunizacijuService {
                              IModelMapper<SaglasnostZaImunizaciju> mapper, IModelMapper<Interesovanje> interesovanjeIModelMapper, MetadataExtractor extractor,
                              InteresovanjeService interesovanjeService,
                              AppointmentService appointmentService, EmailService emailService,
-                             @Lazy PotvrdaOIzvrsenojVakcinacijiService potvrdaOIzvrsenojVakcinacijiService, PdfTransformer pdfTransformer) {
+                             @Lazy PotvrdaOIzvrsenojVakcinacijiService potvrdaOIzvrsenojVakcinacijiService, PdfTransformer pdfTransformer, HtmlTransformer htmlTransformer) {
         this.saglasnostZaImunizacijuIDao = saglasnostZaImunizacijuIDao;
         this.digitalniSertifikatDAO = digitalniSertifikatDAO;
         this.validator = validator;
@@ -46,6 +48,7 @@ public class SaglasnostZaImunizacijuService {
         this.interesovanjeService = interesovanjeService;
         this.potvrdaOIzvrsenojVakcinacijiService = potvrdaOIzvrsenojVakcinacijiService;
         this.pdfTransformer = pdfTransformer;
+        this.htmlTransformer = htmlTransformer;
         this.appointmentService = appointmentService;
         this.emailService = emailService;
         this.interesovanjeIModelMapper = interesovanjeIModelMapper;
@@ -154,5 +157,9 @@ public class SaglasnostZaImunizacijuService {
 
     public ByteArrayInputStream generatePdf(String idBrojIndex) {
         return pdfTransformer.generatePDF(getSaglasnostZaImunizaciju(idBrojIndex), SaglasnostZaImunizaciju.class);
+    }
+
+    public ByteArrayInputStream generateXhtml(String idBroj) {
+        return htmlTransformer.generateHTML(getSaglasnostZaImunizaciju(idBroj), SaglasnostZaImunizaciju.class);
     }
 }
