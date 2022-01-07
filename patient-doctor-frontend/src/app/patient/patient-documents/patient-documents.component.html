@@ -1,2 +1,10 @@
 <app-header></app-header>
-<p>patient works!</p>
+
+<h2 *ngIf="showMessage">Trenutno nemate nijedan dokument!</h2>
+
+<div fxLayout="row" fxLayoutAlign="start start">
+  <app-document-card
+    *ngFor="let doc of lista"
+    [dokument]="doc"
+  ></app-document-card>
+</div>

@@ -5,7 +5,9 @@ import akatsuki.immunizationsystem.utils.modelmappers.IModelMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
 import java.util.Optional;
 
 @Component
@@ -29,7 +31,13 @@ public class AppointmentDAO implements IDao<Appointment> {
 
     @Override
     public Collection<Appointment> getAll() {
-        return null;
+        List<String> resourceContent = daoUtils.getResourcesByCollectionId(collectionId);
+        List<Appointment> appointments = new ArrayList<>();
+        for (String resource : resourceContent) {
+            Appointment appointment = mapper.convertToObject(resource);
+            appointments.add(appointment);
+        }
+        return appointments;
     }
 
     @Override

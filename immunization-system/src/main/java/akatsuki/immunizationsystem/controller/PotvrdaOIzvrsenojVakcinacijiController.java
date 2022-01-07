@@ -2,8 +2,14 @@ package akatsuki.immunizationsystem.controller;
 
 import akatsuki.immunizationsystem.service.PotvrdaOIzvrsenojVakcinacijiService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.core.io.InputStreamResource;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.io.ByteArrayInputStream;
 
 @RestController
 @RequestMapping("/api/potvrde")
@@ -17,10 +23,15 @@ public class PotvrdaOIzvrsenojVakcinacijiController {
         return potvrdaOIzvrsenojVakcinacijiService.getPotvrdaOIzvrsenojVakcinaciji(idBrojDoza);
     }
 
+    @GetMapping("/serie-of-first-vacine/{idBrojDoza}")
+    public String getSerijuPrveVakcine(@PathVariable String idBrojDoza) {
+        return potvrdaOIzvrsenojVakcinacijiService.getSerijuPrveVakcine(idBrojDoza);
+    }
+
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public String createPotvrdaOIzvrsenojVakcinaciji(@RequestBody String potvrdaOIzvrsenojVakcinacijiXml) {
-        return potvrdaOIzvrsenojVakcinacijiService.createPotvrdaOIzvrsenojVakcinaciji(potvrdaOIzvrsenojVakcinacijiXml);
+    public void createPotvrdaOIzvrsenojVakcinaciji(@RequestBody String potvrdaOIzvrsenojVakcinacijiXml) {
+        potvrdaOIzvrsenojVakcinacijiService.createPotvrdaOIzvrsenojVakcinaciji(potvrdaOIzvrsenojVakcinacijiXml);
     }
 
     @GetMapping("/doze/{periodOd}/{periodDo}")
@@ -32,4 +43,19 @@ public class PotvrdaOIzvrsenojVakcinacijiController {
     public String getResourcesCountByProizvodjaci(@PathVariable String periodOd, @PathVariable String periodDo) {
         return potvrdaOIzvrsenojVakcinacijiService.getResourcesCountByProizvodjaci(periodOd, periodDo);
     }
+
+    @GetMapping(value = "/pdf/{idBroj}", produces = MediaType.APPLICATION_PDF_VALUE)
+    public ResponseEntity<InputStreamResource> getPotvrdaPdf(@PathVariable String idBroj) {
+        ByteArrayInputStream stream = potvrdaOIzvrsenojVakcinacijiService.generatePdf(idBroj);
+        if (stream == null)
+            return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
+        HttpHeaders headers = new HttpHeaders();
+        headers.add("Content-Disposition", "inline; filename=details.pdf");
+        return ResponseEntity
+                .ok()
+                .headers(headers)
+                .contentType(MediaType.APPLICATION_PDF)
+                .body(new InputStreamResource(stream));
+    }
+
 }

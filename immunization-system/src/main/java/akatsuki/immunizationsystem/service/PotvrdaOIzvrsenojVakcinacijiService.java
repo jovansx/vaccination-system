@@ -11,6 +11,8 @@ import akatsuki.immunizationsystem.model.dto.RaspodelaPoProizvodjacimaDTO;
 import akatsuki.immunizationsystem.model.vaccine.VaccineType;
 import akatsuki.immunizationsystem.utils.CalendarPeriod;
 import akatsuki.immunizationsystem.utils.MetadataExtractor;
+import akatsuki.immunizationsystem.utils.PdfTransformer;
+import akatsuki.immunizationsystem.utils.QRCodeGenerator;
 import akatsuki.immunizationsystem.utils.Validator;
 import akatsuki.immunizationsystem.utils.modelmappers.IModelMapper;
 import lombok.RequiredArgsConstructor;
@@ -21,6 +23,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.List;
+import java.io.ByteArrayInputStream;
 import java.util.stream.Stream;
 
 @Service
@@ -34,12 +37,20 @@ public class PotvrdaOIzvrsenojVakcinacijiService {
     private final MetadataExtractor extractor;
     private final SaglasnostZaImunizacijuService saglasnostZaImunizacijuService;
     private final RestTemplate restTemplate;
+    private final PdfTransformer pdfTransformer;
+    private final QRCodeGenerator qrCodeGenerator;
 
     public static VaccineType getVaccineTypeFromStringValue(String givenName) {
         return Stream.of(VaccineType.values())
                 .filter(direction -> direction.label.equals(givenName))
                 .findFirst()
                 .orElse(null);
+    }
+
+    public String getSerijuPrveVakcine(String idBrojDoza) {
+        PotvrdaOVakcinaciji potvrdaOVakcinaciji = potvrdaOVakcinacijiIDao.get(idBrojDoza).
+                orElseThrow(() -> new NotFoundRuntimeException("Nije pronadjena potvrda sa unetim " + idBrojDoza + "."));
+        return potvrdaOVakcinaciji.getPrimljeneVakcine().getDoza().get(0).getSerija();
     }
 
     public String getPotvrdaOIzvrsenojVakcinaciji(String idBrojDoza) throws RuntimeException {
@@ -119,6 +130,7 @@ public class PotvrdaOIzvrsenojVakcinacijiService {
 
         decreaseAmountOfVaccine(potvrdaOVakcinaciji);
 
+        potvrdaOVakcinaciji.setQrCode(qrCodeGenerator.getQRCodeImage("http://localhost:8081/api/potvrde/pdf/" + documentId));
         return potvrdaOVakcinacijiIDao.save(potvrdaOVakcinaciji);
     }
 
@@ -127,8 +139,8 @@ public class PotvrdaOIzvrsenojVakcinacijiService {
 
         int dozesSize = potvrdaOVakcinaciji.getPrimljeneVakcine().getDoza().size();
 
-        restTemplate.put("http://localhost:8083/api/vakcine/" + vaccine.name() + "/" +
-                potvrdaOVakcinaciji.getPrimljeneVakcine().getDoza().get(dozesSize - 1).getSerija(), null);
+//        restTemplate.put("http://localhost:8083/api/vakcine/" + vaccine.name() + "/" +
+//                potvrdaOVakcinaciji.getPrimljeneVakcine().getDoza().get(dozesSize - 1).getSerija(), null);
     }
 
     private void setLinkToThisDocument(PotvrdaOVakcinaciji potvrdaOVakcinaciji) {
@@ -154,5 +166,9 @@ public class PotvrdaOIzvrsenojVakcinacijiService {
             potvrdaOVakcinaciji.setHref("http://www.akatsuki.org/saglasnosti/" + referencedObjectId);
 
         potvrdaOVakcinacijiIDao.save(potvrdaOVakcinaciji);
+    }
+
+    public ByteArrayInputStream generatePdf(String idBroj) {
+        return pdfTransformer.generatePDF(getPotvrdaOIzvrsenojVakcinaciji(idBroj), PotvrdaOVakcinaciji.class);
     }
 }

@@ -1,0 +1,37 @@
+<mat-card>
+  <mat-card-title>{{ dokument.NAZIVDOKUMENTA }}</mat-card-title>
+  <mat-card-subtitle
+    >Id dokumneta: {{ dokument.IDDOKUMENTA }}</mat-card-subtitle
+  >
+  <mat-card-content></mat-card-content>
+  <mat-card-footer>
+    <button mat-button [matMenuTriggerFor]="menu">
+      HTML
+      <mat-icon>cloud</mat-icon>
+    </button>
+    <mat-menu #menu="matMenu">
+      <button mat-menu-item (click)="display('xhtml')">
+        Prikazi
+        <mat-icon style="color: black; margin-left: 20px">search</mat-icon>
+      </button>
+      <button mat-menu-item (click)="download('xhtml')">
+        Preuzmi
+        <mat-icon style="color: black; margin-left: 10px">download</mat-icon>
+      </button>
+    </mat-menu>
+    <button mat-button [matMenuTriggerFor]="menu2">
+      PDF
+      <mat-icon>picture_as_pdf</mat-icon>
+    </button>
+    <mat-menu #menu2="matMenu">
+      <button mat-menu-item (click)="display('pdf')">
+        Prikazi
+        <mat-icon style="color: black; margin-left: 20px">search</mat-icon>
+      </button>
+      <button mat-menu-item (click)="download('pdf')">
+        Preuzmi
+        <mat-icon style="color: black; margin-left: 10px">download</mat-icon>
+      </button>
+    </mat-menu>
+  </mat-card-footer>
+</mat-card>

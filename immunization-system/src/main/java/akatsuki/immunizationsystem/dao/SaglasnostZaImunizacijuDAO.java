@@ -93,6 +93,7 @@ public class SaglasnostZaImunizacijuDAO implements ISaglasnostZaImunizacijuDAO {
 
     @Override
     public void delete(SaglasnostZaImunizaciju saglasnostZaImunizaciju) {
-
+        String id = saglasnostZaImunizaciju.getAbout().split("http://www.akatsuki.org/saglasnosti/")[1];
+        daoUtils.deleteResource(collectionId, id);
     }
 }

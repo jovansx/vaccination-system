@@ -15,6 +15,7 @@ import java.util.Calendar;
 @XmlType(name = "Appointment", propOrder = {
         "pacijentId",
         "termin",
+        "obradjeno",
 })
 @Data
 @NoArgsConstructor
@@ -27,6 +28,8 @@ public class Appointment {
     protected XMLGregorianCalendar termin;
     @XmlElement(required = true, name = "pacijent_id")
     private String pacijentId;
+    @XmlElement(required = true, name = "obradjeno")
+    private boolean obradjeno;
 
     public String formatTimeToString() {
         Calendar calendar = termin.toGregorianCalendar();

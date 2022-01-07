@@ -12,6 +12,7 @@ import java.io.Serializable;
 @NoArgsConstructor
 @XmlRootElement(name = "jwt_response")
 public class JWTResponse implements Serializable {
+    private boolean error;
     private String jwtToken;
 }
 

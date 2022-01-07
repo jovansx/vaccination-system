@@ -197,7 +197,7 @@ public class SaglasnostZaImunizaciju {
         protected XMLGregorianCalendar datumPopunjavanja;
 
         public String getIdBrojFromDrzavljanstvo() {
-            if (getDrzavljanstvo().getSrpsko().getIdBroj().getValue() == null)
+            if (getDrzavljanstvo().getSrpsko() == null)
                 return getDrzavljanstvo().getStrano().getIdBroj().getValue();
             return getDrzavljanstvo().getSrpsko().getIdBroj().getValue();
         }

@@ -23,6 +23,17 @@
     </properties>
     <dependencies>
         <dependency>
+            <groupId>com.google.zxing</groupId>
+            <artifactId>core</artifactId>
+            <version>3.4.0</version>
+        </dependency>
+        <dependency>
+            <groupId>com.google.zxing</groupId>
+            <artifactId>javase</artifactId>
+            <version>3.4.0</version>
+        </dependency>
+
+        <dependency>
             <groupId>net.sf.xmldb-org</groupId>
             <artifactId>xmldb-api</artifactId>
             <version>${xmldb-api.version}</version>
@@ -32,6 +43,27 @@
             <artifactId>exist-core</artifactId>
             <version>5.0.0</version>
             <scope>runtime</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-mail</artifactId>
+            <version>2.6.2</version>
+            <exclusions>
+                <exclusion>
+                    <groupId>org.springframework.boot</groupId>
+                    <artifactId>spring-boot-starter-logging</artifactId>
+                </exclusion>
+            </exclusions>
+        </dependency>
+        <dependency>
+            <groupId>net.sf.saxon</groupId>
+            <artifactId>Saxon-HE</artifactId>
+            <version>10.6</version>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.xmlgraphics</groupId>
+            <artifactId>fop</artifactId>
+            <version>2.6</version>
         </dependency>
         <dependency>
             <groupId>com.sun.xml.bind</groupId>

@@ -11,6 +11,7 @@ import javax.xml.bind.annotation.*;
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "Doktor", propOrder = {
         "zdravstvenaUstanova",
+        "punkt",
 })
 @XmlRootElement(name = "doktor")
 @Data
@@ -22,8 +23,12 @@ public class Doktor extends Korisnik {
     @XmlElement(required = true, name = "zdravstvena_ustanova")
     protected String zdravstvenaUstanova;
 
-    public Doktor(String zdravstvenaUstanova, String idBroj, String ime, String prezime, String fiksniTelefon, String email, String sifra, TipKorisnika tip) {
+    @XmlElement(required = true, name = "punkt")
+    protected int punkt;
+
+    public Doktor(String zdravstvenaUstanova, int punkt, String idBroj, String ime, String prezime, String fiksniTelefon, String email, String sifra, TipKorisnika tip) {
         super(idBroj, ime, prezime, fiksniTelefon, email, sifra, tip);
         this.zdravstvenaUstanova = zdravstvenaUstanova;
+        this.punkt = punkt;
     }
 }

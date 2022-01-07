@@ -7,7 +7,9 @@ import akatsuki.immunizationsystem.exceptions.NotFoundRuntimeException;
 import akatsuki.immunizationsystem.model.appointments.Appointment;
 import akatsuki.immunizationsystem.model.documents.Interesovanje;
 import akatsuki.immunizationsystem.utils.CalendarPeriod;
+import akatsuki.immunizationsystem.utils.HtmlTransformer;
 import akatsuki.immunizationsystem.utils.MetadataExtractor;
+import akatsuki.immunizationsystem.utils.PdfTransformer;
 import akatsuki.immunizationsystem.utils.Validator;
 import akatsuki.immunizationsystem.utils.modelmappers.IModelMapper;
 import lombok.RequiredArgsConstructor;
@@ -18,6 +20,8 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.List;
 
+import java.io.ByteArrayInputStream;
+
 @Service
 @RequiredArgsConstructor
 public class InteresovanjeService {
@@ -25,9 +29,11 @@ public class InteresovanjeService {
     private final Validator validator;
     private final IModelMapper<Interesovanje> mapper;
     private final MetadataExtractor extractor;
+    private final EmailService emailService;
+    private final PdfTransformer pdfTransformer;
+    private final HtmlTransformer htmlTransformer;
 
-    private final IDao<Appointment> appointmentIDao;
-    private final IModelMapper<Appointment> mapper2;
+    private final AppointmentService appointmentService;
 
 
     public String getInteresovanje(String idBroj) throws RuntimeException {
@@ -53,6 +59,7 @@ public class InteresovanjeService {
     }
 
     public String createInteresovanje(String interesovanjeXml) throws RuntimeException {
+    public void createInteresovanje(String interesovanjeXml) throws RuntimeException {
         Interesovanje interesovanje = mapper.convertToObject(interesovanjeXml);
         if (interesovanje == null)
             throw new BadRequestRuntimeException("Dokument koji ste poslali nije validan.");
@@ -62,7 +69,11 @@ public class InteresovanjeService {
 
         if (!extractor.extractAndSaveToRdf(interesovanjeXml, "/interesovanja"))
             throw new BadRequestRuntimeException("Ekstrakcija metapodataka nije uspela.");
-        return interesovanjeDAO.save(interesovanje);
+
+        Appointment appointment = appointmentService.createAppointment(interesovanje.getPodnosilac().getIdBroj().getValue());
+        emailService.notifyPatientAboutReservedAppointment(interesovanje, appointment);
+
+        interesovanjeDAO.save(interesovanje);
     }
 
     public void setReference(String objectId, String referencedObjectId) {
@@ -73,4 +84,11 @@ public class InteresovanjeService {
         interesovanjeDAO.save(interesovanje);
     }
 
+    public ByteArrayInputStream generatePdf(String idBroj) {
+        return pdfTransformer.generatePDF(getInteresovanje(idBroj), Interesovanje.class);
+    }
+
+    public ByteArrayInputStream generateXhtml(String idBroj) {
+        return htmlTransformer.generateHTML(getInteresovanje(idBroj), Interesovanje.class);
+    }
 }

@@ -29,15 +29,21 @@ public class JWTController {
         String[] parts3 = xmlLogin.split("<password>");
         String[] parts4 = parts3[1].split("</password>");
 
-        JWTRequest authenticationRequest = new JWTRequest(parts2[0].trim(), parts4[0].trim());
-        authenticate(authenticationRequest.getUsername(), authenticationRequest.getPassword());
+        String errorMessage = "";
+        try {
+            JWTRequest authenticationRequest = new JWTRequest(parts2[0].trim(), parts4[0].trim());
+            authenticate(authenticationRequest.getUsername(), authenticationRequest.getPassword());
 
-        final UserDetails userDetails = userDetailsService
-                .loadUserByUsername(authenticationRequest.getUsername());
+            final UserDetails userDetails = userDetailsService
+                    .loadUserByUsername(authenticationRequest.getUsername());
 
-        final String token = jwtTokenUtil.generateToken(userDetails);
+            final String token = jwtTokenUtil.generateToken(userDetails);
 
-        return new JWTResponse(token);
+            return new JWTResponse(false, token);
+        } catch (Exception e) {
+            errorMessage = e.getLocalizedMessage();
+        }
+        return new JWTResponse(true, errorMessage);
     }
 
     private void authenticate(String username, String password) throws Exception {

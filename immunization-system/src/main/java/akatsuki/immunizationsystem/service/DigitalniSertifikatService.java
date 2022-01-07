@@ -7,6 +7,8 @@ import akatsuki.immunizationsystem.exceptions.NotFoundRuntimeException;
 import akatsuki.immunizationsystem.model.documents.DigitalniSertifikat;
 import akatsuki.immunizationsystem.utils.CalendarPeriod;
 import akatsuki.immunizationsystem.utils.MetadataExtractor;
+import akatsuki.immunizationsystem.utils.PdfTransformer;
+import akatsuki.immunizationsystem.utils.QRCodeGenerator;
 import akatsuki.immunizationsystem.utils.Validator;
 import akatsuki.immunizationsystem.utils.modelmappers.IModelMapper;
 import lombok.RequiredArgsConstructor;
@@ -14,6 +16,8 @@ import org.springframework.stereotype.Service;
 
 import java.util.Calendar;
 import java.util.List;
+
+import java.io.ByteArrayInputStream;
 
 @Service
 @RequiredArgsConstructor
@@ -23,6 +27,8 @@ public class DigitalniSertifikatService {
     private final IModelMapper<DigitalniSertifikat> mapper;
     private final MetadataExtractor extractor;
     private final ZahtevZaSertifikatService zahtevZaSertifikatService;
+    private final PdfTransformer pdfTransformer;
+    private final QRCodeGenerator qrCodeGenerator;
 
     public String getDigitalniSertifikat(String idBroj) throws RuntimeException {
         if (!validator.isIdValid(idBroj))
@@ -59,14 +65,18 @@ public class DigitalniSertifikatService {
 
         setLinkToThisDocument(digitalniSertifikat);
 
+        digitalniSertifikat.setQrCode(qrCodeGenerator.getQRCodeImage("http://localhost:8081/api/digitalni-sertifikati/pdf/"
+                + digitalniSertifikat.getPrimalac().getIdBroj().getValue()));
         return digitalniSertifikatDAO.save(digitalniSertifikat);
     }
 
     private void setLinkToThisDocument(DigitalniSertifikat digitalniSertifikat) {
-//        potvrdaOIzvrsenojVakcinacijiService.getPotvrdaOIzvrsenojVakcinaciji(
-//                    zahtevZaSertifikat.getPodnosilac().getIdBroj().getValue() + "_2");
         zahtevZaSertifikatService.setReference(digitalniSertifikat.getPrimalac().getIdBroj().getValue(),
                 digitalniSertifikat.getPrimalac().getIdBroj().getValue());
+    }
+
+    public ByteArrayInputStream generatePdf(String idBroj) {
+        return pdfTransformer.generatePDF(getDigitalniSertifikat(idBroj), DigitalniSertifikat.class);
     }
 
 }

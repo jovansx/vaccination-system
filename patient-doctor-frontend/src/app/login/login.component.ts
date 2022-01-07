@@ -1,4 +1,3 @@
-import * as xml2js from 'xml2js';
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
@@ -35,6 +34,10 @@ export class LoginComponent implements OnInit {
     this._auth.loginUser(this.loginForm.value).subscribe(
       (res: any) => {
         let response = this._xml_parser.parseXmlToObject(res);
+        if(response.ERROR[0] === "true") {
+          this._toastr.error("Credentials are invalid.", "Error!")
+          return;
+        }
         localStorage.setItem('token', response.JWTTOKEN[0]);
         const type = this._jwt.getTypeFromToken();
         if (type === 'DOKTOR') {

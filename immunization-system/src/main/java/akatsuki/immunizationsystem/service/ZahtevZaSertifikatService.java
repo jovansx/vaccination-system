@@ -6,7 +6,9 @@ import akatsuki.immunizationsystem.exceptions.NotFoundRuntimeException;
 import akatsuki.immunizationsystem.model.documents.Interesovanje;
 import akatsuki.immunizationsystem.model.documents.ZahtevZaSertifikat;
 import akatsuki.immunizationsystem.utils.CalendarPeriod;
+import akatsuki.immunizationsystem.utils.HtmlTransformer;
 import akatsuki.immunizationsystem.utils.MetadataExtractor;
+import akatsuki.immunizationsystem.utils.PdfTransformer;
 import akatsuki.immunizationsystem.utils.Validator;
 import akatsuki.immunizationsystem.utils.modelmappers.IModelMapper;
 import lombok.RequiredArgsConstructor;
@@ -17,6 +19,8 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.List;
 
+import java.io.ByteArrayInputStream;
+
 @Service
 @RequiredArgsConstructor
 public class ZahtevZaSertifikatService {
@@ -25,6 +29,9 @@ public class ZahtevZaSertifikatService {
     private final IModelMapper<ZahtevZaSertifikat> mapper;
     private final MetadataExtractor extractor;
     private final PotvrdaOIzvrsenojVakcinacijiService potvrdaOIzvrsenojVakcinacijiService;
+    private final PdfTransformer pdfTransformer;
+    private final HtmlTransformer htmlTransformer;
+
 
     public String getZahtevZaSertifikat(String idBroj) throws RuntimeException {
         if (!validator.isIdValid(idBroj))
@@ -65,8 +72,6 @@ public class ZahtevZaSertifikatService {
     }
 
     private void setLinkToThisDocument(ZahtevZaSertifikat zahtevZaSertifikat) {
-//        potvrdaOIzvrsenojVakcinacijiService.getPotvrdaOIzvrsenojVakcinaciji(
-//                    zahtevZaSertifikat.getPodnosilac().getIdBroj().getValue() + "_2");
         potvrdaOIzvrsenojVakcinacijiService.setReference(zahtevZaSertifikat.getPodnosilac().getIdBroj().getValue() + "_2",
                 zahtevZaSertifikat.getPodnosilac().getIdBroj().getValue());
     }
@@ -77,5 +82,13 @@ public class ZahtevZaSertifikatService {
         zahtevZaSertifikat.setHref("http://www.akatsuki.org/digitalni-sertifikati/" + referencedObjectId);
 
         zahtevZaSertifikatDAO.save(zahtevZaSertifikat);
+    }
+
+    public ByteArrayInputStream generatePdf(String idBroj) {
+        return pdfTransformer.generatePDF(getZahtevZaSertifikat(idBroj), ZahtevZaSertifikat.class);
+    }
+
+    public ByteArrayInputStream generateXhtml(String idBroj) {
+        return htmlTransformer.generateHTML(getZahtevZaSertifikat(idBroj), ZahtevZaSertifikat.class);
     }
 }

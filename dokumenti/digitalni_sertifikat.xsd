@@ -50,6 +50,7 @@
                         </xs:sequence>
                     </xs:complexType>
                 </xs:element>
+				<xs:element name="qr_code" type="xs:string"/>
             </xs:sequence>
             <xs:attribute name="datum_i_vreme_izdavanja" use="required" type="xs:dateTime"/>
             <xs:attribute name="broj_sertifikata" use="required" type="xs:string"/>

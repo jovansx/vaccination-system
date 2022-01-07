@@ -2,7 +2,7 @@
     <h1>
       Registracija na sistem vakcinacije<mat-icon>account_circle</mat-icon>
     </h1>
-    <form class="form-container" [formGroup]="registrationForm" (ngSubmit)="registerUser()" fxFlex fxLayout="column" fxLayoutAlign="center center">
+    <form class="form-container" [formGroup]="registrationForm" (ngSubmit)="registerUser()">
       <mat-form-field appearance="fill">
         <mat-label>Unesite ime</mat-label>
         <input matInput formControlName="ime" required />
@@ -60,6 +60,10 @@
         <mat-option value="STRANO_SA_BORAVKOM">Strano sa boravkom</mat-option>
         <mat-option value="STRANO_BEZ_BORAVKA">Strano bez boravka</mat-option>
       </mat-select>
+    </mat-form-field>
+    <mat-form-field appearance="fill" *ngIf="registrationForm.controls['drzavljanstvo'].value != 'SRPSKO'">
+      <mat-label>Naziv drzavljanstva</mat-label>
+      <input matInput formControlName="nazivDrzavljanstva"/>
     </mat-form-field>
     <mat-form-field appearance="fill">
       <mat-label>{{registrationForm.controls['drzavljanstvo'].value === 'SRPSKO' ? "Unesite jmbg" : "Unesite broj pasosa"}}</mat-label>
