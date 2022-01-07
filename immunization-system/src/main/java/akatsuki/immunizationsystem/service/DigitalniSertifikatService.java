@@ -6,10 +6,7 @@ import akatsuki.immunizationsystem.exceptions.ConflictRuntimeException;
 import akatsuki.immunizationsystem.exceptions.NotFoundRuntimeException;
 import akatsuki.immunizationsystem.model.documents.DigitalniSertifikat;
 import akatsuki.immunizationsystem.model.documents.Interesovanje;
-import akatsuki.immunizationsystem.utils.MetadataExtractor;
-import akatsuki.immunizationsystem.utils.PdfTransformer;
-import akatsuki.immunizationsystem.utils.QRCodeGenerator;
-import akatsuki.immunizationsystem.utils.Validator;
+import akatsuki.immunizationsystem.utils.*;
 import akatsuki.immunizationsystem.utils.modelmappers.IModelMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -25,6 +22,7 @@ public class DigitalniSertifikatService {
     private final MetadataExtractor extractor;
     private final ZahtevZaSertifikatService zahtevZaSertifikatService;
     private final PdfTransformer pdfTransformer;
+    private final HtmlTransformer htmlTransformer;
     private final QRCodeGenerator qrCodeGenerator;
 
     public String getDigitalniSertifikat(String idBroj) throws RuntimeException {
@@ -62,4 +60,7 @@ public class DigitalniSertifikatService {
         return pdfTransformer.generatePDF(getDigitalniSertifikat(idBroj), DigitalniSertifikat.class);
     }
 
+    public ByteArrayInputStream generateXhtml(String idBroj) {
+        return htmlTransformer.generateHTML(getDigitalniSertifikat(idBroj), DigitalniSertifikat.class);
+    }
 }
