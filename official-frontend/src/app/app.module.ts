@@ -14,14 +14,22 @@ import { FlexLayoutModule } from '@angular/flex-layout';
 import { HeaderInterceptorService } from './autentification/services/header-interceptor.service';
 import { VaccinePageComponent } from './vaccine-page/vaccine-page.component';
 import { HeaderComponent } from './header/header.component';
-import { VaccineService } from './services/vaccine.service'
+import { VaccineService } from './services/vaccine.service';
+import { ReportPageComponent } from './report-page/report-page.component';
+import { SingleReportPageComponent } from './single-report-page/single-report-page.component';
+import { ReportInfoPanelComponent } from './report-info-panel/report-info-panel.component';
+import { ProgressBarDialogComponent } from './utils/progress-bar-dialog/progress-bar-dialog.component'
 
 @NgModule({
   declarations: [
     AppComponent,
     LoginComponent,
     VaccinePageComponent,
-    HeaderComponent
+    HeaderComponent,
+    ReportPageComponent,
+    SingleReportPageComponent,
+    ReportInfoPanelComponent,
+    ProgressBarDialogComponent
   ],
   imports: [
     BrowserModule,

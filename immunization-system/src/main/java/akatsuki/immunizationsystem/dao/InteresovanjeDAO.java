@@ -1,12 +1,15 @@
 package akatsuki.immunizationsystem.dao;
 
 import akatsuki.immunizationsystem.model.documents.Interesovanje;
+import akatsuki.immunizationsystem.model.documents.SaglasnostZaImunizaciju;
+import akatsuki.immunizationsystem.utils.CalendarPeriod;
 import akatsuki.immunizationsystem.utils.modelmappers.IModelMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
-import java.util.Collection;
-import java.util.Optional;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.*;
 
 @Component
 @RequiredArgsConstructor
@@ -29,7 +32,18 @@ public class InteresovanjeDAO implements IDao<Interesovanje> {
 
     @Override
     public Collection<Interesovanje> getAll() {
-        return null;
+        List<String> resourceContent = daoUtils.getResourcesByCollectionId(collectionId);
+        List<Interesovanje> interesovanja = new ArrayList<>();
+        for (String resource : resourceContent) {
+            Interesovanje interesovanje = mapper.convertToObject(resource);
+            interesovanja.add(interesovanje);
+        }
+        return interesovanja;
+    }
+
+    @Override
+    public int getResourcesCount() {
+        return daoUtils.getResourcesCount(collectionId);
     }
 
     @Override

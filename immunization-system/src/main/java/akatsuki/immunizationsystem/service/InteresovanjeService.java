@@ -6,6 +6,7 @@ import akatsuki.immunizationsystem.exceptions.ConflictRuntimeException;
 import akatsuki.immunizationsystem.exceptions.NotFoundRuntimeException;
 import akatsuki.immunizationsystem.model.appointments.Appointment;
 import akatsuki.immunizationsystem.model.documents.Interesovanje;
+import akatsuki.immunizationsystem.utils.CalendarPeriod;
 import akatsuki.immunizationsystem.utils.HtmlTransformer;
 import akatsuki.immunizationsystem.utils.MetadataExtractor;
 import akatsuki.immunizationsystem.utils.PdfTransformer;
@@ -13,6 +14,11 @@ import akatsuki.immunizationsystem.utils.Validator;
 import akatsuki.immunizationsystem.utils.modelmappers.IModelMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.List;
 
 import java.io.ByteArrayInputStream;
 
@@ -36,6 +42,20 @@ public class InteresovanjeService {
 
         Interesovanje interesovanje = interesovanjeDAO.get(idBroj).orElseThrow(() -> new NotFoundRuntimeException("Osoba s id-om " + idBroj + " nije podnela interesovanje za vakcinacijom."));
         return mapper.convertToXml(interesovanje);
+    }
+
+    public int getResourcesCountInPeriod(String periodOd, String periodDo) {
+        List<Interesovanje> allInteresovanja = (List<Interesovanje>) interesovanjeDAO.getAll();
+        CalendarPeriod.calendarSetTimeByPeriod(periodOd, periodDo);
+        int count = 0;
+        for(Interesovanje i: allInteresovanja) {
+            Calendar datumPodnosenjaInteresovanja = i.getDatumPodnosenja().toGregorianCalendar();
+            if(datumPodnosenjaInteresovanja.compareTo(CalendarPeriod.periodOdCal) == 1 && datumPodnosenjaInteresovanja.compareTo(CalendarPeriod.periodDoCal) == -1) {
+                count++;
+            }
+
+        }
+        return count;
     }
 
     public void createInteresovanje(String interesovanjeXml) throws RuntimeException {

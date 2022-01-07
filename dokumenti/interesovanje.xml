@@ -6,7 +6,8 @@
     xsi:schemaLocation="http://www.akatsuki.org interesovanje.xsd
     http://www.akatsuki.org/tipovi tipovi.xsd"
     xmlns:pred="http://www.akatsuki.org/rdf/examples/predicate/"
-    about="http://www.akatsuki.org/interesovanja/1510999800012">
+    about="http://www.akatsuki.org/interesovanja/1510999800012"
+	datumPodnosenja="2021-01-01">
     <drzavljanstvo>srpsko</drzavljanstvo>
     <podnosilac>
         <t:ime property="pred:ime" datatype="xs:string">Aleksandar</t:ime>

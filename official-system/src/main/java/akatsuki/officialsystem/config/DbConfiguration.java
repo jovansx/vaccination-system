@@ -1,6 +1,10 @@
 package akatsuki.officialsystem.config;
 
 import akatsuki.officialsystem.dao.IDao;
+import akatsuki.officialsystem.model.documents.IzvestajOImunizaciji;
+import akatsuki.officialsystem.model.types.TCBrojInteresovanja;
+import akatsuki.officialsystem.model.types.TCIzdatoZelenih;
+import akatsuki.officialsystem.model.types.TCPrimljenoZelenih;
 import akatsuki.officialsystem.model.users.Sluzbenik;
 import akatsuki.officialsystem.model.vaccine.Vaccine;
 import akatsuki.officialsystem.model.vaccine.VaccineType;
@@ -9,6 +13,12 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
+import javax.xml.datatype.DatatypeFactory;
+import javax.xml.datatype.XMLGregorianCalendar;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.GregorianCalendar;
 import java.util.List;
 
 @Configuration
@@ -46,6 +56,49 @@ public class DbConfiguration {
             vaccineIDao.save(v3);
             vaccineIDao.save(v4);
             vaccineIDao.save(v5);
+
+//            DateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+//            GregorianCalendar calendar1 = new GregorianCalendar();
+//            GregorianCalendar calendar2 = new GregorianCalendar();
+//            Date dateFrom1 = format.parse("2020-01-01");
+//            Date dateTo1 = format.parse("2020-01-31");
+//            calendar1.setTime(dateFrom1);
+//            calendar2.setTime(dateTo1);
+//
+//            IzvestajOImunizaciji.Period period1 = new IzvestajOImunizaciji.Period(DatatypeFactory.newInstance().newXMLGregorianCalendar(calendar1), DatatypeFactory.newInstance().newXMLGregorianCalendar(calendar2));
+//
+//            dateFrom1 = format.parse("2020-02-01");
+//            dateTo1 = format.parse("2020-02-28");
+//            calendar1.setTime(dateFrom1);
+//            calendar2.setTime(dateTo1);
+//
+//            IzvestajOImunizaciji.Period period2 = new IzvestajOImunizaciji.Period(DatatypeFactory.newInstance().newXMLGregorianCalendar(calendar1), DatatypeFactory.newInstance().newXMLGregorianCalendar(calendar2));
+//
+//            dateFrom1 = format.parse("2020-03-01");
+//            dateTo1 = format.parse("2020-03-31");
+//            calendar1.setTime(dateFrom1);
+//            calendar2.setTime(dateTo1);
+//
+//            IzvestajOImunizaciji.Period period3 = new IzvestajOImunizaciji.Period(DatatypeFactory.newInstance().newXMLGregorianCalendar(calendar1), DatatypeFactory.newInstance().newXMLGregorianCalendar(calendar2));
+//
+//            dateFrom1 = format.parse("2020-04-01");
+//            dateTo1 = format.parse("2020-04-30");
+//            calendar1.setTime(dateFrom1);
+//            calendar2.setTime(dateTo1);
+//
+//            IzvestajOImunizaciji.Period period4 = new IzvestajOImunizaciji.Period(DatatypeFactory.newInstance().newXMLGregorianCalendar(calendar1), DatatypeFactory.newInstance().newXMLGregorianCalendar(calendar2));
+//
+//            dateFrom1 = format.parse("2020-05-01");
+//            dateTo1 = format.parse("2020-05-31");
+//            calendar1.setTime(dateFrom1);
+//            calendar2.setTime(dateTo1);
+//
+//            IzvestajOImunizaciji.Period period5 = new IzvestajOImunizaciji.Period(DatatypeFactory.newInstance().newXMLGregorianCalendar(calendar1), DatatypeFactory.newInstance().newXMLGregorianCalendar(calendar2));
+//            IzvestajOImunizaciji.Dokumenti.ZeleniSertifikat zeleni1 = new IzvestajOImunizaciji.Dokumenti.ZeleniSertifikat(new TCPrimljenoZelenih(), new TCIzdatoZelenih());
+//            IzvestajOImunizaciji.Dokumenti dokumenti1 = new IzvestajOImunizaciji.Dokumenti(new TCBrojInteresovanja(), zeleni1);
+//            IzvestajOImunizaciji.DozeVakcina doze1 = new IzvestajOImunizaciji.DozeVakcina(new IzvestajOImunizaciji.DozeVakcina.RaspodelaPoDozama(), new IzvestajOImunizaciji.DozeVakcina.RaspodelaPoProizvodjacima(), 20);
+//
+//            IzvestajOImunizaciji izvestaj1 = new IzvestajOImunizaciji(period5, dokumenti1, doze1, DatatypeFactory.newInstance().newXMLGregorianCalendar(calendar1), "http://www.akatsuki.org/izvestaji/2020-01-01_2020-01-31");
 
             log.info("Database is populated");
         };

@@ -32,6 +32,27 @@ public class DaoUtils {
             ex.printStackTrace();
         }
     }
+    
+    public int getResourcesCount(String collectionId) {
+        Collection col = null;
+        int count = 0;
+        try {
+            col = getOrCreateCollection(collectionId, 0);
+            col.setProperty(OutputKeys.INDENT, "yes");
+            count = col.getResourceCount();
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        } finally {
+            if (col != null) {
+                try {
+                    col.close();
+                } catch (XMLDBException ex) {
+                    ex.printStackTrace();
+                }
+            }
+        }
+        return count;
+    }
 
     public List<String> getResourcesByCollectionId(String collectionId) {
         Collection col = null;

@@ -1,14 +1,14 @@
 package akatsuki.immunizationsystem.dao;
 
 import akatsuki.immunizationsystem.model.documents.ZahtevZaSertifikat;
+import akatsuki.immunizationsystem.utils.CalendarPeriod;
 import akatsuki.immunizationsystem.utils.modelmappers.IModelMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
-import java.util.Optional;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.*;
 
 @Component
 @RequiredArgsConstructor
@@ -49,6 +49,11 @@ public class ZahtevZaSertifikatDAO implements IZahtevZaSertifikatDAO {
             zahtevi.add(zahtevZaSertifikat);
         }
         return zahtevi;
+    }
+
+    @Override
+    public int getResourcesCount() {
+        return daoUtils.getResourcesCount(collectionId);
     }
 
     @Override

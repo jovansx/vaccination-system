@@ -2,7 +2,7 @@
 <div class="vaccine-page-container">
   <h1>Vakcine</h1>
   <mat-divider></mat-divider>
-  <div class="vaccine-table">
+  <div class="vaccine-table" *ngIf="loaded">
     <table mat-table [dataSource]="vaccines" class="mat-elevation-z8">
     
       <ng-container matColumnDef="name">
@@ -45,5 +45,7 @@
       <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
     </table>
   </div>
-  
+  <div [hidden]="loaded">
+    <mat-spinner></mat-spinner>
+  </div>
 </div>

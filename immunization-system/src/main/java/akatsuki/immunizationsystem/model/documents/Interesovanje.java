@@ -8,6 +8,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.xml.bind.annotation.*;
+import javax.xml.datatype.XMLGregorianCalendar;
 import java.util.List;
 
 @XmlAccessorType(XmlAccessType.FIELD)
@@ -38,6 +39,9 @@ public class Interesovanje {
     protected String rel;
     @XmlAttribute(name = "href")
     protected String href;
+    @XmlAttribute(name = "datumPodnosenja")
+    @XmlSchemaType(name = "date")
+    protected XMLGregorianCalendar datumPodnosenja;
 
     @XmlAccessorType(XmlAccessType.FIELD)
     @XmlType(name = "", propOrder = {"vakcina"})

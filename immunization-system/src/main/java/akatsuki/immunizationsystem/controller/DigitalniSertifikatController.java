@@ -29,6 +29,11 @@ public class DigitalniSertifikatController {
         return digitalniSertifikatService.createDigitalniSertifikat(digitalniSertifikatXml);
     }
 
+    @GetMapping("/{periodOd}/{periodDo}")
+    public int getResourcesCount(@PathVariable String periodOd, @PathVariable String periodDo) {
+        return digitalniSertifikatService.getResourcesCountInPeriod(periodOd, periodDo);
+    }
+
     @GetMapping(value = "/pdf/{idBroj}", produces = MediaType.APPLICATION_PDF_VALUE)
     public ResponseEntity<InputStreamResource> getSertifikatPdf(@PathVariable String idBroj) {
         ByteArrayInputStream stream = digitalniSertifikatService.generatePdf(idBroj);

@@ -5,11 +5,19 @@ import akatsuki.immunizationsystem.exceptions.BadRequestRuntimeException;
 import akatsuki.immunizationsystem.exceptions.ConflictRuntimeException;
 import akatsuki.immunizationsystem.exceptions.NotFoundRuntimeException;
 import akatsuki.immunizationsystem.model.documents.DigitalniSertifikat;
+import akatsuki.immunizationsystem.utils.CalendarPeriod;
+import akatsuki.immunizationsystem.utils.MetadataExtractor;
+import akatsuki.immunizationsystem.utils.PdfTransformer;
+import akatsuki.immunizationsystem.utils.QRCodeGenerator;
+import akatsuki.immunizationsystem.utils.Validator;
 import akatsuki.immunizationsystem.model.documents.Interesovanje;
 import akatsuki.immunizationsystem.utils.*;
 import akatsuki.immunizationsystem.utils.modelmappers.IModelMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+
+import java.util.Calendar;
+import java.util.List;
 
 import java.io.ByteArrayInputStream;
 
@@ -31,6 +39,20 @@ public class DigitalniSertifikatService {
 
         DigitalniSertifikat digitalniSertifikat = digitalniSertifikatDAO.get(idBroj).orElseThrow(() -> new NotFoundRuntimeException("Osoba s id-om " + idBroj + " nema digitalni zeleni sertifikat."));
         return mapper.convertToXml(digitalniSertifikat);
+    }
+
+    public int getResourcesCountInPeriod(String periodOd, String periodDo) {
+        List<DigitalniSertifikat> allSertifikati = (List<DigitalniSertifikat>) digitalniSertifikatDAO.getAll();
+        CalendarPeriod.calendarSetTimeByPeriod(periodOd, periodDo);
+        int count = 0;
+        for(DigitalniSertifikat d: allSertifikati) {
+            Calendar datumIzdavanjaSertifikata = d.getDatumIVremeIzdavanja().toGregorianCalendar();
+            if(datumIzdavanjaSertifikata.compareTo(CalendarPeriod.periodOdCal) > 0 && datumIzdavanjaSertifikata.compareTo(CalendarPeriod.periodDoCal) < 0) {
+                count++;
+            }
+
+        }
+        return count;
     }
 
     public String createDigitalniSertifikat(String digitalniSertifikatXml) throws RuntimeException {

@@ -56,4 +56,9 @@ public class InteresovanjeController {
                 .contentType(MediaType.TEXT_HTML)
                 .body(new InputStreamResource(stream));
     }
+
+    @GetMapping("/{periodOd}/{periodDo}")
+    public int getResourcesCount(@PathVariable String periodOd, @PathVariable String periodDo) {
+        return interesovanjeService.getResourcesCountInPeriod(periodOd, periodDo);
+    }
 }

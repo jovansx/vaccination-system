@@ -1,0 +1,62 @@
+<div fxLayout="column" *ngIf="loaded">
+  <h2>Dokumenti</h2>
+  <mat-divider></mat-divider>
+  <div class="documents-panel">
+    <div class="report-input-panel" [ngClass]="{'dotted': !this.componentPart}" fxLayout="row" fxLayoutAlign="space-between center"> 
+      <p>Broj interesovanja za imunizaciju:</p>
+      <div style="border-bottom: 1px solid black;"></div>
+      <input [value]="izvestajOImunizaciji.brojInteresovanja" class="report-input" readonly/>
+    </div>
+    
+    <div class="report-input-panel" [ngClass]="{'dotted': !this.componentPart}" fxLayout="row" fxLayoutAlign="space-between center">
+      <p>Podnesenih zahteva za digitalni zeleni sertifikat:</p>
+      <input [value]="izvestajOImunizaciji.primljenoSertifikata" class="report-input" readonly/>
+    </div>
+    <div class="report-input-panel" [ngClass]="{'dotted': !this.componentPart}" fxLayout="row" fxLayoutAlign="space-between center">
+      <p>Izdato digitalnih zelenih sertifikata:</p>
+      <input [value]="izvestajOImunizaciji.izdatoSertifikata" class="report-input" readonly/>
+    </div>
+  </div>
+  
+  <div class="vaccine-doses">
+    <h2>Doze vakcina</h2>
+    <mat-divider></mat-divider>
+    <h3 style="margin-top:20px">Raspodela po dozama</h3>
+    <div class="report-input-panel" [ngClass]="{'dotted': !this.componentPart}" fxLayout="row" fxLayoutAlign="space-between center">
+      <p>Izdato doza vakcina:</p>
+      <input [value]="izvestajOImunizaciji.ukupnoIzdato" class="report-input" readonly/>
+    </div>
+    <div class="report-input-panel" [ngClass]="{'dotted': !this.componentPart}" fxLayout="row" fxLayoutAlign="space-between center">
+      <p>Doza broj 1:</p>
+      <input [value]="izvestajOImunizaciji.doza1" class="report-input" readonly/>
+    </div>
+    <div class="report-input-panel" [ngClass]="{'dotted': !this.componentPart}" fxLayout="row" fxLayoutAlign="space-between center">
+      <p>Doza broj 2:</p>
+      <input [value]="izvestajOImunizaciji.doza2" class="report-input" readonly/>
+    </div>
+    <h3>Raspodela po proizvodjacima</h3>
+    <div class="report-input-panel" [ngClass]="{'dotted': !this.componentPart}" fxLayout="row" fxLayoutAlign="space-between center">
+      <p>Pfizer-BioNTech:</p>
+      <input [value]="izvestajOImunizaciji.pfizer" class="report-input" readonly/>
+    </div>
+    <div class="report-input-panel" [ngClass]="{'dotted': !this.componentPart}" fxLayout="row" fxLayoutAlign="space-between center">
+      <p>Sputnik V:</p>
+      <input [value]="izvestajOImunizaciji.sputnikV" class="report-input" readonly/>
+    </div>
+    <div class="report-input-panel" [ngClass]="{'dotted': !this.componentPart}" fxLayout="row" fxLayoutAlign="space-between center">
+      <p>Sinopharm:</p>
+      <input [value]="izvestajOImunizaciji.sinopharm" class="report-input" readonly/>
+    </div>
+    <div class="report-input-panel" [ngClass]="{'dotted': !this.componentPart}" fxLayout="row" fxLayoutAlign="space-between center">
+      <p>AstraZeneca:</p>
+      <input [value]="izvestajOImunizaciji.astraZeneca" class="report-input" readonly/>
+    </div>
+    <div class="report-input-panel" [ngClass]="{'dotted': !this.componentPart}" fxLayout="row" fxLayoutAlign="space-between center">
+      <p>Moderna:</p>
+      <input [value]="izvestajOImunizaciji.moderna" class="report-input" readonly/>
+    </div>
+  </div>
+</div>
+<div [hidden]="loaded">
+  <mat-spinner></mat-spinner>
+</div>

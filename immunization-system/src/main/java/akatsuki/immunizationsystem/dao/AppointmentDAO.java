@@ -41,6 +41,11 @@ public class AppointmentDAO implements IDao<Appointment> {
     }
 
     @Override
+    public int getResourcesCount() {
+        return 0;
+    }
+
+    @Override
     public String save(Appointment appointment) {
         String id = appointment.formatTimeToString() + "_" + appointment.getPacijentId() + ".xml";
         daoUtils.createResource(collectionId, appointment, id, Appointment.class);
