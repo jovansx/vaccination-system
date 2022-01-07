@@ -3,7 +3,6 @@ package akatsuki.immunizationsystem.service;
 import akatsuki.immunizationsystem.dao.IZahtevZaSertifikatDAO;
 import akatsuki.immunizationsystem.exceptions.BadRequestRuntimeException;
 import akatsuki.immunizationsystem.exceptions.NotFoundRuntimeException;
-import akatsuki.immunizationsystem.model.documents.Interesovanje;
 import akatsuki.immunizationsystem.model.documents.ZahtevZaSertifikat;
 import akatsuki.immunizationsystem.utils.HtmlTransformer;
 import akatsuki.immunizationsystem.utils.MetadataExtractor;
