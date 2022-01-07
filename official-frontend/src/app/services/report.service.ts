@@ -20,4 +20,8 @@ export class ReportService {
   getById(id: string): Observable<string> {
     return this._http.get<string>('/izvestaji/' + id, {responseType: 'text' as 'json'});
   }
+
+  saveReport(xmlIzvestajOImunizaciji: string) {
+    return this._http.post<string>('/izvestaji', xmlIzvestajOImunizaciji, {responseType: 'text' as 'json'});
+  }
 }

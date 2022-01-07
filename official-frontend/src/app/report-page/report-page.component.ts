@@ -5,6 +5,10 @@ import { XmlConverterService } from '../services/xml-converter.service';
 import { FormControl } from '@angular/forms';
 import { format } from 'date-fns'
 import { makeReportFromResponse } from '../utils/utils';
+import { ToastrService } from 'ngx-toastr';
+import { switchMap } from 'rxjs/operators';
+import { MatDialog } from '@angular/material/dialog';
+import { ProgressBarDialogComponent } from '../utils/progress-bar-dialog/progress-bar-dialog.component';
 
 @Component({
   selector: 'app-report-page',
@@ -21,7 +25,8 @@ export class ReportPageComponent implements OnInit {
   loaded: boolean = true;
   allReportsLoaded: boolean = true;
 
-  constructor(private reportService: ReportService, private _xml_parser: XmlConverterService) { }
+  constructor(private reportService: ReportService, private _xml_parser: XmlConverterService, private _toastr: ToastrService,
+    public dialog: MatDialog) { }
 
   ngOnInit(): void {
   }
@@ -51,5 +56,21 @@ export class ReportPageComponent implements OnInit {
         this.izvestajOImunizaciji = makeReportFromResponse(response);
         this.loaded = true;
       })
+  }
+
+  saveReport() {
+    const dialogRef = this.dialog.open(ProgressBarDialogComponent, {
+      height: '60px',
+      width: '30%',
+    });
+    this.reportService.saveReport(this.xmlIzvestajOImunizaciji)
+      .subscribe(
+        (res) => {
+          this._toastr.success("Uspesno sacuvan izvestaj sa id-jem " + res);
+          dialogRef.close();
+        },
+        (err) => {
+          this._toastr.error("Greska u dodavanju izvestaja.");
+        })
   }
 }
