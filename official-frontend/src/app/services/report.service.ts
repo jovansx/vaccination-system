@@ -7,7 +7,6 @@ import { Observable } from 'rxjs';
 })
 export class ReportService {
   
-
   constructor(private _http: HttpClient) { }
 
   getAll(): Observable<string> {
@@ -16,5 +15,9 @@ export class ReportService {
 
   getReportForPeriod(periodOd: string, periodDo: string): Observable<string> {
     return this._http.get<string>('/izvestaji/' + periodOd + "/" + periodDo, {responseType: 'text' as 'json'});
+  }
+
+  getById(id: string): Observable<string> {
+    return this._http.get<string>('/izvestaji/' + id, {responseType: 'text' as 'json'});
   }
 }

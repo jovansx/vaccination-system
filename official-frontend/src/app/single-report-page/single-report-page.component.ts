@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-single-report-page',
@@ -6,10 +7,16 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./single-report-page.component.css']
 })
 export class SingleReportPageComponent implements OnInit {
+  period: string;
 
-  constructor() { }
+  constructor(private route: ActivatedRoute) { }
 
   ngOnInit(): void {
+    this.route.params.subscribe((params) => {
+      let id = params['id']
+      this.period = id.split("_").join(" - ");
+      console.log(this.period)
+    })
   }
 
 }

@@ -23,66 +23,8 @@
     </button>
   </div>
   <div class="report-info-panel" fxLayout="row" [fxLayoutAlign]="allReportsLoaded ? 'center start' : 'space-around center'">
-    <div fxLayout="column" fxFlex="40" *ngIf="loaded">
-      <h2>Dokumenti</h2>
-      <mat-divider></mat-divider>
-      <div class="documents-panel">
-        <div class="report-input-panel" fxLayout="row" fxLayoutAlign="space-between center"> 
-          <p>Broj interesovanja za imunizaciju:</p>
-          <input [value]="izvestajOImunizaciji.brojInteresovanja" class="report-input" readonly/>
-        </div>
-        
-        <div class="report-input-panel" fxLayout="row" fxLayoutAlign="space-between center">
-          <p>Podnesenih zahteva za digitalni zeleni sertifikat:</p>
-          <input [value]="izvestajOImunizaciji.primljenoSertifikata" class="report-input" readonly/>
-        </div>
-        <div class="report-input-panel" fxLayout="row" fxLayoutAlign="space-between center">
-          <p>Izdato digitalnih zelenih sertifikata:</p>
-          <input [value]="izvestajOImunizaciji.izdatoSertifikata" class="report-input" readonly/>
-        </div>
-      </div>
-      
-      <div class="vaccine-doses">
-        <h2>Doze vakcina</h2>
-        <mat-divider></mat-divider>
-        <h3 style="margin-top:20px">Raspodela po dozama</h3>
-        <div fxLayout="row" fxLayoutAlign="space-between center">
-          <p>Izdato doza vakcina:</p>
-          <input [value]="izvestajOImunizaciji.ukupnoIzdato" class="report-input" readonly/>
-        </div>
-        <div fxLayout="row" fxLayoutAlign="space-between center">
-          <p>Doza broj 1:</p>
-          <input [value]="izvestajOImunizaciji.doza1" class="report-input" readonly/>
-        </div>
-        <div fxLayout="row" fxLayoutAlign="space-between center">
-          <p>Doza broj 2:</p>
-          <input [value]="izvestajOImunizaciji.doza2" class="report-input" readonly/>
-        </div>
-        <h3>Raspodela po proizvodjacima</h3>
-        <div fxLayout="row" fxLayoutAlign="space-between center">
-          <p>Pfizer-BioNTech:</p>
-          <input [value]="izvestajOImunizaciji.pfizer" class="report-input" readonly/>
-        </div>
-        <div fxLayout="row" fxLayoutAlign="space-between center">
-          <p>Sputnik V:</p>
-          <input [value]="izvestajOImunizaciji.sputnikV" class="report-input" readonly/>
-        </div>
-        <div fxLayout="row" fxLayoutAlign="space-between center">
-          <p>Sinopharm:</p>
-          <input [value]="izvestajOImunizaciji.sinopharm" class="report-input" readonly/>
-        </div>
-        <div fxLayout="row" fxLayoutAlign="space-between center">
-          <p>AstraZeneca:</p>
-          <input [value]="izvestajOImunizaciji.astraZeneca" class="report-input" readonly/>
-        </div>
-        <div fxLayout="row" fxLayoutAlign="space-between center">
-          <p>Moderna:</p>
-          <input [value]="izvestajOImunizaciji.moderna" class="report-input" readonly/>
-        </div>
-      </div>
-    </div>
-    <div [hidden]="loaded" fxFlex="40">
-      <mat-spinner></mat-spinner>
+    <div fxFlex="40">
+      <app-report-info-panel [izvestajOImunizaciji]="izvestajOImunizaciji" [loaded]="loaded" [componentPart]="true"></app-report-info-panel>
     </div>
     <div fxFlex="60" *ngIf="allReportsLoaded">
       <div class="p-50" *ngIf="reportsPeriod.length > 0">

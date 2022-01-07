@@ -1,0 +1,25 @@
+.report-input-panel {
+    margin-bottom: 10px;
+}
+
+.dotted {
+    margin-bottom: 12px;
+    border-bottom: 2px dotted #ccc;
+    line-height: 2em;
+}
+
+.report-input-panel p {
+    margin: 0;
+}
+
+.documents-panel {
+    margin: 20px 0;
+}
+
+.vaccine-doses h3 {
+    text-decoration: underline;
+}
+
+.report-input {
+    border:none;
+}

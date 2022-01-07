@@ -14,6 +14,8 @@ export class IzvestajOImunizacijiPeriod implements IIzvestajOImunizacijiPeriod {
 }
 
 export interface IIzvestajOImunizaciji {
+    periodOd: string;
+    periodDo: string;
     brojInteresovanja: number;
     primljenoSertifikata: number;
     izdatoSertifikata: number;
@@ -28,6 +30,8 @@ export interface IIzvestajOImunizaciji {
 }
 
 export class IzvestajOImunizaciji implements IIzvestajOImunizaciji {
+    periodOd: string;
+    periodDo: string;
     brojInteresovanja: number;
     primljenoSertifikata: number;
     izdatoSertifikata: number;
@@ -40,7 +44,10 @@ export class IzvestajOImunizaciji implements IIzvestajOImunizaciji {
     astraZeneca: number;
     moderna: number;
     
-    constructor(brojInteresovanja: number,
+    constructor(
+        periodOd: string,
+        periodDo: string,
+        brojInteresovanja: number,
         primljenoSertifikata: number,
         izdatoSertifikata: number,
         ukupnoIzdato: number,
@@ -51,6 +58,8 @@ export class IzvestajOImunizaciji implements IIzvestajOImunizaciji {
         sinopharm: number,
         astraZeneca: number,
         moderna: number) {
+            this.periodOd = periodOd;
+            this.periodDo = periodDo;
             this.brojInteresovanja = brojInteresovanja;
             this.primljenoSertifikata = primljenoSertifikata;
             this.izdatoSertifikata = izdatoSertifikata;

@@ -58,7 +58,6 @@ public class InteresovanjeService {
         return count;
     }
 
-    public String createInteresovanje(String interesovanjeXml) throws RuntimeException {
     public void createInteresovanje(String interesovanjeXml) throws RuntimeException {
         Interesovanje interesovanje = mapper.convertToObject(interesovanjeXml);
         if (interesovanje == null)

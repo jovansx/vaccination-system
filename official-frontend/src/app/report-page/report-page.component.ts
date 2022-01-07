@@ -17,7 +17,7 @@ export class ReportPageComponent implements OnInit {
   dateFrom = new FormControl(new Date());
   dateTo = new FormControl(new Date());
   xmlIzvestajOImunizaciji: string = ""
-  izvestajOImunizaciji: IzvestajOImunizaciji = new IzvestajOImunizaciji(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0);
+  izvestajOImunizaciji: IzvestajOImunizaciji = new IzvestajOImunizaciji("","",0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0);
   loaded: boolean = true;
   allReportsLoaded: boolean = true;
 
@@ -50,7 +50,6 @@ export class ReportPageComponent implements OnInit {
         let response = this._xml_parser.parseXmlToObject(res);
         this.izvestajOImunizaciji = makeReportFromResponse(response);
         this.loaded = true;
-        console.log(this.izvestajOImunizaciji)
       })
   }
 }
