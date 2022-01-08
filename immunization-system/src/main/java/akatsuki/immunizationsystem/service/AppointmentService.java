@@ -28,6 +28,8 @@ public class AppointmentService {
         appointmentList = appointmentList.stream().filter(a -> !a.isObradjeno()).collect(Collectors.toList());
         if (appointmentList.size() == 0)
             return "";
+
+//        TODO sortiraj prvo
         return mapper.convertToXml(appointmentList.get(0));
     }
 
@@ -41,6 +43,7 @@ public class AppointmentService {
 
     public Appointment createAppointment(String idBroj) {
         try {
+            //        TODO sortiraj prvo
             List<String> retVal = utils.execute("(//termin/text())[last()]", "/db/vaccination-system/termini");
             String[] parts = retVal.get(0).split(":[0-9]{2}.[0-9]{3}\\+[0-9]{2}.[0-9]{2}");
             DateFormat format2 = new SimpleDateFormat("yyyy-MM-dd'T'hh:mm");
