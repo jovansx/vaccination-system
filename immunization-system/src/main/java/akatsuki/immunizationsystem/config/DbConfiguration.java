@@ -43,24 +43,9 @@ public class DbConfiguration {
             korisnikIDao.save(doktor1);
             korisnikIDao.save(pacijent1);
 
-            DateFormat format2 = new SimpleDateFormat("yyyy-MM-dd hh:mm");
-//            date = format2.parse("2022-01-05 08:00");
-//            TODO - iznad 2 linije zameniti sa date = new Date(); kad bude trebalo
             calendar.setTime(new Date());
             Appointment appointment1 = new Appointment(DatatypeFactory.newInstance().newXMLGregorianCalendar(calendar), "1010998800070", true);
             appointmentIDao.save(appointment1);
-
-//            calendar.add(Calendar.MINUTE, Appointment.DURATION_IN_MINUTES);
-//            Appointment appointment2 = new Appointment(DatatypeFactory.newInstance().newXMLGregorianCalendar(calendar), "1010998800070", true);
-//            appointmentIDao.save(appointment2);
-//
-//            calendar.add(Calendar.MINUTE, Appointment.DURATION_IN_MINUTES);
-//            Appointment appointment3 = new Appointment(DatatypeFactory.newInstance().newXMLGregorianCalendar(calendar), "1010998800070", false);
-//            appointmentIDao.save(appointment3);
-//
-//            calendar.add(Calendar.MINUTE, Appointment.DURATION_IN_MINUTES);
-//            Appointment appointment4 = new Appointment(DatatypeFactory.newInstance().newXMLGregorianCalendar(calendar), "1010998800070", false);
-//            appointmentIDao.save(appointment4);
 
             log.info("Database is populated");
         };

@@ -154,6 +154,7 @@ public class SaglasnostZaImunizacijuService {
         saglasnostZaImunizaciju.setRel("pred:parentTo");
         saglasnostZaImunizaciju.setHref("http://www.akatsuki.org/potvrde/" + referencedObjectId);
 
+        saglasnostZaImunizacijuIDao.delete(saglasnostZaImunizaciju);
         saglasnostZaImunizacijuIDao.update(saglasnostZaImunizaciju);
     }
 

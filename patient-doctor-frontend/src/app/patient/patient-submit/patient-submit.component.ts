@@ -88,7 +88,9 @@ export class PatientSubmitComponent implements OnInit {
         xsi:schemaLocation="http://www.akatsuki.org interesovanje.xsd
         http://www.akatsuki.org/tipovi tipovi.xsd"
         xmlns:pred="http://www.akatsuki.org/rdf/examples/predicate/"
-        about="http://www.akatsuki.org/interesovanja/${this.idBroj}">
+        about="http://www.akatsuki.org/interesovanja/${this.idBroj}"
+        datumPodnosenja="${this._getCurrentDate()}"
+        >
         <drzavljanstvo>${this.patient.drzavljanstvo}</drzavljanstvo>
         <podnosilac>
             <t:ime property="pred:ime" datatype="xs:string">${this.patient.ime}</t:ime>
