@@ -55,4 +55,10 @@ public class AppointmentService {
         }
         return null;
     }
+
+    public void setCurrentObradjeno() {
+        Appointment a = mapper.convertToObject(this.getCurrentAppointment());
+        a.setObradjeno(true);
+        appointmentIDao.save(a);
+    }
 }

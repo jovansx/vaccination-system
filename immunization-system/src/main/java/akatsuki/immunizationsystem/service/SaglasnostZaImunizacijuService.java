@@ -36,7 +36,8 @@ public class SaglasnostZaImunizacijuService {
 
     @Autowired
     public void setValidator(Validator validator, ISaglasnostZaImunizacijuDAO saglasnostZaImunizacijuIDao, DigitalniSertifikatDAO digitalniSertifikatDAO,
-                             IModelMapper<SaglasnostZaImunizaciju> mapper, IModelMapper<Interesovanje> interesovanjeIModelMapper, MetadataExtractor extractor,
+                             IModelMapper<SaglasnostZaImunizaciju> mapper, IModelMapper<Interesovanje> interesovanjeIModelMapper,
+                             MetadataExtractor extractor,
                              InteresovanjeService interesovanjeService,
                              AppointmentService appointmentService, EmailService emailService,
                              @Lazy PotvrdaOIzvrsenojVakcinacijiService potvrdaOIzvrsenojVakcinacijiService, PdfTransformer pdfTransformer, HtmlTransformer htmlTransformer) {
@@ -125,14 +126,15 @@ public class SaglasnostZaImunizacijuService {
             throw new BadRequestRuntimeException("Osobi sa id-jem " + id + " je vec izdat digitalni zeleni sertifikat");
         }
 
+        this.appointmentService.setCurrentObradjeno();
+
+        saglasnostZaImunizacijuIDao.update(saglasnostZaImunizaciju);
 
         if (saglasnostZaImunizaciju.getEvidencijaOVakcinaciji().getVakcine().getVakcina().size() == 1) {
             Appointment appointment = appointmentService.createAppointment(id);
             Interesovanje i = interesovanjeIModelMapper.convertToObject(interesovanjeService.getInteresovanje(id));
             emailService.notifyPatientAboutReservedAppointment(i, appointment);
         }
-
-        saglasnostZaImunizacijuIDao.update(saglasnostZaImunizaciju);
     }
 
     private void setLinkToThisDocument(SaglasnostZaImunizaciju saglasnostZaImunizaciju) {

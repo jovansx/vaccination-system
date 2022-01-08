@@ -143,8 +143,8 @@ public class PotvrdaOIzvrsenojVakcinacijiService {
 
         int dozesSize = potvrdaOVakcinaciji.getPrimljeneVakcine().getDoza().size();
 
-//        restTemplate.put("http://localhost:8083/api/vakcine/" + vaccine.name() + "/" +
-//                potvrdaOVakcinaciji.getPrimljeneVakcine().getDoza().get(dozesSize - 1).getSerija(), null);
+        restTemplate.put("http://localhost:8083/api/vakcine/" + vaccine.name() + "/" +
+                potvrdaOVakcinaciji.getPrimljeneVakcine().getDoza().get(dozesSize - 1).getSerija(), null);
     }
 
     private void setLinkToThisDocument(PotvrdaOVakcinaciji potvrdaOVakcinaciji) {

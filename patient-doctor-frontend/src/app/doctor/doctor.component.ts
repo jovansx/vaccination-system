@@ -281,15 +281,15 @@ didntShowUp() : void {
 }
 
 getProizvodjac() : string {
-  if(this.vaccinattionForm.controls['izaberiVakcinu'].value === "Pfizer-BioNTech")
+  if(this.vaccinattionForm.controls['izaberiVakcinu'].value === "Pfizer-BioNTech" || this.vaccinattionForm.controls['izabranaVakcina'].value === "Pfizer-BioNTech" )
     return "Americki proizvodjac";
-  else if(this.vaccinattionForm.controls['izaberiVakcinu'].value === "Sputnik V")
+  else if(this.vaccinattionForm.controls['izaberiVakcinu'].value === "Sputnik V" || this.vaccinattionForm.controls['izabranaVakcina'].value === "Sputnik V")
     return "Ruski proizvodjac";
-  else if(this.vaccinattionForm.controls['izaberiVakcinu'].value === "Sinopharm")
+  else if(this.vaccinattionForm.controls['izaberiVakcinu'].value === "Sinopharm" || this.vaccinattionForm.controls['izabranaVakcina'].value === "Sinopharm")
     return "Kineski proizvodjac";
-  else if(this.vaccinattionForm.controls['izaberiVakcinu'].value === "AstraZeneca")
+  else if(this.vaccinattionForm.controls['izaberiVakcinu'].value === "AstraZeneca" || this.vaccinattionForm.controls['izabranaVakcina'].value === "AstraZeneca")
     return "Britanski proizvodjac";
-  else if(this.vaccinattionForm.controls['izaberiVakcinu'].value === "Moderna")
+  else if(this.vaccinattionForm.controls['izaberiVakcinu'].value === "Moderna" || this.vaccinattionForm.controls['izabranaVakcina'].value === "Moderna")
     return "Britanski proizvodjac";
   return ""
 }
@@ -348,7 +348,10 @@ sendDocuments() : void {
   </vakcine>
   </evidencija_o_vakcinaciji>
   </saglasnost_za_imunizaciju>`;
-    novaSaglasnost = this.saglasnost?.replace("</vakcina>", evidencija) as string
+    novaSaglasnost = this.saglasnost?.replace("</vakcina>", evidencija) as string;
+    let parts : string[] = novaSaglasnost.split("<kontraindikacije>")
+    parts[0] += "<kontraindikacije>";
+    novaSaglasnost = parts[0] + parts[1];
   }
   this.sendSaglasnost(novaSaglasnost);
   
@@ -405,7 +408,7 @@ sendDocuments() : void {
                 <datum_davanja>${this.vaccinattionForm.controls['datumIzdavanja'].value}</datum_davanja>
                 <serija>${this.serijaPrveVakcine}</serija>
             </doza>
-            <doza broj="1">
+            <doza broj="2">
                 <datum_davanja>${this.vaccinattionForm.controls['datumIzdavanjaVakcine'].value}</datum_davanja>
                 <serija>${this.vaccinattionForm.controls['serijaVakcine'].value}</serija>
             </doza>
