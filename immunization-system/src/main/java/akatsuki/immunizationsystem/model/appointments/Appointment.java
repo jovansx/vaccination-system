@@ -16,6 +16,7 @@ import java.util.Calendar;
         "pacijentId",
         "termin",
         "obradjeno",
+        "redniBrojSastanka",
 })
 @Data
 @NoArgsConstructor
@@ -30,6 +31,9 @@ public class Appointment {
     private String pacijentId;
     @XmlElement(required = true, name = "obradjeno")
     private boolean obradjeno;
+    @XmlElement(required = true, name = "redni_broj_sastanka")
+    private int redniBrojSastanka;
+
 
     public String formatTimeToString() {
         Calendar calendar = termin.toGregorianCalendar();

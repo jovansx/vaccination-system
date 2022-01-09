@@ -109,9 +109,10 @@ export class DoctorComponent implements OnInit {
         }
         let response = this._xml_parser.parseXmlToObject(res);
         this.pacijentId = response.PACIJENT_ID[0];
+        let redniBrojVakcinacije = response.REDNI_BROJ_SASTANKA[0];
         let date : String = response.TERMIN[0];
         this.termin = date.substring(11, 16);
-        this.getCurrentSaglasnost(this.pacijentId as string);
+        this.getCurrentSaglasnost(this.pacijentId as string, redniBrojVakcinacije as string);
       },
       (err: any) => this._toastr.error(convertResponseError(err), "Don't exist!")
     );
@@ -121,15 +122,9 @@ export class DoctorComponent implements OnInit {
     this.getCurrentAppointment();
   }
 
-    getCurrentSaglasnost(pacijentId : string) : void {
-      this.saglasnostService.getCurrentSaglasnost(pacijentId).subscribe(
+    getCurrentSaglasnost(pacijentId : string, redniBrojVakcinacije : string) : void {
+      this.saglasnostService.getSaglasnost(pacijentId+"_"+redniBrojVakcinacije).subscribe(
         (res: any) => {
-          if(res == "") {
-            this._toastr.info("Trenutno nema saglasnosti!", "Paznja!")
-            this.document = "Nema saglasnosti"
-            return;
-          }
-
           this.saglasnost = res;
           this.document = this._xml_parser.parseXmlToObject(res);
           if(this.document.EVIDENCIJA_O_VAKCINACIJI != undefined) {
@@ -140,7 +135,10 @@ export class DoctorComponent implements OnInit {
             this.getAvailableVaccines(pacijentId);
           this.setValues()
         },
-        (err: any) => this._toastr.error(convertResponseError(err), "Don't exist!")
+        (err: any) => {
+          this._toastr.info("Trenutno nema saglasnosti!", "Paznja!");
+          this.document = "Nema saglasnosti";
+        }
       );
     }
 

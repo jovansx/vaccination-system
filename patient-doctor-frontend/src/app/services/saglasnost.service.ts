@@ -9,10 +9,6 @@ export class SaglasnostService {
 
   constructor(private _http: HttpClient) { }
 
-  getCurrentSaglasnost(id : String): Observable<string> {
-    return this._http.get<string>('/saglasnosti/by-patient-id/'+id, {responseType: 'text' as 'json'});
-  }
-
   deleteCurrentSaglasnost(id: string): Observable<void> {
     return this._http.delete<void>('/saglasnosti/'+id);
   }

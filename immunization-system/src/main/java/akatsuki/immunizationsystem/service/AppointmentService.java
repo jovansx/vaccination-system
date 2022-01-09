@@ -9,7 +9,6 @@ import org.springframework.stereotype.Service;
 
 import javax.xml.datatype.DatatypeFactory;
 import java.text.DateFormat;
-import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.*;
 import java.util.stream.Collectors;
@@ -28,24 +27,17 @@ public class AppointmentService {
         if (appointmentList.size() == 0)
             return "";
 
-//        TODO sortiraj prvo
+        appointmentList.sort(Comparator.comparing(Appointment::formatTimeToString));
+
         return mapper.convertToXml(appointmentList.get(0));
     }
 
-    public void setFirstAppointmentToObradjen() {
-        List<Appointment> appointmentList = (List<Appointment>) appointmentIDao.getAll();
-        appointmentList = appointmentList.stream().filter(a -> !a.isObradjeno()).collect(Collectors.toList());
-        Appointment appointment = appointmentList.get(0);
-        appointment.setObradjeno(true);
-        appointmentIDao.save(appointment);
-    }
-
-    public Appointment createAppointment(String idBroj) {
+    public Appointment createAppointment(String idBroj, int redniBroj) {
         Appointment appointment = null;
         try {
             GregorianCalendar calendar = determineLastAppointment();
             calendar.add(Calendar.MINUTE, Appointment.DURATION_IN_MINUTES);
-            appointment = new Appointment(DatatypeFactory.newInstance().newXMLGregorianCalendar(calendar), idBroj, false);
+            appointment = new Appointment(DatatypeFactory.newInstance().newXMLGregorianCalendar(calendar), idBroj, false, redniBroj);
             appointmentIDao.save(appointment);
         } catch (Exception ignored) {
         }
@@ -86,5 +78,10 @@ public class AppointmentService {
         Appointment a = mapper.convertToObject(this.getCurrentAppointment());
         a.setObradjeno(true);
         appointmentIDao.save(a);
+    }
+
+    public int getCurrentAppointmentRedniBroj() {
+        Appointment a = mapper.convertToObject(this.getCurrentAppointment());
+        return a.getRedniBrojSastanka();
     }
 }
