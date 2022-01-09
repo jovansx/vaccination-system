@@ -10,10 +10,7 @@ import org.springframework.stereotype.Service;
 import javax.xml.datatype.DatatypeFactory;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.GregorianCalendar;
-import java.util.List;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Service
@@ -30,7 +27,8 @@ public class AppointmentService {
         if (appointmentList.size() == 0)
             return "";
 
-//        TODO sortiraj prvo
+        appointmentList.sort(Comparator.comparing(Appointment::formatTimeToString));
+
         return mapper.convertToXml(appointmentList.get(0));
     }
 
