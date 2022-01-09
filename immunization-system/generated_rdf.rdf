@@ -1,0 +1,20 @@
+<rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:h="http://www.w3.org/1999/xhtml">
+  <rdf:Description rdf:about="http://www.akatsuki.org/potvrde/1010998800070_1">
+    <pred:ime xmlns:pred="http://www.akatsuki.org/rdf/examples/predicate/" rdf:datatype="http://www.w3.org/1999/02/22-rdf-syntax-ns#XMLLiteral">Marko</pred:ime>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://www.akatsuki.org/potvrde/1010998800070_1">
+    <pred:prezime xmlns:pred="http://www.akatsuki.org/rdf/examples/predicate/" rdf:datatype="http://www.w3.org/1999/02/22-rdf-syntax-ns#XMLLiteral">Markovic</pred:prezime>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://www.akatsuki.org/potvrde/1010998800070_1">
+    <pred:id_broj xmlns:pred="http://www.akatsuki.org/rdf/examples/predicate/" rdf:datatype="http://www.w3.org/1999/02/22-rdf-syntax-ns#XMLLiteral">1010998800070</pred:id_broj>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://www.akatsuki.org/potvrde/1010998800070_1">
+    <pred:pol xmlns:pred="http://www.akatsuki.org/rdf/examples/predicate/" rdf:datatype="http://www.w3.org/1999/02/22-rdf-syntax-ns#XMLLiteral">Muski</pred:pol>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://www.akatsuki.org/potvrde/1010998800070_1">
+    <pred:zdravstvena_ustanova xmlns:pred="http://www.akatsuki.org/rdf/examples/predicate/" rdf:datatype="http://www.w3.org/1999/02/22-rdf-syntax-ns#XMLLiteral">Promenada u Novom Sadu</pred:zdravstvena_ustanova>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://www.akatsuki.org/potvrde/1010998800070_1">
+    <pred:vakcina xmlns:pred="http://www.akatsuki.org/rdf/examples/predicate/" rdf:datatype="http://www.w3.org/1999/02/22-rdf-syntax-ns#XMLLiteral">Moderna</pred:vakcina>
+  </rdf:Description>
+</rdf:RDF>

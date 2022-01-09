@@ -57,7 +57,7 @@ public class DbConfiguration {
             korisnikIDao.save(pacijent3);
 
             calendar.setTime(new Date());
-            Appointment appointment1 = new Appointment(DatatypeFactory.newInstance().newXMLGregorianCalendar(calendar), "1010998800070", true);
+            Appointment appointment1 = new Appointment(DatatypeFactory.newInstance().newXMLGregorianCalendar(calendar), "1010998800070", true, 2);
             appointmentIDao.save(appointment1);
 
             log.info("Database is populated");
