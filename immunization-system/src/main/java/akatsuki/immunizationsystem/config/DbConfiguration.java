@@ -14,7 +14,6 @@ import org.springframework.context.annotation.Configuration;
 import javax.xml.datatype.DatatypeFactory;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
-import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
 
@@ -40,27 +39,26 @@ public class DbConfiguration {
                     "Novi Sad", "Veternik", "Vladike Maksima", "12",
                     "0648736578", "Lazar", "Sombor", RadniStatus.STUDENT, Zanimanje.PROSVETA);
 
+            Pacijent pacijent2 = new Pacijent("101099880", "Marko2",
+                    "Markovic", "(021) 823-1113", "marko2@gmail.com", "$2a$12$GfYvRDS42Ki3Dk3w39svpeKozJOFYPFYxwgP6l0eEyuadTf5gE5Ry",
+                    TipKorisnika.PACIJENT, Pol.MUSKI, DatatypeFactory.newInstance().newXMLGregorianCalendar(calendar), TipDrzavljanstva.STRANO_SA_BORAVKOM,
+                    "Novi Sad", "Veternik", "Vladike Maksima", "11",
+                    "0648736579", "Milorad", "Sombor", RadniStatus.STUDENT, Zanimanje.PROSVETA);
+
+            Pacijent pacijent3 = new Pacijent("101099881", "Marko3",
+                    "Markovic", "(021) 823-1113", "marko3@gmail.com", "$2a$12$GfYvRDS42Ki3Dk3w39svpeKozJOFYPFYxwgP6l0eEyuadTf5gE5Ry",
+                    TipKorisnika.PACIJENT, Pol.MUSKI, DatatypeFactory.newInstance().newXMLGregorianCalendar(calendar), TipDrzavljanstva.STRANO_BEZ_BORAVKA,
+                    "Novi Sad", "Veternik", "Vladike Maksima", "11",
+                    "0648736519", "Milorad", "Sombor", RadniStatus.STUDENT, Zanimanje.PROSVETA);
+
             korisnikIDao.save(doktor1);
             korisnikIDao.save(pacijent1);
+            korisnikIDao.save(pacijent2);
+            korisnikIDao.save(pacijent3);
 
-            DateFormat format2 = new SimpleDateFormat("yyyy-MM-dd hh:mm");
-//            date = format2.parse("2022-01-05 08:00");
-//            TODO - iznad 2 linije zameniti sa date = new Date(); kad bude trebalo
             calendar.setTime(new Date());
-            Appointment appointment1 = new Appointment(DatatypeFactory.newInstance().newXMLGregorianCalendar(calendar), "1010998800070", true);
+            Appointment appointment1 = new Appointment(DatatypeFactory.newInstance().newXMLGregorianCalendar(calendar), "1010998800070", true, 2);
             appointmentIDao.save(appointment1);
-
-//            calendar.add(Calendar.MINUTE, Appointment.DURATION_IN_MINUTES);
-//            Appointment appointment2 = new Appointment(DatatypeFactory.newInstance().newXMLGregorianCalendar(calendar), "1010998800070", true);
-//            appointmentIDao.save(appointment2);
-//
-//            calendar.add(Calendar.MINUTE, Appointment.DURATION_IN_MINUTES);
-//            Appointment appointment3 = new Appointment(DatatypeFactory.newInstance().newXMLGregorianCalendar(calendar), "1010998800070", false);
-//            appointmentIDao.save(appointment3);
-//
-//            calendar.add(Calendar.MINUTE, Appointment.DURATION_IN_MINUTES);
-//            Appointment appointment4 = new Appointment(DatatypeFactory.newInstance().newXMLGregorianCalendar(calendar), "1010998800070", false);
-//            appointmentIDao.save(appointment4);
 
             log.info("Database is populated");
         };

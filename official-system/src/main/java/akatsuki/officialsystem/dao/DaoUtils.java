@@ -39,7 +39,7 @@ public class DaoUtils {
         String[] resources;
         List<String> xmlResourceList = new ArrayList<>();
         try {
-            col = DatabaseManager.getCollection(dbConnection.getDbUrl() + collectionId, dbConnection.getUsername(), dbConnection.getPassword());
+            col = this.getOrCreateCollection(collectionId, 0);
             col.setProperty(OutputKeys.INDENT, "yes");
             resources = col.listResources();
 

@@ -132,7 +132,7 @@ public class PotvrdaOIzvrsenojVakcinacijiService {
 
         setLinkToThisDocument(potvrdaOVakcinaciji);
 
-        decreaseAmountOfVaccine(potvrdaOVakcinaciji);
+//        decreaseAmountOfVaccine(potvrdaOVakcinaciji);
 
         potvrdaOVakcinaciji.setQrCode(qrCodeGenerator.getQRCodeImage("http://localhost:8081/api/potvrde/pdf/" + documentId));
         return potvrdaOVakcinacijiIDao.save(potvrdaOVakcinaciji);

@@ -55,21 +55,6 @@ public class SaglasnostZaImunizacijuService {
         this.interesovanjeIModelMapper = interesovanjeIModelMapper;
     }
 
-    public String getSaglasnostByPatientId(String patientId) {
-        String saglasnostXml = "";
-        try {
-            saglasnostXml = getSaglasnostZaImunizaciju(patientId + "_2");
-        } catch (Exception ignored) {
-        }
-        if (saglasnostXml.equals("")) {
-            try {
-                saglasnostXml = getSaglasnostZaImunizaciju(patientId + "_1");
-            } catch (Exception ignored) {
-            }
-        }
-        return saglasnostXml;
-    }
-
     public String getSaglasnostZaImunizaciju(String idBrojIndex) throws RuntimeException {
         String idBroj = idBrojIndex.split("_")[0];
         if (!validator.isIdValid(idBroj)) {
@@ -89,11 +74,13 @@ public class SaglasnostZaImunizacijuService {
     public void deleteSaglasnostZaImunizaciju(String idBrojIndex) {
         SaglasnostZaImunizaciju saglasnostZaImunizaciju = saglasnostZaImunizacijuIDao.get(idBrojIndex).orElseThrow(() -> new NotFoundRuntimeException("Saglasnost sa id-jem " + idBrojIndex + " nije pronadjena."));
         saglasnostZaImunizacijuIDao.delete(saglasnostZaImunizaciju);
-        appointmentService.setFirstAppointmentToObradjen();
+
+        int redniBroj = this.appointmentService.getCurrentAppointmentRedniBroj();
+        this.appointmentService.setCurrentObradjeno();
 
         String id = saglasnostZaImunizaciju.getPacijent().getIdBrojFromDrzavljanstvo();
 
-        Appointment appointment = appointmentService.createAppointment(id);
+        Appointment appointment = appointmentService.createAppointment(id, redniBroj);
         Interesovanje i = interesovanjeIModelMapper.convertToObject(interesovanjeService.getInteresovanje(id));
         emailService.notifyPatientAboutReservedAppointment(i, appointment);
     }
@@ -131,7 +118,7 @@ public class SaglasnostZaImunizacijuService {
         saglasnostZaImunizacijuIDao.update(saglasnostZaImunizaciju);
 
         if (saglasnostZaImunizaciju.getEvidencijaOVakcinaciji().getVakcine().getVakcina().size() == 1) {
-            Appointment appointment = appointmentService.createAppointment(id);
+            Appointment appointment = appointmentService.createAppointment(id, 2);
             Interesovanje i = interesovanjeIModelMapper.convertToObject(interesovanjeService.getInteresovanje(id));
             emailService.notifyPatientAboutReservedAppointment(i, appointment);
         }
@@ -154,6 +141,7 @@ public class SaglasnostZaImunizacijuService {
         saglasnostZaImunizaciju.setRel("pred:parentTo");
         saglasnostZaImunizaciju.setHref("http://www.akatsuki.org/potvrde/" + referencedObjectId);
 
+        saglasnostZaImunizacijuIDao.delete(saglasnostZaImunizaciju);
         saglasnostZaImunizacijuIDao.update(saglasnostZaImunizaciju);
     }
 

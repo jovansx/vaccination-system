@@ -69,7 +69,7 @@ public class InteresovanjeService {
         if (!extractor.extractAndSaveToRdf(interesovanjeXml, "/interesovanja"))
             throw new BadRequestRuntimeException("Ekstrakcija metapodataka nije uspela.");
 
-        Appointment appointment = appointmentService.createAppointment(interesovanje.getPodnosilac().getIdBroj().getValue());
+        Appointment appointment = appointmentService.createAppointment(interesovanje.getPodnosilac().getIdBroj().getValue(), 1);
         emailService.notifyPatientAboutReservedAppointment(interesovanje, appointment);
 
         interesovanjeDAO.save(interesovanje);
