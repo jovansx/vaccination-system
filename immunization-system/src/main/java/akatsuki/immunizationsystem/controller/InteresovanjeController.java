@@ -61,4 +61,9 @@ public class InteresovanjeController {
     public int getResourcesCount(@PathVariable String periodOd, @PathVariable String periodDo) {
         return interesovanjeService.getResourcesCountInPeriod(periodOd, periodDo);
     }
+
+    @GetMapping("/rdf")
+    public int getRdf() {
+        return interesovanjeService.getRdf();
+    }
 }

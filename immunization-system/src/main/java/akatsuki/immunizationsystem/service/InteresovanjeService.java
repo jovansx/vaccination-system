@@ -90,4 +90,8 @@ public class InteresovanjeService {
     public ByteArrayInputStream generateXhtml(String idBroj) {
         return htmlTransformer.generateHTML(getInteresovanje(idBroj), Interesovanje.class);
     }
+
+    public int getRdf() {
+        return extractor.countTripletsFromRdf("/interesovanja");
+    }
 }
