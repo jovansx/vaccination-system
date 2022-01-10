@@ -37,11 +37,12 @@ export class ReportPageComponent implements OnInit {
     this.reportService.getAll()
       .subscribe(res => {
         let response = this._xml_parser.parseXmlToObject(res);
-        response.IZVESTAJPERIOD.forEach((element: { ID: string; PERIOD: string; }) => {
-          this.reportsPeriod.push(new IzvestajOImunizacijiPeriod(element.ID[0], element.PERIOD[0]));
-        });
+        if(response.IZVESTAJPERIOD !== undefined) {
+          response.IZVESTAJPERIOD.forEach((element: { ID: string; PERIOD: string; }) => {
+            this.reportsPeriod.push(new IzvestajOImunizacijiPeriod(element.ID[0], element.PERIOD[0]));
+          });
+        }
         this.allReportsLoaded = true;
-        console.log(this.reportsPeriod)
       })
   }
 
@@ -59,6 +60,10 @@ export class ReportPageComponent implements OnInit {
   }
 
   saveReport() {
+    if(this.xmlIzvestajOImunizaciji === "") {
+      this._toastr.error("Morate odabrati period i ucitati ga.");
+      return;
+    }
     const dialogRef = this.dialog.open(ProgressBarDialogComponent, {
       height: '60px',
       width: '30%',
@@ -71,6 +76,7 @@ export class ReportPageComponent implements OnInit {
         },
         (err) => {
           this._toastr.error("Greska u dodavanju izvestaja.");
+          dialogRef.close();
         })
   }
 }

@@ -6,14 +6,12 @@
   <div class="report-filter-panel" fxLayout="row" fxLayoutAlign="end center">
     Od: 
     <mat-form-field appearance="fill" class="mr-30 ml-20">
-      <!-- <mat-label>Choose a date</mat-label> -->
       <input matInput [matDatepicker]="picker_from" [formControl]="dateFrom">
       <mat-datepicker-toggle matSuffix [for]="picker_from"></mat-datepicker-toggle>
       <mat-datepicker #picker_from></mat-datepicker>
     </mat-form-field>
     Do: 
     <mat-form-field appearance="fill" class="mr-20 ml-20">
-      <!-- <mat-label>Choose a date</mat-label> -->
       <input matInput [matDatepicker]="picker_to" [formControl]="dateTo">
       <mat-datepicker-toggle matSuffix [for]="picker_to"></mat-datepicker-toggle>
       <mat-datepicker #picker_to></mat-datepicker>
@@ -24,6 +22,7 @@
   </div>
   <div class="report-info-panel" fxLayout="row" [fxLayoutAlign]="allReportsLoaded ? 'center start' : 'space-around center'">
     <div fxFlex="40">
+      <p style="color: red" *ngIf="xmlIzvestajOImunizaciji === ''">Izvestaj nije ucitan</p>
       <app-report-info-panel [izvestajOImunizaciji]="izvestajOImunizaciji" [loaded]="loaded" [componentPart]="true"></app-report-info-panel>
     </div>
     <div fxFlex="60" *ngIf="allReportsLoaded">
@@ -43,6 +42,6 @@
   
   <div class="report-actions-panel" fxLayout="row" fxLayoutAlign="end center">
     <button mat-raised-button class="mr-20" (click)="getAllReports()">Izlistaj sve izvestaje</button>
-    <button mat-raised-button color="primary" (click)="saveReport()">Sacuvaj izvestaj</button>
+    <button mat-raised-button color="primary" (click)="saveReport()" [disabled]="xmlIzvestajOImunizaciji === ''">Sacuvaj izvestaj</button>
   </div>
 </div>
