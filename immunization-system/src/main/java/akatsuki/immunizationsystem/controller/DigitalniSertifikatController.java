@@ -54,6 +54,11 @@ public class DigitalniSertifikatController {
         return digitalniSertifikatService.getMetadataJSON(idBroj);
     }
 
+    @GetMapping(value = "/metadata/rdf/{idBroj}")
+    public String getMetadataRDF(@PathVariable String idBroj) {
+        return digitalniSertifikatService.getMetadataRDF(idBroj);
+    }
+
     @GetMapping(value = "/xhtml/{idBroj}", produces = MediaType.TEXT_HTML_VALUE)
     public ResponseEntity<InputStreamResource> getSertifikatXhtml(@PathVariable String idBroj) {
         ByteArrayInputStream stream = digitalniSertifikatService.generateXhtml(idBroj);

@@ -158,4 +158,7 @@ public class SaglasnostZaImunizacijuService {
         return new MetadataDTO("<http://www.akatsuki.org/saglasnosti/" + idBrojIndex + ">", extractor.readFromRdfWhereObjectIs("/saglasnosti", idBrojIndex));
     }
 
+    public String getMetadataRDF(String idBrojIndex) {
+        return extractor.getRdfMetadata("/saglasnosti", idBrojIndex);
+    }
 }

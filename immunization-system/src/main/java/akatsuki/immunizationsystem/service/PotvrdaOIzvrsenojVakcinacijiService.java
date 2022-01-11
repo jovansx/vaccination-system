@@ -174,4 +174,8 @@ public class PotvrdaOIzvrsenojVakcinacijiService {
     public MetadataDTO getMetadataJSON(String idBrojIndex) {
         return new MetadataDTO("<http://www.akatsuki.org/potvrde/" + idBrojIndex + ">", extractor.readFromRdfWhereObjectIs("/potvrde", idBrojIndex));
     }
+
+    public String getMetadataRDF(String idBrojIndex) {
+        return extractor.getRdfMetadata("/potvrde", idBrojIndex);
+    }
 }

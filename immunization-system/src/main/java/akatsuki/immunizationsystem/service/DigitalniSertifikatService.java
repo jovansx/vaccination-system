@@ -83,4 +83,8 @@ public class DigitalniSertifikatService {
     public MetadataDTO getMetadataJSON(String idBroj) {
         return new MetadataDTO("<http://www.akatsuki.org/digitalni-sertifikati/" + idBroj + ">", extractor.readFromRdfWhereObjectIs("/digitalni-sertifikati", idBroj));
     }
+
+    public String getMetadataRDF(String idBroj) {
+        return extractor.getRdfMetadata("/digitalni-sertifikati", idBroj);
+    }
 }

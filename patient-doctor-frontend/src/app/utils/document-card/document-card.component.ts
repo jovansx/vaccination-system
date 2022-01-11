@@ -55,7 +55,10 @@ export class DocumentCardComponent implements OnInit {
 
       this.getDocumentMetadataJSON(type, filename);
     } else {
-     console.log("NISTA JOS")
+      filename+=".rdf";
+      type = "application/rdf;charset=utf-8";
+
+      this.getDocumentMetadataRDF(type, filename);
     }
   }
 
@@ -64,33 +67,72 @@ export class DocumentCardComponent implements OnInit {
     if(this.getTypeOfDocument() === "interesovanja") {
       this.interesovanjeService.getInteresovanjeJSON(this.dokument.IDDOKUMENTA).subscribe(
         (res: any) => {
-          this.onReturnedDocument(res, type, filename)
+          this.onReturnedDocument(JSON.stringify(res), type, filename)
         },
         (err: any) => this._toastr.error(convertResponseError(err), "Don't exist!")
       );
     } else if(this.getTypeOfDocument() === "saglasnosti") {
       this.saglasnostService.getSaglasnostJSON(this.dokument.IDDOKUMENTA).subscribe(
         (res: any) => {
-          this.onReturnedDocument(res, type, filename)
+          this.onReturnedDocument(JSON.stringify(res), type, filename)
         },
         (err: any) => this._toastr.error(convertResponseError(err), "Don't exist!")
       );
     } else if(this.getTypeOfDocument() === "potvrde") {
       this.potvdaService.getPotvrdaJSON(this.dokument.IDDOKUMENTA).subscribe(
         (res: any) => {
-          this.onReturnedDocument(res, type, filename)
+          this.onReturnedDocument(JSON.stringify(res), type, filename)
         },
         (err: any) => this._toastr.error(convertResponseError(err), "Don't exist!")
       );
     } else if(this.getTypeOfDocument() === "zahtevi") {
       this.zahtevService.getZahtevJSON(this.dokument.IDDOKUMENTA).subscribe(
         (res: any) => {
-          this.onReturnedDocument(res, type, filename)
+          this.onReturnedDocument(JSON.stringify(res), type, filename)
         },
         (err: any) => this._toastr.error(convertResponseError(err), "Don't exist!")
       );
     } else {
       this.digitalniService.getSertifikatJSON(this.dokument.IDDOKUMENTA).subscribe(
+        (res: any) => {
+          this.onReturnedDocument(JSON.stringify(res), type, filename)
+        },
+        (err: any) => this._toastr.error(convertResponseError(err), "Don't exist!")
+      );
+    }
+  }
+
+  getDocumentMetadataRDF(type : string, filename : string) {
+    if(this.getTypeOfDocument() === "interesovanja") {
+      this.interesovanjeService.getInteresovanjeRDF(this.dokument.IDDOKUMENTA).subscribe(
+        (res: any) => {
+          this.onReturnedDocument(res, type, filename)
+        },
+        (err: any) => this._toastr.error(convertResponseError(err), "Don't exist!")
+      );
+    } else if(this.getTypeOfDocument() === "saglasnosti") {
+      this.saglasnostService.getSaglasnostRDF(this.dokument.IDDOKUMENTA).subscribe(
+        (res: any) => {
+          this.onReturnedDocument(res, type, filename)
+        },
+        (err: any) => this._toastr.error(convertResponseError(err), "Don't exist!")
+      );
+    } else if(this.getTypeOfDocument() === "potvrde") {
+      this.potvdaService.getPotvrdaRDF(this.dokument.IDDOKUMENTA).subscribe(
+        (res: any) => {
+          this.onReturnedDocument(res, type, filename)
+        },
+        (err: any) => this._toastr.error(convertResponseError(err), "Don't exist!")
+      );
+    } else if(this.getTypeOfDocument() === "zahtevi") {
+      this.zahtevService.getZahtevRDF(this.dokument.IDDOKUMENTA).subscribe(
+        (res: any) => {
+          this.onReturnedDocument(res, type, filename)
+        },
+        (err: any) => this._toastr.error(convertResponseError(err), "Don't exist!")
+      );
+    } else {
+      this.digitalniService.getSertifikatRDF(this.dokument.IDDOKUMENTA).subscribe(
         (res: any) => {
           this.onReturnedDocument(res, type, filename)
         },

@@ -20,4 +20,8 @@ export class DigitalniSertifikatService {
   public getSertifikatJSON(id: string): Observable<string> {
     return this._http.get<string>('/digitalni-sertifikati/metadata/json/'+id);
   }
+
+  public getSertifikatRDF(id: string): Observable<string> {
+    return this._http.get<string>('/digitalni-sertifikati/metadata/rdf/'+id, {responseType: 'text' as 'json'});
+  }
 }

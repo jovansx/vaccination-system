@@ -63,6 +63,11 @@ public class InteresovanjeController {
         return interesovanjeService.getMetadataJSON(idBroj);
     }
 
+    @GetMapping(value = "/metadata/rdf/{idBroj}")
+    public String getMetadataRDF(@PathVariable String idBroj) {
+        return interesovanjeService.getMetadataRDF(idBroj);
+    }
+
     @GetMapping("/{periodOd}/{periodDo}")
     public int getResourcesCount(@PathVariable String periodOd, @PathVariable String periodDo) {
         return interesovanjeService.getResourcesCountInPeriod(periodOd, periodDo);

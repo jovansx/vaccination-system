@@ -25,6 +25,7 @@ import javax.xml.transform.stream.StreamSource;
 import java.io.*;
 import java.util.HashMap;
 import java.util.Iterator;
+import java.util.Map;
 
 @Component
 @RequiredArgsConstructor
@@ -149,5 +150,22 @@ public class MetadataExtractor {
         query.close();
         System.out.println("[INFO] End.");
         return true;
+    }
+
+    public String getRdfMetadata(String documentType, String idBroj) {
+        HashMap<String, String> map = readFromRdfWhereObjectIs(documentType, idBroj);
+        StringBuilder builder =
+                new StringBuilder("<?xml version=\"1.0\" encoding=\"utf-8\" ?>\n" +
+                        "<rdf:RDF xmlns:rdf=\"http://www.w3.org/1999/02/22-rdf-syntax-ns#\"\n" +
+                        "         xmlns:pred=\"http://www.akatsuki.org" + documentType + "/predicate/\">\n" +
+                        "\n" +
+                        "  <rdf:Description rdf:about=\"http://www.akatsuki.org" + documentType + "/" + idBroj + "\">\n");
+
+        for (Map.Entry<String, String> entry : map.entrySet()) {
+            String predicate = entry.getKey().split("http://www.akatsuki.org/rdf/examples/predicate/")[1];
+            builder.append("\t\t<pred:").append(predicate).append(">").append(entry.getValue()).append("</pred:").append(predicate).append(">\n");
+        }
+        builder.append("  </rdf:Description>\n\n</rdf:RDF>");
+        return builder.toString();
     }
 }

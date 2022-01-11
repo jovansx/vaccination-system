@@ -89,4 +89,7 @@ public class InteresovanjeService {
         return new MetadataDTO("<http://www.akatsuki.org/interesovanja/" + idBroj + ">", extractor.readFromRdfWhereObjectIs("/interesovanja", idBroj));
     }
 
+    public String getMetadataRDF(String idBroj) {
+        return extractor.getRdfMetadata("/interesovanja", idBroj);
+    }
 }

@@ -62,6 +62,11 @@ public class ZahtevZaSertifikatController {
         return zahtevZaSertifikatService.getMetadataJSON(idBroj);
     }
 
+    @GetMapping(value = "/metadata/rdf/{idBroj}")
+    public String getMetadataRDF(@PathVariable String idBroj) {
+        return zahtevZaSertifikatService.getMetadataRDF(idBroj);
+    }
+
     @GetMapping("/{periodOd}/{periodDo}")
     public int getResourcesCount(@PathVariable String periodOd, @PathVariable String periodDo) {
         return zahtevZaSertifikatService.getResourcesCountInPeriod(periodOd, periodDo);

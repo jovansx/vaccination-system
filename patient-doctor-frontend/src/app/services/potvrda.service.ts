@@ -30,4 +30,8 @@ export class PotvrdaService {
     return this._http.get<string>('/potvrde/metadata/json/'+id);
   }
 
+  public getPotvrdaRDF(id: string): Observable<string> {
+    return this._http.get<string>('/potvrde/metadata/rdf/'+id, {responseType: 'text' as 'json'});
+  }
+
 }
