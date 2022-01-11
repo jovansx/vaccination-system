@@ -91,7 +91,4 @@ public class InteresovanjeService {
         return htmlTransformer.generateHTML(getInteresovanje(idBroj), Interesovanje.class);
     }
 
-    public int getRdf() {
-        return extractor.countTripletsFromRdf("/interesovanja");
-    }
 }

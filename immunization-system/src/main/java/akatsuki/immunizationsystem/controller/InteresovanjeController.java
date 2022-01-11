@@ -62,8 +62,4 @@ public class InteresovanjeController {
         return interesovanjeService.getResourcesCountInPeriod(periodOd, periodDo);
     }
 
-    @GetMapping("/rdf")
-    public int getRdf() {
-        return interesovanjeService.getRdf();
-    }
 }
