@@ -1,25 +1,18 @@
 package akatsuki.immunizationsystem.service;
 
 import akatsuki.immunizationsystem.dao.IZahtevZaSertifikatDAO;
+import akatsuki.immunizationsystem.dtos.MetadataDTO;
 import akatsuki.immunizationsystem.exceptions.BadRequestRuntimeException;
 import akatsuki.immunizationsystem.exceptions.NotFoundRuntimeException;
-import akatsuki.immunizationsystem.model.documents.Interesovanje;
 import akatsuki.immunizationsystem.model.documents.ZahtevZaSertifikat;
-import akatsuki.immunizationsystem.utils.CalendarPeriod;
-import akatsuki.immunizationsystem.utils.HtmlTransformer;
-import akatsuki.immunizationsystem.utils.MetadataExtractor;
-import akatsuki.immunizationsystem.utils.PdfTransformer;
-import akatsuki.immunizationsystem.utils.Validator;
+import akatsuki.immunizationsystem.utils.*;
 import akatsuki.immunizationsystem.utils.modelmappers.IModelMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
+import java.io.ByteArrayInputStream;
 import java.util.Calendar;
 import java.util.List;
-
-import java.io.ByteArrayInputStream;
 
 @Service
 @RequiredArgsConstructor
@@ -44,9 +37,9 @@ public class ZahtevZaSertifikatService {
         List<ZahtevZaSertifikat> allZahtevi = (List<ZahtevZaSertifikat>) zahtevZaSertifikatDAO.getAll();
         CalendarPeriod.calendarSetTimeByPeriod(periodOd, periodDo);
         int count = 0;
-        for(ZahtevZaSertifikat z: allZahtevi) {
+        for (ZahtevZaSertifikat z : allZahtevi) {
             Calendar datumPodnosenjaZahteva = z.getDatum().toGregorianCalendar();
-            if(datumPodnosenjaZahteva.compareTo(CalendarPeriod.periodOdCal) > 0 && datumPodnosenjaZahteva.compareTo(CalendarPeriod.periodDoCal) < 0) {
+            if (datumPodnosenjaZahteva.compareTo(CalendarPeriod.periodOdCal) > 0 && datumPodnosenjaZahteva.compareTo(CalendarPeriod.periodDoCal) < 0) {
                 count++;
             }
 
@@ -91,4 +84,9 @@ public class ZahtevZaSertifikatService {
     public ByteArrayInputStream generateXhtml(String idBroj) {
         return htmlTransformer.generateHTML(getZahtevZaSertifikat(idBroj), ZahtevZaSertifikat.class);
     }
+
+    public MetadataDTO getMetadataJSON(String idBroj) {
+        return new MetadataDTO("<http://www.akatsuki.org/zahtevi/" + idBroj + ">", extractor.readFromRdfWhereObjectIs("/zahtevi", idBroj));
+    }
+
 }

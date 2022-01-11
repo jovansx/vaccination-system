@@ -44,7 +44,60 @@ export class DocumentCardComponent implements OnInit {
   display(typeOfDoc : string) : void {
     window.open(`${env.apiUrl}/${this.getTypeOfDocument()}/${typeOfDoc}/${this.dokument.IDDOKUMENTA}`, "_blank")
   }
+  
+  downloadMetadata(typeOfDoc: string) {
+    let filename = this.getTypeOfDocument() + `-${this.dokument.IDDOKUMENTA}-METADATA`;
+    let type = "";
 
+    if(typeOfDoc === "json") {
+      filename+=".json";
+      type = "application/json;charset=utf-8";
+
+      this.getDocumentMetadataJSON(type, filename);
+    } else {
+     console.log("NISTA JOS")
+    }
+  }
+
+  
+  getDocumentMetadataJSON(type : string, filename : string) {
+    if(this.getTypeOfDocument() === "interesovanja") {
+      this.interesovanjeService.getInteresovanjeJSON(this.dokument.IDDOKUMENTA).subscribe(
+        (res: any) => {
+          this.onReturnedDocument(res, type, filename)
+        },
+        (err: any) => this._toastr.error(convertResponseError(err), "Don't exist!")
+      );
+    } else if(this.getTypeOfDocument() === "saglasnosti") {
+      this.saglasnostService.getSaglasnostJSON(this.dokument.IDDOKUMENTA).subscribe(
+        (res: any) => {
+          this.onReturnedDocument(res, type, filename)
+        },
+        (err: any) => this._toastr.error(convertResponseError(err), "Don't exist!")
+      );
+    } else if(this.getTypeOfDocument() === "potvrde") {
+      this.potvdaService.getPotvrdaJSON(this.dokument.IDDOKUMENTA).subscribe(
+        (res: any) => {
+          this.onReturnedDocument(res, type, filename)
+        },
+        (err: any) => this._toastr.error(convertResponseError(err), "Don't exist!")
+      );
+    } else if(this.getTypeOfDocument() === "zahtevi") {
+      this.zahtevService.getZahtevJSON(this.dokument.IDDOKUMENTA).subscribe(
+        (res: any) => {
+          this.onReturnedDocument(res, type, filename)
+        },
+        (err: any) => this._toastr.error(convertResponseError(err), "Don't exist!")
+      );
+    } else {
+      this.digitalniService.getSertifikatJSON(this.dokument.IDDOKUMENTA).subscribe(
+        (res: any) => {
+          this.onReturnedDocument(res, type, filename)
+        },
+        (err: any) => this._toastr.error(convertResponseError(err), "Don't exist!")
+      );
+    }
+  }
   
   download(typeOfDoc : string) : void {
     let filename = this.getTypeOfDocument() + `-${this.dokument.IDDOKUMENTA}`;
@@ -106,35 +159,36 @@ export class DocumentCardComponent implements OnInit {
     if(this.getTypeOfDocument() === "interesovanja") {
       this.interesovanjeService.getInteresovanjeXHTML(this.dokument.IDDOKUMENTA).subscribe(
         (res: any) => {
-          this.onReturnedDocument(res, type, filename)
+          console.log(res)
+          this.onReturnedDocument(JSON.stringify(res), type, filename)
         },
         (err: any) => this._toastr.error(convertResponseError(err), "Don't exist!")
       );
     } else if(this.getTypeOfDocument() === "saglasnosti") {
       this.saglasnostService.getSaglasnostXHTML(this.dokument.IDDOKUMENTA).subscribe(
         (res: any) => {
-          this.onReturnedDocument(res, type, filename)
+          this.onReturnedDocument(JSON.stringify(res), type, filename)
         },
         (err: any) => this._toastr.error(convertResponseError(err), "Don't exist!")
       );
     } else if(this.getTypeOfDocument() === "potvrde") {
       this.potvdaService.getPotvrdaXHTML(this.dokument.IDDOKUMENTA).subscribe(
         (res: any) => {
-          this.onReturnedDocument(res, type, filename)
+          this.onReturnedDocument(JSON.stringify(res), type, filename)
         },
         (err: any) => this._toastr.error(convertResponseError(err), "Don't exist!")
       );
     } else if(this.getTypeOfDocument() === "zahtevi") {
       this.zahtevService.getZahtevXHTML(this.dokument.IDDOKUMENTA).subscribe(
         (res: any) => {
-          this.onReturnedDocument(res, type, filename)
+          this.onReturnedDocument(JSON.stringify(res), type, filename)
         },
         (err: any) => this._toastr.error(convertResponseError(err), "Don't exist!")
       );
     } else {
       this.digitalniService.getSertifikatXHTML(this.dokument.IDDOKUMENTA).subscribe(
         (res: any) => {
-          this.onReturnedDocument(res, type, filename)
+          this.onReturnedDocument(JSON.stringify(res), type, filename)
         },
         (err: any) => this._toastr.error(convertResponseError(err), "Don't exist!")
       );

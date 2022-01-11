@@ -1,5 +1,6 @@
 package akatsuki.immunizationsystem.controller;
 
+import akatsuki.immunizationsystem.dtos.MetadataDTO;
 import akatsuki.immunizationsystem.service.InteresovanjeService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.core.io.InputStreamResource;
@@ -55,6 +56,11 @@ public class InteresovanjeController {
                 .headers(headers)
                 .contentType(MediaType.TEXT_HTML)
                 .body(new InputStreamResource(stream));
+    }
+
+    @GetMapping(value = "/metadata/json/{idBroj}")
+    public MetadataDTO getMetadataJSON(@PathVariable String idBroj) {
+        return interesovanjeService.getMetadataJSON(idBroj);
     }
 
     @GetMapping("/{periodOd}/{periodDo}")

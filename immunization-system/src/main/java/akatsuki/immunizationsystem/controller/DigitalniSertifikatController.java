@@ -1,5 +1,6 @@
 package akatsuki.immunizationsystem.controller;
 
+import akatsuki.immunizationsystem.dtos.MetadataDTO;
 import akatsuki.immunizationsystem.service.DigitalniSertifikatService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.core.io.InputStreamResource;
@@ -46,6 +47,11 @@ public class DigitalniSertifikatController {
                 .headers(headers)
                 .contentType(MediaType.APPLICATION_PDF)
                 .body(new InputStreamResource(stream));
+    }
+
+    @GetMapping(value = "/metadata/json/{idBroj}")
+    public MetadataDTO getMetadataJSON(@PathVariable String idBroj) {
+        return digitalniSertifikatService.getMetadataJSON(idBroj);
     }
 
     @GetMapping(value = "/xhtml/{idBroj}", produces = MediaType.TEXT_HTML_VALUE)

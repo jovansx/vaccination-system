@@ -1,20 +1,13 @@
 package akatsuki.immunizationsystem.service;
 
 import akatsuki.immunizationsystem.dao.IDao;
+import akatsuki.immunizationsystem.dtos.MetadataDTO;
 import akatsuki.immunizationsystem.exceptions.BadRequestRuntimeException;
 import akatsuki.immunizationsystem.exceptions.ConflictRuntimeException;
 import akatsuki.immunizationsystem.exceptions.NotFoundRuntimeException;
-import akatsuki.immunizationsystem.model.documents.DigitalniSertifikat;
 import akatsuki.immunizationsystem.model.documents.PotvrdaOVakcinaciji;
 import akatsuki.immunizationsystem.model.dto.RaspodelaPoDozamaDTO;
 import akatsuki.immunizationsystem.model.dto.RaspodelaPoProizvodjacimaDTO;
-import akatsuki.immunizationsystem.model.vaccine.VaccineType;
-import akatsuki.immunizationsystem.utils.CalendarPeriod;
-import akatsuki.immunizationsystem.utils.MetadataExtractor;
-import akatsuki.immunizationsystem.utils.PdfTransformer;
-import akatsuki.immunizationsystem.utils.QRCodeGenerator;
-import akatsuki.immunizationsystem.utils.Validator;
-import akatsuki.immunizationsystem.model.documents.ZahtevZaSertifikat;
 import akatsuki.immunizationsystem.model.vaccine.VaccineType;
 import akatsuki.immunizationsystem.utils.*;
 import akatsuki.immunizationsystem.utils.modelmappers.IModelMapper;
@@ -22,11 +15,9 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
+import java.io.ByteArrayInputStream;
 import java.util.Calendar;
 import java.util.List;
-import java.io.ByteArrayInputStream;
 import java.util.stream.Stream;
 
 @Service
@@ -71,10 +62,10 @@ public class PotvrdaOIzvrsenojVakcinacijiService {
         CalendarPeriod.calendarSetTimeByPeriod(periodOd, periodDo);
         int doza1 = 0;
         int doza2 = 0;
-        for(PotvrdaOVakcinaciji p: allPotvrde) {
+        for (PotvrdaOVakcinaciji p : allPotvrde) {
             Calendar datumIzdavanjaPotvrde = p.getDatumIzdavanja().toGregorianCalendar();
-            if(datumIzdavanjaPotvrde.compareTo(CalendarPeriod.periodOdCal) > 0 && datumIzdavanjaPotvrde.compareTo(CalendarPeriod.periodDoCal) < 0) {
-                if(p.getPrimljeneVakcine().getDoza().size() == 1) {
+            if (datumIzdavanjaPotvrde.compareTo(CalendarPeriod.periodOdCal) > 0 && datumIzdavanjaPotvrde.compareTo(CalendarPeriod.periodDoCal) < 0) {
+                if (p.getPrimljeneVakcine().getDoza().size() == 1) {
                     doza1++;
                 } else {
                     doza2++;
@@ -96,16 +87,16 @@ public class PotvrdaOIzvrsenojVakcinacijiService {
         int sinopharm = 0;
         int astraZeneca = 0;
         int moderna = 0;
-        for(PotvrdaOVakcinaciji p: allPotvrde) {
+        for (PotvrdaOVakcinaciji p : allPotvrde) {
             Calendar datumIzdavanjaPotvrde = p.getDatumIzdavanja().toGregorianCalendar();
-            if(datumIzdavanjaPotvrde.compareTo(CalendarPeriod.periodOdCal) == 1 && datumIzdavanjaPotvrde.compareTo(CalendarPeriod.periodDoCal) == -1) {
-                if(p.getNazivVakcine().getValue().equals("Pfizer-BioNTech")) {
+            if (datumIzdavanjaPotvrde.compareTo(CalendarPeriod.periodOdCal) == 1 && datumIzdavanjaPotvrde.compareTo(CalendarPeriod.periodDoCal) == -1) {
+                if (p.getNazivVakcine().getValue().equals("Pfizer-BioNTech")) {
                     pfizerBioNTech++;
-                } else if(p.getNazivVakcine().getValue().equals("Sputnik V")) {
+                } else if (p.getNazivVakcine().getValue().equals("Sputnik V")) {
                     sputnikV++;
-                } else if(p.getNazivVakcine().getValue().equals("Sinopharm")) {
+                } else if (p.getNazivVakcine().getValue().equals("Sinopharm")) {
                     sinopharm++;
-                } else if(p.getNazivVakcine().getValue().equals("AstraZeneca")) {
+                } else if (p.getNazivVakcine().getValue().equals("AstraZeneca")) {
                     astraZeneca++;
                 } else {
                     moderna++;
@@ -178,5 +169,9 @@ public class PotvrdaOIzvrsenojVakcinacijiService {
 
     public ByteArrayInputStream generateXhtml(String idBroj) {
         return htmlTransformer.generateHTML(getPotvrdaOIzvrsenojVakcinaciji(idBroj), PotvrdaOVakcinaciji.class);
+    }
+
+    public MetadataDTO getMetadataJSON(String idBrojIndex) {
+        return new MetadataDTO("<http://www.akatsuki.org/potvrde/" + idBrojIndex + ">", extractor.readFromRdfWhereObjectIs("/potvrde", idBrojIndex));
     }
 }

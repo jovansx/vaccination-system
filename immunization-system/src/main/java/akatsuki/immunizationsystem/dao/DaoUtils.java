@@ -32,7 +32,7 @@ public class DaoUtils {
             ex.printStackTrace();
         }
     }
-    
+
     public int getResourcesCount(String collectionId) {
         Collection col = null;
         int count = 0;

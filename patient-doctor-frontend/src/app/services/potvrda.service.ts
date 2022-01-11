@@ -26,4 +26,8 @@ export class PotvrdaService {
     return this._http.get<string>('/potvrde/pdf/'+id, {responseType: 'arraybuffer' as 'json'});
   }
 
+  public getPotvrdaJSON(id: string): Observable<string> {
+    return this._http.get<string>('/potvrde/metadata/json/'+id);
+  }
+
 }
