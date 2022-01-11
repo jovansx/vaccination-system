@@ -89,4 +89,7 @@ public class ZahtevZaSertifikatService {
         return new MetadataDTO("<http://www.akatsuki.org/zahtevi/" + idBroj + ">", extractor.readFromRdfWhereObjectIs("/zahtevi", idBroj));
     }
 
+    public String getMetadataRDF(String idBroj) {
+        return extractor.getRdfMetadata("/zahtevi", idBroj);
+    }
 }

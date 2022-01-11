@@ -64,6 +64,11 @@ public class PotvrdaOIzvrsenojVakcinacijiController {
         return potvrdaOIzvrsenojVakcinacijiService.getMetadataJSON(idBrojDoza);
     }
 
+    @GetMapping(value = "/metadata/rdf/{idBroj}")
+    public String getMetadataRDF(@PathVariable String idBroj) {
+        return potvrdaOIzvrsenojVakcinacijiService.getMetadataRDF(idBroj);
+    }
+
     @GetMapping(value = "/xhtml/{idBroj}", produces = MediaType.TEXT_HTML_VALUE)
     public ResponseEntity<InputStreamResource> getPotvrdaXhtml(@PathVariable String idBroj) {
         ByteArrayInputStream stream = potvrdaOIzvrsenojVakcinacijiService.generateXhtml(idBroj);

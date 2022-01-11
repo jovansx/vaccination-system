@@ -36,4 +36,8 @@ export class SaglasnostService {
   public getSaglasnostJSON(id: string): Observable<string> {
     return this._http.get<string>('/saglasnosti/metadata/json/'+id);
   }
+
+  public getSaglasnostRDF(id: string): Observable<string> {
+    return this._http.get<string>('/saglasnosti/metadata/rdf/'+id, {responseType: 'text' as 'json'});
+  }
 }

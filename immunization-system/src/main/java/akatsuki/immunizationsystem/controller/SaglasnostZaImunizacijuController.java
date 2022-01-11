@@ -48,6 +48,11 @@ public class SaglasnostZaImunizacijuController {
         return saglasnostZaImunizacijuService.getMetadataJSON(idBrojIndex);
     }
 
+    @GetMapping(value = "/metadata/rdf/{idBroj}")
+    public String getMetadataRDF(@PathVariable String idBroj) {
+        return saglasnostZaImunizacijuService.getMetadataRDF(idBroj);
+    }
+
     @GetMapping(value = "/xhtml/{idBroj}", produces = MediaType.TEXT_HTML_VALUE)
     public ResponseEntity<InputStreamResource> getSaglasnostXhtml(@PathVariable String idBroj) {
         ByteArrayInputStream stream = saglasnostZaImunizacijuService.generateXhtml(idBroj);

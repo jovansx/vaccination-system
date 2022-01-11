@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
-    xmlns:z="http://www.akatsuki.org/zahtev_za_sertifikat"
-    xmlns:t="http://www.akatsuki.org/tipovi"
-    xmlns:fo="http://www.w3.org/1999/XSL/Format" version="2.0">
+                xmlns:z="http://www.akatsuki.org/zahtev_za_sertifikat"
+                xmlns:t="http://www.akatsuki.org/tipovi"
+                xmlns:fo="http://www.w3.org/1999/XSL/Format" version="2.0">
     <xsl:template match="/">
         <fo:root>
             <fo:layout-master-set>
@@ -21,13 +21,17 @@
             <fo:page-sequence master-reference="zahtev">
 
                 <fo:flow flow-name="xsl-region-body">
-                    <fo:block font-family="sans-serif" font-size="15px" margin-top="60px" font-weight="bold" text-align="center">Z A H T E V</fo:block>
-                    <fo:block font-family="sans-serif" font-size="13px" padding="2px" font-weight="bold" text-align="center">
+                    <fo:block font-family="sans-serif" font-size="15px" margin-top="60px" font-weight="bold"
+                              text-align="center">Z A H T E V
+                    </fo:block>
+                    <fo:block font-family="sans-serif" font-size="13px" padding="2px" font-weight="bold"
+                              text-align="center">
                         za izdavanje digitalnog zelenog sertifikata
                     </fo:block>
                     <fo:block font-family="sans-serif" font-size="12px" padding="5px" margin-top="25px">
                         U skladu sa odredbom Republike Srbije o izdavanju digitalnog zelenog
-                        sertifikata kao potvrde o izvrsenoj vakcinaciji protiv COVID-19, rezultatima testiranja na zaraznu bolest SARS-CoV-2
+                        sertifikata kao potvrde o izvrsenoj vakcinaciji protiv COVID-19, rezultatima testiranja na
+                        zaraznu bolest SARS-CoV-2
                         ili oporavku od bolesti COVID-19, podnosim zahtev za izdavanje digitalnog zelenog sertifikata.
                     </fo:block>
                     <fo:block font-family="sans-serif" font-size="12px" padding="5px" margin-top="20px">
@@ -92,7 +96,8 @@
                     </fo:block>
                     <fo:block-container>
                         <fo:block-container width="40%" left="60%" top="0in" position="absolute">
-                            <fo:block font-family="sans-serif" font-size="12px" text-align="center" linefeed-treatment="preserve" margin="0" border-top="1px solid black">
+                            <fo:block font-family="sans-serif" font-size="12px" text-align="center"
+                                      linefeed-treatment="preserve" margin="0" border-top="1px solid black">
                                 Potpis
                             </fo:block>
                         </fo:block-container>
