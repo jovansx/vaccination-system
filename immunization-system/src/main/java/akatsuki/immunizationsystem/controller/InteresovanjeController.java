@@ -61,4 +61,5 @@ public class InteresovanjeController {
     public int getResourcesCount(@PathVariable String periodOd, @PathVariable String periodDo) {
         return interesovanjeService.getResourcesCountInPeriod(periodOd, periodDo);
     }
+
 }

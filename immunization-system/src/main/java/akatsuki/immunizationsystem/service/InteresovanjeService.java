@@ -90,4 +90,5 @@ public class InteresovanjeService {
     public ByteArrayInputStream generateXhtml(String idBroj) {
         return htmlTransformer.generateHTML(getInteresovanje(idBroj), Interesovanje.class);
     }
+
 }

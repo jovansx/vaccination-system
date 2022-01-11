@@ -3,8 +3,10 @@ package akatsuki.immunizationsystem.utils;
 import akatsuki.immunizationsystem.config.RdfConnection;
 import com.sun.org.apache.xalan.internal.xsltc.trax.TransformerFactoryImpl;
 import lombok.RequiredArgsConstructor;
+import org.apache.jena.query.*;
 import org.apache.jena.rdf.model.Model;
 import org.apache.jena.rdf.model.ModelFactory;
+import org.apache.jena.rdf.model.RDFNode;
 import org.apache.jena.update.UpdateExecutionFactory;
 import org.apache.jena.update.UpdateFactory;
 import org.apache.jena.update.UpdateProcessor;
@@ -18,6 +20,7 @@ import javax.xml.transform.TransformerFactory;
 import javax.xml.transform.stream.StreamResult;
 import javax.xml.transform.stream.StreamSource;
 import java.io.*;
+import java.util.Iterator;
 
 @Component
 @RequiredArgsConstructor
@@ -67,5 +70,66 @@ public class MetadataExtractor {
         StreamResult result = new StreamResult(out);
 
         transformer.transform(source, result);
+    }
+
+    public int countTripletsFromRdf(String path) {
+        String sparqlQuery = SparqlUtil.countData(rdf.getEndpoint().trim() + path, "?s ?p ?o");
+        String queryEndpoint = String.join("/", rdf.getEndpoint().trim(), rdf.getDataset().trim(), rdf.getQuery().trim());
+
+        QueryExecution query = QueryExecutionFactory.sparqlService(queryEndpoint, sparqlQuery);
+        ResultSet results = query.execSelect();
+
+        int documentsNumber = 0;
+        if(results.hasNext()) {
+            QuerySolution querySolution = results.next() ;
+            Iterator<String> variableBindings = querySolution.varNames();
+
+            while (variableBindings.hasNext()) {
+
+                String varName = variableBindings.next();
+                RDFNode varValue = querySolution.get(varName);
+                String count = varValue.asLiteral().getString();
+                documentsNumber = Integer.parseInt(count);
+            }
+        }
+
+        query.close();
+        return documentsNumber;
+    }
+
+    public boolean readFromRdf(String path) {
+
+        String queryEndpoint = String.join("/", rdf.getEndpoint().trim(), rdf.getDataset().trim(), rdf.getQuery().trim());
+        String sparqlQuery = SparqlUtil.selectData(rdf.getEndpoint().trim() + path, "?s ?p ?o");
+
+        // Create a QueryExecution that will access a SPARQL service over HTTP
+        QueryExecution query = QueryExecutionFactory.sparqlService(queryEndpoint, sparqlQuery);
+
+        // Query the SPARQL endpoint, iterate over the result set...
+        ResultSet results = query.execSelect();
+
+        String varName;
+        RDFNode varValue;
+        while(results.hasNext()) {
+
+            // A single answer from a SELECT query
+            QuerySolution querySolution = results.next() ;
+            Iterator<String> variableBindings = querySolution.varNames();
+
+            // Retrieve variable bindings
+            while (variableBindings.hasNext()) {
+
+                varName = variableBindings.next();
+                varValue = querySolution.get(varName);
+
+                System.out.println(varName + ": " + varValue);
+            }
+            System.out.println();
+        }
+
+        query.close() ;
+
+        System.out.println("[INFO] End.");
+        return true;
     }
 }
