@@ -1,7 +1,6 @@
 package akatsuki.immunizationsystem.utils.modelmappers;
 
 import akatsuki.immunizationsystem.model.dto.RaspodelaPoDozamaDTO;
-import akatsuki.immunizationsystem.model.dto.RaspodelaPoProizvodjacimaDTO;
 import org.springframework.stereotype.Component;
 
 import javax.xml.bind.JAXBContext;

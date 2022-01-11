@@ -16,4 +16,8 @@ export class DigitalniSertifikatService {
   public getSertifikatPDF(id: string): Observable<string> {
     return this._http.get<string>('/digitalni-sertifikati/pdf/'+id, {responseType: 'arraybuffer' as 'json'});
   }
+
+  public getSertifikatJSON(id: string): Observable<string> {
+    return this._http.get<string>('/digitalni-sertifikati/metadata/json/'+id);
+  }
 }

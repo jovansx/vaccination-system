@@ -56,7 +56,8 @@ public class AppointmentService {
                         return c1.compareTo(c2);
                     })
                     .collect(Collectors.toList());
-        }catch (Exception ignored) {}
+        } catch (Exception ignored) {
+        }
 
         return convertStringToGregorianCalendar(dates.get(dates.size() - 1));
     }

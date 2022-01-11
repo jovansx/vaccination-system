@@ -2,6 +2,7 @@ package akatsuki.immunizationsystem.service;
 
 import akatsuki.immunizationsystem.dao.DigitalniSertifikatDAO;
 import akatsuki.immunizationsystem.dao.ISaglasnostZaImunizacijuDAO;
+import akatsuki.immunizationsystem.dtos.MetadataDTO;
 import akatsuki.immunizationsystem.exceptions.BadRequestRuntimeException;
 import akatsuki.immunizationsystem.exceptions.NotFoundRuntimeException;
 import akatsuki.immunizationsystem.model.appointments.Appointment;
@@ -152,4 +153,9 @@ public class SaglasnostZaImunizacijuService {
     public ByteArrayInputStream generateXhtml(String idBroj) {
         return htmlTransformer.generateHTML(getSaglasnostZaImunizaciju(idBroj), SaglasnostZaImunizaciju.class);
     }
+
+    public MetadataDTO getMetadataJSON(String idBrojIndex) {
+        return new MetadataDTO("<http://www.akatsuki.org/saglasnosti/" + idBrojIndex + ">", extractor.readFromRdfWhereObjectIs("/saglasnosti", idBrojIndex));
+    }
+
 }

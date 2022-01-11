@@ -1,18 +1,10 @@
 package akatsuki.immunizationsystem.utils.modelmappers;
 
-import akatsuki.immunizationsystem.model.documents.SaglasnostZaImunizaciju;
 import akatsuki.immunizationsystem.model.dto.RaspodelaPoProizvodjacimaDTO;
 import org.springframework.stereotype.Component;
-import org.springframework.util.ResourceUtils;
 
-import javax.xml.XMLConstants;
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.Marshaller;
-import javax.xml.bind.Unmarshaller;
-import javax.xml.validation.Schema;
-import javax.xml.validation.SchemaFactory;
-import java.io.File;
-import java.io.StringReader;
 import java.io.StringWriter;
 
 @Component
