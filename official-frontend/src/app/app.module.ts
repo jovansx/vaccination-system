@@ -18,7 +18,8 @@ import { VaccineService } from './services/vaccine.service';
 import { ReportPageComponent } from './report-page/report-page.component';
 import { SingleReportPageComponent } from './single-report-page/single-report-page.component';
 import { ReportInfoPanelComponent } from './report-info-panel/report-info-panel.component';
-import { ProgressBarDialogComponent } from './utils/progress-bar-dialog/progress-bar-dialog.component'
+import { ProgressBarDialogComponent } from './utils/progress-bar-dialog/progress-bar-dialog.component';
+import { RequestPageComponent } from './request-page/request-page.component'
 
 @NgModule({
   declarations: [
@@ -29,7 +30,8 @@ import { ProgressBarDialogComponent } from './utils/progress-bar-dialog/progress
     ReportPageComponent,
     SingleReportPageComponent,
     ReportInfoPanelComponent,
-    ProgressBarDialogComponent
+    ProgressBarDialogComponent,
+    RequestPageComponent
   ],
   imports: [
     BrowserModule,

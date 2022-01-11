@@ -1,0 +1,92 @@
+<app-header></app-header>
+
+<div class="request-page-container">
+  <h1>Zahtevi za digitalni zeleni sertifikat</h1>
+  <mat-divider></mat-divider>
+  <div class="request-filter-panel" fxLayout="row" fxLayoutAlign="end center">
+    <mat-form-field appearance="outline" class="mt-10">
+        <mat-label>Pretrazi</mat-label>
+        <input matInput>
+      </mat-form-field>
+    <button mat-button (click)="searchRequests()">
+      <mat-icon>search</mat-icon>
+    </button>
+  </div>
+  <div fxLayout="row">
+    <div fxFlex="40" class="request-list-panel">
+      <div class="scroller">
+        <h2 style="margin-left: 10px;"><u>Neodobreni zahtevi</u></h2>
+        <mat-selection-list [multiple]="false" [(ngModel)]="selectedOptions" (ngModelChange)="onNgModelChange($event)">
+          <mat-list-option *ngFor="let zahtev of zahtevi" [value]="zahtev">
+            <span style="text-decoration: underline; color:rgb(81,111,195)">{{zahtev.podnosilac.ime}} {{zahtev.podnosilac.prezime}}, {{zahtev.podnosilac.idBroj}}</span>
+          </mat-list-option>
+        </mat-selection-list>
+      </div>
+    </div>
+    <div fxFlex class="request-info-panel" *ngIf="zahtevSelected">
+      <h2>Podnosilac</h2>
+      <mat-divider></mat-divider>
+      <div class="request-input-panel mt-30" fxLayout="row" fxLayoutAlign="space-between center"> 
+        <p>Ime i prezime:</p>
+        <input class="request-input" value="{{zahtevSelected.podnosilac.ime}} {{zahtevSelected.podnosilac.prezime}}" readonly/>
+      </div>
+
+      <div class="request-input-panel" fxLayout="row" fxLayoutAlign="space-between center"> 
+        <p>Jmbg:</p>
+        <input class="request-input" value="{{zahtevSelected.podnosilac.idBroj}}" readonly/>
+      </div>
+
+      <div class="request-input-panel" fxLayout="row" fxLayoutAlign="space-between center"> 
+        <p>Pol:</p>
+        <input class="request-input" value="{{zahtevSelected.podnosilac.pol}}" readonly/>
+      </div>
+
+      <div class="request-input-panel mb-30" fxLayout="row" fxLayoutAlign="space-between center"> 
+        <p>Datum rodjenja:</p>
+        <input class="request-input" value="{{zahtevSelected.podnosilac.datumRodjenja}}" readonly/>
+      </div>
+
+      <h2>Vakcinacija</h2>
+      <mat-divider></mat-divider>
+      <h3 class="mt-30">Doza broj 1</h3>
+      <div class="request-input-panel" fxLayout="row" fxLayoutAlign="space-between center"> 
+        <p>Naziv vakcine:</p>
+        <input class="request-input" value="{{zahtevSelected.vakcine[0].naziv}}" readonly/>
+      </div>
+      <div class="request-input-panel" fxLayout="row" fxLayoutAlign="space-between center"> 
+        <p>Proizvodjac i serija:</p>
+        <input class="request-input" value="{{zahtevSelected.vakcine[0].proizvodjac}} {{zahtevSelected.vakcine[0].serija}}" readonly/>
+      </div>
+      <div class="request-input-panel" fxLayout="row" fxLayoutAlign="space-between center"> 
+        <p>Datum davanja:</p>
+        <input class="request-input" value="{{zahtevSelected.vakcine[0].datum}}" readonly/>
+      </div>
+      <div class="request-input-panel" fxLayout="row" fxLayoutAlign="space-between center"> 
+        <p>Zdravstvena ustanova:</p>
+        <input class="request-input" value="{{zahtevSelected.vakcine[0].zdravstvenaUstanova}}" readonly/>
+      </div>
+
+      <h3>Doza broj 2</h3>
+      <div class="request-input-panel" fxLayout="row" fxLayoutAlign="space-between center"> 
+        <p>Naziv vakcine:</p>
+        <input class="request-input" value="{{zahtevSelected.vakcine[1].naziv}}" readonly/>
+      </div>
+      <div class="request-input-panel" fxLayout="row" fxLayoutAlign="space-between center"> 
+        <p>Proizvodjac i serija:</p>
+        <input class="request-input" value="{{zahtevSelected.vakcine[1].proizvodjac}} {{zahtevSelected.vakcine[1].serija}}" readonly/>
+      </div>
+      <div class="request-input-panel" fxLayout="row" fxLayoutAlign="space-between center"> 
+        <p>Datum davanja:</p>
+        <input class="request-input" value="{{zahtevSelected.vakcine[1].datum}}" readonly/>
+      </div>
+      <div class="request-input-panel" fxLayout="row" fxLayoutAlign="space-between center"> 
+        <p>Zdravstvena ustanova:</p>
+        <input class="request-input" value="{{zahtevSelected.vakcine[1].zdravstvenaUstanova}}" readonly/>
+      </div>
+      <div fxLayout="row" fxLayoutAlign="end end">
+        <button mat-raised-button class="mr-20">Odbaci</button>
+        <button mat-raised-button color="primary">Odobri</button>
+      </div>
+    </div>
+  </div>
+</div>
