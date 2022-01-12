@@ -77,6 +77,7 @@ public class VaccineService {
             }
         }
         VaccinesDTO vaccinesDTO = new VaccinesDTO(vaccinesDTOList);
-        return vaccineDTOmapper.convertToXml(vaccinesDTO);
+        String xml = vaccineDTOmapper.convertToXml(vaccinesDTO);
+        return xml;
     }
 }

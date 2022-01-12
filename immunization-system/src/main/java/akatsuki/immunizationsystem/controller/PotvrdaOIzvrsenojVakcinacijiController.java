@@ -72,4 +72,9 @@ public class PotvrdaOIzvrsenojVakcinacijiController {
                 .body(new InputStreamResource(stream));
     }
 
+    @GetMapping("/druge")
+    public String getDrugePotvrde() {
+        return potvrdaOIzvrsenojVakcinacijiService.getDrugePotvrde();
+    }
+
 }

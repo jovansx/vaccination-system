@@ -1,5 +1,6 @@
 package akatsuki.immunizationsystem.service;
 
+import akatsuki.immunizationsystem.dao.DaoUtils;
 import akatsuki.immunizationsystem.dao.IDao;
 import akatsuki.immunizationsystem.exceptions.BadRequestRuntimeException;
 import akatsuki.immunizationsystem.exceptions.ConflictRuntimeException;
@@ -43,6 +44,7 @@ public class PotvrdaOIzvrsenojVakcinacijiService {
     private final PdfTransformer pdfTransformer;
     private final HtmlTransformer htmlTransformer;
     private final QRCodeGenerator qrCodeGenerator;
+    private final DaoUtils utils;
 
     public static VaccineType getVaccineTypeFromStringValue(String givenName) {
         return Stream.of(VaccineType.values())
@@ -178,5 +180,16 @@ public class PotvrdaOIzvrsenojVakcinacijiService {
 
     public ByteArrayInputStream generateXhtml(String idBroj) {
         return htmlTransformer.generateHTML(getPotvrdaOIzvrsenojVakcinaciji(idBroj), PotvrdaOVakcinaciji.class);
+    }
+
+    public String getDrugePotvrde() {
+        List<String> allDrugePotvrde = utils.execute("//*[@about[contains(.,'_2')]]", "/db/vaccination-system/potvrde");
+        StringBuilder str = new StringBuilder();
+        str.append("<drugePotvrdeDTO>");
+        for (String potvrda: allDrugePotvrde) {
+            str.append(potvrda);
+        }
+        str.append("</drugePotvrdeDTO>");
+        return str.toString();
     }
 }

@@ -1,5 +1,6 @@
 package akatsuki.immunizationsystem.service;
 
+import akatsuki.immunizationsystem.dao.DaoUtils;
 import akatsuki.immunizationsystem.dao.IZahtevZaSertifikatDAO;
 import akatsuki.immunizationsystem.exceptions.BadRequestRuntimeException;
 import akatsuki.immunizationsystem.exceptions.NotFoundRuntimeException;
@@ -31,6 +32,7 @@ public class ZahtevZaSertifikatService {
     private final PotvrdaOIzvrsenojVakcinacijiService potvrdaOIzvrsenojVakcinacijiService;
     private final PdfTransformer pdfTransformer;
     private final HtmlTransformer htmlTransformer;
+    private final DaoUtils utils;
 
 
     public String getZahtevZaSertifikat(String idBroj) throws RuntimeException {
@@ -90,5 +92,32 @@ public class ZahtevZaSertifikatService {
 
     public ByteArrayInputStream generateXhtml(String idBroj) {
         return htmlTransformer.generateHTML(getZahtevZaSertifikat(idBroj), ZahtevZaSertifikat.class);
+    }
+
+    public String getAllNeodobreni() {
+        List<String> allNeodobreniZahtevi = utils.execute("//*[@odobren='false']", "/db/vaccination-system/zahtevi");
+        StringBuilder str = new StringBuilder();
+        str.append("<neodobreniZahteviDTO>");
+        for (String zahtev: allNeodobreniZahtevi) {
+//            zahtev = zahtev.replace("ns2:","");
+//            zahtev = zahtev.replace("xmlns=\"http://www.akatsuki.org/tipovi\"", "xmlns:t=\"http://www.akatsuki.org/tipovi\"");
+//            zahtev = zahtev.replace(":ns2","");
+//            zahtev = zahtev.replace("<ime","<t:ime");
+//            zahtev = zahtev.replace("<prezime","<t:prezime");
+//            zahtev = zahtev.replace("<id_broj","<t:id_broj");
+//            zahtev = zahtev.replace("<pol","<t:pol");
+//            zahtev = zahtev.replace("<datum_rodjenja","<t:datum_rodjenja");
+//            zahtev = zahtev.replace("</ime","</t:ime");
+//            zahtev = zahtev.replace("</prezime","</t:prezime");
+//            zahtev = zahtev.replace("</id_broj","</t:id_broj");
+//            zahtev = zahtev.replace("</pol","</t:pol");
+//            zahtev = zahtev.replace("</datum_rodjenja","</t:datum_rodjenja");
+
+//            str.append("<zahtevZaSertifikat>");
+            str.append(zahtev);
+//            str.append("</zahtevZaSertifikat>");
+        }
+        str.append("</neodobreniZahteviDTO>");
+        return str.toString();
     }
 }

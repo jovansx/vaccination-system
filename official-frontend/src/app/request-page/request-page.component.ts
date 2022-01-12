@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { IVakcina, IZahtev, Podnosilac, Vakcina, Zahtev } from '../models/request.model';
+import { RequestService } from '../services/request.service';
+import { XmlConverterService } from '../services/xml-converter.service';
 
 @Component({
   selector: 'app-request-page',
@@ -10,28 +12,51 @@ export class RequestPageComponent implements OnInit {
   zahtevi: IZahtev[] = [];
   zahtevSelected: IZahtev;
   selectedOptions: IZahtev[];
-  constructor() { }
+  allRequestsLoaded: boolean = true;
+
+  constructor(private requestService: RequestService, private _xml_parser: XmlConverterService) { }
 
   ngOnInit(): void {
-    this.getAllZahtevi()
+    this.getAllNeodobreniZahtevi()
     let vakcine: IVakcina[] = []
     vakcine.push(new Vakcina("","","","",""))
     vakcine.push(new Vakcina("","","","",""))
-    this.zahtevSelected = new Zahtev(new Podnosilac("Jeelna","","","",""), vakcine)
+    this.zahtevSelected = new Zahtev("", new Podnosilac("Jeelna","","","",""), vakcine, true)
   }
 
-  getAllZahtevi() {
-    let podnosilac = new Podnosilac("Jelena", "Stojanovic", "0510999805068", "Zenski", "05-10-1999");
-    let podnosilac2 = new Podnosilac("Jovan", "Simic", "5510934505068", "Zenski", "30-01-1999");
-    let podnosilac3 = new Podnosilac("Aleksandar", "Buljevic", "0510999805068", "Zenski", "15-10-1999");
-    let vakcine: IVakcina[] = []
-    let v1 = new Vakcina("Sinopharm", "BIONTECH MANUFACTURING", "1", "2021-09-09", "Promenada u Novom Sadu");
-    let v2 = new Vakcina("Sinopharm", "BIONTECH MANUFACTURING", "2", "2021-10-09", "Promenada u Novom Sadu");
-    vakcine.push(v1);
-    vakcine.push(v2);
-    this.zahtevi.push(new Zahtev(podnosilac, vakcine))
-    this.zahtevi.push(new Zahtev(podnosilac2, vakcine))
-    this.zahtevi.push(new Zahtev(podnosilac3, vakcine))
+  getAllNeodobreniZahtevi() {
+    this.allRequestsLoaded = false;
+    this.zahtevi = [];
+    this.requestService.getAllNeodobreniZahtevi()
+      .subscribe(res => {
+        let response = this._xml_parser.parseXmlToObject(res);
+        console.log(response)
+        // if(response.NEODOBRENZAHTEVDTOLIST !== undefined) {
+          response.NEODOBRENZAHTEVDTOLIST.forEach((element: any) => {
+            let podnosilac = new Podnosilac(element.IME[0], element.PREZIME[0], element.IDBROJ[0], element.POL[0], element.DATUMRODJENJA[0]);
+            let vakcine: IVakcina[] = []
+            let isValid: boolean = true;
+            if(element.DRUGAPOTVRDADTO[0] !== '') {
+              let nazivVakcine = element.DRUGAPOTVRDADTO[0].NAZIVVAKCINE[0]
+              let proizvodjac = ''
+              if(nazivVakcine === 'Moderna') {
+                proizvodjac = 'Kineska'
+              }
+              let v1 = new Vakcina(element.DRUGAPOTVRDADTO[0].NAZIVVAKCINE[0], proizvodjac, element.DRUGAPOTVRDADTO[0].DOZA1SERIJA[0], element.DRUGAPOTVRDADTO[0].DOZA1DATUM[0], element.DRUGAPOTVRDADTO[0].ZDRAVSTVENAUSTANOVA[0]);
+              let v2 = new Vakcina(element.DRUGAPOTVRDADTO[0].NAZIVVAKCINE[0], proizvodjac, element.DRUGAPOTVRDADTO[0].DOZA2SERIJA[0], element.DRUGAPOTVRDADTO[0].DOZA2DATUM[0], element.DRUGAPOTVRDADTO[0].ZDRAVSTVENAUSTANOVA[0]);
+              vakcine.push(v1);
+              vakcine.push(v2);
+            } else {
+              vakcine.push(new Vakcina("","","","",""));
+              vakcine.push(new Vakcina("","","","",""));
+              isValid = false;
+            }
+            
+            this.zahtevi.push(new Zahtev(element.RAZLOGPODNOSENJA[0], podnosilac, vakcine, isValid));
+          });
+        // }
+        this.allRequestsLoaded = true;
+      })
   }
 
   searchRequests() {
@@ -41,15 +66,4 @@ export class RequestPageComponent implements OnInit {
   onNgModelChange(event: any) {
     this.zahtevSelected = event[0]
   }
-
-  //imam iz zahteva: podnosilac (ime, prezime, idbr, pol, datumrodjenja)
-  // treba mi: 
-  //vakcinacija (iz potvrde o vakcinaciji - primljene vakcine, naziv vakcine, datum_izdavanja, zdr ustanova)
-  //testovi - hardkodovano
-  //qr code - kao sto su aca i simic
-
-  // prikazi: podnosilac
-  // primljene vakcine
-  // zdravsvtena ustanova
-
 }

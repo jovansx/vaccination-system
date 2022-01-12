@@ -10,6 +10,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.io.ByteArrayInputStream;
+import java.util.List;
 
 @RestController
 @RequestMapping("/api/zahtevi")
@@ -59,6 +60,11 @@ public class ZahtevZaSertifikatController {
     @GetMapping("/{periodOd}/{periodDo}")
     public int getResourcesCount(@PathVariable String periodOd, @PathVariable String periodDo) {
         return zahtevZaSertifikatService.getResourcesCountInPeriod(periodOd, periodDo);
+    }
+
+    @GetMapping("/neodobreni")
+    public String getAllNeodobreni() {
+        return zahtevZaSertifikatService.getAllNeodobreni();
     }
 
 }

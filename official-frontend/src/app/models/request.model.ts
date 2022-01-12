@@ -55,16 +55,22 @@ export class Vakcina implements IVakcina {
 }
 
 export interface IZahtev {
+    razlogPodnosenja: string;
     podnosilac: IPodnosilac;
     vakcine: IVakcina[];
+    isValid: boolean;
 }
 
 export class Zahtev implements IZahtev {
+    razlogPodnosenja: string;
     podnosilac: IPodnosilac;
     vakcine: IVakcina[];
+    isValid: boolean;
 
-    constructor(podnosilac: IPodnosilac, vakcine: IVakcina[]) {
+    constructor(razlogPodnosenja: string, podnosilac: IPodnosilac, vakcine: IVakcina[], isValid: boolean) {
+        this.razlogPodnosenja = razlogPodnosenja;
         this.podnosilac = podnosilac;
         this.vakcine = vakcine;
+        this.isValid = isValid;
     }
 }
