@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { IVakcina, IZahtev, Podnosilac, Vakcina, Zahtev } from '../models/request.model';
 import { RequestService } from '../services/request.service';
 import { XmlConverterService } from '../services/xml-converter.service';
+import { format } from 'date-fns'
+import { makeDigitalniSertifikatXml } from '../utils/utils';
 
 @Component({
   selector: 'app-request-page',
@@ -18,10 +20,10 @@ export class RequestPageComponent implements OnInit {
 
   ngOnInit(): void {
     this.getAllNeodobreniZahtevi()
-    let vakcine: IVakcina[] = []
-    vakcine.push(new Vakcina("","","","",""))
-    vakcine.push(new Vakcina("","","","",""))
-    this.zahtevSelected = new Zahtev("", new Podnosilac("Jeelna","","","",""), vakcine, true)
+    // let vakcine: IVakcina[] = []
+    // vakcine.push(new Vakcina("","","","",""))
+    // vakcine.push(new Vakcina("","","","",""))
+    // this.zahtevSelected = new Zahtev("", new Podnosilac("Jeelna","","","",""), vakcine, true)
   }
 
   getAllNeodobreniZahtevi() {
@@ -65,5 +67,10 @@ export class RequestPageComponent implements OnInit {
 
   onNgModelChange(event: any) {
     this.zahtevSelected = event[0]
+  }
+
+  acceptRequest() {
+    let digitalniSertifikatXml = makeDigitalniSertifikatXml(this.zahtevSelected);
+    console.log(digitalniSertifikatXml);
   }
 }
