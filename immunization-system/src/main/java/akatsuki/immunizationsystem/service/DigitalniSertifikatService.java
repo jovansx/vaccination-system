@@ -57,6 +57,7 @@ public class DigitalniSertifikatService {
 
     public String createDigitalniSertifikat(String digitalniSertifikatXml) throws RuntimeException {
         DigitalniSertifikat digitalniSertifikat = mapper.convertToObject(digitalniSertifikatXml);
+
         if (digitalniSertifikat == null)
             throw new BadRequestRuntimeException("Dokument koji ste poslali nije validan.");
 

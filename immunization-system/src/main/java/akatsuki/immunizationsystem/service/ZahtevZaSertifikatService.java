@@ -99,25 +99,16 @@ public class ZahtevZaSertifikatService {
         StringBuilder str = new StringBuilder();
         str.append("<neodobreniZahteviDTO>");
         for (String zahtev: allNeodobreniZahtevi) {
-//            zahtev = zahtev.replace("ns2:","");
-//            zahtev = zahtev.replace("xmlns=\"http://www.akatsuki.org/tipovi\"", "xmlns:t=\"http://www.akatsuki.org/tipovi\"");
-//            zahtev = zahtev.replace(":ns2","");
-//            zahtev = zahtev.replace("<ime","<t:ime");
-//            zahtev = zahtev.replace("<prezime","<t:prezime");
-//            zahtev = zahtev.replace("<id_broj","<t:id_broj");
-//            zahtev = zahtev.replace("<pol","<t:pol");
-//            zahtev = zahtev.replace("<datum_rodjenja","<t:datum_rodjenja");
-//            zahtev = zahtev.replace("</ime","</t:ime");
-//            zahtev = zahtev.replace("</prezime","</t:prezime");
-//            zahtev = zahtev.replace("</id_broj","</t:id_broj");
-//            zahtev = zahtev.replace("</pol","</t:pol");
-//            zahtev = zahtev.replace("</datum_rodjenja","</t:datum_rodjenja");
-
-//            str.append("<zahtevZaSertifikat>");
             str.append(zahtev);
-//            str.append("</zahtevZaSertifikat>");
         }
         str.append("</neodobreniZahteviDTO>");
         return str.toString();
+    }
+
+    public void odobriZahtev(String idBroj) {
+        ZahtevZaSertifikat zahtevZaSertifikat = zahtevZaSertifikatDAO.get(idBroj).get();
+        zahtevZaSertifikat.setOdobren(true);
+
+        zahtevZaSertifikatDAO.save(zahtevZaSertifikat);
     }
 }

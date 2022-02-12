@@ -12,4 +12,8 @@ export class RequestService {
   getAllNeodobreniZahtevi(): Observable<string> {
     return this._http.get<string>('/izdavanje-dzs/zahtevi', {responseType: 'text' as 'json'});
   }
+
+  createRequest(digitalniSertifikatXml: string) {
+    return this._http.post<string>('/izdavanje-dzs', digitalniSertifikatXml)
+  }
 }

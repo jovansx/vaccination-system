@@ -1,5 +1,6 @@
 package akatsuki.officialsystem.service;
 
+import akatsuki.officialsystem.exceptions.BadRequestRuntimeException;
 import akatsuki.officialsystem.model.potvrde.DrugaPotvrdaDTO;
 import akatsuki.officialsystem.model.zahtevi.NeodobrenZahtevDTO;
 import akatsuki.officialsystem.model.zahtevi.NeodobreniZahteviDTO;
@@ -73,5 +74,16 @@ public class IzdavanjeDZSService {
 
         String z = neodobreniZahteviDTOmapper.convertToXml(neodobreniZahteviDTO);
         return z;
+    }
+
+    public String createDZS(String digitalniSertifikatXml) {
+        try {
+            ResponseEntity<String> response = restTemplate.postForEntity("http://localhost:8081/api/digitalni-sertifikati", digitalniSertifikatXml, String.class);
+            String id = response.getBody();
+            restTemplate.put("http://localhost:8081/api/zahtevi/" + id, digitalniSertifikatXml);
+            return id;
+        } catch (Exception e) {
+            throw new BadRequestRuntimeException("Dokument koji ste poslali nije validan.");
+        }
     }
 }

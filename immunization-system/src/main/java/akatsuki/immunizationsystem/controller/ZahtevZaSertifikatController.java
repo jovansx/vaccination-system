@@ -29,6 +29,11 @@ public class ZahtevZaSertifikatController {
         zahtevZaSertifikatService.createZahtevZaSertifikat(zahtevXml);
     }
 
+    @PutMapping("/{idBroj}")
+    public void odobriZahtev(@PathVariable String idBroj) {
+        zahtevZaSertifikatService.odobriZahtev(idBroj);
+    }
+
     @GetMapping(value = "/pdf/{idBroj}", produces = MediaType.APPLICATION_PDF_VALUE)
     public ResponseEntity<InputStreamResource> getZahtevPdf(@PathVariable String idBroj) {
         ByteArrayInputStream stream = zahtevZaSertifikatService.generatePdf(idBroj);

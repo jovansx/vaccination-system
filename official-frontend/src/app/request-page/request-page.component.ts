@@ -4,6 +4,9 @@ import { RequestService } from '../services/request.service';
 import { XmlConverterService } from '../services/xml-converter.service';
 import { format } from 'date-fns'
 import { makeDigitalniSertifikatXml } from '../utils/utils';
+import { ToastrService } from 'ngx-toastr';
+import { MatDialog } from '@angular/material/dialog';
+import { ProgressBarDialogComponent } from '../utils/progress-bar-dialog/progress-bar-dialog.component';
 
 @Component({
   selector: 'app-request-page',
@@ -15,15 +18,13 @@ export class RequestPageComponent implements OnInit {
   zahtevSelected: IZahtev;
   selectedOptions: IZahtev[];
   allRequestsLoaded: boolean = true;
+  isZahtevSelected: boolean = false;
 
-  constructor(private requestService: RequestService, private _xml_parser: XmlConverterService) { }
+  constructor(private requestService: RequestService, private _xml_parser: XmlConverterService, private _toastr: ToastrService,
+    public dialog: MatDialog) { }
 
   ngOnInit(): void {
     this.getAllNeodobreniZahtevi()
-    // let vakcine: IVakcina[] = []
-    // vakcine.push(new Vakcina("","","","",""))
-    // vakcine.push(new Vakcina("","","","",""))
-    // this.zahtevSelected = new Zahtev("", new Podnosilac("Jeelna","","","",""), vakcine, true)
   }
 
   getAllNeodobreniZahtevi() {
@@ -67,10 +68,25 @@ export class RequestPageComponent implements OnInit {
 
   onNgModelChange(event: any) {
     this.zahtevSelected = event[0]
+    this.isZahtevSelected = true;
   }
 
   acceptRequest() {
+    const dialogRef = this.dialog.open(ProgressBarDialogComponent, {
+      height: '60px',
+      width: '30%',
+    });
     let digitalniSertifikatXml = makeDigitalniSertifikatXml(this.zahtevSelected);
-    console.log(digitalniSertifikatXml);
+    this.requestService.createRequest(digitalniSertifikatXml)
+      .subscribe((res) => {
+        this._toastr.success("Uspesno kreiran digitalni sertifikat sa id-jem " + res);
+        dialogRef.close();
+        this.isZahtevSelected = false;
+        this.getAllNeodobreniZahtevi();
+      }, (err) => {
+        this._toastr.error(err.error.message);
+        dialogRef.close();
+        this.isZahtevSelected = false;
+      })
   }
 }
