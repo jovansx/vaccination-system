@@ -41,6 +41,11 @@ public class InteresovanjeDAO implements IDao<Interesovanje> {
     }
 
     @Override
+    public List<String> getAllXmls() {
+        return daoUtils.getResourcesByCollectionId(collectionId);
+    }
+
+    @Override
     public int getResourcesCount() {
         return daoUtils.getResourcesCount(collectionId);
     }

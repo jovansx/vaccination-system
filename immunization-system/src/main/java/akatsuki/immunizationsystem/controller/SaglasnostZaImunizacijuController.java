@@ -23,6 +23,11 @@ public class SaglasnostZaImunizacijuController {
         return saglasnostZaImunizacijuService.getSaglasnostZaImunizaciju(idBrojIndex);
     }
 
+    @GetMapping("/pretrazi/{searchInput}")
+    public String getSaglasnostiBasicSearch(@PathVariable String searchInput) {
+        return saglasnostZaImunizacijuService.getSaglasnostiBySearchInput(searchInput);
+    }
+
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     public void createSaglasnostZaImunizaciju(@RequestBody String saglasnostXml) {

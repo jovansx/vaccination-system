@@ -18,6 +18,7 @@ import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Service;
 
 import java.io.ByteArrayInputStream;
+import java.util.List;
 
 @Service
 public class SaglasnostZaImunizacijuService {
@@ -160,5 +161,20 @@ public class SaglasnostZaImunizacijuService {
 
     public String getMetadataRDF(String idBrojIndex) {
         return extractor.getRdfMetadata("/saglasnosti", idBrojIndex);
+    }
+
+    public String getSaglasnostiBySearchInput(String searchInput) {
+        List<String> saglasnosti = saglasnostZaImunizacijuIDao.getAllXmls();
+        StringBuilder str = new StringBuilder();
+        str.append("<saglasnosti>");
+        for (String i: saglasnosti) {
+            if (i.contains(searchInput)) {
+                String idBroj = i.split("about=\"http://www.akatsuki.org/saglasnosti/")[1]
+                        .split("\"")[0];
+                str.append("<idBroj>").append(idBroj).append("</idBroj>");
+            }
+        }
+        str.append("</saglasnosti>");
+        return str.toString();
     }
 }

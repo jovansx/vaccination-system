@@ -30,6 +30,11 @@ public class PotvrdaOIzvrsenojVakcinacijiDAO implements IDao<PotvrdaOVakcinaciji
     }
 
     @Override
+    public List<String> getAllXmls() {
+        return daoUtils.getResourcesByCollectionId(collectionId);
+    }
+
+    @Override
     public Collection<PotvrdaOVakcinaciji> getAll() {
         List<String> resourceContent = daoUtils.getResourcesByCollectionId(collectionId);
         List<PotvrdaOVakcinaciji> potvrde = new ArrayList<>();

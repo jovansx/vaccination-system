@@ -24,6 +24,11 @@ public class ZahtevZaSertifikatController {
         return zahtevZaSertifikatService.getZahtevZaSertifikat(idBroj);
     }
 
+    @GetMapping("/pretrazi/{searchInput}")
+    public String getZahteviBasicSearch(@PathVariable String searchInput) {
+        return zahtevZaSertifikatService.getZahteveBySearchInput(searchInput);
+    }
+
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     public void createZahtevZaSertifikat(@RequestBody String zahtevXml) {
