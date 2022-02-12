@@ -1,0 +1,54 @@
+.request-page-container {
+    padding: 20px;
+}
+
+.request-filter-panel {
+    /* text-align: end; */
+    /* background-color: #eee; */
+    /* padding: 10px; */
+    padding-right: 10px;
+}
+
+.mt-10 {
+    margin-top: 10px;
+}
+
+.mt-30 {
+    margin-top: 30px;
+}
+
+.mr-20 {
+    margin-right: 20px;
+}
+
+.request-input-panel {
+    margin-bottom: 10px;
+}
+
+
+.mb-30 {
+    margin-bottom: 30px;
+}
+
+.request-input-panel p {
+    margin: 0;
+}
+
+.request-input {
+    border:none;
+    width: 300px;
+}
+
+.request-info-panel {
+    background-color: #eee;
+    padding: 20px;
+}
+
+.request-list-panel {
+    margin-right: 20px;
+}
+
+.scroller {
+    height: 680px;
+  overflow: scroll;
+}

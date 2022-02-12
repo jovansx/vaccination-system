@@ -11,6 +11,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.io.ByteArrayInputStream;
+import java.util.List;
 
 @RestController
 @RequestMapping("/api/zahtevi")
@@ -27,6 +28,11 @@ public class ZahtevZaSertifikatController {
     @ResponseStatus(HttpStatus.CREATED)
     public void createZahtevZaSertifikat(@RequestBody String zahtevXml) {
         zahtevZaSertifikatService.createZahtevZaSertifikat(zahtevXml);
+    }
+
+    @PutMapping("/{idBroj}")
+    public void odobriZahtev(@PathVariable String idBroj) {
+        zahtevZaSertifikatService.odobriZahtev(idBroj);
     }
 
     @GetMapping(value = "/pdf/{idBroj}", produces = MediaType.APPLICATION_PDF_VALUE)
@@ -70,6 +76,16 @@ public class ZahtevZaSertifikatController {
     @GetMapping("/{periodOd}/{periodDo}")
     public int getResourcesCount(@PathVariable String periodOd, @PathVariable String periodDo) {
         return zahtevZaSertifikatService.getResourcesCountInPeriod(periodOd, periodDo);
+    }
+
+    @GetMapping("/neodobreni")
+    public String getAllNeodobreni() {
+        return zahtevZaSertifikatService.getAllNeodobreni();
+    }
+
+    @DeleteMapping("/{idBroj}")
+    public void deleteZahtev(@PathVariable String idBroj) {
+        zahtevZaSertifikatService.odbaciZahtev(idBroj);
     }
 
 }

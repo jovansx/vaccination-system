@@ -1,5 +1,6 @@
 package akatsuki.immunizationsystem.service;
 
+import akatsuki.immunizationsystem.dao.DaoUtils;
 import akatsuki.immunizationsystem.dao.IZahtevZaSertifikatDAO;
 import akatsuki.immunizationsystem.dtos.MetadataDTO;
 import akatsuki.immunizationsystem.exceptions.BadRequestRuntimeException;
@@ -24,6 +25,7 @@ public class ZahtevZaSertifikatService {
     private final PotvrdaOIzvrsenojVakcinacijiService potvrdaOIzvrsenojVakcinacijiService;
     private final PdfTransformer pdfTransformer;
     private final HtmlTransformer htmlTransformer;
+    private final DaoUtils utils;
 
 
     public String getZahtevZaSertifikat(String idBroj) throws RuntimeException {
@@ -85,6 +87,29 @@ public class ZahtevZaSertifikatService {
         return htmlTransformer.generateHTML(getZahtevZaSertifikat(idBroj), ZahtevZaSertifikat.class);
     }
 
+
+    public String getAllNeodobreni() {
+        List<String> allNeodobreniZahtevi = utils.execute("//*[@odobren='false']", "/db/vaccination-system/zahtevi");
+        StringBuilder str = new StringBuilder();
+        str.append("<neodobreniZahteviDTO>");
+        for (String zahtev: allNeodobreniZahtevi) {
+            str.append(zahtev);
+        }
+        str.append("</neodobreniZahteviDTO>");
+        return str.toString();
+    }
+
+    public void odobriZahtev(String idBroj) {
+        ZahtevZaSertifikat zahtevZaSertifikat = zahtevZaSertifikatDAO.get(idBroj).get();
+        zahtevZaSertifikat.setOdobren(true);
+
+        zahtevZaSertifikatDAO.save(zahtevZaSertifikat);
+    }
+
+    public void odbaciZahtev(String idBroj) {
+        utils.deleteResource("/db/vaccination-system/zahtevi", idBroj);
+    }
+  
     public MetadataDTO getMetadataJSON(String idBroj) {
         return new MetadataDTO("<http://www.akatsuki.org/zahtevi/" + idBroj + ">", extractor.readFromRdfWhereObjectIs("/zahtevi", idBroj));
     }

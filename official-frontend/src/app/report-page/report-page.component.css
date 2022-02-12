@@ -63,3 +63,7 @@ padding: 20px;
 .report-input {
     border:none;
 }
+
+.approve-panel {
+    background-color: #eee;
+}
