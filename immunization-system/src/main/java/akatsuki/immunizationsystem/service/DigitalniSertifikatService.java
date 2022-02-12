@@ -88,4 +88,19 @@ public class DigitalniSertifikatService {
     public String getMetadataRDF(String idBroj) {
         return extractor.getRdfMetadata("/digitalni-sertifikati", idBroj);
     }
+
+    public String getSertifikatiBySearchInput(String searchInput) {
+        List<String> sertifikati = digitalniSertifikatDAO.getAllXmls();
+        StringBuilder str = new StringBuilder();
+        str.append("<sertifikati>");
+        for (String i: sertifikati) {
+            if (i.contains(searchInput)) {
+                String idBroj = i.split("about=\"http://www.akatsuki.org/digitalni-sertifikati/")[1]
+                        .split("\"")[0];
+                str.append("<idBroj>").append(idBroj).append("</idBroj>");
+            }
+        }
+        str.append("</sertifikati>");
+        return str.toString();
+    }
 }

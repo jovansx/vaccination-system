@@ -191,4 +191,19 @@ public class PotvrdaOIzvrsenojVakcinacijiService {
     public String getMetadataRDF(String idBrojIndex) {
         return extractor.getRdfMetadata("/potvrde", idBrojIndex);
     }
+
+    public String getPotvrdeBySearchInput(String searchInput) {
+        List<String> potvrde = potvrdaOVakcinacijiIDao.getAllXmls();
+        StringBuilder str = new StringBuilder();
+        str.append("<potvrde>");
+        for (String i: potvrde) {
+            if (i.contains(searchInput)) {
+                String idBroj = i.split("about=\"http://www.akatsuki.org/potvrde/")[1]
+                        .split("\"")[0];
+                str.append("<idBroj>").append(idBroj).append("</idBroj>");
+            }
+        }
+        str.append("</potvrde>");
+        return str.toString();
+    }
 }

@@ -1,5 +1,6 @@
 package akatsuki.immunizationsystem.service;
 
+import akatsuki.immunizationsystem.dao.DaoUtils;
 import akatsuki.immunizationsystem.dao.IDao;
 import akatsuki.immunizationsystem.dtos.MetadataDTO;
 import akatsuki.immunizationsystem.exceptions.BadRequestRuntimeException;
@@ -26,7 +27,7 @@ public class InteresovanjeService {
     private final EmailService emailService;
     private final PdfTransformer pdfTransformer;
     private final HtmlTransformer htmlTransformer;
-
+    private final DaoUtils utils;
     private final AppointmentService appointmentService;
 
 
@@ -91,5 +92,20 @@ public class InteresovanjeService {
 
     public String getMetadataRDF(String idBroj) {
         return extractor.getRdfMetadata("/interesovanja", idBroj);
+    }
+
+    public String getInteresovanjaBySearchInput(String searchInput) {
+        List<String> interesovanja = interesovanjeDAO.getAllXmls();
+        StringBuilder str = new StringBuilder();
+        str.append("<interesovanja>");
+        for (String i: interesovanja) {
+            if (i.contains(searchInput)) {
+                String idBroj = i.split("about=\"http://www.akatsuki.org/interesovanja/")[1]
+                        .split("\"")[0];
+                str.append("<idBroj>").append(idBroj).append("</idBroj>");
+            }
+        }
+        str.append("</interesovanja>");
+        return str.toString();
     }
 }

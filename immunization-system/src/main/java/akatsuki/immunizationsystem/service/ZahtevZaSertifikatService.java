@@ -117,4 +117,19 @@ public class ZahtevZaSertifikatService {
     public String getMetadataRDF(String idBroj) {
         return extractor.getRdfMetadata("/zahtevi", idBroj);
     }
+
+    public String getZahteveBySearchInput(String searchInput) {
+        List<String> zahtevi = zahtevZaSertifikatDAO.getAllXmls();
+        StringBuilder str = new StringBuilder();
+        str.append("<zahtevi>");
+        for (String i: zahtevi) {
+            if (i.contains(searchInput)) {
+                String idBroj = i.split("about=\"http://www.akatsuki.org/zahtevi/")[1]
+                        .split("\"")[0];
+                str.append("</idBroj>").append(idBroj).append("</idBroj>");
+            }
+        }
+        str.append("</zahtevi>");
+        return str.toString();
+    }
 }

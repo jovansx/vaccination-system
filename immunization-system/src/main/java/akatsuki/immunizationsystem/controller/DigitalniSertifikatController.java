@@ -24,6 +24,11 @@ public class DigitalniSertifikatController {
         return digitalniSertifikatService.getDigitalniSertifikat(idBroj);
     }
 
+    @GetMapping("/pretrazi/{searchInput}")
+    public String getDigitalneSertifikateBasicSearch(@PathVariable String searchInput) {
+        return digitalniSertifikatService.getSertifikatiBySearchInput(searchInput);
+    }
+
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     public String createDigitalniSertifikat(@RequestBody String digitalniSertifikatXml) {

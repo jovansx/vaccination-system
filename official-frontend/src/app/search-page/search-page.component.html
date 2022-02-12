@@ -1,0 +1,22 @@
+<app-header></app-header>
+
+<div class="search-page-container">
+    <h1>Pretraga dokumenata</h1>
+    <mat-divider></mat-divider>
+
+    <mat-tab-group>
+        <mat-tab label="Osnovna pretraga">
+            <mat-form-field class="example-full-width" appearance="fill">
+                <input matInput placeholder="Npr. Phizer" [(ngModel)]="searchInput">
+            </mat-form-field>
+            <button mat-button color="primary" (click)="submitBasicSearch()">Pretrazi</button>
+            <div fxLayout="row" fxLayoutAlign="start start">
+                <app-document-card
+                  *ngFor="let doc of lista"
+                  [dokument]="doc"
+                ></app-document-card>
+              </div>
+        </mat-tab>
+        <mat-tab label="Napredna pretraga"> Napredna pretraga </mat-tab>
+      </mat-tab-group>
+</div>

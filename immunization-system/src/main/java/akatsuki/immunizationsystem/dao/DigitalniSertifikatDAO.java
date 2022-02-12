@@ -30,6 +30,11 @@ public class DigitalniSertifikatDAO implements IDao<DigitalniSertifikat> {
     }
 
     @Override
+    public List<String> getAllXmls() {
+        return daoUtils.getResourcesByCollectionId(collectionId);
+    }
+
+    @Override
     public Collection<DigitalniSertifikat> getAll() {
         List<String> resourceContent = daoUtils.getResourcesByCollectionId(collectionId);
         List<DigitalniSertifikat> sertifikati = new ArrayList<>();

@@ -30,6 +30,11 @@ public class AppointmentDAO implements IDao<Appointment> {
     }
 
     @Override
+    public List<String> getAllXmls() {
+        return daoUtils.getResourcesByCollectionId(collectionId);
+    }
+
+    @Override
     public Collection<Appointment> getAll() {
         List<String> resourceContent = daoUtils.getResourcesByCollectionId(collectionId);
         List<Appointment> appointments = new ArrayList<>();

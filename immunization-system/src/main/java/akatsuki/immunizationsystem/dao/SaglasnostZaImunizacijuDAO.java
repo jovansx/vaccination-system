@@ -29,6 +29,11 @@ public class SaglasnostZaImunizacijuDAO implements ISaglasnostZaImunizacijuDAO {
         return Optional.of(saglasnostZaImunizaciju);
     }
 
+    @Override
+    public List<String> getAllXmls() {
+        return daoUtils.getResourcesByCollectionId(collectionId);
+    }
+
     public Optional<SaglasnostZaImunizaciju> getByIdBroj(String jmbg) {
         List<String> resourceContent = daoUtils.getResourcesByCollectionId(collectionId);
         for (String resource : resourceContent) {

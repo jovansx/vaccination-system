@@ -24,6 +24,11 @@ public class InteresovanjeController {
         return interesovanjeService.getInteresovanje(idBroj);
     }
 
+    @GetMapping("/pretrazi/{searchInput}")
+    public String getInteresovanjaBasicSearch(@PathVariable String searchInput) {
+        return interesovanjeService.getInteresovanjaBySearchInput(searchInput);
+    }
+
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     public void createInteresovanje(@RequestBody String interesovanjeXml) {
