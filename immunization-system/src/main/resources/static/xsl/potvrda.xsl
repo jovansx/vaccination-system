@@ -8,30 +8,30 @@
                 <title>Potvrda o izvrsenoj vakcinaciji</title>
                 <style type="text/css">
                     body {
-                        margin: 0;
-                        font-family: Arial, sans-serif;
-                        overflow-x: hidden;
+                    margin: 0;
+                    font-family: Arial, sans-serif;
+                    overflow-x: hidden;
                     }
                     h1 {
-                        text-align: center;
-                        padding: 20px;
-                        font-weight: bold;
+                    text-align: center;
+                    padding: 20px;
+                    font-weight: bold;
                     }
                     .indent-paragraph {
-                        margin-left: 10vw;
-                        font-size: 1.5em;
+                    margin-left: 10vw;
+                    font-size: 1.5em;
                     }
                     .flex-row-center {
-                        display: flex;
-                        flex-direction: row;
-                        align-items: center;
-                        justify-content: center;
+                    display: flex;
+                    flex-direction: row;
+                    align-items: center;
+                    justify-content: center;
                     }
                     .flex-row-between {
-                        display: flex;
-                        flex-direction: row;
-                        align-items: center;
-                        justify-content: space-between;
+                    display: flex;
+                    flex-direction: row;
+                    align-items: center;
+                    justify-content: space-between;
                     }
                 </style>
             </head>
@@ -42,35 +42,55 @@
                     </div>
                     <pre style="width: 25%; font-size: 1.7em;">
                         <b>
-                        INSTITUT ZA JAVNO ZDRAVLJE SRBIJE
+                            INSTITUT ZA JAVNO ZDRAVLJE SRBIJE
                             "Dr Milan Jankovic Batut"
                         </b>
                         INSTITUT ZA JAVNO ZDRAVLJE SRBIJE
-                            "Dr Milan Jankovic Batut"
+                        "Dr Milan Jankovic Batut"
                         INSTITUTE OF PUBLIC HEALTH OF SERBIA
-                            "Dr Milan Jankovic Batut"
+                        "Dr Milan Jankovic Batut"
                     </pre>
                 </div>
                 <h1>POTVRDA O IZVRSENOJ VAKCINACIJI PROTIV COVID-19</h1>
-                <p style="color: grey; text-align: center; font-size: 1.7em;">POTVRDA O IZVRSENOJ VAKCINACIJI <b>PROTIV COVID 19</b></p>
-                <p style="color: grey; text-align: center; font-size: 1.7em;">CONFIRMATION OF THE <b>COVID 19</b> VACCINATION</p>
-                <p class="indent-paragraph"><b>Ime i prezime: </b><xsl:value-of select="concat(' ', //t:ime, ' ', //t:prezime)"/></p>
-                <p class="indent-paragraph" style="font-size: 1.3em; color: grey;">Ime i prezime / First and Last Name</p>
-                <p class="indent-paragraph"><b>Datum rodjenja: </b><xsl:value-of select="concat(' ', //t:datum_rodjenja)"/></p>
+                <p style="color: grey; text-align: center; font-size: 1.7em;">POTVRDA O IZVRSENOJ VAKCINACIJI
+                    <b>PROTIV COVID 19</b>
+                </p>
+                <p style="color: grey; text-align: center; font-size: 1.7em;">CONFIRMATION OF THE <b>COVID 19</b> VACCINATION
+                </p>
+                <p class="indent-paragraph">
+                    <b>Ime i prezime:</b>
+                    <xsl:value-of select="concat(' ', //t:ime, ' ', //t:prezime)"/>
+                </p>
+                <p class="indent-paragraph" style="font-size: 1.3em; color: grey;">Ime i prezime / First and Last Name
+                </p>
+                <p class="indent-paragraph">
+                    <b>Datum rodjenja:</b>
+                    <xsl:value-of select="concat(' ', //t:datum_rodjenja)"/>
+                </p>
                 <p class="indent-paragraph" style="font-size: 1.3em; color: grey;">Datum rodjenja / Date Of Birth</p>
-                <p class="indent-paragraph"><b>Pol: </b><xsl:value-of select="concat(' ', //t:pol)"/></p>
+                <p class="indent-paragraph">
+                    <b>Pol:</b>
+                    <xsl:value-of select="concat(' ', //t:pol)"/>
+                </p>
                 <p class="indent-paragraph" style="font-size: 1.3em; color: grey;">
-                    Pol: <xsl:value-of select="concat(' ', //t:pol, ' / Gender ')"/>
+                    Pol:
+                    <xsl:value-of select="concat(' ', //t:pol, ' / Gender ')"/>
                     <xsl:if test="//t:pol = 'Muski'">Male</xsl:if>
                     <xsl:if test="//t:pol = 'Zenski'">Female</xsl:if>
                 </p>
                 <xsl:choose>
                     <xsl:when test="string-length(//t:id_broj/text()) = 13">
-                        <p class="indent-paragraph"><b>JMBG: </b><xsl:value-of select="concat(' ', //t:id_broj)"/></p>
+                        <p class="indent-paragraph">
+                            <b>JMBG:</b>
+                            <xsl:value-of select="concat(' ', //t:id_broj)"/>
+                        </p>
                         <p class="indent-paragraph" style="font-size: 1.3em; color: grey;">JMBG / Personal No.</p>
                     </xsl:when>
                     <xsl:otherwise>
-                        <p class="indent-paragraph"><b>Passport number: </b><xsl:value-of select="concat(' ', //t:id_broj)"/></p>
+                        <p class="indent-paragraph">
+                            <b>Passport number:</b>
+                            <xsl:value-of select="concat(' ', //t:id_broj)"/>
+                        </p>
                         <p class="indent-paragraph" style="font-size: 1.3em; color: grey;">Passport number</p>
                     </xsl:otherwise>
                 </xsl:choose>
@@ -84,7 +104,8 @@
                             </xsl:choose>
                             doze vakcine:
                         </b>
-                        <xsl:value-of select="concat(' ', p:datum_davanja, ', serija: ', p:serija)"/></p>
+                        <xsl:value-of select="concat(' ', p:datum_davanja, ', serija: ', p:serija)"/>
+                    </p>
                     <p class="indent-paragraph" style="font-size: 1.3em; color: grey;">
                         Datum
                         <xsl:if test="@broj = 2">druge</xsl:if>
@@ -93,18 +114,42 @@
                         Vaccination Date
                     </p>
                 </xsl:for-each>
-                <p class="indent-paragraph"><b>Zdravstvena ustanova koja vakcinise: </b><xsl:value-of select="concat(' ', //p:zdravstvena_ustanova)"/></p>
-                <p class="indent-paragraph" style="font-size: 1.3em; color: grey;">Zdravstvena ustanova koja vakcinise / Health care institution of vaccination</p>
-                <p class="indent-paragraph"><b>Naziv vakcine: </b><xsl:value-of select="concat(' ', //p:naziv_vakcine)"/></p>
+                <p class="indent-paragraph">
+                    <b>Zdravstvena ustanova koja vakcinise:</b>
+                    <xsl:value-of select="concat(' ', //p:zdravstvena_ustanova)"/>
+                </p>
+                <p class="indent-paragraph" style="font-size: 1.3em; color: grey;">Zdravstvena ustanova koja vakcinise /
+                    Health care institution of vaccination
+                </p>
+                <p class="indent-paragraph">
+                    <b>Naziv vakcine:</b>
+                    <xsl:value-of select="concat(' ', //p:naziv_vakcine)"/>
+                </p>
                 <p class="indent-paragraph" style="font-size: 1.3em; color: grey;">Naziv vakcine / Name of vaccine</p>
-                <p class="indent-paragraph"><b>Datum izdavanja potvrde: </b><xsl:value-of select="concat(' ', //p:potvrda_o_vakcinaciji/@datum_izdavanja)"/></p>
-                <p class="indent-paragraph" style="font-size: 1.3em; color: grey;">Datum izdavanja potvrde / Confirmation Release Date</p>
-                <p class="indent-paragraph" style="text-align: right; margin-right: 10vw;"><b>Zdravstvena ustanova: <xsl:value-of select="concat(' ', //p:zdravstvena_ustanova)"/></b></p>
-                <p class="indent-paragraph" style="font-size: 1.3em; color: grey; text-align: right; margin-right: 10vw;">Zdravstvena ustanova / Medical institution</p>
+                <p class="indent-paragraph">
+                    <b>Datum izdavanja potvrde:</b>
+                    <xsl:value-of select="concat(' ', //p:potvrda_o_vakcinaciji/@datum_izdavanja)"/>
+                </p>
+                <p class="indent-paragraph" style="font-size: 1.3em; color: grey;">Datum izdavanja potvrde /
+                    Confirmation Release Date
+                </p>
+                <p class="indent-paragraph" style="text-align: right; margin-right: 10vw;">
+                    <b>Zdravstvena ustanova:
+                        <xsl:value-of select="concat(' ', //p:zdravstvena_ustanova)"/>
+                    </b>
+                </p>
+                <p class="indent-paragraph"
+                   style="font-size: 1.3em; color: grey; text-align: right; margin-right: 10vw;">Zdravstvena ustanova /
+                    Medical institution
+                </p>
                 <div class="flex-row-between">
                     <div style="width:50vw;">
-                        <p style="font-size: 1.2em; text-align: left; margin-left: 10vw;">Ova potvrda vazi bez potpisa i pecata</p>
-                        <p style="font-size: 1em; color: grey; text-align: left; margin-left: 10vw;">Ova potvrda vazi bez potpisa i pecata / This certification is valid without signatures and seals</p>
+                        <p style="font-size: 1.2em; text-align: left; margin-left: 10vw;">Ova potvrda vazi bez potpisa i
+                            pecata
+                        </p>
+                        <p style="font-size: 1em; color: grey; text-align: left; margin-left: 10vw;">Ova potvrda vazi
+                            bez potpisa i pecata / This certification is valid without signatures and seals
+                        </p>
                     </div>
                     <xsl:variable name="qrcode" select="//p:qr_code/text()"/>
                     <image src="data:image/jpeg;base64,{$qrcode}" style="width: 15vw; margin-right: 10vw;"/>

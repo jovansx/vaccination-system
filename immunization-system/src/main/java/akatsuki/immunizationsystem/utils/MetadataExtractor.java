@@ -3,7 +3,10 @@ package akatsuki.immunizationsystem.utils;
 import akatsuki.immunizationsystem.config.RdfConnection;
 import com.sun.org.apache.xalan.internal.xsltc.trax.TransformerFactoryImpl;
 import lombok.RequiredArgsConstructor;
-import org.apache.jena.query.*;
+import org.apache.jena.query.QueryExecution;
+import org.apache.jena.query.QueryExecutionFactory;
+import org.apache.jena.query.QuerySolution;
+import org.apache.jena.query.ResultSet;
 import org.apache.jena.rdf.model.Model;
 import org.apache.jena.rdf.model.ModelFactory;
 import org.apache.jena.rdf.model.RDFNode;
@@ -20,7 +23,9 @@ import javax.xml.transform.TransformerFactory;
 import javax.xml.transform.stream.StreamResult;
 import javax.xml.transform.stream.StreamSource;
 import java.io.*;
+import java.util.HashMap;
 import java.util.Iterator;
+import java.util.Map;
 
 @Component
 @RequiredArgsConstructor
@@ -80,8 +85,8 @@ public class MetadataExtractor {
         ResultSet results = query.execSelect();
 
         int documentsNumber = 0;
-        if(results.hasNext()) {
-            QuerySolution querySolution = results.next() ;
+        if (results.hasNext()) {
+            QuerySolution querySolution = results.next();
             Iterator<String> variableBindings = querySolution.varNames();
 
             while (variableBindings.hasNext()) {
@@ -97,39 +102,70 @@ public class MetadataExtractor {
         return documentsNumber;
     }
 
-    public boolean readFromRdf(String path) {
+    public HashMap<String, String> readFromRdfWhereObjectIs(String path, String subject) {
+        HashMap<String, String> values = new HashMap<>();
 
         String queryEndpoint = String.join("/", rdf.getEndpoint().trim(), rdf.getDataset().trim(), rdf.getQuery().trim());
-        String sparqlQuery = SparqlUtil.selectData(rdf.getEndpoint().trim() + path, "?s ?p ?o");
-
-        // Create a QueryExecution that will access a SPARQL service over HTTP
+        String sparqlQuery = SparqlUtil.selectData(rdf.getEndpoint().trim() + path, "<http://www.akatsuki.org" + path + "/" + subject + "> ?p ?o");
         QueryExecution query = QueryExecutionFactory.sparqlService(queryEndpoint, sparqlQuery);
-
-        // Query the SPARQL endpoint, iterate over the result set...
         ResultSet results = query.execSelect();
-
-        String varName;
-        RDFNode varValue;
-        while(results.hasNext()) {
-
-            // A single answer from a SELECT query
-            QuerySolution querySolution = results.next() ;
+        String p;
+        String o;
+        RDFNode predicate;
+        RDFNode object;
+        while (results.hasNext()) {
+            QuerySolution querySolution = results.next();
             Iterator<String> variableBindings = querySolution.varNames();
 
-            // Retrieve variable bindings
-            while (variableBindings.hasNext()) {
+            p = variableBindings.next();
+            predicate = querySolution.get(p);
 
+            o = variableBindings.next();
+            object = querySolution.get(o);
+
+            int indexOfHttp = object.toString().indexOf("http:");
+            values.put(predicate.toString(), object.toString().substring(0, indexOfHttp - 2));
+        }
+        query.close();
+        return values;
+    }
+
+    public boolean readFromRdf(String path) {
+        String queryEndpoint = String.join("/", rdf.getEndpoint().trim(), rdf.getDataset().trim(), rdf.getQuery().trim());
+        String sparqlQuery = SparqlUtil.selectData(rdf.getEndpoint().trim() + path, "?s ?p ?o");
+        QueryExecution query = QueryExecutionFactory.sparqlService(queryEndpoint, sparqlQuery);
+        ResultSet results = query.execSelect();
+        String varName;
+        RDFNode varValue;
+        while (results.hasNext()) {
+            QuerySolution querySolution = results.next();
+            Iterator<String> variableBindings = querySolution.varNames();
+            while (variableBindings.hasNext()) {
                 varName = variableBindings.next();
                 varValue = querySolution.get(varName);
-
                 System.out.println(varName + ": " + varValue);
             }
             System.out.println();
         }
-
-        query.close() ;
-
+        query.close();
         System.out.println("[INFO] End.");
         return true;
+    }
+
+    public String getRdfMetadata(String documentType, String idBroj) {
+        HashMap<String, String> map = readFromRdfWhereObjectIs(documentType, idBroj);
+        StringBuilder builder =
+                new StringBuilder("<?xml version=\"1.0\" encoding=\"utf-8\" ?>\n" +
+                        "<rdf:RDF xmlns:rdf=\"http://www.w3.org/1999/02/22-rdf-syntax-ns#\"\n" +
+                        "         xmlns:pred=\"http://www.akatsuki.org" + documentType + "/predicate/\">\n" +
+                        "\n" +
+                        "  <rdf:Description rdf:about=\"http://www.akatsuki.org" + documentType + "/" + idBroj + "\">\n");
+
+        for (Map.Entry<String, String> entry : map.entrySet()) {
+            String predicate = entry.getKey().split("http://www.akatsuki.org/rdf/examples/predicate/")[1];
+            builder.append("\t\t<pred:").append(predicate).append(">").append(entry.getValue()).append("</pred:").append(predicate).append(">\n");
+        }
+        builder.append("  </rdf:Description>\n\n</rdf:RDF>");
+        return builder.toString();
     }
 }

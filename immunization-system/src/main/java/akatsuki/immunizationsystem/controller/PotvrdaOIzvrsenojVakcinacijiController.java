@@ -1,5 +1,6 @@
 package akatsuki.immunizationsystem.controller;
 
+import akatsuki.immunizationsystem.dtos.MetadataDTO;
 import akatsuki.immunizationsystem.service.PotvrdaOIzvrsenojVakcinacijiService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.core.io.InputStreamResource;
@@ -56,6 +57,16 @@ public class PotvrdaOIzvrsenojVakcinacijiController {
                 .headers(headers)
                 .contentType(MediaType.APPLICATION_PDF)
                 .body(new InputStreamResource(stream));
+    }
+
+    @GetMapping(value = "/metadata/json/{idBrojDoza}")
+    public MetadataDTO getMetadataJSON(@PathVariable String idBrojDoza) {
+        return potvrdaOIzvrsenojVakcinacijiService.getMetadataJSON(idBrojDoza);
+    }
+
+    @GetMapping(value = "/metadata/rdf/{idBroj}")
+    public String getMetadataRDF(@PathVariable String idBroj) {
+        return potvrdaOIzvrsenojVakcinacijiService.getMetadataRDF(idBroj);
     }
 
     @GetMapping(value = "/xhtml/{idBroj}", produces = MediaType.TEXT_HTML_VALUE)

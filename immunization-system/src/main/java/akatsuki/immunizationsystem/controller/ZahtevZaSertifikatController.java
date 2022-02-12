@@ -1,5 +1,6 @@
 package akatsuki.immunizationsystem.controller;
 
+import akatsuki.immunizationsystem.dtos.MetadataDTO;
 import akatsuki.immunizationsystem.service.ZahtevZaSertifikatService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.core.io.InputStreamResource;
@@ -60,6 +61,16 @@ public class ZahtevZaSertifikatController {
                 .headers(headers)
                 .contentType(MediaType.TEXT_HTML)
                 .body(new InputStreamResource(stream));
+    }
+
+    @GetMapping(value = "/metadata/json/{idBroj}")
+    public MetadataDTO getMetadataJSON(@PathVariable String idBroj) {
+        return zahtevZaSertifikatService.getMetadataJSON(idBroj);
+    }
+
+    @GetMapping(value = "/metadata/rdf/{idBroj}")
+    public String getMetadataRDF(@PathVariable String idBroj) {
+        return zahtevZaSertifikatService.getMetadataRDF(idBroj);
     }
 
     @GetMapping("/{periodOd}/{periodDo}")

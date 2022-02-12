@@ -33,5 +33,20 @@
         <mat-icon style="color: black; margin-left: 10px">download</mat-icon>
       </button>
     </mat-menu>
+
+    <button mat-button [matMenuTriggerFor]="menu3">
+      METAPODACI
+      <mat-icon>info</mat-icon>
+    </button>
+    <mat-menu #menu3="matMenu">
+      <button mat-menu-item (click)="downloadMetadata('json')">
+        Prezumi JSON
+        <mat-icon style="color: black; margin-left: 10px">download</mat-icon>
+      </button>
+      <button mat-menu-item (click)="downloadMetadata('rdf')">
+        Prezumi RDF
+        <mat-icon style="color: black; margin-left: 20px">download</mat-icon>
+      </button>
+    </mat-menu>
   </mat-card-footer>
 </mat-card>

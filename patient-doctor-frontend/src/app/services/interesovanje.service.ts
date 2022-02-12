@@ -17,6 +17,14 @@ export class InteresovanjeService {
     return this._http.get<string>('/interesovanja/'+id, {responseType: 'text' as 'json'});
   }
 
+  public getInteresovanjeJSON(id: string): Observable<string> {
+    return this._http.get<string>('/interesovanja/metadata/json/'+id);
+  }
+
+  public getInteresovanjeRDF(id: string): Observable<string> {
+    return this._http.get<string>('/interesovanja/metadata/rdf/'+id, {responseType: 'text' as 'json'});
+  }
+
   public getInteresovanjeXHTML(id: string): Observable<string> {
     return this._http.get<string>('/interesovanja/xhtml/'+id, {responseType: 'text' as 'json'});
   }

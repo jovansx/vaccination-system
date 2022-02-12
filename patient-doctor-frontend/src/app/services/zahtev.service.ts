@@ -20,4 +20,12 @@ export class ZahtevService {
   public getZahtevPDF(id: string): Observable<string> {
     return this._http.get<string>('/zahtevi/pdf/'+id, {responseType: 'arraybuffer' as 'json'});
   }
+
+  public getZahtevJSON(id: string): Observable<string> {
+    return this._http.get<string>('/zahtevi/metadata/json/'+id);
+  }
+
+  public getZahtevRDF(id: string): Observable<string> {
+    return this._http.get<string>('/zahtevi/metadata/rdf/'+id, {responseType: 'text' as 'json'});
+  }
 }

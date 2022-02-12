@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified"
-    targetNamespace="http://www.akatsuki.org/interesovanje"
-    xmlns="http://www.akatsuki.org/interesovanje" xmlns:o="http://www.akatsuki.org/interesovanje"
-    xmlns:t="http://www.akatsuki.org/tipovi">
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:o="http://www.akatsuki.org/interesovanje"
+           xmlns:t="http://www.akatsuki.org/tipovi"
+           elementFormDefault="qualified" targetNamespace="http://www.akatsuki.org/interesovanje"
+           xmlns="http://www.akatsuki.org/interesovanje">
     <xs:import namespace="http://www.akatsuki.org/tipovi" schemaLocation="tipovi.xsd"/>
     <xs:element name="interesovanje">
         <xs:complexType>
@@ -13,7 +13,7 @@
                     <xs:complexType>
                         <xs:sequence>
                             <xs:element name="vakcina" type="t:TTipVakcine" minOccurs="1"
-                                maxOccurs="6"> </xs:element>
+                                        maxOccurs="6"></xs:element>
                         </xs:sequence>
                     </xs:complexType>
                     <xs:unique name="vakcinaNazivUnique">
@@ -29,9 +29,6 @@
             <xs:attribute name="datumPodnosenja" type="xs:date"/>
         </xs:complexType>
     </xs:element>
-
-
-
 
 
     <xs:simpleType name="TDrzavljanstvo">
