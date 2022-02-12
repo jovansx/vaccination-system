@@ -96,7 +96,7 @@
         <input class="request-input" value="{{zahtevSelected.vakcine[1].zdravstvenaUstanova}}" readonly/>
       </div>
       <div fxLayout="row" fxLayoutAlign="end end">
-        <button mat-raised-button class="mr-20">Odbaci</button>
+        <button mat-raised-button class="mr-20" (click)="rejectRequest()">Odbaci</button>
         <button mat-raised-button color="primary" (click)="acceptRequest()">Odobri</button>
       </div>
     </div>

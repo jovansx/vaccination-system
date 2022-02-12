@@ -111,4 +111,8 @@ public class ZahtevZaSertifikatService {
 
         zahtevZaSertifikatDAO.save(zahtevZaSertifikat);
     }
+
+    public void odbaciZahtev(String idBroj) {
+        utils.deleteResource("/db/vaccination-system/zahtevi", idBroj);
+    }
 }

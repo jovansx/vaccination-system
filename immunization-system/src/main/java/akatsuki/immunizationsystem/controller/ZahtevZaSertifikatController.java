@@ -72,4 +72,9 @@ public class ZahtevZaSertifikatController {
         return zahtevZaSertifikatService.getAllNeodobreni();
     }
 
+    @DeleteMapping("/{idBroj}")
+    public void deleteZahtev(@PathVariable String idBroj) {
+        zahtevZaSertifikatService.odbaciZahtev(idBroj);
+    }
+
 }

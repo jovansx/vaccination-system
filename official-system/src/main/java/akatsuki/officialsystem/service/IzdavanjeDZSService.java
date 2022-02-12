@@ -86,4 +86,8 @@ public class IzdavanjeDZSService {
             throw new BadRequestRuntimeException("Dokument koji ste poslali nije validan.");
         }
     }
+
+    public void odbaciZahtev(String idBroj) {
+        restTemplate.delete("http://localhost:8081/api/zahtevi/" + idBroj);
+    }
 }

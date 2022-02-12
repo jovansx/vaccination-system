@@ -19,4 +19,10 @@ public class IzdavanjeDZSController {
     public String createDZS(@RequestBody String digitalniSertifikatXml) {
         return izdavanjeDZSService.createDZS(digitalniSertifikatXml);
     }
+
+    @DeleteMapping("/{idBroj}")
+    public void deleteZahtev(@PathVariable String idBroj) {
+        izdavanjeDZSService.odbaciZahtev(idBroj);
+    }
+
 }

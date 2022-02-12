@@ -16,4 +16,8 @@ export class RequestService {
   createRequest(digitalniSertifikatXml: string) {
     return this._http.post<string>('/izdavanje-dzs', digitalniSertifikatXml)
   }
+
+  rejectRequest(id: string) {
+    return this._http.delete<string>('/izdavanje-dzs/' + id);
+  }
 }

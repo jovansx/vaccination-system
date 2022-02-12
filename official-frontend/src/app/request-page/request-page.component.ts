@@ -89,4 +89,23 @@ export class RequestPageComponent implements OnInit {
         this.isZahtevSelected = false;
       })
   }
+
+  rejectRequest() {
+    const dialogRef = this.dialog.open(ProgressBarDialogComponent, {
+      height: '60px',
+      width: '30%',
+    });
+    let id = this.zahtevSelected.podnosilac.idBroj
+    this.requestService.rejectRequest(id)
+      .subscribe(() => {
+        this._toastr.success("Zahtev za sertifikat sa id-jem " + id + " je odbijen.");
+        dialogRef.close();
+        this.isZahtevSelected = false;
+        this.getAllNeodobreniZahtevi();
+      }, (err) => {
+        this._toastr.error(err.error.message);
+        dialogRef.close();
+        this.isZahtevSelected = false;
+      })
+  }
 }
