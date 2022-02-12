@@ -19,6 +19,7 @@ export class SearchPageComponent implements OnInit {
   }
 
   submitBasicSearch(): void {
+    this.lista = [];
     this.pretragaService.basicSearch(this.searchInput).subscribe(
       (res: any) => {
         let response = this.xmlParser.parseXmlToObject(res);

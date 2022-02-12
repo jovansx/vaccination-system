@@ -6,11 +6,11 @@
 
     <mat-tab-group>
         <mat-tab label="Osnovna pretraga">
-            <mat-form-field class="example-full-width" appearance="fill">
+            <mat-form-field class="example-full-width" appearance="fill" class="odgurni">
                 <input matInput placeholder="Npr. Phizer" [(ngModel)]="searchInput">
             </mat-form-field>
-            <button mat-button color="primary" (click)="submitBasicSearch()">Pretrazi</button>
-            <div fxLayout="row" fxLayoutAlign="start start">
+            <button mat-button color="primary" class="odgurni" (click)="submitBasicSearch()">Pretrazi</button>
+            <div fxLayout="row" fxLayoutAlign="start start" class="documents-container">
                 <app-document-card
                   *ngFor="let doc of lista"
                   [dokument]="doc"
