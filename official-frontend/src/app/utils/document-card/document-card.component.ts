@@ -37,6 +37,14 @@ export class DocumentCardComponent implements OnInit {
   display(typeOfDoc : string) : void {
     window.open(`${env.apiUrl}/document-proxy/${this.getTypeOfDocument()}/${typeOfDoc}/${this.dokument.IDDOKUMENTA}`, "_blank")
   }
+
+  displayReference(typeOfDoc : string) : void {
+    let parts : string[] = this.dokument.PARENTTO[0].split("/")
+    let type = parts[3];
+    let id = parts[4];
+
+    window.open(`${env.apiUrl}/document-proxy/${type}/${typeOfDoc}/${id}`, "_blank")
+  }
   
   download(typeOfDoc : string) : void {
     let filename = this.getTypeOfDocument() + `-${this.dokument.IDDOKUMENTA}`;

@@ -32,4 +32,10 @@ public class PretragaService {
                 "</dokumenti>";
 
     }
+
+    public String getInteresovanjeAdvenced(String ime, String prezime, String id_broj, String lokacija) {
+        ResponseEntity<String> interesovanjaRetVal =
+                template.getForEntity("http://localhost:8081/api/interesovanja/napredno-pretrazi?ime=" + ime + "&prezime="+ prezime + "&id_broj=" + id_broj + "&lokacija=" + lokacija, String.class);
+        return interesovanjaRetVal.getBody();
+    }
 }
