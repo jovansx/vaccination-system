@@ -28,6 +28,11 @@ public class KorisnikDAO implements IDao<Korisnik> {
         return Optional.of(korisnik);
     }
 
+    @Override
+    public List<String> getAllXmls() {
+        return daoUtils.getResourcesByCollectionId(collectionId);
+    }
+
     public Optional<Korisnik> getByEmail(String email) {
         List<String> resourceContent = daoUtils.getResourcesByCollectionId(collectionId);
         for (String resource : resourceContent) {
@@ -42,6 +47,11 @@ public class KorisnikDAO implements IDao<Korisnik> {
     @Override
     public Collection<Korisnik> getAll() {
         return null;
+    }
+
+    @Override
+    public int getResourcesCount() {
+        return 0;
     }
 
     @Override

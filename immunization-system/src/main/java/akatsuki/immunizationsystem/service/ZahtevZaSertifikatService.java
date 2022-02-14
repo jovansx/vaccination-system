@@ -1,17 +1,20 @@
 package akatsuki.immunizationsystem.service;
 
-import akatsuki.immunizationsystem.dao.DigitalniSertifikatDAO;
+import akatsuki.immunizationsystem.dao.DaoUtils;
 import akatsuki.immunizationsystem.dao.IZahtevZaSertifikatDAO;
+import akatsuki.immunizationsystem.dtos.MetadataDTO;
 import akatsuki.immunizationsystem.exceptions.BadRequestRuntimeException;
 import akatsuki.immunizationsystem.exceptions.NotFoundRuntimeException;
 import akatsuki.immunizationsystem.model.documents.Interesovanje;
-import akatsuki.immunizationsystem.model.documents.PotvrdaOVakcinaciji;
 import akatsuki.immunizationsystem.model.documents.ZahtevZaSertifikat;
-import akatsuki.immunizationsystem.utils.MetadataExtractor;
-import akatsuki.immunizationsystem.utils.Validator;
+import akatsuki.immunizationsystem.utils.*;
 import akatsuki.immunizationsystem.utils.modelmappers.IModelMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+
+import java.io.ByteArrayInputStream;
+import java.util.Calendar;
+import java.util.List;
 
 @Service
 @RequiredArgsConstructor
@@ -21,6 +24,10 @@ public class ZahtevZaSertifikatService {
     private final IModelMapper<ZahtevZaSertifikat> mapper;
     private final MetadataExtractor extractor;
     private final PotvrdaOIzvrsenojVakcinacijiService potvrdaOIzvrsenojVakcinacijiService;
+    private final PdfTransformer pdfTransformer;
+    private final HtmlTransformer htmlTransformer;
+    private final DaoUtils utils;
+
 
     public String getZahtevZaSertifikat(String idBroj) throws RuntimeException {
         if (!validator.isIdValid(idBroj))
@@ -29,13 +36,27 @@ public class ZahtevZaSertifikatService {
         return mapper.convertToXml(zahtevZaSertifikat);
     }
 
+    public int getResourcesCountInPeriod(String periodOd, String periodDo) {
+        List<ZahtevZaSertifikat> allZahtevi = (List<ZahtevZaSertifikat>) zahtevZaSertifikatDAO.getAll();
+        CalendarPeriod.calendarSetTimeByPeriod(periodOd, periodDo);
+        int count = 0;
+        for (ZahtevZaSertifikat z : allZahtevi) {
+            Calendar datumPodnosenjaZahteva = z.getDatum().toGregorianCalendar();
+            if (datumPodnosenjaZahteva.compareTo(CalendarPeriod.periodOdCal) > 0 && datumPodnosenjaZahteva.compareTo(CalendarPeriod.periodDoCal) < 0) {
+                count++;
+            }
+
+        }
+        return count;
+    }
+
     public String createZahtevZaSertifikat(String zahtevXml) throws RuntimeException {
         ZahtevZaSertifikat zahtevZaSertifikat = mapper.convertToObject(zahtevXml);
 
         if (zahtevZaSertifikat == null || zahtevZaSertifikat.isOdobren())
             throw new BadRequestRuntimeException("Dokument koji ste poslali nije validan.");
 
-        if(zahtevZaSertifikatDAO.get(zahtevZaSertifikat.getPodnosilac().getIdBroj().getValue()).isPresent())
+        if (zahtevZaSertifikatDAO.get(zahtevZaSertifikat.getPodnosilac().getIdBroj().getValue()).isPresent())
             throw new NotFoundRuntimeException("Osoba sa id-jem " + zahtevZaSertifikat.getPodnosilac().getIdBroj().getValue() + " je vec podnela zahtev.");
 
         if (!extractor.extractAndSaveToRdf(zahtevXml, "/zahtevi"))
@@ -47,10 +68,8 @@ public class ZahtevZaSertifikatService {
     }
 
     private void setLinkToThisDocument(ZahtevZaSertifikat zahtevZaSertifikat) {
-//        potvrdaOIzvrsenojVakcinacijiService.getPotvrdaOIzvrsenojVakcinaciji(
-//                    zahtevZaSertifikat.getPodnosilac().getIdBroj().getValue() + "_2");
         potvrdaOIzvrsenojVakcinacijiService.setReference(zahtevZaSertifikat.getPodnosilac().getIdBroj().getValue() + "_2",
-                    zahtevZaSertifikat.getPodnosilac().getIdBroj().getValue());
+                zahtevZaSertifikat.getPodnosilac().getIdBroj().getValue());
     }
 
     public void setReference(String objectId, String referencedObjectId) {
@@ -60,4 +79,93 @@ public class ZahtevZaSertifikatService {
 
         zahtevZaSertifikatDAO.save(zahtevZaSertifikat);
     }
+
+    public ByteArrayInputStream generatePdf(String idBroj) {
+        return pdfTransformer.generatePDF(getZahtevZaSertifikat(idBroj), ZahtevZaSertifikat.class);
+    }
+
+    public ByteArrayInputStream generateXhtml(String idBroj) {
+        return htmlTransformer.generateHTML(getZahtevZaSertifikat(idBroj), ZahtevZaSertifikat.class);
+    }
+
+
+    public String getAllNeodobreni() {
+        List<String> allNeodobreniZahtevi = utils.execute("//*[@odobren='false']", "/db/vaccination-system/zahtevi");
+        StringBuilder str = new StringBuilder();
+        str.append("<neodobreniZahteviDTO>");
+        for (String zahtev: allNeodobreniZahtevi) {
+            str.append(zahtev);
+        }
+        str.append("</neodobreniZahteviDTO>");
+        return str.toString();
+    }
+
+    public void odobriZahtev(String idBroj) {
+        ZahtevZaSertifikat zahtevZaSertifikat = zahtevZaSertifikatDAO.get(idBroj).get();
+        zahtevZaSertifikat.setOdobren(true);
+
+        zahtevZaSertifikatDAO.save(zahtevZaSertifikat);
+    }
+
+    public void odbaciZahtev(String idBroj) {
+        utils.deleteResource("/db/vaccination-system/zahtevi", idBroj);
+    }
+  
+    public MetadataDTO getMetadataJSON(String idBroj) {
+        return new MetadataDTO("<http://www.akatsuki.org/zahtevi/" + idBroj + ">", extractor.readFromRdfWhereObjectIs("/zahtevi", idBroj));
+    }
+
+    public String getMetadataRDF(String idBroj) {
+        return extractor.getRdfMetadata("/zahtevi", idBroj);
+    }
+
+    public String getZahteveBySearchInput(String searchInput) {
+        List<String> zahtevi = zahtevZaSertifikatDAO.getAllXmls();
+        StringBuilder str = new StringBuilder();
+        str.append("<zahtevi>");
+        for (String i: zahtevi) {
+            if (i.contains(searchInput)  || searchInput.equals("null")) {
+                String idBroj = i.split("about=\"http://www.akatsuki.org/zahtevi/")[1]
+                        .split("\"")[0];
+                str.append("<idBroj>").append(idBroj).append("</idBroj>");
+            }
+        }
+        str.append("</zahtevi>");
+        return str.toString();
+    }
+
+    public String getZahteviAdvenced(String ime, String prezime, String id_broj, String pol) {
+        String condition = "";
+        if(!ime.equals("null"))
+            condition += "?s <http://www.akatsuki.org/rdf/examples/predicate/ime> \""+ime+"\"^^<http://www.w3.org/1999/02/22-rdf-syntax-ns#XMLLiteral> .";
+        if(!prezime.equals("null"))
+            condition += "?s <http://www.akatsuki.org/rdf/examples/predicate/prezime> \""+prezime+"\"^^<http://www.w3.org/1999/02/22-rdf-syntax-ns#XMLLiteral> .";
+        if(!id_broj.equals("null"))
+            condition += "?s <http://www.akatsuki.org/rdf/examples/predicate/id_broj> \""+id_broj+"\"^^<http://www.w3.org/1999/02/22-rdf-syntax-ns#XMLLiteral> .";
+        if(!pol.equals("null"))
+            condition += "?s <http://www.akatsuki.org/rdf/examples/predicate/pol> \""+pol+"\"^^<http://www.w3.org/1999/02/22-rdf-syntax-ns#XMLLiteral> .";
+        if(condition.equals(""))
+            condition += "?s <http://www.akatsuki.org/rdf/examples/predicate/id_broj> ?o";
+
+        StringBuilder str = new StringBuilder();
+        str.append("<zahtevi>");
+        for (String i: extractor.filterFromRdf("/zahtevi", condition)) {
+            String idBroj = i.split("http://www.akatsuki.org/zahtevi/")[1];
+
+            str.append("<zahtev>");
+
+            str.append("<idBroj>").append(idBroj).append("</idBroj>");
+
+            try {
+                ZahtevZaSertifikat zahtevZaSertifikat = zahtevZaSertifikatDAO.get(idBroj).orElseThrow(() -> new NotFoundRuntimeException("Zahtev za sertifikat sa id-jem " + idBroj + " nije pronadjena."));
+                str.append("<parentTo>").append(zahtevZaSertifikat.getHref()).append("</parentTo>");
+            } catch (Exception ignored) {}
+
+            str.append("</zahtev>");
+
+        }
+        str.append("</zahtevi>");
+        return str.toString();
+    }
+
 }

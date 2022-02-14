@@ -1,5 +1,8 @@
 package akatsuki.officialsystem.model.types;
 
+import lombok.AllArgsConstructor;
+import lombok.NoArgsConstructor;
+
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlAttribute;
@@ -11,6 +14,8 @@ import javax.xml.bind.annotation.XmlValue;
 @XmlType(name = "TCPrimljenoZelenih", namespace = "http://www.akatsuki.org/izvestaj_o_imunizaciji", propOrder = {
     "value"
 })
+@AllArgsConstructor
+@NoArgsConstructor
 public class TCPrimljenoZelenih {
 
     @XmlValue

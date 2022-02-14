@@ -41,4 +41,9 @@ public class SparqlUtil {
     public static String selectData(String graphURI, String sparqlCondition) {
         return String.format(SELECT_NAMED_GRAPH_TEMPLATE, graphURI, sparqlCondition);
     }
+
+    public static String countData(String graphURI, String sparqlCondition) {
+        return String.format("SELECT count(distinct ?s) FROM <%1$s> WHERE { %2$s }", graphURI, sparqlCondition);
+    }
+
 }

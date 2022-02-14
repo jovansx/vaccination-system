@@ -1,0 +1,47 @@
+<app-header></app-header>
+
+<div class="report-page-container">
+  <h1>Izvestaji</h1>
+  <mat-divider></mat-divider>
+  <div class="report-filter-panel" fxLayout="row" fxLayoutAlign="end center">
+    Od: 
+    <mat-form-field appearance="fill" class="mr-30 ml-20">
+      <input matInput [matDatepicker]="picker_from" [formControl]="dateFrom">
+      <mat-datepicker-toggle matSuffix [for]="picker_from"></mat-datepicker-toggle>
+      <mat-datepicker #picker_from></mat-datepicker>
+    </mat-form-field>
+    Do: 
+    <mat-form-field appearance="fill" class="mr-20 ml-20">
+      <input matInput [matDatepicker]="picker_to" [formControl]="dateTo">
+      <mat-datepicker-toggle matSuffix [for]="picker_to"></mat-datepicker-toggle>
+      <mat-datepicker #picker_to></mat-datepicker>
+    </mat-form-field>
+    <button mat-button (click)="getReportForPeriod()">
+      <mat-icon>search</mat-icon>
+    </button>
+  </div>
+  <div class="report-info-panel" fxLayout="row" [fxLayoutAlign]="allReportsLoaded ? 'center start' : 'space-around center'">
+    <div fxFlex="40">
+      <p style="color: red" *ngIf="xmlIzvestajOImunizaciji === ''">Izvestaj nije ucitan</p>
+      <app-report-info-panel [izvestajOImunizaciji]="izvestajOImunizaciji" [loaded]="loaded" [componentPart]="true"></app-report-info-panel>
+    </div>
+    <div fxFlex="60" *ngIf="allReportsLoaded">
+      <div class="p-50" *ngIf="reportsPeriod.length > 0">
+        <h2>Svi izvestaji</h2>
+        <mat-list role="list" class="report-list">
+          <mat-list-item role="listitem" *ngFor="let report of reportsPeriod">
+            <a [routerLink]="['/home/reports', report.id]">{{report.period}}</a>
+          </mat-list-item>
+        </mat-list>
+      </div>
+    </div>
+    <div [hidden]="allReportsLoaded" fxFlex="60">
+      <mat-spinner style="margin: auto;"></mat-spinner>
+    </div>
+  </div>
+  
+  <div class="report-actions-panel" fxLayout="row" fxLayoutAlign="end center">
+    <button mat-raised-button class="mr-20" (click)="getAllReports()">Izlistaj sve izvestaje</button>
+    <button mat-raised-button color="primary" (click)="saveReport()" [disabled]="xmlIzvestajOImunizaciji === ''">Sacuvaj izvestaj</button>
+  </div>
+</div>

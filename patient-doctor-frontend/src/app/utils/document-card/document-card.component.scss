@@ -1,0 +1,22 @@
+mat-card {
+  width: 18vw;
+  height: 10vw;
+  background: linear-gradient(
+    330deg,
+    rgba(112, 204, 231, 1) 22%,
+    rgba(200, 231, 112, 1) 71%
+  );
+  position: relative;
+  // cursor: pointer;
+}
+
+mat-card:hover {
+  transform: scale(1.01);
+}
+
+mat-card-footer {
+  background-color: whitesmoke;
+  position: absolute;
+  bottom: 0.8vw;
+  width: 100%;
+}

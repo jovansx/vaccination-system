@@ -1,0 +1,26 @@
+.header {
+  border-bottom: 1px solid black;
+  height: 10vh;
+  background-color: var(--header);
+}
+
+button {
+  margin: 0 0.5vw;
+  font-size: large;
+}
+
+mat-icon {
+  margin-right: 5vw;
+  margin-left: 2vw;
+  font-size: 3em;
+  color: white;
+}
+
+.active-button {
+  background-color: rgb(101,131,215);
+  color: white;
+}
+
+#logout {
+  margin-right: 2vw;
+}

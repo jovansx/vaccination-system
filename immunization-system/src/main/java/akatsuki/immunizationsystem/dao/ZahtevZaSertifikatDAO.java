@@ -29,6 +29,11 @@ public class ZahtevZaSertifikatDAO implements IZahtevZaSertifikatDAO {
     }
 
     @Override
+    public List<String> getAllXmls() {
+        return daoUtils.getResourcesByCollectionId(collectionId);
+    }
+
+    @Override
     public Optional<ZahtevZaSertifikat> getByIdBroj(String idBroj) {
         List<String> resourceContent = daoUtils.getResourcesByCollectionId(collectionId);
         for (String resource : resourceContent) {
@@ -49,6 +54,11 @@ public class ZahtevZaSertifikatDAO implements IZahtevZaSertifikatDAO {
             zahtevi.add(zahtevZaSertifikat);
         }
         return zahtevi;
+    }
+
+    @Override
+    public int getResourcesCount() {
+        return daoUtils.getResourcesCount(collectionId);
     }
 
     @Override

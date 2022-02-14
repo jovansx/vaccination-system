@@ -5,7 +5,9 @@ import akatsuki.immunizationsystem.utils.modelmappers.IModelMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
 import java.util.Optional;
 
 @Component
@@ -29,7 +31,23 @@ public class InteresovanjeDAO implements IDao<Interesovanje> {
 
     @Override
     public Collection<Interesovanje> getAll() {
-        return null;
+        List<String> resourceContent = daoUtils.getResourcesByCollectionId(collectionId);
+        List<Interesovanje> interesovanja = new ArrayList<>();
+        for (String resource : resourceContent) {
+            Interesovanje interesovanje = mapper.convertToObject(resource);
+            interesovanja.add(interesovanje);
+        }
+        return interesovanja;
+    }
+
+    @Override
+    public List<String> getAllXmls() {
+        return daoUtils.getResourcesByCollectionId(collectionId);
+    }
+
+    @Override
+    public int getResourcesCount() {
+        return daoUtils.getResourcesCount(collectionId);
     }
 
     @Override

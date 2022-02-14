@@ -12,12 +12,31 @@ import { AuthService } from './autentification/services/auth.service';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { HeaderInterceptorService } from './autentification/services/header-interceptor.service';
+import { VaccinePageComponent } from './vaccine-page/vaccine-page.component';
+import { HeaderComponent } from './header/header.component';
+import { VaccineService } from './services/vaccine.service';
+import { ReportPageComponent } from './report-page/report-page.component';
+import { SingleReportPageComponent } from './single-report-page/single-report-page.component';
+import { ReportInfoPanelComponent } from './report-info-panel/report-info-panel.component';
+import { ProgressBarDialogComponent } from './utils/progress-bar-dialog/progress-bar-dialog.component';
+import { RequestPageComponent } from './request-page/request-page.component';
+import { SearchPageComponent } from './search-page/search-page.component';
+import { DocumentCardComponent } from './utils/document-card/document-card.component';
 
 @NgModule({
   declarations: [
     AppComponent,
-    LoginComponent
-  ],
+    LoginComponent,
+    VaccinePageComponent,
+    HeaderComponent,
+    ReportPageComponent,
+    SingleReportPageComponent,
+    ReportInfoPanelComponent,
+    ProgressBarDialogComponent,
+    RequestPageComponent,
+    SearchPageComponent,
+    DocumentCardComponent
+    ],
   imports: [
     BrowserModule,
     HttpClientModule,
@@ -31,6 +50,7 @@ import { HeaderInterceptorService } from './autentification/services/header-inte
   ],
   providers: [
     AuthService,
+    VaccineService,
     { provide: HTTP_INTERCEPTORS, useClass: HeaderInterceptorService, multi: true }
   ],
   bootstrap: [AppComponent]

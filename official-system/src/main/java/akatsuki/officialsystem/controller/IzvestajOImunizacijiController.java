@@ -22,4 +22,14 @@ public class IzvestajOImunizacijiController {
     public String createIzvestajOImunizaciji(@RequestBody String izvestajOImunizacijiXml) {
         return izvestajOImunizacijiService.createIzvestajOImunizaciji(izvestajOImunizacijiXml);
     }
+
+    @GetMapping
+    public String getAll() {
+        return izvestajOImunizacijiService.getAll();
+    }
+
+    @GetMapping("/{periodOd}/{periodDo}")
+    public String getOneByPeriod(@PathVariable String periodOd, @PathVariable String periodDo) {
+        return izvestajOImunizacijiService.getIzvestajOImunizacijiByPeriod(periodOd, periodDo);
+    }
 }

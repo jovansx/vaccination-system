@@ -1,0 +1,14 @@
+<app-header></app-header>
+<div class="single-report-page-container">
+  <div fxLayout="row" fxLayoutAlign="space-between center">
+    <h1>Izvestaj za period: <span style="color: gray;margin-left: 10px;">{{period}}</span></h1>
+    <div>
+      <button mat-stroked-button color="accent" routerLink="/home/reports">Nazad na izvestaje</button>
+    </div>
+  </div>
+  
+  <mat-divider></mat-divider>
+  <div class="report-info-panel">
+    <app-report-info-panel></app-report-info-panel>
+  </div>
+</div>

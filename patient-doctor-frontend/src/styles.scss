@@ -1,9 +1,16 @@
 /* You can add global styles to this file, and also import other style files */
 
-html, body { height: 100%; }
-body { margin: 0; font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif; }
+html,
+body {
+  height: 100%;
+}
+body {
+  margin: 0;
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+}
 
 :root {
-    --header: rgb(81,111,195);
-    --light-grey: rgb(240, 240, 240);
-  }
+  --header: rgb(81, 111, 195);
+  --light-grey: rgb(240, 240, 240);
+  --light-header: rgb(131, 160, 241);
+}

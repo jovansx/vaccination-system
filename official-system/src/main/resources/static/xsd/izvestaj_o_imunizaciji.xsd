@@ -44,14 +44,14 @@
                                                 <xs:attribute name="broj">
                                                   <xs:simpleType>
                                                   <xs:restriction base="xs:int">
-                                                  <xs:minInclusive value="1"/>
+                                                  <xs:minInclusive value="0"/>
                                                   </xs:restriction>
                                                   </xs:simpleType>
                                                 </xs:attribute>
                                                 <xs:attribute name="kolicina">
                                                   <xs:simpleType>
                                                   <xs:restriction base="xs:int">
-                                                  <xs:minInclusive value="1"/>
+                                                  <xs:minInclusive value="0"/>
                                                   </xs:restriction>
                                                   </xs:simpleType>
                                                 </xs:attribute>
@@ -90,7 +90,7 @@
                         <xs:attribute name="izdato">
                             <xs:simpleType>
                                 <xs:restriction base="xs:int">
-                                    <xs:minInclusive value="1"/>
+                                    <xs:minInclusive value="0"/>
                                 </xs:restriction>
                             </xs:simpleType>
                         </xs:attribute>

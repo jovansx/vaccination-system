@@ -7,6 +7,7 @@ export interface RegistrationDetails {
     email: string;
     sifra: string;
     drzavljanstvo: string;
+    nazivDrzavljanstva: string;
     idBroj: string;
     pol: string;
     zanimanje: string;

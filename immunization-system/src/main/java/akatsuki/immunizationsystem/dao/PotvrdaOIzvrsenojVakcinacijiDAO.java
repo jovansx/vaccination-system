@@ -5,7 +5,9 @@ import akatsuki.immunizationsystem.utils.modelmappers.IModelMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
 import java.util.Optional;
 
 @Component
@@ -28,8 +30,24 @@ public class PotvrdaOIzvrsenojVakcinacijiDAO implements IDao<PotvrdaOVakcinaciji
     }
 
     @Override
+    public List<String> getAllXmls() {
+        return daoUtils.getResourcesByCollectionId(collectionId);
+    }
+
+    @Override
     public Collection<PotvrdaOVakcinaciji> getAll() {
-        return null;
+        List<String> resourceContent = daoUtils.getResourcesByCollectionId(collectionId);
+        List<PotvrdaOVakcinaciji> potvrde = new ArrayList<>();
+        for (String resource : resourceContent) {
+            PotvrdaOVakcinaciji potvrda = mapper.convertToObject(resource);
+            potvrde.add(potvrda);
+        }
+        return potvrde;
+    }
+
+    @Override
+    public int getResourcesCount() {
+        return 0;
     }
 
     @Override

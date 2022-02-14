@@ -28,7 +28,6 @@ public class DigitalniSertifikatModelMapper implements IModelMapper<DigitalniSer
             unmarshaller.setSchema(schema);
             return (DigitalniSertifikat) unmarshaller.unmarshal(new StringReader(xmlString));
         } catch (Exception e) {
-            e.printStackTrace();
         }
         return null;
     }

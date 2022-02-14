@@ -5,7 +5,9 @@ import akatsuki.immunizationsystem.utils.modelmappers.IModelMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
 import java.util.Optional;
 
 @Component
@@ -28,8 +30,24 @@ public class DigitalniSertifikatDAO implements IDao<DigitalniSertifikat> {
     }
 
     @Override
+    public List<String> getAllXmls() {
+        return daoUtils.getResourcesByCollectionId(collectionId);
+    }
+
+    @Override
     public Collection<DigitalniSertifikat> getAll() {
-        return null;
+        List<String> resourceContent = daoUtils.getResourcesByCollectionId(collectionId);
+        List<DigitalniSertifikat> sertifikati = new ArrayList<>();
+        for (String resource : resourceContent) {
+            DigitalniSertifikat sertifikat = mapper.convertToObject(resource);
+            sertifikati.add(sertifikat);
+        }
+        return sertifikati;
+    }
+
+    @Override
+    public int getResourcesCount() {
+        return daoUtils.getResourcesCount(collectionId);
     }
 
     @Override

@@ -29,6 +29,11 @@ public class SaglasnostZaImunizacijuDAO implements ISaglasnostZaImunizacijuDAO {
         return Optional.of(saglasnostZaImunizaciju);
     }
 
+    @Override
+    public List<String> getAllXmls() {
+        return daoUtils.getResourcesByCollectionId(collectionId);
+    }
+
     public Optional<SaglasnostZaImunizaciju> getByIdBroj(String jmbg) {
         List<String> resourceContent = daoUtils.getResourcesByCollectionId(collectionId);
         for (String resource : resourceContent) {
@@ -49,6 +54,11 @@ public class SaglasnostZaImunizacijuDAO implements ISaglasnostZaImunizacijuDAO {
             saglasnosti.add(saglasnostZaImunizaciju);
         }
         return saglasnosti;
+    }
+
+    @Override
+    public int getResourcesCount() {
+        return 0;
     }
 
     @Override
@@ -83,11 +93,12 @@ public class SaglasnostZaImunizacijuDAO implements ISaglasnostZaImunizacijuDAO {
     @Override
     public void update(SaglasnostZaImunizaciju saglasnostZaImunizaciju) {
         String id = saglasnostZaImunizaciju.getAbout().split("http://www.akatsuki.org/saglasnosti/")[1];
-        daoUtils.createResource(collectionId, saglasnostZaImunizaciju,  id + ".xml", SaglasnostZaImunizaciju.class);
+        daoUtils.createResource(collectionId, saglasnostZaImunizaciju, id + ".xml", SaglasnostZaImunizaciju.class);
     }
 
     @Override
     public void delete(SaglasnostZaImunizaciju saglasnostZaImunizaciju) {
-
+        String id = saglasnostZaImunizaciju.getAbout().split("http://www.akatsuki.org/saglasnosti/")[1];
+        daoUtils.deleteResource(collectionId, id);
     }
 }

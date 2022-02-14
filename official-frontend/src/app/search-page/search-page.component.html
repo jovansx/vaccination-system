@@ -1,0 +1,306 @@
+<app-header></app-header>
+
+<div class="search-page-container">
+  <h1>Pretraga dokumenata</h1>
+  <mat-divider></mat-divider>
+
+  <mat-tab-group (selectedTabChange)="resetData()">
+    <mat-tab label="Osnovna pretraga">
+      <mat-form-field
+        class="example-full-width"
+        appearance="fill"
+        class="odgurni"
+      >
+        <input matInput placeholder="Npr. Phizer" [(ngModel)]="searchInput" />
+      </mat-form-field>
+      <button
+        mat-button
+        color="primary"
+        class="odgurni"
+        (click)="submitBasicSearch()"
+      >
+        Pretrazi
+      </button>
+      <div
+        fxLayout="row"
+        fxLayoutAlign="start start"
+        class="documents-container"
+      >
+        <app-document-card
+          *ngFor="let doc of lista"
+          [dokument]="doc"
+        ></app-document-card>
+      </div>
+    </mat-tab>
+    <mat-tab label="Napredna pretraga">
+      <div fxLayout="row" fxLayoutAlign="start start">
+        <div>
+          <mat-form-field appearance="fill" class="odgurni prosiri">
+            <mat-label>Tip dokumenta</mat-label>
+            <mat-select
+              [(value)]="selectedType"
+              (selectionChange)="resetData()"
+            >
+              <mat-option value="InteresovanjeZaVakcinaciju">
+                Interesovanje za vakcinaciju
+              </mat-option>
+              <mat-option value="SaglasnostOVakcinaciji">
+                Saglasnost o vakcinaciji
+              </mat-option>
+              <mat-option value="PotvrdaOVakcinaciji">
+                Potvrda o vakcinaciji
+              </mat-option>
+              <mat-option value="ZahtevZaZeleniSertifikat">
+                Zahtev za zeleni sertifikat
+              </mat-option>
+              <mat-option value="DigitalniZeleniSertifikat">
+                Digitalni zeleni sertifikat
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+          <div *ngIf="selectedType === 'InteresovanjeZaVakcinaciju'">
+            <div>
+              <mat-checkbox (change)="checkboxChanged('ime')"></mat-checkbox>
+              <mat-form-field class="example-full-width" appearance="fill">
+                <mat-label>Ime</mat-label>
+                <input
+                  [disabled]="metaIme === undefined"
+                  matInput
+                  [(ngModel)]="metaIme"
+                />
+              </mat-form-field>
+            </div>
+            <div>
+              <mat-checkbox
+                (change)="checkboxChanged('prezime')"
+              ></mat-checkbox>
+              <mat-form-field class="example-full-width" appearance="fill">
+                <mat-label>Prezime</mat-label>
+                <input
+                  [disabled]="metaPrezime === undefined"
+                  matInput
+                  [(ngModel)]="metaPrezime"
+                />
+              </mat-form-field>
+            </div>
+            <div>
+              <mat-checkbox
+                (change)="checkboxChanged('id_broj')"
+              ></mat-checkbox>
+              <mat-form-field class="example-full-width" appearance="fill">
+                <mat-label>Identifikacioni broj</mat-label>
+                <input
+                  [disabled]="metaIdBroj === undefined"
+                  matInput
+                  [(ngModel)]="metaIdBroj"
+                />
+              </mat-form-field>
+            </div>
+            <div>
+              <mat-checkbox
+                (change)="checkboxChanged('lokacija')"
+              ></mat-checkbox>
+              <mat-form-field class="example-full-width" appearance="fill">
+                <mat-label>Lokacija</mat-label>
+                <input
+                  [disabled]="metaLokacija === undefined"
+                  matInput
+                  [(ngModel)]="metaLokacija"
+                />
+              </mat-form-field>
+            </div>
+          </div>
+
+          <div *ngIf="selectedType === 'SaglasnostOVakcinaciji'">
+            <div>
+              <mat-checkbox (change)="checkboxChanged('ime')"></mat-checkbox>
+              <mat-form-field class="example-full-width" appearance="fill">
+                <mat-label>Ime</mat-label>
+                <input
+                  [disabled]="metaIme === undefined"
+                  matInput
+                  [(ngModel)]="metaIme"
+                />
+              </mat-form-field>
+            </div>
+            <div>
+              <mat-checkbox
+                (change)="checkboxChanged('prezime')"
+              ></mat-checkbox>
+              <mat-form-field class="example-full-width" appearance="fill">
+                <mat-label>Prezime</mat-label>
+                <input
+                  [disabled]="metaPrezime === undefined"
+                  matInput
+                  [(ngModel)]="metaPrezime"
+                />
+              </mat-form-field>
+            </div>
+            <div>
+              <mat-checkbox
+                (change)="checkboxChanged('id_broj')"
+              ></mat-checkbox>
+              <mat-form-field class="example-full-width" appearance="fill">
+                <mat-label>Identifikacioni broj</mat-label>
+                <input
+                  [disabled]="metaIdBroj === undefined"
+                  matInput
+                  [(ngModel)]="metaIdBroj"
+                />
+              </mat-form-field>
+            </div>
+            <div>
+              <mat-checkbox
+                (change)="checkboxChanged('lokacija')"
+              ></mat-checkbox>
+              <mat-form-field class="example-full-width" appearance="fill">
+                <mat-label>Lokacija</mat-label>
+                <input
+                  [disabled]="metaLokacija === undefined"
+                  matInput
+                  [(ngModel)]="metaLokacija"
+                />
+              </mat-form-field>
+            </div>
+            <div>
+              <mat-checkbox (change)="checkboxChanged('pol')"></mat-checkbox>
+              <mat-form-field appearance="fill">
+                <mat-label>Pol</mat-label>
+                <mat-select
+                  [disabled]="metaPol === undefined"
+                  [(value)]="metaPol"
+                >
+                  <mat-option value="Musko"> Muski </mat-option>
+                  <mat-option value="Zensko"> Zenski </mat-option>
+                </mat-select>
+              </mat-form-field>
+            </div>
+          </div>
+
+          <div *ngIf="selectedType === 'PotvrdaOVakcinaciji'">
+            <div>
+              <mat-checkbox (change)="checkboxChanged('ime')"></mat-checkbox>
+              <mat-form-field class="example-full-width" appearance="fill">
+                <mat-label>Ime</mat-label>
+                <input
+                  [disabled]="metaIme === undefined"
+                  matInput
+                  [(ngModel)]="metaIme"
+                />
+              </mat-form-field>
+            </div>
+            <div>
+              <mat-checkbox
+                (change)="checkboxChanged('prezime')"
+              ></mat-checkbox>
+              <mat-form-field class="example-full-width" appearance="fill">
+                <mat-label>Prezime</mat-label>
+                <input
+                  [disabled]="metaPrezime === undefined"
+                  matInput
+                  [(ngModel)]="metaPrezime"
+                />
+              </mat-form-field>
+            </div>
+            <div>
+              <mat-checkbox
+                (change)="checkboxChanged('id_broj')"
+              ></mat-checkbox>
+              <mat-form-field class="example-full-width" appearance="fill">
+                <mat-label>Identifikacioni broj</mat-label>
+                <input
+                  [disabled]="metaIdBroj === undefined"
+                  matInput
+                  [(ngModel)]="metaIdBroj"
+                />
+              </mat-form-field>
+            </div>
+          </div>
+
+          <div
+            *ngIf="
+              selectedType === 'ZahtevZaZeleniSertifikat' ||
+              selectedType === 'DigitalniZeleniSertifikat'
+            "
+          >
+            <div>
+              <mat-checkbox (change)="checkboxChanged('ime')"></mat-checkbox>
+              <mat-form-field class="example-full-width" appearance="fill">
+                <mat-label>Ime</mat-label>
+                <input
+                  [disabled]="metaIme === undefined"
+                  matInput
+                  [(ngModel)]="metaIme"
+                />
+              </mat-form-field>
+            </div>
+            <div>
+              <mat-checkbox
+                (change)="checkboxChanged('prezime')"
+              ></mat-checkbox>
+              <mat-form-field class="example-full-width" appearance="fill">
+                <mat-label>Prezime</mat-label>
+                <input
+                  [disabled]="metaPrezime === undefined"
+                  matInput
+                  [(ngModel)]="metaPrezime"
+                />
+              </mat-form-field>
+            </div>
+            <div>
+              <mat-checkbox
+                (change)="checkboxChanged('id_broj')"
+              ></mat-checkbox>
+              <mat-form-field class="example-full-width" appearance="fill">
+                <mat-label>Identifikacioni broj</mat-label>
+                <input
+                  [disabled]="metaIdBroj === undefined"
+                  matInput
+                  [(ngModel)]="metaIdBroj"
+                />
+              </mat-form-field>
+            </div>
+            <div>
+              <mat-checkbox (change)="checkboxChanged('pol')"></mat-checkbox>
+              <mat-form-field appearance="fill">
+                <mat-label>Pol</mat-label>
+                <mat-select
+                  [disabled]="metaPol === undefined"
+                  [(value)]="metaPol"
+                >
+                  <mat-option value="Musko"> Muski </mat-option>
+                  <mat-option value="Zensko"> Zenski </mat-option>
+                </mat-select>
+              </mat-form-field>
+            </div>
+          </div>
+
+          <button
+            mat-button
+            color="primary"
+            class="odgurni"
+            (click)="submitAdvencedSearch()"
+          >
+            Pretrazi
+          </button>
+          <div
+            fxLayout="row"
+            fxLayoutAlign="start start"
+            class="documents-container"
+          ></div>
+        </div>
+        <div
+          fxFlex
+          fxLayout="row"
+          fxLayoutAlign="start start"
+          class="documents-container"
+        >
+          <app-document-card
+            *ngFor="let doc of lista"
+            [dokument]="doc"
+          ></app-document-card>
+        </div>
+      </div>
+    </mat-tab>
+  </mat-tab-group>
+</div>

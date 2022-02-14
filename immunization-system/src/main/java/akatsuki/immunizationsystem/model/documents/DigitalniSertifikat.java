@@ -11,7 +11,7 @@ import javax.xml.datatype.XMLGregorianCalendar;
 import java.util.List;
 
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "", propOrder = {"primalac", "vakcinacija", "testovi"})
+@XmlType(name = "", propOrder = {"primalac", "vakcinacija", "testovi", "qrCode"})
 @XmlRootElement(name = "digitalni_sertifikat", namespace = "http://www.akatsuki.org/digitalni_sertifikat")
 @Data
 @NoArgsConstructor
@@ -31,6 +31,9 @@ public class DigitalniSertifikat {
     protected String brojSertifikata;
     @XmlAttribute(name = "about", required = true)
     protected String about;
+
+    @XmlElement(name = "qr_code", namespace = "http://www.akatsuki.org/digitalni_sertifikat", required = true)
+    protected String qrCode;
 
     @XmlAccessorType(XmlAccessType.FIELD)
     @XmlType(name = "", propOrder = {"test"})
