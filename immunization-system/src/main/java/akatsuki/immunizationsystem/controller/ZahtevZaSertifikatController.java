@@ -29,6 +29,12 @@ public class ZahtevZaSertifikatController {
         return zahtevZaSertifikatService.getZahteveBySearchInput(searchInput);
     }
 
+    @GetMapping("/napredno-pretrazi")
+    public String getZahteviAdvenced(@RequestParam(required = false) String ime, @RequestParam(required = false) String prezime,
+                                     @RequestParam(required = false) String id_broj,  @RequestParam(required = false) String pol) {
+        return zahtevZaSertifikatService.getZahteviAdvenced(ime, prezime, id_broj, pol);
+    }
+
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     public void createZahtevZaSertifikat(@RequestBody String zahtevXml) {

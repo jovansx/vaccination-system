@@ -29,6 +29,12 @@ public class DigitalniSertifikatController {
         return digitalniSertifikatService.getSertifikatiBySearchInput(searchInput);
     }
 
+    @GetMapping("/napredno-pretrazi")
+    public String getDigitalniSertifikateAdvenced(@RequestParam(required = false) String ime, @RequestParam(required = false) String prezime,
+                                     @RequestParam(required = false) String id_broj,  @RequestParam(required = false) String pol) {
+        return digitalniSertifikatService.getDigitalniSertifikateAdvenced(ime, prezime, id_broj, pol);
+    }
+
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     public String createDigitalniSertifikat(@RequestBody String digitalniSertifikatXml) {

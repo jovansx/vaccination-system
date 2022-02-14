@@ -23,9 +23,7 @@ import javax.xml.transform.TransformerFactory;
 import javax.xml.transform.stream.StreamResult;
 import javax.xml.transform.stream.StreamSource;
 import java.io.*;
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.Map;
+import java.util.*;
 
 @Component
 @RequiredArgsConstructor
@@ -167,5 +165,30 @@ public class MetadataExtractor {
         }
         builder.append("  </rdf:Description>\n\n</rdf:RDF>");
         return builder.toString();
+    }
+
+    public List<String> filterFromRdf(String path, String condition) {
+        List<String> list = new ArrayList<>();
+
+        String queryEndpoint = String.join("/", rdf.getEndpoint().trim(), rdf.getDataset().trim(), rdf.getQuery().trim());
+        String sparqlQuery = SparqlUtil.selectData(rdf.getEndpoint().trim() + path, condition);
+        QueryExecution query = QueryExecutionFactory.sparqlService(queryEndpoint, sparqlQuery);
+        ResultSet results = query.execSelect();
+        String varName;
+        RDFNode varValue;
+        while (results.hasNext()) {
+            int index = 0;
+            QuerySolution querySolution = results.next();
+            Iterator<String> variableBindings = querySolution.varNames();
+            while (variableBindings.hasNext()) {
+                varName = variableBindings.next();
+                varValue = querySolution.get(varName);
+                if(index == 0)
+                    list.add(varValue.toString());
+                index += 1;
+            }
+        }
+        query.close();
+        return list;
     }
 }

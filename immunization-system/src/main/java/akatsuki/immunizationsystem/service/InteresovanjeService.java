@@ -99,11 +99,45 @@ public class InteresovanjeService {
         StringBuilder str = new StringBuilder();
         str.append("<interesovanja>");
         for (String i: interesovanja) {
-            if (i.contains(searchInput)) {
+            if (i.contains(searchInput)  || searchInput.equals("null")) {
                 String idBroj = i.split("about=\"http://www.akatsuki.org/interesovanja/")[1]
                         .split("\"")[0];
                 str.append("<idBroj>").append(idBroj).append("</idBroj>");
             }
+        }
+        str.append("</interesovanja>");
+        return str.toString();
+    }
+
+    public String getInteresovanjaAdvenced(String ime, String prezime, String id_broj, String lokacija) {
+        String condition = "";
+        if(!ime.equals("null"))
+            condition += "?s <http://www.akatsuki.org/rdf/examples/predicate/ime> \""+ime+"\"^^<http://www.w3.org/1999/02/22-rdf-syntax-ns#XMLLiteral> .";
+        if(!prezime.equals("null"))
+            condition += "?s <http://www.akatsuki.org/rdf/examples/predicate/prezime> \""+prezime+"\"^^<http://www.w3.org/1999/02/22-rdf-syntax-ns#XMLLiteral> .";
+        if(!id_broj.equals("null"))
+            condition += "?s <http://www.akatsuki.org/rdf/examples/predicate/id_broj> \""+id_broj+"\"^^<http://www.w3.org/1999/02/22-rdf-syntax-ns#XMLLiteral> .";
+        if(!lokacija.equals("null"))
+            condition += "?s <http://www.akatsuki.org/rdf/examples/predicate/lokacija> \""+lokacija+"\"^^<http://www.w3.org/1999/02/22-rdf-syntax-ns#XMLLiteral> .";
+        if(condition.equals(""))
+            condition += "?s <http://www.akatsuki.org/rdf/examples/predicate/id_broj> ?o";
+
+        StringBuilder str = new StringBuilder();
+        str.append("<interesovanja>");
+        for (String i: extractor.filterFromRdf("/interesovanja", condition)) {
+            String idBroj = i.split("http://www.akatsuki.org/interesovanja/")[1];
+
+            str.append("<interesovanje>");
+
+            str.append("<idBroj>").append(idBroj).append("</idBroj>");
+
+            try {
+                Interesovanje interesovanje = interesovanjeDAO.get(idBroj).orElseThrow(() -> new NotFoundRuntimeException("Osoba s id-om " + idBroj + " nije podnela interesovanje za vakcinacijom."));
+                str.append("<parentTo>").append(interesovanje.getHref()).append("</parentTo>");
+            } catch (Exception ignored) {}
+
+            str.append("</interesovanje>");
+
         }
         str.append("</interesovanja>");
         return str.toString();

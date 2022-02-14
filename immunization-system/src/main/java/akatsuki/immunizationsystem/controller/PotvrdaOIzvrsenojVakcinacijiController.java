@@ -29,6 +29,13 @@ public class PotvrdaOIzvrsenojVakcinacijiController {
         return potvrdaOIzvrsenojVakcinacijiService.getPotvrdeBySearchInput(searchInput);
     }
 
+
+    @GetMapping("/napredno-pretrazi")
+    public String getPotvrdeAdvenced(@RequestParam(required = false) String ime, @RequestParam(required = false) String prezime,
+                                         @RequestParam(required = false) String id_broj) {
+        return potvrdaOIzvrsenojVakcinacijiService.getPotvrdeAdvenced(ime, prezime, id_broj);
+    }
+
     @GetMapping("/serie-of-first-vacine/{idBrojDoza}")
     public String getSerijuPrveVakcine(@PathVariable String idBrojDoza) {
         return potvrdaOIzvrsenojVakcinacijiService.getSerijuPrveVakcine(idBrojDoza);

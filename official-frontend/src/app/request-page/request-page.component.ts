@@ -33,7 +33,6 @@ export class RequestPageComponent implements OnInit {
     this.requestService.getAllNeodobreniZahtevi()
       .subscribe(res => {
         let response = this._xml_parser.parseXmlToObject(res);
-        console.log(response)
         // if(response.NEODOBRENZAHTEVDTOLIST !== undefined) {
           response.NEODOBRENZAHTEVDTOLIST.forEach((element: any) => {
             let podnosilac = new Podnosilac(element.IME[0], element.PREZIME[0], element.IDBROJ[0], element.POL[0], element.DATUMRODJENJA[0]);

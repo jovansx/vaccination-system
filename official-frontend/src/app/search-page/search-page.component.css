@@ -1,28 +1,40 @@
-
 .search-page-container {
-    padding: 20px;
-    height: 85vh;
+  padding: 20px;
+  height: 85vh;
+}
+
+.prosiri {
+  width: 300px;
+}
+
+.mat-checkbox {
+  margin-right: 20px;
+  margin-bottom: 10px;
+}
+
+.prazan {
+  background-color: red;
 }
 
 .documents-container {
-    height: 70vh;
-    flex-wrap: wrap;
+  height: 70vh;
+  flex-wrap: wrap;
 }
 
 .odgurni {
-    margin-top: 20px;
+  margin-top: 20px;
 }
 
 mat-tab-group {
-    height: 85vh;
+  height: 85vh;
 }
 
 app-document-card {
-    margin: 20px;
-    box-shadow: 0px 0px 10px black;
+  margin: 20px;
+  box-shadow: 0px 0px 10px black;
 }
 
 app-document-card:hover {
-    transform: scale(1.05);
-    box-shadow: 0px 0px 20px black;
+  transform: scale(1.05);
+  box-shadow: 0px 0px 20px black;
 }

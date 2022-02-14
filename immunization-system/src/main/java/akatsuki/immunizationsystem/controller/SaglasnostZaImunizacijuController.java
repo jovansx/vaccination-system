@@ -28,6 +28,13 @@ public class SaglasnostZaImunizacijuController {
         return saglasnostZaImunizacijuService.getSaglasnostiBySearchInput(searchInput);
     }
 
+    @GetMapping("/napredno-pretrazi")
+    public String getSaglasnostiAdvenced(@RequestParam(required = false) String ime, @RequestParam(required = false) String prezime,
+                                           @RequestParam(required = false) String id_broj,
+                                         @RequestParam(required = false) String lokacija, @RequestParam(required = false) String pol) {
+        return saglasnostZaImunizacijuService.getSaglasnostiAdvenced(ime, prezime, id_broj, lokacija, pol);
+    }
+
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     public void createSaglasnostZaImunizaciju(@RequestBody String saglasnostXml) {

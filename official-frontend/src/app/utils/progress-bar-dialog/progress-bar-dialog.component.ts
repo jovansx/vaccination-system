@@ -10,7 +10,6 @@ export class ProgressBarDialogComponent implements OnInit {
   constructor() { }
 
   ngOnInit(): void {
-    console.log('otvoren')
   }
 
 }

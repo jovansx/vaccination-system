@@ -21,7 +21,7 @@ import { ReportInfoPanelComponent } from './report-info-panel/report-info-panel.
 import { ProgressBarDialogComponent } from './utils/progress-bar-dialog/progress-bar-dialog.component';
 import { RequestPageComponent } from './request-page/request-page.component';
 import { SearchPageComponent } from './search-page/search-page.component';
-import { DocumentCardComponent } from './utils/document-card/document-card.component'
+import { DocumentCardComponent } from './utils/document-card/document-card.component';
 
 @NgModule({
   declarations: [
@@ -36,7 +36,7 @@ import { DocumentCardComponent } from './utils/document-card/document-card.compo
     RequestPageComponent,
     SearchPageComponent,
     DocumentCardComponent
-  ],
+    ],
   imports: [
     BrowserModule,
     HttpClientModule,
