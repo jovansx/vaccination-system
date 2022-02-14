@@ -7,6 +7,7 @@ import akatsuki.immunizationsystem.exceptions.BadRequestRuntimeException;
 import akatsuki.immunizationsystem.exceptions.ConflictRuntimeException;
 import akatsuki.immunizationsystem.exceptions.NotFoundRuntimeException;
 import akatsuki.immunizationsystem.model.documents.PotvrdaOVakcinaciji;
+import akatsuki.immunizationsystem.model.documents.SaglasnostZaImunizaciju;
 import akatsuki.immunizationsystem.model.dto.RaspodelaPoDozamaDTO;
 import akatsuki.immunizationsystem.model.dto.RaspodelaPoProizvodjacimaDTO;
 import akatsuki.immunizationsystem.model.vaccine.VaccineType;
@@ -197,11 +198,43 @@ public class PotvrdaOIzvrsenojVakcinacijiService {
         StringBuilder str = new StringBuilder();
         str.append("<potvrde>");
         for (String i: potvrde) {
-            if (i.contains(searchInput)) {
+            if (i.contains(searchInput)  || searchInput.equals("null")) {
                 String idBroj = i.split("about=\"http://www.akatsuki.org/potvrde/")[1]
                         .split("\"")[0];
                 str.append("<idBroj>").append(idBroj).append("</idBroj>");
             }
+        }
+        str.append("</potvrde>");
+        return str.toString();
+    }
+
+    public String getPotvrdeAdvenced(String ime, String prezime, String id_broj) {
+        String condition = "";
+        if(!ime.equals("null"))
+            condition += "?s <http://www.akatsuki.org/rdf/examples/predicate/ime> \""+ime+"\"^^<http://www.w3.org/1999/02/22-rdf-syntax-ns#XMLLiteral> .";
+        if(!prezime.equals("null"))
+            condition += "?s <http://www.akatsuki.org/rdf/examples/predicate/prezime> \""+prezime+"\"^^<http://www.w3.org/1999/02/22-rdf-syntax-ns#XMLLiteral> .";
+        if(!id_broj.equals("null"))
+            condition += "?s <http://www.akatsuki.org/rdf/examples/predicate/id_broj> \""+id_broj+"\"^^<http://www.w3.org/1999/02/22-rdf-syntax-ns#XMLLiteral> .";
+        if(condition.equals(""))
+            condition += "?s <http://www.akatsuki.org/rdf/examples/predicate/id_broj> ?o";
+
+        StringBuilder str = new StringBuilder();
+        str.append("<potvrde>");
+        for (String i: extractor.filterFromRdf("/potvrde", condition)) {
+            String idBroj = i.split("http://www.akatsuki.org/potvrde/")[1];
+
+            str.append("<potvrda>");
+
+            str.append("<idBroj>").append(idBroj).append("</idBroj>");
+
+            try {
+                PotvrdaOVakcinaciji potvrdaOVakcinaciji = potvrdaOVakcinacijiIDao.get(idBroj).
+                        orElseThrow(() -> new NotFoundRuntimeException("Nije pronadjena potvrda sa unetim " + idBroj + "."));
+                str.append("<parentTo>").append(potvrdaOVakcinaciji.getHref()).append("</parentTo>");
+            } catch (Exception ignored) {}
+
+            str.append("</potvrda>");
         }
         str.append("</potvrde>");
         return str.toString();

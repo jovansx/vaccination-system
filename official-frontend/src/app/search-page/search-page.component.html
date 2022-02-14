@@ -4,7 +4,7 @@
   <h1>Pretraga dokumenata</h1>
   <mat-divider></mat-divider>
 
-  <mat-tab-group>
+  <mat-tab-group (selectedTabChange)="resetData()">
     <mat-tab label="Osnovna pretraga">
       <mat-form-field
         class="example-full-width"

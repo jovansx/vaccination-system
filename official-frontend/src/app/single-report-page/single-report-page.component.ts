@@ -15,7 +15,6 @@ export class SingleReportPageComponent implements OnInit {
     this.route.params.subscribe((params) => {
       let id = params['id']
       this.period = id.split("_").join(" - ");
-      console.log(this.period)
     })
   }
 

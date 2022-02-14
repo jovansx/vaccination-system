@@ -99,7 +99,7 @@ public class InteresovanjeService {
         StringBuilder str = new StringBuilder();
         str.append("<interesovanja>");
         for (String i: interesovanja) {
-            if (i.contains(searchInput)) {
+            if (i.contains(searchInput)  || searchInput.equals("null")) {
                 String idBroj = i.split("about=\"http://www.akatsuki.org/interesovanja/")[1]
                         .split("\"")[0];
                 str.append("<idBroj>").append(idBroj).append("</idBroj>");

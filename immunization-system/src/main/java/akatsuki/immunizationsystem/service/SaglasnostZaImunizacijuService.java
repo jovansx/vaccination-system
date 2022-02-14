@@ -168,11 +168,46 @@ public class SaglasnostZaImunizacijuService {
         StringBuilder str = new StringBuilder();
         str.append("<saglasnosti>");
         for (String i: saglasnosti) {
-            if (i.contains(searchInput)) {
+            if (i.contains(searchInput)  || searchInput.equals("null")) {
                 String idBroj = i.split("about=\"http://www.akatsuki.org/saglasnosti/")[1]
                         .split("\"")[0];
                 str.append("<idBroj>").append(idBroj).append("</idBroj>");
             }
+        }
+        str.append("</saglasnosti>");
+        return str.toString();
+    }
+
+    public String getSaglasnostiAdvenced(String ime, String prezime, String id_broj, String lokacija, String pol) {
+        String condition = "";
+        if(!ime.equals("null"))
+            condition += "?s <http://www.akatsuki.org/rdf/examples/predicate/ime> \""+ime+"\"^^<http://www.w3.org/1999/02/22-rdf-syntax-ns#XMLLiteral> .";
+        if(!prezime.equals("null"))
+            condition += "?s <http://www.akatsuki.org/rdf/examples/predicate/prezime> \""+prezime+"\"^^<http://www.w3.org/1999/02/22-rdf-syntax-ns#XMLLiteral> .";
+        if(!id_broj.equals("null"))
+            condition += "?s <http://www.akatsuki.org/rdf/examples/predicate/id_broj> \""+id_broj+"\"^^<http://www.w3.org/1999/02/22-rdf-syntax-ns#XMLLiteral> .";
+        if(!lokacija.equals("null"))
+            condition += "?s <http://www.akatsuki.org/rdf/examples/predicate/lokacija> \""+lokacija+"\"^^<http://www.w3.org/1999/02/22-rdf-syntax-ns#XMLLiteral> .";
+        if(!pol.equals("null"))
+            condition += "?s <http://www.akatsuki.org/rdf/examples/predicate/pol> \""+pol+"\"^^<http://www.w3.org/1999/02/22-rdf-syntax-ns#XMLLiteral> .";
+        if(condition.equals(""))
+            condition += "?s <http://www.akatsuki.org/rdf/examples/predicate/id_broj> ?o";
+
+        StringBuilder str = new StringBuilder();
+        str.append("<saglasnosti>");
+        for (String i: extractor.filterFromRdf("/saglasnosti", condition)) {
+            String idBroj = i.split("http://www.akatsuki.org/saglasnosti/")[1];
+
+            str.append("<saglasnost>");
+
+            str.append("<idBroj>").append(idBroj).append("</idBroj>");
+
+            try {
+                SaglasnostZaImunizaciju saglasnostZaImunizaciju = saglasnostZaImunizacijuIDao.get(idBroj).orElseThrow(() -> new NotFoundRuntimeException("Saglasnost sa id-jem " + idBroj + " nije pronadjena."));
+                str.append("<parentTo>").append(saglasnostZaImunizaciju.getHref()).append("</parentTo>");
+            } catch (Exception ignored) {}
+
+            str.append("</saglasnost>");
         }
         str.append("</saglasnosti>");
         return str.toString();

@@ -5,6 +5,7 @@ import akatsuki.immunizationsystem.dao.IZahtevZaSertifikatDAO;
 import akatsuki.immunizationsystem.dtos.MetadataDTO;
 import akatsuki.immunizationsystem.exceptions.BadRequestRuntimeException;
 import akatsuki.immunizationsystem.exceptions.NotFoundRuntimeException;
+import akatsuki.immunizationsystem.model.documents.Interesovanje;
 import akatsuki.immunizationsystem.model.documents.ZahtevZaSertifikat;
 import akatsuki.immunizationsystem.utils.*;
 import akatsuki.immunizationsystem.utils.modelmappers.IModelMapper;
@@ -123,13 +124,48 @@ public class ZahtevZaSertifikatService {
         StringBuilder str = new StringBuilder();
         str.append("<zahtevi>");
         for (String i: zahtevi) {
-            if (i.contains(searchInput)) {
+            if (i.contains(searchInput)  || searchInput.equals("null")) {
                 String idBroj = i.split("about=\"http://www.akatsuki.org/zahtevi/")[1]
                         .split("\"")[0];
-                str.append("</idBroj>").append(idBroj).append("</idBroj>");
+                str.append("<idBroj>").append(idBroj).append("</idBroj>");
             }
         }
         str.append("</zahtevi>");
         return str.toString();
     }
+
+    public String getZahteviAdvenced(String ime, String prezime, String id_broj, String pol) {
+        String condition = "";
+        if(!ime.equals("null"))
+            condition += "?s <http://www.akatsuki.org/rdf/examples/predicate/ime> \""+ime+"\"^^<http://www.w3.org/1999/02/22-rdf-syntax-ns#XMLLiteral> .";
+        if(!prezime.equals("null"))
+            condition += "?s <http://www.akatsuki.org/rdf/examples/predicate/prezime> \""+prezime+"\"^^<http://www.w3.org/1999/02/22-rdf-syntax-ns#XMLLiteral> .";
+        if(!id_broj.equals("null"))
+            condition += "?s <http://www.akatsuki.org/rdf/examples/predicate/id_broj> \""+id_broj+"\"^^<http://www.w3.org/1999/02/22-rdf-syntax-ns#XMLLiteral> .";
+        if(!pol.equals("null"))
+            condition += "?s <http://www.akatsuki.org/rdf/examples/predicate/pol> \""+pol+"\"^^<http://www.w3.org/1999/02/22-rdf-syntax-ns#XMLLiteral> .";
+        if(condition.equals(""))
+            condition += "?s <http://www.akatsuki.org/rdf/examples/predicate/id_broj> ?o";
+
+        StringBuilder str = new StringBuilder();
+        str.append("<zahtevi>");
+        for (String i: extractor.filterFromRdf("/zahtevi", condition)) {
+            String idBroj = i.split("http://www.akatsuki.org/zahtevi/")[1];
+
+            str.append("<zahtev>");
+
+            str.append("<idBroj>").append(idBroj).append("</idBroj>");
+
+            try {
+                ZahtevZaSertifikat zahtevZaSertifikat = zahtevZaSertifikatDAO.get(idBroj).orElseThrow(() -> new NotFoundRuntimeException("Zahtev za sertifikat sa id-jem " + idBroj + " nije pronadjena."));
+                str.append("<parentTo>").append(zahtevZaSertifikat.getHref()).append("</parentTo>");
+            } catch (Exception ignored) {}
+
+            str.append("</zahtev>");
+
+        }
+        str.append("</zahtevi>");
+        return str.toString();
+    }
+
 }

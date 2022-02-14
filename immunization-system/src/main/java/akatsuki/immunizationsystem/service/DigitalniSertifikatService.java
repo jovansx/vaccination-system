@@ -6,6 +6,7 @@ import akatsuki.immunizationsystem.exceptions.BadRequestRuntimeException;
 import akatsuki.immunizationsystem.exceptions.ConflictRuntimeException;
 import akatsuki.immunizationsystem.exceptions.NotFoundRuntimeException;
 import akatsuki.immunizationsystem.model.documents.DigitalniSertifikat;
+import akatsuki.immunizationsystem.model.documents.ZahtevZaSertifikat;
 import akatsuki.immunizationsystem.utils.*;
 import akatsuki.immunizationsystem.utils.modelmappers.IModelMapper;
 import lombok.RequiredArgsConstructor;
@@ -94,11 +95,36 @@ public class DigitalniSertifikatService {
         StringBuilder str = new StringBuilder();
         str.append("<sertifikati>");
         for (String i: sertifikati) {
-            if (i.contains(searchInput)) {
+            if (i.contains(searchInput) || searchInput.equals("null")) {
                 String idBroj = i.split("about=\"http://www.akatsuki.org/digitalni-sertifikati/")[1]
                         .split("\"")[0];
                 str.append("<idBroj>").append(idBroj).append("</idBroj>");
             }
+        }
+        str.append("</sertifikati>");
+        return str.toString();
+    }
+
+    public String getDigitalniSertifikateAdvenced(String ime, String prezime, String id_broj, String pol) {
+        String condition = "";
+        if(!ime.equals("null"))
+            condition += "?s <http://www.akatsuki.org/rdf/examples/predicate/ime> \""+ime+"\"^^<http://www.w3.org/1999/02/22-rdf-syntax-ns#XMLLiteral> .";
+        if(!prezime.equals("null"))
+            condition += "?s <http://www.akatsuki.org/rdf/examples/predicate/prezime> \""+prezime+"\"^^<http://www.w3.org/1999/02/22-rdf-syntax-ns#XMLLiteral> .";
+        if(!id_broj.equals("null"))
+            condition += "?s <http://www.akatsuki.org/rdf/examples/predicate/id_broj> \""+id_broj+"\"^^<http://www.w3.org/1999/02/22-rdf-syntax-ns#XMLLiteral> .";
+        if(!pol.equals("null"))
+            condition += "?s <http://www.akatsuki.org/rdf/examples/predicate/pol> \""+pol+"\"^^<http://www.w3.org/1999/02/22-rdf-syntax-ns#XMLLiteral> .";
+        if(condition.equals(""))
+            condition += "?s <http://www.akatsuki.org/rdf/examples/predicate/id_broj> ?o";
+
+        StringBuilder str = new StringBuilder();
+        str.append("<sertifikati>");
+        for (String i: extractor.filterFromRdf("/digitalni-sertifikati", condition)) {
+            String idBroj = i.split("http://www.akatsuki.org/digitalni-sertifikati/")[1];
+            str.append("<sertifikat>");
+            str.append("<idBroj>").append(idBroj).append("</idBroj>");
+            str.append("</sertifikat>");
         }
         str.append("</sertifikati>");
         return str.toString();

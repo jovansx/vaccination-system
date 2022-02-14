@@ -106,40 +106,44 @@ export class DocumentCardComponent implements OnInit {
     if(this.getTypeOfDocument() === "interesovanja") {
       this.documentProxy.getInteresovanjeXHTML(this.dokument.IDDOKUMENTA).subscribe(
         (res: any) => {
-          console.log(res)
-          this.onReturnedDocument(JSON.stringify(res), type, filename)
+          this.onReturnedDocument(this.replaceWhiteSpaces(JSON.stringify(res)), type, filename)
         },
         (err: any) => this._toastr.error(convertResponseError(err), "Don't exist!")
       );
     } else if(this.getTypeOfDocument() === "saglasnosti") {
       this.documentProxy.getSaglasnostXHTML(this.dokument.IDDOKUMENTA).subscribe(
         (res: any) => {
-          this.onReturnedDocument(JSON.stringify(res), type, filename)
+          this.onReturnedDocument(this.replaceWhiteSpaces(JSON.stringify(res)), type, filename)
         },
         (err: any) => this._toastr.error(convertResponseError(err), "Don't exist!")
       );
     } else if(this.getTypeOfDocument() === "potvrde") {
       this.documentProxy.getPotvrdaXHTML(this.dokument.IDDOKUMENTA).subscribe(
         (res: any) => {
-          this.onReturnedDocument(JSON.stringify(res), type, filename)
+          this.onReturnedDocument(this.replaceWhiteSpaces(JSON.stringify(res)), type, filename)
         },
         (err: any) => this._toastr.error(convertResponseError(err), "Don't exist!")
       );
     } else if(this.getTypeOfDocument() === "zahtevi") {
       this.documentProxy.getZahtevXHTML(this.dokument.IDDOKUMENTA).subscribe(
         (res: any) => {
-          this.onReturnedDocument(JSON.stringify(res), type, filename)
+          this.onReturnedDocument(this.replaceWhiteSpaces(JSON.stringify(res)), type, filename)
         },
         (err: any) => this._toastr.error(convertResponseError(err), "Don't exist!")
       );
     } else {
       this.documentProxy.getSertifikatXHTML(this.dokument.IDDOKUMENTA).subscribe(
         (res: any) => {
-          this.onReturnedDocument(JSON.stringify(res), type, filename)
+          this.onReturnedDocument(this.replaceWhiteSpaces(JSON.stringify(res)), type, filename)
         },
         (err: any) => this._toastr.error(convertResponseError(err), "Don't exist!")
       );
     }
+  }
+
+  replaceWhiteSpaces(text : string) : string {
+    text = text.split("\\r\\n").join("");
+    return text.split("\\").join("");
   }
 
   onReturnedDocument(res : any, type : string, filename : string) : void {
