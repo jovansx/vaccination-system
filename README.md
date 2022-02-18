@@ -3,7 +3,7 @@
 Uputstvo za pokretanje projekta:
 
 - Preuzeti zip / Klonirati repoziturijum
-- Preuzeti baze sa datog linka:
+- Preuzeti baze sa datog linka: https://drive.google.com/drive/folders/1S8dHMKHNAcT9oNqqKlVfjBr7jr0dAqeG?usp=sharing
 - Otpakovati preuzete direktorijume
 
 - Pokretanje baza -> apache-tomme-plus-7.1.4 -> bin -> startup.sh
